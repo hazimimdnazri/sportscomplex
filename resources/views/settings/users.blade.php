@@ -27,7 +27,7 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>No. </th>
+                                <th width="5%">No. </th>
                                 <th>Name</th>
                                 <th>E-Mail</th>
                                 <th>Status</th>
@@ -35,24 +35,16 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $n = 1 @endphp
+                            @foreach($users as $u)
                             <tr>
-                            <td>1</td>
-                            <td>Internet
-                                Explorer 4.0
-                            </td>
-                            <td>Data</td>
-                            <td>Data</td>
-                            <td>Win 95+</td>
+                                <td>{{ $n++ }}</td>
+                                <td>{{ $u->name }}</td>
+                                <td>{{ $u->email }}</td>
+                                <td>{{ $u->status }}</td>
+                                <td>Data</td>
                             </tr>
-                            <tr>
-                            <td>2</td>
-                            <td>Data</td>
-                            <td>Data</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td>Win 95+</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

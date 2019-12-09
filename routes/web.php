@@ -22,10 +22,11 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('dashboard', 'HomeController@dashboard')->middleware('auth');
-Route::get('calendar', 'HomeController@calendar');
-Route::get('application', 'ApplicationsController@index');
+Route::get('calendar', 'HomeController@calendar')->middleware('auth');
+Route::get('application', 'ApplicationsController@index')->middleware('auth');
+Route::post('application', 'ApplicationsController@submitApplication')->middleware('auth');
 
-Route::get('settings/assets', 'SettingsController@assets');
-Route::post('settings/assets', 'SettingsController@submitAsset');
-Route::get('settings/users', 'SettingsController@users');
-Route::get('settings/profile', 'SettingsController@profile');
+Route::get('settings/assets', 'SettingsController@assets')->middleware('auth');
+Route::post('settings/assets', 'SettingsController@submitAsset')->middleware('auth');
+Route::get('settings/users', 'SettingsController@users')->middleware('auth');
+Route::get('settings/profile', 'SettingsController@profile')->middleware('auth');

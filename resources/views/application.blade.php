@@ -34,30 +34,22 @@
                             <tr>
                                 <th>No. </th>
                                 <th>Applicant</th>
-                                <th>Name</th>
+                                <th>Asset</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php $n = 1 @endphp
+                            @foreach($applications as $a)
                             <tr>
-                            <td>1</td>
-                            <td>Internet
-                                Explorer 4.0
-                            </td>
-                            <td>Win 95+</td>
-                            <td> 4</td>
-                            <td>X</td>
+                                <td>{{ $n++ }}</td>
+                                <td>{{ $a->user_id }}</td>
+                                <td>{{ $a->asset_id }}</td>
+                                <td>{{ $a->status }}</td>
+                                <td>Data</td>
                             </tr>
-                            <tr>
-                            <td>2</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td>Win 95+</td>
-                            <td>5</td>
-                            <td>C</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -69,7 +61,7 @@
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ url('settings/assets') }}" method="POST">
+            <form action="{{ url('application') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -81,19 +73,16 @@
                         <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}" placeholder="Enter applicant name" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Application Date<span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="datenow" value="{{ date('d/m/Y') }}" disabled>
+                        <label for="exampleInputEmail1">Application Date <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="datenow" value="{{ date('d/m/Y') }}" readOnly>
                     </div>
                     <div class="form-group">
-                        <label>Asset</label>
-                        <select class="form-control select2" style="width: 100%;">
-                            <option selected="selected">Alabama</option>
-                            <option>Alaska</option>
-                            <option>California</option>
-                            <option>Delaware</option>
-                            <option>Tennessee</option>
-                            <option>Texas</option>
-                            <option>Washington</option>
+                        <label>Asset <span class="text-red">*</span></label>
+                        <select name="asset" class="form-control select2" style="width: 100%;">
+                            <option value="">-- Select Asset --</option>
+                            @foreach($assets as $a)
+                                <option value="{{ $a->id }}">{{ $a->asset }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
@@ -106,7 +95,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Remarks <span class="text-red">*</span></label>
+                        <label>Remarks</label>
                         <textarea class="form-control" name="remark" rows="3" placeholder="Enter your remarks here..."></textarea>
                     </div>
                     <div class="form-group">
@@ -114,6 +103,8 @@
                         <input type="file" name="attachment" id="exampleInputFile">
                     </div>
                 </div>
+                <input type="hidden" name="start_date" id="start_date">
+                <input type="hidden" name="end_date" id="end_date">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary" value="Submit"/>
@@ -145,7 +136,17 @@
         $('.select2').select2()
 
         //Date range picker
-        $('#reservation').daterangepicker()
+        $('#reservation').daterangepicker({
+            locale: {
+                "format": "DD/MM/YYYY",
+            }
+        },
+        (start, end) => {
+            $("#start_date").val(start.format('YYYY-MM-DD'))
+            $("#end_date").val(end.format('YYYY-MM-DD'))
+        });
+
+        $('#reservation').val('');
     })
 </script>
 @endsection

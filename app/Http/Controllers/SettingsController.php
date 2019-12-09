@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LAsset;
+use App\User;
 
 class SettingsController extends Controller
 {
@@ -22,7 +23,8 @@ class SettingsController extends Controller
     }
 
     public function users(){
-        return view('settings.users');
+        $users = User::all();
+        return view('settings.users', compact('users'));
     }
 
     public function profile(){
