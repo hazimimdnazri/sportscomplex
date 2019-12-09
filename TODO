@@ -1,5 +1,8 @@
-== TABLE ==
-users
-assets
-applications
-l_applicationstatuses
+== TODO ==
+
+- Resit lepas daftar nak pinjam.
+- Ubah role user.
+- Validation kat semua forms.
+- Display kat kalendar.
+- Popup klik event kat kalendar.
+- Senarai asset yang tengah digunakan dalam satu masa.

@@ -17,10 +17,19 @@ class ApplicationsController extends Controller
 
     public function submitApplication(Request $request){
         $application = new Application;
-        $application->user_id = Auth::user()->id;
+        $application->name = $request->name;
+        $application->email = $request->email;
+        $application->ic = $request->ic;
+        $application->address = $request->address;
+        $application->zipcode = $request->zipcode;
+        $application->city = $request->city;
         $application->asset_id = $request->asset;
         $application->start_date = $request->start_date;
         $application->end_date = $request->end_date;
+        $application->registered_by = Auth::user()->id;
+        $application->remarks = $request->remark;
+        $application->attachment = $request->attachment;
+
 
         if($application->save()){
             return back();

@@ -33,19 +33,23 @@
                         <thead>
                             <tr>
                                 <th width="5%">No. </th>
-                                <th>Applicant</th>
-                                <th>Asset</th>
-                                <th>Status</th>
-                                <th width="20%">Actions</th>
+                                <th class="text-center">Applicant</th>
+                                <th class="text-center">Asset</th>
+                                <th class="text-center">Duration</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php $n = 1 @endphp
                             @foreach($applications as $a)
                             <tr>
-                                <td>{{ $n++ }}</td>
-                                <td>{{ $a->a_applicant->name }}</td>
-                                <td>{{ $a->a_asset->asset }}</td>
+                                <td class="text-center">{{ $n++ }}</td>
+                                <td>{{ $a->name }}</td>
+                                <td class="text-center">{{ $a->a_asset->asset }}</td>
+                                <td class="text-center">
+                                    {{ date('d/m/Y',strtotime($a->start_date)) }} - {{ date('d/m/Y',strtotime($a->end_date)) }}
+                                </td>
                                 <td class="text-center">
                                     @if($a->status == 2)
                                         <span class="label label-info">{{ $a->a_status->status }}</span>
@@ -80,39 +84,73 @@
                     <h4 class="modal-title">New Application</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Applicant Name <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}" placeholder="Enter applicant name" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Application Date <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="datenow" value="{{ date('d/m/Y') }}" readOnly>
-                    </div>
-                    <div class="form-group">
-                        <label>Asset <span class="text-red">*</span></label>
-                        <select name="asset" class="form-control select2" style="width: 100%;">
-                            <option value="">-- Select Asset --</option>
-                            @foreach($assets as $a)
-                                <option value="{{ $a->id }}">{{ $a->asset }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Date range <span class="text-red">*</span></label>
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Event <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter applicant name">
                             </div>
-                            <input type="text" class="form-control pull-right" id="reservation">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Name <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter applicant name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" name="ic" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label>Address <span class="text-red">*</span></label>
+                                <textarea class="form-control" name="address" rows="2" placeholder="Enter your remarks here..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Asset <span class="text-red">*</span></label>
+                                <select name="asset" class="form-control select2" style="width: 100%;">
+                                    <option value="">-- Select Asset --</option>
+                                    @foreach($assets as $a)
+                                        <option value="{{ $a->id }}">{{ $a->asset }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputFile">Attachment</label>
+                                <input type="file" name="attachment" id="exampleInputFile">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Application Date <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" name="datenow" value="{{ date('d/m/Y') }}" readOnly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
+                                <input type="email" class="form-control" name="email" placeholder="Enter applicant email">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Zipcode <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" name="zipcode" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">City <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" name="city" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label>Date range <span class="text-red">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" id="reservation">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Remarks</label>
-                        <textarea class="form-control" name="remark" rows="3" placeholder="Enter your remarks here..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputFile">Attachment</label>
-                        <input type="file" name="attachment" id="exampleInputFile">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea class="form-control" name="remark" rows="3" placeholder="Enter your remarks here..."></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <input type="hidden" name="start_date" id="start_date">

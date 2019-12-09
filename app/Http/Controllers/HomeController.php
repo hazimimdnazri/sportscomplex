@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\User;
+use App\Application;
 
 class HomeController extends Controller
 {
@@ -38,7 +39,7 @@ class HomeController extends Controller
         $user->password = Hash::make($request->password);
 
         if($user->save()){
-            return "success!";
+            return redirect('login');
         }
     }
 
@@ -51,7 +52,8 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
-        return view('dashboard');
+        $events = Application::where('flag', 1)->where('status', 3)->get();
+        return view('dashboard', compact('events'));
     }
 
     public function calendar(){
