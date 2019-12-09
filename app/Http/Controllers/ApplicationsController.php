@@ -17,6 +17,7 @@ class ApplicationsController extends Controller
 
     public function submitApplication(Request $request){
         $application = new Application;
+        $application->event = $request->event;
         $application->name = $request->name;
         $application->email = $request->email;
         $application->ic = $request->ic;

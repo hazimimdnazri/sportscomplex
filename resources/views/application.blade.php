@@ -88,7 +88,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Event <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="name" placeholder="Enter applicant name">
+                                <input type="text" class="form-control" name="event" placeholder="Enter applicant name">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Name <span class="text-red">*</span></label>

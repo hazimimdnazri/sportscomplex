@@ -140,7 +140,7 @@ $(function () {
 		events    : [
 			@foreach($events as $e)
 			{
-				title          : 'Long Event',
+				title          : '{{ $e->event }}',
 				start          : "{{ $e->start_date }}",
 				end            : "{{ $e->end_date }}",
 				backgroundColor: '#f39c12', //yellow
