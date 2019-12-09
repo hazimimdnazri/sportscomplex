@@ -271,13 +271,7 @@
 			<div class="content-wrapper">
 				@yield('content')
 			</div>
-			<footer class="main-footer">
-				<div class="pull-right hidden-xs">
-				<b>Version</b> 2.4.0
-				</div>
-				<strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-				reserved.
-			</footer>
+			@include('shared.footer')
 		</div>
 		<script src="{{ asset('assets/bower_components/jquery/dist/jquery.min.js') }}"></script>
 		<script src="{{ asset('assets/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>

@@ -29,14 +29,14 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Application</button>
                 </div>
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>No. </th>
+                                <th width="5%">No. </th>
                                 <th>Applicant</th>
                                 <th>Asset</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                <th width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,10 +44,22 @@
                             @foreach($applications as $a)
                             <tr>
                                 <td>{{ $n++ }}</td>
-                                <td>{{ $a->user_id }}</td>
-                                <td>{{ $a->asset_id }}</td>
-                                <td>{{ $a->status }}</td>
-                                <td>Data</td>
+                                <td>{{ $a->a_applicant->name }}</td>
+                                <td>{{ $a->a_asset->asset }}</td>
+                                <td class="text-center">
+                                    @if($a->status == 2)
+                                        <span class="label label-info">{{ $a->a_status->status }}</span>
+                                    @elseif($a->status == 3)
+                                        <span class="label label-success">{{ $a->a_status->status }}</span>
+                                    @elseif($a->status == 4)
+                                        <span class="label label-danger">{{ $a->a_status->status }}</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary">View</a>
+                                    <a class="btn btn-info">Edit</a>
+                                    <a class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -30,8 +30,9 @@
                                 <th width="5%">No. </th>
                                 <th>Name</th>
                                 <th>E-Mail</th>
+                                <th>Role</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                <th width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,8 +42,15 @@
                                 <td>{{ $n++ }}</td>
                                 <td>{{ $u->name }}</td>
                                 <td>{{ $u->email }}</td>
-                                <td>{{ $u->status }}</td>
-                                <td>Data</td>
+                                <td>{{ $u->role == 1 ? 'User' : 'Admin' }}</td>
+                                <td class="text-center">
+                                    <span class="label bg-yellow">{{ $u->u_status->status }}</span>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary">View</a>
+                                    <a class="btn btn-info">Edit</a>
+                                    <a class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -51,7 +59,7 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">

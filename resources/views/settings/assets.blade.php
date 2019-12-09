@@ -30,7 +30,7 @@
                                 <th width="5%">No. </th>
                                 <th>Asset</th>
                                 <th>Remarks</th>
-                                <th>Actions</th>
+                                <th width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,11 @@
                                 <td>{{ $n++ }}</td>
                                 <td>{{ $a->asset }}</td>
                                 <td>Data</td>
-                                <td>data</td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary">View</a>
+                                    <a class="btn btn-info">Edit</a>
+                                    <a class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -49,7 +53,7 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">

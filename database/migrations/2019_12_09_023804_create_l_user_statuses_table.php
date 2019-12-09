@@ -25,7 +25,7 @@ class CreateLUserStatusesTable extends Migration
             )
         );
 
-        DB::table('l_application_statuses')->insert(
+        DB::table('l_user_statuses')->insert(
             array(
                 'status' => 'Verified'
             )
