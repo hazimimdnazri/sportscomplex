@@ -35,6 +35,7 @@
             <ul class="treeview-menu">
                 <li><a href="{{ url('settings/assets') }}"><i class="fa fa-circle-o"></i>Assets</a></li>
                 <li><a href="{{ url('settings/users') }}"><i class="fa fa-circle-o"></i>Users</a></li>
+                <li><a href="{{ url('settings/profile') }}"><i class="fa fa-circle-o"></i>My Profile</a></li>
             </ul>
             <li><a href="{{ url('dashboard') }}"><i class="fa fa-question"></i> <span>F.A.Q</span></a></li>
         </li>

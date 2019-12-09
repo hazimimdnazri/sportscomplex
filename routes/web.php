@@ -26,4 +26,6 @@ Route::get('calendar', 'HomeController@calendar');
 Route::get('application', 'ApplicationsController@index');
 
 Route::get('settings/assets', 'SettingsController@assets');
+Route::post('settings/assets', 'SettingsController@submitAsset');
 Route::get('settings/users', 'SettingsController@users');
+Route::get('settings/profile', 'SettingsController@profile');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssetsTable extends Migration
+class CreateLAssetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateAssetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assets', function (Blueprint $table) {
+        Schema::create('l_assets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('asset');
             $table->integer('flag')->default(1);
             $table->timestamps();
         });
