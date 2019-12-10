@@ -108,7 +108,9 @@
                                     </select>
                                     <small><span style="color:gold">Gold</span> = 20% discounted price</small><br>
                                     <small><span style="color:silver">Silver</span> = 15% discounted price</small><br>
-                                    <small><span style="color:brown">Bronze</span> = 10% discounted price</small>
+                                    <small><span style="color:brown">Bronze</span> = 10% discounted price</small><br>
+                                    <small><span style="color:blue">EduCity Students</span> = 20% discounted price</small>
+
                                 </div>
                                 <div class="form-group">
                                     <label>Payment Cycle <span class="text-red">*</span></label>
