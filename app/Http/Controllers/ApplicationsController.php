@@ -30,7 +30,7 @@ class ApplicationsController extends Controller
         $application->start_date = $request->start_date;
         $application->end_date = $request->end_date;
         $application->registered_by = Auth::user()->id;
-        $application->remarks = $request->remark;
+        $application->remark = $request->remark;
         $application->attachment = $request->attachment;
 
 
