@@ -83,6 +83,17 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Membership ID </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="event" placeholder="Enter applicant name">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" type="button">Find</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Event <span class="text-red">*</span></label>
