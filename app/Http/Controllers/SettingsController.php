@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\LAsset;
 use App\User;
+use App\Membership;
+use App\Member;
 
 class SettingsController extends Controller
 {
@@ -29,5 +31,15 @@ class SettingsController extends Controller
 
     public function profile(){
         return view('settings.profile');
+    }
+
+    public function members(){
+        $members = Member::all();
+        return view('settings.members', compact('members'));
+    }
+
+    public function membership(){
+        $memberships = Membership::all();
+        return view('settings.membership', compact('memberships'));
     }
 }

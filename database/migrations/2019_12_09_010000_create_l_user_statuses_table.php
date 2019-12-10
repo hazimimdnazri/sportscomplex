@@ -16,7 +16,6 @@ class CreateLUserStatusesTable extends Migration
         Schema::create('l_user_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('status');
-            $table->timestamps();
         });
 
         DB::table('l_user_statuses')->insert(

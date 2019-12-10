@@ -29,7 +29,7 @@ class HomeController extends Controller
     }
 
     public function register(){
-        return view('auth.register');
+        return view('registration');
     }
 
     public function submitRegister(Request $request){

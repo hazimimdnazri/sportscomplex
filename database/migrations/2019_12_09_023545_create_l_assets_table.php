@@ -18,7 +18,6 @@ class CreateLAssetsTable extends Migration
             $table->string('asset');
             $table->text('remarks')->nullable();
             $table->integer('flag')->default(1);
-            $table->timestamps();
         });
     }
 
