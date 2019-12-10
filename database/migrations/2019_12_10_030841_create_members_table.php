@@ -17,6 +17,7 @@ class CreateMembersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('ic');
+            $table->string('phone');
             $table->string('email');
             $table->date('dob');
             $table->string('address');
@@ -24,6 +25,7 @@ class CreateMembersTable extends Migration
             $table->string('city');
             $table->integer('state');
             $table->integer('membership');
+            $table->integer('cycle');
             $table->timestamps();
 
             $table->foreign('membership')->references('id')->on('memberships');

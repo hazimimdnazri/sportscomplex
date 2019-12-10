@@ -41,12 +41,14 @@ class HomeController extends Controller
         $members->name = $request->name;
         $members->ic = $request->ic;
         $members->email = $request->email;
+        $members->phone = $request->phone;
         $members->dob = date('Y-m-d', strtotime($request->dob));
         $members->address = $request->address;
         $members->zipcode = $request->zipcode;
         $members->city = $request->city;
         $members->state = $request->state;
         $members->membership = $request->membership;
+        $members->cycle = $request->cycle;
 
         if($members->save()){
             return back();

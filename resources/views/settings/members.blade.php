@@ -39,10 +39,10 @@
                         <tbody>
                         @foreach($members as $m)
                             <tr>
-                                <td>{{ $m->id }}</td>
-                                <td>{{ $m->name }}</td>
-                                <td>{{ $m->ic }}</td>
-                                <td>{{ $m->email }}</td>
+                                <td class="text-center">{{ $m->id }}</td>
+                                <td class="text-center">{{ $m->name }}</td>
+                                <td class="text-center">{{ $m->ic }}</td>
+                                <td class="text-center">{{ $m->email }}</td>
                                 <td class="text-center">
                                     @if($m->membership == 1)
                                         <span class="label bg-yellow">{{ $m->m_membership->membership }}</span>

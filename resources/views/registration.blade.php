@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Mobile Phone <span class="text-red">*</span></label>
-                                    <input type="phone" class="form-control" name="email" placeholder="Enter applicant name">
+                                    <input type="text" class="form-control" name="phone" placeholder="Enter applicant name">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
@@ -111,7 +111,7 @@
                                     <small><span style="color:brown">Bronze</span> = 10% discounted price</small>
                                 </div>
                                 <div class="form-group">
-                                    <label>Payment Cycle</label>
+                                    <label>Payment Cycle <span class="text-red">*</span></label>
                                     <select name="cycle" id="" class="form-control">
                                         <option value="">-- Cycle --</option>
                                         <option id="monthly" value="1">Monthly</option>
