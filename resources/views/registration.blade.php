@@ -47,6 +47,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Mobile Phone <span class="text-red">*</span></label>
+                                    <input type="phone" class="form-control" name="email" placeholder="Enter applicant name">
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
                                     <input type="email" class="form-control" name="email" placeholder="Enter applicant name">
                                 </div>
