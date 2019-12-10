@@ -16,10 +16,12 @@ class ApplicationsController extends Controller
     }
 
     public function submitApplication(Request $request){
+
         $application = new Application;
         $application->event = $request->event;
         $application->name = $request->name;
         $application->email = $request->email;
+        $application->phone = $request->phone;
         $application->ic = $request->ic;
         $application->address = $request->address;
         $application->zipcode = $request->zipcode;

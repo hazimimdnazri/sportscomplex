@@ -18,8 +18,8 @@ class SettingsController extends Controller
     }
 
     public function submitCategory(Request $request){
-        $assets = new LAsset;
-        $assets->asset = $request->asset;
+        $assets = new LAssetType;
+        $assets->type = $request->asset;
 
         if($assets->save()){
             return back();

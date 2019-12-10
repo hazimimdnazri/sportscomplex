@@ -20,6 +20,7 @@ class CreateApplicationsTable extends Migration
             $table->string('ic');
             $table->string('email');
             $table->string('address');
+            $table->string('phone');
             $table->string('city');
             $table->string('zipcode');
             $table->integer('asset_id');

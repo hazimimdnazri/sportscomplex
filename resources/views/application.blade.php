@@ -135,6 +135,10 @@
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter applicant email">
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputEmail1">Phone <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter applicant email">
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">Zipcode <span class="text-red">*</span></label>
                                 <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="">
                             </div>
@@ -220,6 +224,7 @@
                 $("#city").val(response.data.city);
                 $("#zipcode").val(response.data.zipcode);
                 $("#address").val(response.data.address);
+                $("#phone").val(response.data.phone);
             } else {
                 alert("Pengguna tidak wujud!")
             }

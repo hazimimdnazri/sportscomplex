@@ -59,7 +59,7 @@
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('settings/assets') }}" method="POST">
+            <form action="{{ url('settings/categories') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -69,6 +69,10 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Asset Category <span class="text-red">*</span></label>
                         <input type="text" class="form-control" name="asset" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Remarks <span class="text-red">*</span></label>
+                        <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name" ></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
