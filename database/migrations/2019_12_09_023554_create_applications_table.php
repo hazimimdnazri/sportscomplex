@@ -25,12 +25,12 @@ class CreateApplicationsTable extends Migration
             $table->string('zipcode');
             $table->integer('asset_id');
             $table->string('attachment')->nullable();
-            $table->text('remarks')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('status')->default(2);
             $table->integer('registered_by');
             $table->integer('approved_by')->nullable();
+            $table->text('remark')->nullable();
             $table->integer('flag')->default(1);
             $table->timestamps();
 

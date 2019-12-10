@@ -17,9 +17,10 @@ class CreateLAssetsTable extends Migration
             $table->bigIncrements('id');
             $table->string('asset');
             $table->integer('type');
-            $table->text('remark')->nullable();
             $table->float('price');
+            $table->float('min_hour');
             $table->integer('status')->default(1);
+            $table->text('remark')->nullable();
             $table->integer('flag')->default(1);
 
             $table->foreign('type')->references('id')->on('l_asset_types');
