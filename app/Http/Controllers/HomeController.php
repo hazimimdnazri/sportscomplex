@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\User;
 use App\Application;
+use App\Membership;
+use App\Member;
 
 class HomeController extends Controller
 {
@@ -29,17 +31,24 @@ class HomeController extends Controller
     }
 
     public function register(){
-        return view('registration');
+        $memberships = Membership::all();
+        return view('registration', compact('memberships'));
     }
 
     public function submitRegister(Request $request){
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $members = new Member;
+        $members->name = $request->name;
+        $members->ic = $request->ic;
+        $members->email = $request->email;
+        $members->dob = date('Y-m-d', strtotime($request->dob));
+        $members->address = $request->address;
+        $members->zipcode = $request->zipcode;
+        $members->city = $request->city;
+        $members->state = $request->state;
+        $members->membership = $request->membership;
 
-        if($user->save()){
-            return redirect('login');
+        if($members->save()){
+            return back();
         }
     }
 
