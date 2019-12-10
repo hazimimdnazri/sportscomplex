@@ -28,12 +28,12 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="5%">No. </th>
-                                <th>Name</th>
-                                <th>E-Mail</th>
-                                <th>Role</th>
-                                <th>Status</th>
-                                <th width="20%">Actions</th>
+                                <th class="text-center" width="5%">No. </th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">E-Mail</th>
+                                <th class="text-center">Role</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>

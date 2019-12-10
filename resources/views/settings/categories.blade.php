@@ -28,10 +28,10 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="5%">No. </th>
-                                <th>Asset Category</th>
-                                <th>Remarks</th>
-                                <th width="20%">Actions</th>
+                                <th class="text-center" width="5%">No. </th>
+                                <th class="text-center">Asset Category</th>
+                                <th class="text-center">Remarks</th>
+                                <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                             <tr>
                                 <td>{{ $n++ }}</td>
                                 <td>{{ $a->type }}</td>
-                                <td>Data</td>
+                                <td>{{ $a->remark }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
                                     <a class="btn btn-info">Edit</a>

@@ -26,7 +26,7 @@
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 			<header class="main-header">
-				<a href="index2.html" class="logo">
+				<a href="{{ url('/') }}" class="logo">
 				<span class="logo-mini"><b>A</b>LT</span>
 				<span class="logo-lg"><b>Sports</b>Complex</span>
 				</a>

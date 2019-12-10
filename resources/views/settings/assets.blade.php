@@ -28,10 +28,10 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="5%">No. </th>
-                                <th>Asset</th>
-                                <th>Remarks</th>
-                                <th width="20%">Actions</th>
+                                <th class="text-center" width="5%">No. </th>
+                                <th class="text-center">Asset</th>
+                                <th class="text-center">Remarks</th>
+                                <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
