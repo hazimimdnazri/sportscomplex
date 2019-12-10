@@ -26,6 +26,8 @@ Route::post('application', 'ApplicationsController@submitApplication')->middlewa
 Route::get('registration', 'HomeController@register');
 Route::post('registration', 'HomeController@submitRegister');
 
+Route::get('settings/categories', 'SettingsController@categories')->middleware('auth');
+Route::post('settings/categories', 'SettingsController@submitCategory')->middleware('auth');
 Route::get('settings/assets', 'SettingsController@assets')->middleware('auth');
 Route::post('settings/assets', 'SettingsController@submitAsset')->middleware('auth');
 Route::get('settings/users', 'SettingsController@users')->middleware('auth');

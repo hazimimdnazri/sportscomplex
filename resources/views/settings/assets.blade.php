@@ -12,7 +12,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Application</li>
+        <li class="active">Assets</li>
     </ol>
 </section>
 
@@ -21,7 +21,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Assets</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Asset</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -62,7 +62,7 @@
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">New Asset</h4>
+                    <h4 class="modal-title">New Assets</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">

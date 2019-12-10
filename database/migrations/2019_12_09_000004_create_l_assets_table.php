@@ -16,8 +16,12 @@ class CreateLAssetsTable extends Migration
         Schema::create('l_assets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('asset');
+            $table->integer('type');
             $table->text('remarks')->nullable();
+            $table->integer('status')->default(1);
             $table->integer('flag')->default(1);
+
+            $table->foreign('type')->references('id')->on('l_asset_types');
         });
     }
 

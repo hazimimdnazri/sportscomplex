@@ -23,7 +23,7 @@
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ url('calendar') }}"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
-        <li><a href="{{ url('application') }}"><i class="fa fa-calendar-check-o"></i> <span>Application</span></a></li>
+        <li><a href="{{ url('application') }}"><i class="fa fa-calendar-check-o"></i> <span>Applications</span></a></li>
         <li><a href="{{ url('registration') }}"><i class="fa fa-user"></i> <span>Registration</span></a></li>
         <li class="treeview">
             <a href="#">
@@ -34,6 +34,7 @@
                 </span>
             </a>
             <ul class="treeview-menu">
+                <li><a href="{{ url('settings/categories') }}"><i class="fa fa-circle-o"></i>Asset Categories</a></li>
                 <li><a href="{{ url('settings/assets') }}"><i class="fa fa-circle-o"></i>Assets</a></li>
                 <li><a href="{{ url('settings/users') }}"><i class="fa fa-circle-o"></i>Users</a></li>
                 <li><a href="{{ url('settings/members') }}"><i class="fa fa-circle-o"></i>Members</a></li>

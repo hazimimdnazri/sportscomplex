@@ -7,12 +7,12 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Members
+        Asset Categories
         <small>Settings</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Members</li>
+        <li class="active">Asset Categories</li>
     </ol>
 </section>
 
@@ -21,37 +21,25 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <a href="{{ url('registration') }}"><button type="button" class="btn btn-primary">New Members</button></a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Asset Category</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th class="text-center" width="5%">ID</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">I.C. Number</th>
-                                <th class="text-center">E-Mail</th>
-                                <th class="text-center">Membership</th>
-                                <th class="text-center" width="20%">Actions</th>
+                                <th width="5%">No. </th>
+                                <th>Asset Category</th>
+                                <th>Remarks</th>
+                                <th width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($members as $m)
+                        @php $n = 1 @endphp
+                        @foreach($assets as $a)
                             <tr>
-                                <td>{{ $m->id }}</td>
-                                <td>{{ $m->name }}</td>
-                                <td>{{ $m->ic }}</td>
-                                <td>{{ $m->email }}</td>
-                                <td class="text-center">
-                                    @if($m->membership == 1)
-                                        <span class="label bg-yellow">{{ $m->m_membership->membership }}</span>
-                                    @elseif($m->membership == 2)
-                                        <span class="label bg-red">{{ $m->m_membership->membership }}</span>
-                                    @elseif($m->membership == 3)
-                                        <span class="label bg-black">{{ $m->m_membership->membership }}</span>
-                                    @endif
-                                    
-                                </td>
+                                <td>{{ $n++ }}</td>
+                                <td>{{ $a->type }}</td>
+                                <td>Data</td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
                                     <a class="btn btn-info">Edit</a>
@@ -66,6 +54,30 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url('settings/assets') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">New Asset Category</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Asset Name <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="asset" placeholder="Enter asset name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('postscript')
