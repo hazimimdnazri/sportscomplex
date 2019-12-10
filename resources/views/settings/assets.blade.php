@@ -30,7 +30,8 @@
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Asset</th>
-                                <th class="text-center">Price</th>
+                                <th class="text-center">Category</th>
+                                <th class="text-center">Price (RM)</th>
                                 <th class="text-center">Remarks</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
@@ -39,10 +40,11 @@
                         @php $n = 1 @endphp
                         @foreach($assets as $a)
                             <tr>
-                                <td>{{ $n++ }}</td>
-                                <td>{{ $a->asset }}</td>
-                                <td>{{ $a->price }}</td>
-                                <td>{{ $a->remark }}</td>
+                                <td class="text-center">{{ $n++ }}</td>
+                                <td class="text-center">{{ $a->asset }}</td>
+                                <td class="text-center">{{ $a->a_type->type }}</td>
+                                <td class="text-center">{{ number_format($a->price, 2) }}</td>
+                                <td class="text-center">{{ $a->remark }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
                                     <a class="btn btn-info">Edit</a>
@@ -74,12 +76,20 @@
                     </div>
                     <div class="form-group">
                         <label>Category <span class="text-red">*</span></label>
-                        <select name="asset" class="form-control" style="width: 100%;">
+                        <select name="category" class="form-control" style="width: 100%;">
                             <option value="">-- Asset Category --</option>
                             @foreach($types as $t)
                                 <option value="{{ $t->id }}">{{ $t->type }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Price (RM) <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="price" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Remarks </label>
+                        <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

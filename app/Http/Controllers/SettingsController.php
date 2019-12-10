@@ -32,9 +32,16 @@ class SettingsController extends Controller
         return view('settings.assets', compact('assets', 'types'));
     }
 
-    public function submitAsset(){
+    public function submitAsset(Request $request){
+        $asset = new LAsset;
+        $asset->asset = $request->asset;
+        $asset->type = $request->category;
+        $asset->price = $request->price;
+        $asset->remarks = $request->remark;
 
-        
+        if($asset->save()){
+            return back();
+        }
     }   
     
     public function activities(){
