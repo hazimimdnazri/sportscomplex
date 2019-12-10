@@ -37,6 +37,7 @@ class SettingsController extends Controller
         $asset->asset = $request->asset;
         $asset->type = $request->category;
         $asset->price = $request->price;
+        $asset->min_hour = $request->min_hour;
         $asset->remark = $request->remark;
 
         if($asset->save()){

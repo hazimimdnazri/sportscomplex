@@ -24,7 +24,8 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Application</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Asset Reservation</button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default-2">Activity Reservation</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered">

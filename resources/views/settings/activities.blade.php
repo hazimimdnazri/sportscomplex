@@ -31,6 +31,7 @@
                                 <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Activity</th>
                                 <th class="text-center">Price</th>
+                                <th class="text-center">Deposit</th>
                                 <th class="text-center">Remark</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
@@ -42,6 +43,7 @@
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $a->activity }}</td>
                                 <td class="text-center">{{ number_format($a->price, 2) }}</td>
+                                <td class="text-center">{{ number_format($a->deposit, 2) }}</td>
                                 <td class="text-center">{{ $a->remark }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
@@ -75,6 +77,10 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Price (RM) <span class="text-red">*</span></label>
                         <input type="integer" class="form-control" name="price" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Deposit (RM) <span class="text-red">*</span></label>
+                        <input type="integer" class="form-control" name="deposit" placeholder="Enter asset name">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Remark <span class="text-red">*</span></label>

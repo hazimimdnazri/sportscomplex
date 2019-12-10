@@ -32,6 +32,7 @@
                                 <th class="text-center">Asset</th>
                                 <th class="text-center">Category</th>
                                 <th class="text-center">Price (RM)</th>
+                                <th class="text-center">Min. Hour</th>
                                 <th class="text-center">Remarks</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
@@ -44,7 +45,8 @@
                                 <td class="text-center">{{ $a->asset }}</td>
                                 <td class="text-center">{{ $a->a_type->type }}</td>
                                 <td class="text-center">{{ number_format($a->price, 2) }}</td>
-                                <td class="text-center">{{ $a->remark }}</td>
+                                <td class="text-center">{{ $a->min_hour }}</td>
+                                <td class="text-ceter">{{ $a->remark }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
                                     <a class="btn btn-info">Edit</a>
@@ -86,6 +88,10 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Price (RM) <span class="text-red">*</span></label>
                         <input type="text" class="form-control" name="price" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Minimum Hour <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="min_hour" placeholder="Enter asset name">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Remarks </label>
