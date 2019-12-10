@@ -37,7 +37,7 @@ class SettingsController extends Controller
         $asset->asset = $request->asset;
         $asset->type = $request->category;
         $asset->price = $request->price;
-        $asset->remarks = $request->remark;
+        $asset->remark = $request->remark;
 
         if($asset->save()){
             return back();
@@ -47,6 +47,17 @@ class SettingsController extends Controller
     public function activities(){
         $activities = LActivity::all();
         return view('settings.activities', compact('activities'));
+    }
+
+    public function submitActivity(Request $request){
+        $activity = new LActivity;
+        $activity->activity = $request->activity;
+        $activity->price = $request->price;
+        $activity->remark = $request->remark;
+
+        if($activity->save()){
+            return back();
+        }
     }
 
     public function users(){

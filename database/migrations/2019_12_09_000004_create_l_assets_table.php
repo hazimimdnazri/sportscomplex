@@ -17,7 +17,7 @@ class CreateLAssetsTable extends Migration
             $table->bigIncrements('id');
             $table->string('asset');
             $table->integer('type');
-            $table->text('remarks')->nullable();
+            $table->text('remark')->nullable();
             $table->float('price');
             $table->integer('status')->default(1);
             $table->integer('flag')->default(1);
