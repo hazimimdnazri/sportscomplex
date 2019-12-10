@@ -30,6 +30,7 @@
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Asset</th>
+                                <th class="text-center">Price</th>
                                 <th class="text-center">Remarks</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
@@ -40,7 +41,8 @@
                             <tr>
                                 <td>{{ $n++ }}</td>
                                 <td>{{ $a->asset }}</td>
-                                <td>Data</td>
+                                <td>{{ $a->price }}</td>
+                                <td>{{ $a->remark }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
                                     <a class="btn btn-info">Edit</a>
