@@ -87,9 +87,9 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Membership ID </label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="event" placeholder="Enter applicant name">
+                                    <input id="member_id" type="text" class="form-control" placeholder="Enter applicant name">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-info" type="button">Find</button>
+                                        <button onClick="member()" class="btn btn-info" type="button">Find</button>
                                     </span>
                                 </div>
                             </div>
@@ -101,15 +101,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Name <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="name" placeholder="Enter applicant name">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter applicant name">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="ic" placeholder="">
+                                <input type="text" class="form-control" id="ic" name="ic" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label>Address <span class="text-red">*</span></label>
-                                <textarea class="form-control" name="address" rows="2" placeholder="Enter your remarks here..."></textarea>
+                                <textarea class="form-control" id="address" name="address" rows="2" placeholder="Enter your remarks here..."></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Asset <span class="text-red">*</span></label>
@@ -132,15 +132,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
-                                <input type="email" class="form-control" name="email" placeholder="Enter applicant email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter applicant email">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Zipcode <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="zipcode" placeholder="">
+                                <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">City <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="city" placeholder="">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label>Date range <span class="text-red">*</span></label>
@@ -207,5 +207,23 @@
 
         $('#reservation').val('');
     })
+
+    member = () => {
+        $.ajax({
+            type:"GET",
+            url: "{{ url('api/member') }}"+"/"+$("#member_id").val()
+        }).done(function(response){
+            if(response.data != ""){
+                $("#name").val(response.data.name);
+                $("#email").val(response.data.email);
+                $("#ic").val(response.data.ic);
+                $("#city").val(response.data.city);
+                $("#zipcode").val(response.data.zipcode);
+                $("#address").val(response.data.address);
+            } else {
+                alert("Pengguna tidak wujud!")
+            }
+        });
+    }
 </script>
 @endsection

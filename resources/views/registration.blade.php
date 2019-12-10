@@ -161,7 +161,6 @@
             document.getElementById("monthly").innerHTML = "Monthly (RM"+response.monthly+")"
             document.getElementById("anually").innerHTML = "Anually (RM"+response.anually+")";
         });
-       
     }
 </script>
 @endsection
