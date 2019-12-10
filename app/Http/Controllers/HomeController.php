@@ -28,6 +28,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
+        return redirect('dashboard');
     }
 
     public function register(){
