@@ -17,26 +17,43 @@ class CreateMembershipsTable extends Migration
             $table->bigIncrements('id');
             $table->string('membership');
             $table->float('discount');
+            $table->float('monthly');
+            $table->float('anually');
         });
 
         DB::table('memberships')->insert(
             array(
                 'membership' => 'Gold',
-                'discount' => 20
+                'discount' => 20,
+                'monthly' => 140,
+                'anually' => 1200
             )
         );
 
         DB::table('memberships')->insert(
             array(
                 'membership' => 'Silver',
-                'discount' => 15
+                'discount' => 15,
+                'monthly' => 140,
+                'anually' => 900
             )
         );
 
         DB::table('memberships')->insert(
             array(
                 'membership' => 'Bronze',
-                'discount' => 10
+                'discount' => 10,
+                'monthly' => 140,
+                'anually' => 600
+            )
+        );
+
+        DB::table('memberships')->insert(
+            array(
+                'membership' => 'EduCity Student',
+                'discount' => 20,
+                'monthly' => 0,
+                'anually' => 377.50
             )
         );
     }

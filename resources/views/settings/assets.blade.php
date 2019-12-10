@@ -12,6 +12,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>Settings</li>
         <li class="active">Assets</li>
     </ol>
 </section>
@@ -68,6 +69,15 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Asset Name <span class="text-red">*</span></label>
                         <input type="text" class="form-control" name="asset" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label>Category <span class="text-red">*</span></label>
+                        <select name="asset" class="form-control" style="width: 100%;">
+                            <option value="">-- Asset Category --</option>
+                            @foreach($types as $t)
+                                <option value="{{ $t->id }}">{{ $t->type }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

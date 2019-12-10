@@ -7,12 +7,13 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Assets
+        Membership
         <small>Settings</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Application</li>
+        <li>Settings</li>
+        <li class="active">Membership</li>
     </ol>
 </section>
 
@@ -27,19 +28,23 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="5%">No. </th>
-                                <th>Membership</th>
-                                <th>Discount</th>
-                                <th width="20%">Actions</th>
+                                <th class="text-center" width="5%">No. </th>
+                                <th class="text-center">Membership</th>
+                                <th class="text-center">Discount (%)</th>
+                                <th class="text-center">Montly Fee (RM)</th>
+                                <th class="text-center">Anually Fee (RM)</th>
+                                <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         @php $n = 1 @endphp
                         @foreach($memberships as $m)
                             <tr>
-                                <td>{{ $n++ }}</td>
-                                <td>{{ $m->membership }}</td>
-                                <td>{{ $m->discount }}</td>
+                                <td class="text-center">{{ $n++ }}</td>
+                                <td class="text-center">{{ $m->membership }}</td>
+                                <td class="text-center">{{ $m->discount }}</td>
+                                <td class="text-center">{{ number_format($m->monthly, 2) }}</td>
+                                <td class="text-center">{{ number_format($m->anually, 2) }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
                                     <a class="btn btn-info">Edit</a>

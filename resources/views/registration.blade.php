@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Address <span class="text-red">*</span></label>
-                                    <textarea type="text" col="3" class="form-control" name="address" placeholder="Enter applicant name"></textarea>
+                                    <textarea type="text" rows="4" class="form-control" name="address" placeholder="Enter applicant name"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Membership Type <span class="text-red">*</span></label>
-                                    <select class="form-control" name="membership">
+                                    <select onChange="member(this.value)" class="form-control" name="membership">
                                         <option value="" selected>-- Membership --</option>
                                         @foreach($memberships as $m)
                                         <option value="{{ $m->id }}">{{ $m->membership }}</option>
@@ -109,6 +109,14 @@
                                     <small><span style="color:gold">Gold</span> = 20% discounted price</small><br>
                                     <small><span style="color:silver">Silver</span> = 15% discounted price</small><br>
                                     <small><span style="color:brown">Bronze</span> = 10% discounted price</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Payment Cycle</label>
+                                    <select name="cycle" id="" class="form-control">
+                                        <option value="">-- Cycle --</option>
+                                        <option id="monthly" value="1">Monthly</option>
+                                        <option id="anually" value="2">Anually</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -140,5 +148,20 @@
         format: 'dd-mm-yyyy',
         autoclose: true
     })
+
+    member = (value) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('membershipprice') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "membership" : value
+            }
+        }).done(function(response){
+            document.getElementById("monthly").innerHTML = "Monthly (RM"+response.monthly+")"
+            document.getElementById("anually").innerHTML = "Anually (RM"+response.anually+")";
+        });
+       
+    }
 </script>
 @endsection

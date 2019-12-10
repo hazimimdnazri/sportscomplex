@@ -25,11 +25,13 @@ Route::get('application', 'ApplicationsController@index')->middleware('auth');
 Route::post('application', 'ApplicationsController@submitApplication')->middleware('auth');
 Route::get('registration', 'HomeController@register');
 Route::post('registration', 'HomeController@submitRegister');
+Route::post('membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');
 
 Route::get('settings/categories', 'SettingsController@categories')->middleware('auth');
 Route::post('settings/categories', 'SettingsController@submitCategory')->middleware('auth');
 Route::get('settings/assets', 'SettingsController@assets')->middleware('auth');
 Route::post('settings/assets', 'SettingsController@submitAsset')->middleware('auth');
+Route::get('settings/activities', 'SettingsController@activities')->middleware('auth');
 Route::get('settings/users', 'SettingsController@users')->middleware('auth');
 Route::get('settings/members', 'SettingsController@members')->middleware('auth');
 Route::get('settings/membership', 'SettingsController@membership')->middleware('auth');

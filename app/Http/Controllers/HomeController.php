@@ -52,6 +52,11 @@ class HomeController extends Controller
         }
     }
 
+    public function ajaxMembershipPrice(Request $request){
+        $price = Membership::where('id', $request->membership)->first();
+        return $price;
+    }
+
     public function login(){
         return view('auth.login');
     }

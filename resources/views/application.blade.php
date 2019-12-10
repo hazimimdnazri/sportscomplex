@@ -24,8 +24,6 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Applications List</h3>
-                    <br><br>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Application</button>
                 </div>
                 <div class="box-body">

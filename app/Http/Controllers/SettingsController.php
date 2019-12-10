@@ -8,6 +8,7 @@ use App\User;
 use App\Membership;
 use App\Member;
 use App\LAssetType;
+use App\LActivity;
 
 class SettingsController extends Controller
 {
@@ -27,12 +28,19 @@ class SettingsController extends Controller
     
     public function assets(){
         $assets = LAsset::all();
-        return view('settings.assets', compact('assets'));
+        $types = LAssetType::all();
+        return view('settings.assets', compact('assets', 'types'));
     }
 
     public function submitAsset(){
 
-    }    
+        
+    }   
+    
+    public function activities(){
+        $activities = LActivity::all();
+        return view('settings.activities', compact('activities'));
+    }
 
     public function users(){
         $users = User::all();

@@ -7,13 +7,13 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Asset Categories
+        Activities
         <small>Settings</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Settings</li>
-        <li class="active">Asset Categories</li>
+        <li class="active">Activities</li>
     </ol>
 </section>
 
@@ -22,25 +22,27 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Asset Category</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Activity</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="5%">No. </th>
-                                <th>Asset Category</th>
-                                <th>Remarks</th>
-                                <th width="20%">Actions</th>
+                                <th class="text-center" width="5%">No. </th>
+                                <th class="text-center">Activity</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Remark</th>
+                                <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         @php $n = 1 @endphp
-                        @foreach($assets as $a)
+                        @foreach($activities as $a)
                             <tr>
-                                <td>{{ $n++ }}</td>
-                                <td>{{ $a->type }}</td>
-                                <td>Data</td>
+                                <td class="text-center">{{ $n++ }}</td>
+                                <td class="text-center">{{ $a->activity }}</td>
+                                <td class="text-center">{{ number_format($a->price, 2) }}</td>
+                                <td class="text-center">{{ $a->remark }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
                                     <a class="btn btn-info">Edit</a>
@@ -63,12 +65,20 @@
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">New Asset Category</h4>
+                    <h4 class="modal-title">New Activity</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Asset Category <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="asset" placeholder="Enter asset name">
+                        <label for="exampleInputEmail1">Activity <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="membership" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Price (RM) <span class="text-red">*</span></label>
+                        <input type="integer" class="form-control" name="discount" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Remark <span class="text-red">*</span></label>
+                        <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
