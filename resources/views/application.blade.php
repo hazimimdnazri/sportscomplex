@@ -44,7 +44,7 @@
                             @foreach($applications as $a)
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
-                                <td>{{ $a->name }}</td>
+                                <td>{{ $a->a_applicant->name }}</td>
                                 <td class="text-center">{{ $a->a_asset->asset }}</td>
                                 <td class="text-center">
                                     {{ date('d/m/Y',strtotime($a->start_date)) }} - {{ date('d/m/Y',strtotime($a->end_date)) }}
@@ -148,6 +148,28 @@
                                 <input type="text" class="form-control" id="city" name="city" placeholder="">
                             </div>
                             <div class="form-group">
+                                <label>State <span class="text-red">*</span></label>
+                                <select name="state" class="select2 form-control" id="state" style="width: 100%;">
+                                    <option value="" selected>-- State --</option>
+                                    <option value="1" >Johor</option>
+                                    <option value="2" >Kedah</option>
+                                    <option value="3" >Kelantan</option>
+                                    <option value="4" >Melaka</option>
+                                    <option value="5" >Negeri Sembilan</option>
+                                    <option value="6" >Pahang</option>
+                                    <option value="7" >Perak</option>
+                                    <option value="8" >Perlis</option>
+                                    <option value="9" >Pulau Pinang</option>
+                                    <option value="10" >Sabah</option>
+                                    <option value="11" >Sarawak</option>
+                                    <option value="12" >Selangor</option>
+                                    <option value="13" >Terengganu</option>
+                                    <option value="14" >W.P. Kuala Lumpur</option>
+                                    <option value="15" >W.P. Labuan</option>
+                                    <option value="16" >W.P. Putrajaya</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>Date range <span class="text-red">*</span></label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
@@ -169,6 +191,7 @@
                 </div>
                 <input type="hidden" name="start_date" id="start_date">
                 <input type="hidden" name="end_date" id="end_date">
+                <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary" value="Submit"/>
@@ -216,7 +239,7 @@
     member = () => {
         $.ajax({
             type:"GET",
-            url: "{{ url('api/member') }}"+"/"+$("#member_id").val()
+            url: "{{ url('api/customer') }}"+"/"+$("#member_id").val()
         }).done(function(response){
             if(response.data != ""){
                 $("#name").val(response.data.name);
@@ -226,6 +249,9 @@
                 $("#zipcode").val(response.data.zipcode);
                 $("#address").val(response.data.address);
                 $("#phone").val(response.data.phone);
+                $("#state").val(response.data.state).change();
+                $("#post_id").val(response.data.id);
+                post_id
             } else {
                 alert("Pengguna tidak wujud!")
             }

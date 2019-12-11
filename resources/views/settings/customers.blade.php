@@ -7,13 +7,13 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Members
+        Customers
         <small>Settings</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Settings</li>
-        <li class="active">Members</li>
+        <li class="active">Customers</li>
     </ol>
 </section>
 
@@ -45,11 +45,13 @@
                                 <td class="text-center">{{ $c->email }}</td>
                                 <td class="text-center">
                                     @if($c->membership == 1)
-                                        <span class="label bg-yellow">{{ $m->c_membership->membership }}</span>
+                                        <span class="label bg-yellow">{{ $c->c_membership->membership }}</span>
                                     @elseif($c->membership == 2)
-                                        <span class="label bg-red">{{ $m->c_membership->membership }}</span>
+                                        <span class="label bg-red">{{ $c->c_membership->membership }}</span>
                                     @elseif($c->membership == 3)
-                                        <span class="label bg-black">{{ $m->c_membership->membership }}</span>
+                                        <span class="label label-info">{{ $c->c_membership->membership }}</span>
+                                    @else
+                                        <span class="label bg-black">Non Member</span>
                                     @endif
                                     
                                 </td>

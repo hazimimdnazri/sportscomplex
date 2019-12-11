@@ -24,7 +24,7 @@ class CreateCustomersTable extends Migration
             $table->string('zipcode');
             $table->string('city');
             $table->integer('state');
-            $table->integer('type');
+            $table->integer('type')->default(1);
             $table->integer('membership')->nullable();
             $table->integer('cycle')->nullable();
             $table->timestamps();
