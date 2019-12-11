@@ -30,3 +30,8 @@ $ php artisan config:cache
 - Application for renting for days.
 - Transactions history.
 - Transactions reporting.
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
