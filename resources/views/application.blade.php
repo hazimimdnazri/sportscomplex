@@ -356,61 +356,43 @@
         },
         messages: {
             name: {
-                required: "Please enter your name.",
+                required: "Applicant name is required.",
             },
             event: {
-                required: "Please enter event name.",
+                required: "Event name is required.",
             },
             ic: {
-                required: "Please enter IC number.",
+                required: "Applicant I.C number is required.",
             },
             address: {
-                required: "Please your address.",
+                required: "Applicant address is required.",
             },
             asset: {
-                required: "Please select an asset.",
+                required: "Asset is required.",
             },
             duration: {
-                required: "Please select reservation duration.",
+                required: "Reservation duration is required.",
             },
             email: {
-                required: "Please enter your name.",
-            },
-            event: {
-                required: "Please enter event name.",
-            },
-            ic: {
-                required: "Please enter IC number.",
-            },
-            address: {
-                required: "Please your address.",
-            },
-            asset: {
-                required: "Please select an asset.",
-            },
-            duration: {
-                required: "Please select reservation duration.",
-            },
-            email: {
-                required: "Please enter email.",
+                required: "Applicant email is required.",
             },
             phone: {
-                required: "Please enter phone.",
+                required: "Applicant phone number is required.",
             },
             zipcode: {
-                required: "Please enter your zipcode.",
+                required: "Applicant zipcode is required.",
             },
             city: {
-                required: "Please enter your city.",
+                required: "Applicant city is required.",
             },
             state: {
-                required: "Please select your state.",
+                required: "Applicant state is required.",
             },
             date: {
-                required: "Please select reservation date.",
+                required: "Reservation date is required.",
             },
             time: {
-                required: "Please select reservation time.",
+                required: "Reservation time is required.",
             },
         },
         errorLabelContainer: "#errors", 
