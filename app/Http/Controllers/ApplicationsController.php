@@ -50,8 +50,16 @@ class ApplicationsController extends Controller
             $application->end_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time) + 60 * 60 * $request->duration);
 
             if($application->save()){
-                return back();
+                return redirect("application/payment/$application->id");
             }
         }
+    }
+
+    public function payment($id){
+        $application = Application::find($id);
+        $customer = Customer::find($application->customer_id);
+        $duration = (strtotime($application->end_date) -  strtotime($application->start_date)) / (60 * 60);
+        $asset = LAsset::find($application->asset_id);
+        return view('applications.payment', compact('customer', 'application', 'duration', 'asset'));
     }
 }

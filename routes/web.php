@@ -23,6 +23,7 @@ Route::get('dashboard', 'HomeController@dashboard')->middleware('auth');
 Route::get('calendar', 'HomeController@calendar')->middleware('auth');
 Route::get('application', 'ApplicationsController@index')->middleware('auth');
 Route::post('application', 'ApplicationsController@submitApplication')->middleware('auth');
+Route::get('application/payment/{id}', 'ApplicationsController@payment')->middleware('auth');
 Route::get('registration', 'HomeController@register');
 Route::post('registration', 'HomeController@submitRegister');
 Route::post('membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');
