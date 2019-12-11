@@ -31,7 +31,7 @@ $ php artisan config:cache
 - Transactions history.
 - Transactions reporting.
 
-| First Header  | Second Header |
+| Name  | Info  |
 | ------------- | ------------- |
 | Content Cell  | Content Cell  |
 | Content Cell  | Content Cell  |
