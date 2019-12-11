@@ -2,12 +2,12 @@
 
 ### Application Information
 Application environments and information are as follow:
-| Name | Info |
-| ------ | ------ |
-| PHP | v7.4.0 |
-| DBMS | PostgreSQL v12.1 |
-| Composer | v1.9.1 |
-| Laravel | v5.8.35 |
+| Name     | Info             |
+| -------- | --------------   |
+| PHP      | v7.4.0           |
+| DBMS     | PostgreSQL v12.1 |
+| Composer | v1.9.1           |
+| Laravel  | v5.8.35          |
 
 ### Installation
 Edit the .htaccess inside public folder if you are using Apache and enabled rewrite mod. Consider using the original laravel .htaccess if your are using NGINX.
