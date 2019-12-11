@@ -9,12 +9,12 @@ Application environments and information are as follow:
 | DBMS  | PostgreSQL v12.1  |
 | Composer  | v1.9.1  |
 | Laravel  | v5.8.35  |
-```
 
 ### Installation
 Edit the .htaccess inside public folder if you are using Apache and enabled rewrite mod. Consider using the original laravel .htaccess if your are using NGINX.
 
 After every changes in the .env file, please run the following command.
+
 ```sh
 $ php artisan cache:clear
 $ php artisan view:clear
