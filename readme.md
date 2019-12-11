@@ -35,3 +35,5 @@ $ php artisan config:cache
 | ------------- | ------------- |
 | PHP  | v7.4.0   |
 | DBMS  | PostgreSQL v12.1  |
+| Composer  | v1.9.1  |
+| Laravel  | v5.8.35  |
