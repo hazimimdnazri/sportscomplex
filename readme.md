@@ -2,12 +2,14 @@
 
 ### Application Information
 Application environments and information are as follow:
-| Name     | Info        |
-|--------|--------------|
+```sh
+| Name     | Info             |
+| -------- | --------------   |
 | PHP      | v7.4.0           |
 | DBMS     | PostgreSQL v12.1 |
 | Composer | v1.9.1           |
 | Laravel  | v5.8.35          |
+```
 
 ### Installation
 Edit the .htaccess inside public folder if you are using Apache and enabled rewrite mod. Consider using the original laravel .htaccess if your are using NGINX.
@@ -28,9 +30,3 @@ $ php artisan config:cache
 - Application for renting for days.
 - Transactions history.
 - Transactions reporting.
-
-## Amost always imports
-
-|  R |  Python |    Matlab |
-| --------- |:---|:---------|:-----|
-| library(tidyverse) |import numpy as np|
