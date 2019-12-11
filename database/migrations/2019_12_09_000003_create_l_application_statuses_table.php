@@ -32,7 +32,7 @@ class CreateLApplicationStatusesTable extends Migration
 
         DB::table('l_application_statuses')->insert(
             array(
-                'status' => 'Approved'
+                'status' => 'Paid'
             )
         );
 

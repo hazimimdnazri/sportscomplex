@@ -61,7 +61,7 @@
                         <th>Asset</th>
                         <th>Category</th>
                         <th>Duration (Hour)</th>
-                        <th>Price/Hour (RM)</th>
+                        <th>Price/Min. Hour (RM)</th>
                         <th>Subtotal (RM)</th>
                     </tr>
                 </thead>
@@ -106,7 +106,7 @@
                     <td>0%</td>
                     </tr>
                     <tr>
-                    <th>Discount:</th>
+                    <th>Discount (Membership / Special Offer):</th>
                     <td>{{ $customer->c_membership->discount }}%</td>
                     </tr>
                     <tr>

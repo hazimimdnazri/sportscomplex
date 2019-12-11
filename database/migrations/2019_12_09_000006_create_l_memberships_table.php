@@ -56,6 +56,16 @@ class CreateLMembershipsTable extends Migration
                 'anually' => 377.50
             )
         );
+
+        DB::table('l_memberships')->insert(
+            array(
+                'id' => 99,
+                'membership' => 'Non Member',
+                'discount' => 0,
+                'monthly' => 0,
+                'anually' => 0
+            )
+        );
     }
 
     /**

@@ -103,7 +103,9 @@
                                     <select onChange="member(this.value)" class="form-control" name="membership">
                                         <option value="" selected>-- Membership --</option>
                                         @foreach($memberships as $m)
-                                        <option value="{{ $m->id }}">{{ $m->membership }}</option>
+                                            @if($m->id !=99)
+                                            <option value="{{ $m->id }}">{{ $m->membership }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     <small><span style="color:gold">Gold</span> = 20% discounted price</small><br>

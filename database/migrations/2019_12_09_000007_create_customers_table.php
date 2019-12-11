@@ -25,7 +25,7 @@ class CreateCustomersTable extends Migration
             $table->string('city');
             $table->integer('state');
             $table->integer('type')->default(1);
-            $table->integer('membership')->nullable();
+            $table->integer('membership')->default(99);
             $table->integer('cycle')->nullable();
             $table->timestamps();
 
