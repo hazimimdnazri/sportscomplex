@@ -11,7 +11,7 @@ Application environments and information are as follow:
 | Laravel  | v5.8.35  |
 
 ### Installation
-Edit the **.htaccess** inside public folder if you are using **Apache** and enabled rewrite mod. Consider using the original Laravel **.htaccess** if your are using **NGINX**.
+Edit the **.htaccess** inside public folder if you are using **Apache** and enabled rewrite_mod. Consider using the original Laravel **.htaccess** if your are using **NGINX**.
 
 After every changes in the **.env** file, please run the following command.
 
