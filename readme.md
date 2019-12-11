@@ -2,8 +2,8 @@
 
 ### Application Information
 Application environments and information are as follow:
-| Name     | Info             |
-| -------- | --------------   |
+| Name     | Info        |
+|--------|--------------|
 | PHP      | v7.4.0           |
 | DBMS     | PostgreSQL v12.1 |
 | Composer | v1.9.1           |
