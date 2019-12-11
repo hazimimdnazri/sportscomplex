@@ -27,7 +27,7 @@
             <div class="box">
                 <div class="box-header">
                     <button type="button" class="btn btn-primary" onClick="assetModal()">Asset Reservation</button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default-2">Activity Reservation</button>
+                    <button type="button" class="btn btn-info" onClick="activityModal()">Activity Reservation</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered">
@@ -112,7 +112,7 @@
             }
         }).done(function(response){
             $("#variable_1").html(response)
-            $('#modal-default').modal('show');
+            $('#assetModal').modal('show');
         });
     }
 
@@ -149,6 +149,19 @@
         } else {
             $('#duration').find('option').remove().end().append("<option value=''>-- Duration --</option>")
         }
+    }
+
+    activityModal = () => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('ajax/activitymodal') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+            }
+        }).done(function(response){
+            $("#variable_1").html(response)
+            $('#activityModal').modal('show');
+        });
     }
 </script>
 @endsection

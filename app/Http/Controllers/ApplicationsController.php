@@ -21,6 +21,10 @@ class ApplicationsController extends Controller
         return view('shared.asset_modal', compact('assets'));
     }
 
+    public function activityModal(){
+        return view('shared.activity_modal');
+    }
+
     public function submitApplication(Request $request){
         $cust_id = $request->post_id;
         

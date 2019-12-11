@@ -40,3 +40,4 @@ Route::get('settings/membership', 'SettingsController@membership')->middleware('
 Route::get('settings/profile', 'SettingsController@profile')->middleware('auth');
 
 Route::post('ajax/assetmodal', 'ApplicationsController@assetModal');
+Route::post('ajax/activitymodal', 'ApplicationsController@activityModal');

@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="assetModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="application_form" action="{{ url('application') }}" method="POST">
