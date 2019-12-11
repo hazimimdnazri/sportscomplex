@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\Member as MemberResource;
-use App\Member;
+use App\Http\Resources\Customer as CustomerResource;
+use App\Customer;
 
 class ApiController extends Controller
 {
-    public function members(){
-        $members = Member::all();
-        return MemberResource::collection($members);
+    public function customers(){
+        $customers = Customer::all();
+        return CustomerResource::collection($customers);
     }
 
-    public function member($id){
-        $members = Member::find($id);
-        return new MemberResource($members);
+    public function customer($id){
+        $customers = Customer::find($id);
+        return new CustomerResource($customers);
     }
 }

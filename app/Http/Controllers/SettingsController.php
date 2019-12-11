@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\LAsset;
 use App\User;
-use App\Membership;
-use App\Member;
+use App\LMembership;
+use App\Customer;
 use App\LAssetType;
 use App\LActivity;
 
@@ -73,13 +73,13 @@ class SettingsController extends Controller
         return view('settings.profile');
     }
 
-    public function members(){
-        $members = Member::all();
-        return view('settings.members', compact('members'));
+    public function customers(){
+        $customers = Customer::all();
+        return view('settings.customers', compact('customers'));
     }
 
     public function membership(){
-        $memberships = Membership::all();
+        $memberships = LMembership::all();
         return view('settings.membership', compact('memberships'));
     }
 }

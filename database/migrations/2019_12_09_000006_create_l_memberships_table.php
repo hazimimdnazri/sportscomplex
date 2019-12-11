@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMembershipsTable extends Migration
+class CreateLMembershipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMembershipsTable extends Migration
      */
     public function up()
     {
-        Schema::create('memberships', function (Blueprint $table) {
+        Schema::create('l_memberships', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('membership');
             $table->float('discount');
@@ -21,7 +21,7 @@ class CreateMembershipsTable extends Migration
             $table->float('anually');
         });
 
-        DB::table('memberships')->insert(
+        DB::table('l_memberships')->insert(
             array(
                 'membership' => 'Gold',
                 'discount' => 20,
@@ -30,7 +30,7 @@ class CreateMembershipsTable extends Migration
             )
         );
 
-        DB::table('memberships')->insert(
+        DB::table('l_memberships')->insert(
             array(
                 'membership' => 'Silver',
                 'discount' => 15,
@@ -39,7 +39,7 @@ class CreateMembershipsTable extends Migration
             )
         );
 
-        DB::table('memberships')->insert(
+        DB::table('l_memberships')->insert(
             array(
                 'membership' => 'Bronze',
                 'discount' => 10,
@@ -48,7 +48,7 @@ class CreateMembershipsTable extends Migration
             )
         );
 
-        DB::table('memberships')->insert(
+        DB::table('l_memberships')->insert(
             array(
                 'membership' => 'EduCity Student',
                 'discount' => 20,
@@ -65,6 +65,6 @@ class CreateMembershipsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('memberships');
+        Schema::dropIfExists('l_memberships');
     }
 }

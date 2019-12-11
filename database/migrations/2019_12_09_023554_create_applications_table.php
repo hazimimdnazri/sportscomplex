@@ -15,14 +15,8 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('customer_id');
             $table->string('event');
-            $table->string('name');
-            $table->string('ic');
-            $table->string('email');
-            $table->string('address');
-            $table->string('phone');
-            $table->string('city');
-            $table->string('zipcode');
             $table->integer('asset_id');
             $table->string('attachment')->nullable();
             $table->date('start_date');
@@ -38,6 +32,7 @@ class CreateApplicationsTable extends Migration
             $table->foreign('approved_by')->references('id')->on('users');
             $table->foreign('asset_id')->references('id')->on('l_assets');
             $table->foreign('status')->references('id')->on('l_application_statuses');
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
 

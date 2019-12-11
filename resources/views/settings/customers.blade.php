@@ -37,19 +37,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($members as $m)
+                        @foreach($customers as $c)
                             <tr>
-                                <td class="text-center">{{ $m->id }}</td>
-                                <td class="text-center">{{ $m->name }}</td>
-                                <td class="text-center">{{ $m->ic }}</td>
-                                <td class="text-center">{{ $m->email }}</td>
+                                <td class="text-center">{{ $c->id }}</td>
+                                <td class="text-center">{{ $c->name }}</td>
+                                <td class="text-center">{{ $c->ic }}</td>
+                                <td class="text-center">{{ $c->email }}</td>
                                 <td class="text-center">
-                                    @if($m->membership == 1)
-                                        <span class="label bg-yellow">{{ $m->m_membership->membership }}</span>
-                                    @elseif($m->membership == 2)
-                                        <span class="label bg-red">{{ $m->m_membership->membership }}</span>
-                                    @elseif($m->membership == 3)
-                                        <span class="label bg-black">{{ $m->m_membership->membership }}</span>
+                                    @if($c->membership == 1)
+                                        <span class="label bg-yellow">{{ $m->c_membership->membership }}</span>
+                                    @elseif($c->membership == 2)
+                                        <span class="label bg-red">{{ $m->c_membership->membership }}</span>
+                                    @elseif($c->membership == 3)
+                                        <span class="label bg-black">{{ $m->c_membership->membership }}</span>
                                     @endif
                                     
                                 </td>

@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\User;
 use App\Application;
-use App\Membership;
-use App\Member;
+use App\LMembership;
+use App\Customer;
 
 class HomeController extends Controller
 {
@@ -32,12 +32,12 @@ class HomeController extends Controller
     }
 
     public function register(){
-        $memberships = Membership::all();
+        $memberships = LMembership::all();
         return view('registration', compact('memberships'));
     }
 
     public function submitRegister(Request $request){
-        $members = new Member;
+        $members = new Customer;
         $members->name = $request->name;
         $members->ic = $request->ic;
         $members->email = $request->email;
@@ -56,7 +56,7 @@ class HomeController extends Controller
     }
 
     public function ajaxMembershipPrice(Request $request){
-        $price = Membership::where('id', $request->membership)->first();
+        $price = LMembership::where('id', $request->membership)->first();
         return $price;
     }
 

@@ -34,6 +34,6 @@ Route::post('settings/assets', 'SettingsController@submitAsset')->middleware('au
 Route::get('settings/activities', 'SettingsController@activities')->middleware('auth');
 Route::post('settings/activities', 'SettingsController@submitActivity')->middleware('auth');
 Route::get('settings/users', 'SettingsController@users')->middleware('auth');
-Route::get('settings/members', 'SettingsController@members')->middleware('auth');
+Route::get('settings/customers', 'SettingsController@customers')->middleware('auth');
 Route::get('settings/membership', 'SettingsController@membership')->middleware('auth');
 Route::get('settings/profile', 'SettingsController@profile')->middleware('auth');
