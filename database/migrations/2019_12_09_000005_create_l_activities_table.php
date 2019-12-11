@@ -16,9 +16,11 @@ class CreateLActivitiesTable extends Migration
         Schema::create('l_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('activity');
-            $table->float('price');
+            $table->float('public');
+            $table->float('students');
+            $table->float('underage');
             $table->float('deposit');
-            $table->text('remark');
+            $table->text('remark')->nullable();
         });
     }
 

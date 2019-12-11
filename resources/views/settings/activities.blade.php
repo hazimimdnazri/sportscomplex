@@ -30,8 +30,10 @@
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Activity</th>
-                                <th class="text-center">Price</th>
-                                <th class="text-center">Deposit</th>
+                                <th class="text-center">Public Price (RM)</th>
+                                <th class="text-center">Students Price (RM)</th>
+                                <th class="text-center">Under 12 Price (RM)</th>
+                                <th class="text-center">Deposit (RM)</th>
                                 <th class="text-center">Remark</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
@@ -42,7 +44,9 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $a->activity }}</td>
-                                <td class="text-center">{{ number_format($a->price, 2) }}</td>
+                                <td class="text-center">{{ number_format($a->public, 2) }}</td>
+                                <td class="text-center">{{ number_format($a->students, 2) }}</td>
+                                <td class="text-center">{{ number_format($a->underage, 2) }}</td>
                                 <td class="text-center">{{ number_format($a->deposit, 2) }}</td>
                                 <td class="text-center">{{ $a->remark }}</td>
                                 <td class="text-center">
@@ -75,8 +79,16 @@
                         <input type="text" class="form-control" name="activity" placeholder="Enter asset name">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Price (RM) <span class="text-red">*</span></label>
-                        <input type="integer" class="form-control" name="price" placeholder="Enter asset name">
+                        <label for="exampleInputEmail1">Public Price (RM) <span class="text-red">*</span></label>
+                        <input type="integer" class="form-control" name="public" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Students Price (RM) <span class="text-red">*</span></label>
+                        <input type="integer" class="form-control" name="students" placeholder="Enter asset name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Under 12 Price (RM) <span class="text-red">*</span></label>
+                        <input type="integer" class="form-control" name="underage" placeholder="Enter asset name">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Deposit (RM) <span class="text-red">*</span></label>

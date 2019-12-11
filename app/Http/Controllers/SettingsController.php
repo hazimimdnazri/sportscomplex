@@ -53,7 +53,10 @@ class SettingsController extends Controller
     public function submitActivity(Request $request){
         $activity = new LActivity;
         $activity->activity = $request->activity;
-        $activity->price = $request->price;
+        $activity->public = $request->public;
+        $activity->students = $request->students;
+        $activity->underage = $request->underage;
+        $activity->deposit = $request->deposit;
         $activity->remark = $request->remark;
 
         if($activity->save()){
