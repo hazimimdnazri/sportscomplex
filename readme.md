@@ -33,5 +33,5 @@ $ php artisan config:cache
 
 | Name  | Info  |
 | ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| PHP  | v7.4.0   |
+| DBMS  | PostgreSQL v12.1  |
