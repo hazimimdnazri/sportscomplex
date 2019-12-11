@@ -31,6 +31,8 @@ class ApplicationsController extends Controller
             $customer->zipcode = $request->zipcode;
             $customer->city = $request->city;
             $customer->state = $request->state;
+        } else {
+            $customer = Customer::find($cust_id);
         }
 
         if($customer->save() || $cust_id != ''){
@@ -41,11 +43,11 @@ class ApplicationsController extends Controller
             $application->customer_id = $cust_id;
             $application->event = $request->event;
             $application->asset_id = $request->asset;
-            $application->start_date = $request->start_date;
-            $application->end_date = $request->end_date;
             $application->registered_by = Auth::user()->id;
             $application->remark = $request->remark;
             $application->attachment = $request->attachment;
+            $application->start_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time));
+            $application->end_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time) + 60 * 60 * $request->duration);
 
             if($application->save()){
                 return back();

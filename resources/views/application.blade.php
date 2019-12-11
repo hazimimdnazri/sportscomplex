@@ -3,6 +3,8 @@
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
 @endsection
 
@@ -47,7 +49,7 @@
                                 <td>{{ $a->a_applicant->name }}</td>
                                 <td class="text-center">{{ $a->a_asset->asset }}</td>
                                 <td class="text-center">
-                                    {{ date('d/m/Y',strtotime($a->start_date)) }} - {{ date('d/m/Y',strtotime($a->end_date)) }}
+                                    {{ date('g:i:s A (d/m/Y)',strtotime($a->start_date)) }} - {{ date('g:i:s A (d/m/Y)',strtotime($a->end_date)) }}
                                 </td>
                                 <td class="text-center">
                                     @if($a->status == 2)
@@ -114,23 +116,23 @@
                             </div>
                             <div class="form-group">
                                 <label>Asset <span class="text-red">*</span></label>
-                                <select name="asset" class="form-control select2" style="width: 100%;">
+                                <select onChange="waktu(this.value)" name="asset" class="form-control select2" style="width: 100%;">
                                     <option value="">-- Select Asset --</option>
                                     @foreach($assets as $a)
                                         <option value="{{ $a->id }}">{{ $a->asset }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputFile">Attachment</label>
-                                <input type="file" name="attachment" id="exampleInputFile">
+                            <div id="variable_1">
+                                <div class="form-group">
+                                    <label>Duration (Hour) <span class="text-red">*</span></label>
+                                    <select name="duration" class="form-control" id="duration">
+                                        <option value="" selected>-- Duration --</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Application Date <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="datenow" value="{{ date('d/m/Y') }}" readOnly>
-                            </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter applicant email">
@@ -169,13 +171,33 @@
                                     <option value="16" >W.P. Putrajaya</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label>Date range <span class="text-red">*</span></label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
                                     <input type="text" class="form-control pull-right" id="reservation">
+                                </div>
+                            </div> -->
+                            <div class="form-group">
+                                <label>Date <span class="text-red">*</span></label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" name="date" class="form-control pull-right" id="datepicker">
+                                </div>
+                            </div>
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                    <label>Time <span class="text-red">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                        <input name="time" type="text" class="form-control timepicker">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +229,9 @@
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <script>
     $(function () {
         $('#example1').DataTable()
@@ -233,6 +257,19 @@
             $("#end_date").val(end.format('YYYY-MM-DD'))
         });
 
+        $('#datepicker').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true
+        })
+
+        $('.timepicker').timepicker({
+            showInputs: false,
+            defaultTime: 'current',
+            minuteStep: 15
+        })
+        
+        $('.timepicker').timepicker('setTime', new Date(new Date().getTime()+6*3600*1000));
+
         $('#reservation').val('');
     })
 
@@ -256,6 +293,19 @@
                 alert("Pengguna tidak wujud!")
             }
         });
+    }
+
+    waktu = (value) => {
+        if(value){
+            $.ajax({
+                type:"POST",
+                url: "{{ url('api/asset') }}"+"/"+value
+            }).done(function(response){
+                $("#variable_1").html(response)
+            });
+        } else {
+            $('#duration').find('option').remove().end().append("<option value=''>-- Duration --</option>")
+        }
     }
 </script>
 @endsection
