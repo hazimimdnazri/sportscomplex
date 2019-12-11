@@ -2,13 +2,13 @@
 
 ### Application Information
 Application environments and information are as follow:
-```sh
-| Name     | Info             |
-| -------- | --------------   |
-| PHP      | v7.4.0           |
-| DBMS     | PostgreSQL v12.1 |
-| Composer | v1.9.1           |
-| Laravel  | v5.8.35          |
+
+| Name  | Info  |
+| ------------- | ------------- |
+| PHP  | v7.4.0   |
+| DBMS  | PostgreSQL v12.1  |
+| Composer  | v1.9.1  |
+| Laravel  | v5.8.35  |
 ```
 
 ### Installation
