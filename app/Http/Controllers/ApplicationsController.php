@@ -16,6 +16,11 @@ class ApplicationsController extends Controller
         return view('application', compact('assets', 'applications'));
     }
 
+    public function assetModal(){
+        $assets = LAsset::all();
+        return view('shared.asset_modal', compact('assets'));
+    }
+
     public function submitApplication(Request $request){
         $cust_id = $request->post_id;
         

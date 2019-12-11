@@ -38,3 +38,5 @@ Route::get('settings/users', 'SettingsController@users')->middleware('auth');
 Route::get('settings/customers', 'SettingsController@customers')->middleware('auth');
 Route::get('settings/membership', 'SettingsController@membership')->middleware('auth');
 Route::get('settings/profile', 'SettingsController@profile')->middleware('auth');
+
+Route::post('ajax/assetmodal', 'ApplicationsController@assetModal');

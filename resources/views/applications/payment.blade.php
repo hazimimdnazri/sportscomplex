@@ -71,7 +71,7 @@
                         <td>{{ $application->a_asset->asset }}</td>
                         <td>{{ $application->a_asset->a_type->type }}</td>
                         <td>{{ $duration }}</td>
-                        <td>{{ number_format($asset->price, 2) }}</td>
+                        <td>{{ number_format($asset->price, 2) }} / {{$asset->min_hour}}</td>
                         <td>{{ number_format(($duration / $asset->min_hour) * $asset->price, 2) }}</td>
                     </tr>
                 </tbody>
