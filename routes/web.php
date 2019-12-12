@@ -41,7 +41,7 @@ Route::get('settings/customers', 'SettingsController@customers')->middleware('au
 Route::get('settings/membership', 'SettingsController@membership')->middleware('auth');
 Route::get('settings/profile', 'SettingsController@profile')->middleware('auth');
 
-Route::post('ajax/assetmodal', 'ApplicationController@assetModal');
+Route::post('ajax/itemtype', 'ApplicationController@itemType');
 Route::post('ajax/activitymodal', 'ApplicationController@activityModal');
 Route::post('ajax/detailsmodal', 'ApplicationController@detailsModal');
 Route::post('ajax/membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');

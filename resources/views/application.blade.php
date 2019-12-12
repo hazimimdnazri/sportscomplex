@@ -26,8 +26,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" onClick="assetModal()">Asset Reservation</button>
-                    <button type="button" class="btn btn-info" onClick="activityModal()">Activity Reservation</button>
+                    <button type="button" class="btn btn-primary" onClick="activityModal()">New Reservation</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered">
@@ -35,8 +34,7 @@
                             <tr>
                                 <th width="5%">No. </th>
                                 <th class="text-center">Applicant</th>
-                                <th class="text-center">Asset</th>
-                                <th class="text-center">Duration</th>
+                                <th class="text-center">Reservation Date</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
@@ -47,12 +45,11 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td>{{ $a->a_applicant->name }}</td>
-                                <td class="text-center">{{ $a->a_asset->asset }}</td>
+                                <td class="text-ceter">{{ $a->date }}</td>
                                 <td class="text-center">
-                                    {{ date('g:i:s A (d/m/Y)',strtotime($a->start_date)) }} - {{ date('g:i:s A (d/m/Y)',strtotime($a->end_date)) }}
-                                </td>
-                                <td class="text-center">
-                                    @if($a->status == 2)
+                                    @if($a->status == 1)
+                                        <span class="label label-default">{{ $a->a_status->status }}</span>
+                                    @elseif($a->status == 2)
                                         <span class="label label-info">{{ $a->a_status->status }}</span>
                                     @elseif($a->status == 3)
                                         <span class="label label-success">{{ $a->a_status->status }}</span>
@@ -65,7 +62,7 @@
                                     <a href="{{ url('/application/payment/'.$a->id) }}" class="btn btn-warning">Pay</a>
                                     @endif
                                     <a class="btn btn-primary">View</a>
-                                    <a class="btn btn-info">Edit</a>
+                                    <a href="{{ url('application/'.$a->id) }}" class="btn btn-info">Edit</a>
                                     <a class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>

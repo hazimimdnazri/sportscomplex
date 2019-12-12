@@ -35,9 +35,20 @@ class ApplicationController extends Controller
         }
     }
 
-    public function assetModal(){
-        $assets = LAsset::all();
-        return view('shared.asset_modal', compact('assets'));
+    public function itemType(Request $request){
+        $reservations = Reservation::where('application_id', $request->id);
+        if($request->type == 1){
+            return view('shared.asset', compact('reservations'));
+        } else if($request->type == 2) {
+            return view('shared.activity', compact('reservations'));
+        } else {
+            return NULL;
+        }
+    }
+
+    public function activityType(){
+        
+        return view('shared.asset', compact('reservations'));
     }
 
     public function detailsModal(Request $request){
