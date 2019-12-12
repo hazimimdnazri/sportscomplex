@@ -73,6 +73,12 @@ class ApplicationController extends Controller
     }
 
     public function ajaxSubmitPayment(Request $request){
-        return $request;
+        $application = Application::find($request->id);
+        $application->status = 3;
+        if($application->save()){
+            return "success";
+        } else {
+            return "fail";
+        }
     }
 }

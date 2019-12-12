@@ -24,9 +24,13 @@ $ php artisan config:cache
 
 ### TODO List
 
-- Validation of each form.
-- Mark on calendar based on duration.
-- Application for activities.
+- ~~Validation of each form.~~
+- ~~Mark on calendar based on duration.~~
+- ~~Application for activities.~~
 - Application for renting for days.
 - Transactions history.
 - Transactions reporting.
+- Trasactions type
+M = membership
+AS = asset
+AC = activity

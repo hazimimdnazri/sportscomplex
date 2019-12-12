@@ -49,6 +49,13 @@ class HomeController extends Controller
         $members->state = $request->state;
         $members->membership = $request->membership;
         $members->cycle = $request->cycle;
+        $members->cycle_start = date('Y-m-d');
+        if($request->cycle == 1){
+            $members->cycle_end = date('Y-m-d', strtotime('+1 month'));
+        } else {
+            $members->cycle_end = date('Y-m-d', strtotime('+1 year'));
+        }
+
 
         if($members->save()){
             return back();

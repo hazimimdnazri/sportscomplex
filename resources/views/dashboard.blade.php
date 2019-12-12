@@ -89,7 +89,7 @@
 <script src="{{ asset('assets/bower_components/fullcalendar/dist/fullcalendar.min.js') }}"></script>
 <!-- Page specific script -->
 <script>
-$(function () {
+$(() => {
 
     /* initialize the external events
      -----------------------------------------------------------------*/

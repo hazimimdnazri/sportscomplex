@@ -8,7 +8,97 @@
                     <h4 class="modal-title">New Activity</h4>
                 </div>
                 <div class="modal-body">
-
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Membership ID </label>
+                                <div class="input-group">
+                                    <input id="member_id" type="text" class="form-control" placeholder="Member ID (if available)">
+                                    <span class="input-group-btn">
+                                        <button onClick="member()" class="btn btn-info" type="button">Find</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Name <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Applicant name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="ic" name="ic" placeholder="Applicant MyKad / MyKid">
+                            </div>
+                            <div class="form-group">
+                                <label>Address <span class="text-red">*</span></label>
+                                <textarea class="form-control" id="address" name="address" rows="2" placeholder="Applicant address"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Type <span class="text-red">*</span></label>
+                                <select name="type" class="form-control">
+                                    <option value="">-- Type --</option>
+                                    <option value="1">Public</option>
+                                    <option value="2">Student</option>
+                                    <option value="3">Under 12</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Activity <span class="text-red">*</span></label>
+                                <select name="activity" class="form-control select2" style="width: 100%;">
+                                    <option value="">-- Activity --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Applicant email">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Phone <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Applicant phone number">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Zipcode <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Applicant zipcode">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">City <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Applicant city">
+                            </div>
+                            <div class="form-group">
+                                <label>State <span class="text-red">*</span></label>
+                                <select name="state" class="select2 form-control" id="state" style="width: 100%;">
+                                    <option value="" selected>-- State --</option>
+                                    <option value="1" >Johor</option>
+                                    <option value="2" >Kedah</option>
+                                    <option value="3" >Kelantan</option>
+                                    <option value="4" >Melaka</option>
+                                    <option value="5" >Negeri Sembilan</option>
+                                    <option value="6" >Pahang</option>
+                                    <option value="7" >Perak</option>
+                                    <option value="8" >Perlis</option>
+                                    <option value="9" >Pulau Pinang</option>
+                                    <option value="10" >Sabah</option>
+                                    <option value="11" >Sarawak</option>
+                                    <option value="12" >Selangor</option>
+                                    <option value="13" >Terengganu</option>
+                                    <option value="14" >W.P. Kuala Lumpur</option>
+                                    <option value="15" >W.P. Labuan</option>
+                                    <option value="16" >W.P. Putrajaya</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea class="form-control" name="remark" rows="3" placeholder="Enter any remarks here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <input type="hidden" name="start_date" id="start_date">
                 <input type="hidden" name="end_date" id="end_date">
@@ -21,3 +111,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(() => {
+        $('.select2').select2()
+    })
+</script>

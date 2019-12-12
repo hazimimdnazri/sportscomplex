@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('prescript')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.min.css">
+@endsection
+
 @section('content')
 <section class="content-header">
     <h1>
@@ -135,6 +139,7 @@
 @endsection
 
 @section('postscript')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.all.min.js"></script>
 <script>
     submitPayment = () => {
         var confirmPayment = confirm('Sure to submit payment?')
@@ -144,14 +149,33 @@
                 url: "{{ url('ajax/submitpayment') }}",
                 data: {
                     "_token": "{{ csrf_token() }}",
+                    "id": "{{ $application->id }}",
+                    "total": "{{ number_format((($duration / $asset->min_hour)* (100-$customer->c_membership->discount)/100) * $asset->price, 2) }}"
                 }
             }).done(function(response){
-                console.log(response)
+                if(response == "success"){
+                    Swal.fire(
+                        'Success!',
+                        'Payment has been made!',
+                        'success'
+                    ).then((result) => {
+                        if(result.value){
+                            window.location = "{{ url('application') }}";
+                        }
+                    })
+                }
             });
         } else {
-            alert('Payment cancelled!')
+            Swal.fire(
+                'Cancelled',
+                'Payment has been cancelled!',
+                'warning'
+            ).then((result) => {
+                if(result.value){
+                    window.location = "{{ url('application') }}";
+                }
+            })
         }
-        
     }
 </script>
 @endsection

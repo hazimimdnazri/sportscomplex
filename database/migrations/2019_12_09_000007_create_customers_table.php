@@ -27,6 +27,8 @@ class CreateCustomersTable extends Migration
             $table->integer('type')->default(1);
             $table->integer('membership')->default(99);
             $table->integer('cycle')->nullable();
+            $table->date('cycle_start')->nullabe();
+            $table->date('cycle_end')->nullable();
             $table->timestamps();
 
             $table->foreign('membership')->references('id')->on('l_memberships');
