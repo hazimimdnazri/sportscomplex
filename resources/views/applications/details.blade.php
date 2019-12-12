@@ -53,7 +53,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="text" name="date" value="{{ $application->date }}" class="form-control pull-right" id="datepicker" placeholder="Reservation date">
+                                    <input type="text" name="date" value="{{ date('d-m-Y', strtotime($application->date)) }}" class="form-control pull-right" onChange="setDate(this.value)" id="datepicker" placeholder="Reservation date">
                                 </div>
                             </div>
                         </div>
@@ -121,6 +121,25 @@
         }).done(function(response){
             $("#variable_1").html(response)
         });
+    }
+
+    setDate = (value) => {
+        var confirmDate = confirm('Reserve this date? ('+value+')')
+        if(confirmDate){
+            $.ajax({
+                type:"POST",
+                url: "{{ url('ajax/setdate') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id" : "{{ $application->id }}",
+                    "date": value
+                }
+            }).done(function(response){
+                if(response == 'success'){
+                    alert('Date set!')
+                }
+            });
+        }
     }
 </script>
 @endsection

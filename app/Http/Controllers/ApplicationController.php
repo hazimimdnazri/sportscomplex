@@ -18,7 +18,7 @@ class ApplicationController extends Controller
     }
 
     public function details($id){
-        $application = $applications = Application::find($id);
+        $application = Application::find($id);
         $reservations = Reservation::where('application_id', $id)->get();
         return view('applications.details', compact('application', 'reservations'));
     }
@@ -32,6 +32,16 @@ class ApplicationController extends Controller
         $reservation->duration = $request->duration;
         if($reservation->save()){
             return back();
+        }
+    }
+
+    public function ajaxSetDate(Request $request){
+        $application = Application::find($request->id);
+        $application->date = date('Y-m-d',strtotime($request->date));
+        if($application->save()){
+            return 'success';
+        } else {
+            return 'fail';
         }
     }
 
