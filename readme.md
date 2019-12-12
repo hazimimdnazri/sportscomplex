@@ -30,7 +30,4 @@ $ php artisan config:cache
 - Application for renting for days.
 - Transactions history.
 - Transactions reporting.
-- Trasactions type
-⋅⋅⋅M = membership
-⋅⋅⋅AS = asset
-⋅⋅⋅AC = activity
+- Trasactions types (M, AC, AS)
