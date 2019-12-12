@@ -7,6 +7,7 @@ use App\LAsset;
 use App\Application;
 use Auth;
 use App\Customer;
+use App\Reservation;
 
 class ApplicationController extends Controller
 {
@@ -16,9 +17,33 @@ class ApplicationController extends Controller
         return view('application', compact('assets', 'applications'));
     }
 
+    public function details($id){
+        $application = $applications = Application::find($id);
+        $reservations = Reservation::where('application_id', $id)->get();
+        return view('applications.details', compact('application', 'reservations'));
+    }
+
+    public function submitDetails(Request $request, $id){
+        $reservation = new Reservation;
+        $reservation->application_id = $id;
+        $reservation->asset_id = $request->asset;
+        $reservation->type = $request->type;
+        $reservation->activity_id = $request->activity;
+        $reservation->duration = $request->duration;
+        if($reservation->save()){
+            return back();
+        }
+    }
+
     public function assetModal(){
         $assets = LAsset::all();
         return view('shared.asset_modal', compact('assets'));
+    }
+
+    public function detailsModal(Request $request){
+        $id = $request->id;
+        $assets = LAsset::all();
+        return view('shared.details_modal', compact('assets', 'id'));
     }
 
     public function activityModal(){
@@ -50,16 +75,16 @@ class ApplicationController extends Controller
             }
             $application = new Application;
             $application->customer_id = $cust_id;
-            $application->event = $request->event;
-            $application->asset_id = $request->asset;
+            // $application->event = $request->event;
+            // $application->asset_id = $request->asset;
             $application->registered_by = Auth::user()->id;
-            $application->remark = $request->remark;
-            $application->attachment = $request->attachment;
-            $application->start_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time));
-            $application->end_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time) + 60 * 60 * $request->duration);
+            // $application->remark = $request->remark;
+            // $application->attachment = $request->attachment;
+            // $application->start_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time));
+            // $application->end_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time) + 60 * 60 * $request->duration);
 
             if($application->save()){
-                return redirect("application/payment/$application->id");
+                return redirect("application/$application->id");
             }
         }
     }

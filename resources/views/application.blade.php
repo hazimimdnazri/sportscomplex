@@ -131,7 +131,6 @@
                 $("#phone").val(response.data.phone);
                 $("#state").val(response.data.state).change();
                 $("#post_id").val(response.data.id);
-                $("#application_form").submit();
             } else {
                 alert("Pengguna tidak wujud!")
             }

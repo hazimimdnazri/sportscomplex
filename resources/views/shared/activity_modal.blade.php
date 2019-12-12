@@ -8,6 +8,7 @@
                     <h4 class="modal-title">New Activity</h4>
                 </div>
                 <div class="modal-body">
+                    <p>Please fill in all the required fields, denoted with <span class="text-red">*</span>.</p>
                     <div class="row">
                         <div class="col-lg-12">
                             <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
@@ -35,19 +36,8 @@
                                 <textarea class="form-control" id="address" name="address" rows="2" placeholder="Applicant address"></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Type <span class="text-red">*</span></label>
-                                <select name="type" class="form-control">
-                                    <option value="">-- Type --</option>
-                                    <option value="1">Public</option>
-                                    <option value="2">Student</option>
-                                    <option value="3">Under 12</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Activity <span class="text-red">*</span></label>
-                                <select name="activity" class="form-control select2" style="width: 100%;">
-                                    <option value="">-- Activity --</option>
-                                </select>
+                                <label for="exampleInputEmail1">City <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Applicant city">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -62,10 +52,6 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Zipcode <span class="text-red">*</span></label>
                                 <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Applicant zipcode">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">City <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="city" name="city" placeholder="Applicant city">
                             </div>
                             <div class="form-group">
                                 <label>State <span class="text-red">*</span></label>
@@ -91,17 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Remarks</label>
-                                <textarea class="form-control" name="remark" rows="3" placeholder="Enter any remarks here..."></textarea>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <input type="hidden" name="start_date" id="start_date">
-                <input type="hidden" name="end_date" id="end_date">
                 <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

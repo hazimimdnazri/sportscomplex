@@ -23,6 +23,8 @@ Route::get('dashboard', 'HomeController@dashboard')->middleware('auth');
 Route::get('calendar', 'HomeController@calendar')->middleware('auth');
 Route::get('application', 'ApplicationController@index')->middleware('auth');
 Route::post('application', 'ApplicationController@submitApplication')->middleware('auth');
+Route::get('application/{id}', 'ApplicationController@details')->middleware('auth');
+Route::post('application/{id}', 'ApplicationController@submitDetails')->middleware('auth');
 Route::get('application/payment/{id}', 'ApplicationController@payment')->middleware('auth');
 Route::get('registration', 'HomeController@register')->middleware('auth');
 Route::post('registration', 'HomeController@submitRegister')->middleware('auth');
@@ -41,5 +43,6 @@ Route::get('settings/profile', 'SettingsController@profile')->middleware('auth')
 
 Route::post('ajax/assetmodal', 'ApplicationController@assetModal');
 Route::post('ajax/activitymodal', 'ApplicationController@activityModal');
+Route::post('ajax/detailsmodal', 'ApplicationController@detailsModal');
 Route::post('ajax/membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');
 Route::post('ajax/submitpayment', 'ApplicationController@ajaxSubmitPayment')->middleware('auth');
