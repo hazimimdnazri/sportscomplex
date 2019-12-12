@@ -31,6 +31,6 @@ $ php artisan config:cache
 - Transactions history.
 - Transactions reporting.
 - Trasactions type
-M = membership
-AS = asset
-AC = activity
+⋅⋅⋅M = membership
+⋅⋅⋅AS = asset
+⋅⋅⋅AC = activity
