@@ -8,7 +8,7 @@ use App\Application;
 use Auth;
 use App\Customer;
 
-class ApplicationsController extends Controller
+class ApplicationController extends Controller
 {
     public function index(){
         $assets = LAsset::all();
@@ -70,5 +70,9 @@ class ApplicationsController extends Controller
         $duration = (strtotime($application->end_date) -  strtotime($application->start_date)) / (60 * 60);
         $asset = LAsset::find($application->asset_id);
         return view('applications.payment', compact('customer', 'application', 'duration', 'asset'));
+    }
+
+    public function ajaxSubmitPayment(Request $request){
+        return $request;
     }
 }

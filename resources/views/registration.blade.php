@@ -129,7 +129,7 @@
                         </div>
                         <hr>
                         <div class="text-center">
-                            <button class="btn btn-warning">Reset</button>
+                            <button type="button" class="btn btn-warning">Reset</button>
                             <button class="btn btn-primary">Register</button>
                         </div>
                     </form>
@@ -159,7 +159,7 @@
     member = (value) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('membershipprice') }}",
+            url: "{{ url('ajax/membershipprice') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "membership" : value

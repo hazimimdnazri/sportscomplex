@@ -26,7 +26,7 @@
         <div class="col-sm-4 invoice-col">
             From
             <address>
-                <strong>Sports Complex Management</strong><br>
+                <strong>EduCity Sports Complex Management</strong><br>
                 795 Folsom Ave, Suite 600<br>
                 San Francisco, CA 94107<br>
                 Phone: (804) 123-5432<br>
@@ -117,10 +117,14 @@
             </div>
         </div>
     </div>
+    <form id="submitPayment" action="{{ url('application/payment/'.$application->id) }}" method="POST">
+        @csrf
+        <input type="hidden" name="total" value="{{ number_format((($duration / $asset->min_hour)* (100-$customer->c_membership->discount)/100) * $asset->price, 2) }}">
+    </form>
     <div class="row no-print">
         <div class="col-xs-12">
             <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-            <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+            <button onClick="submitPayment()" type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
             </button>
             <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
             <i class="fa fa-download"></i> Generate PDF
@@ -128,4 +132,26 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('postscript')
+<script>
+    submitPayment = () => {
+        var confirmPayment = confirm('Sure to submit payment?')
+        if(confirmPayment){
+            $.ajax({
+                type:"POST",
+                url: "{{ url('ajax/submitpayment') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            }).done(function(response){
+                console.log(response)
+            });
+        } else {
+            alert('Payment cancelled!')
+        }
+        
+    }
+</script>
 @endsection
