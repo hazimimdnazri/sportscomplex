@@ -24,7 +24,7 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box box-primary">
                 <div class="box-header">
                     <button type="button" class="btn btn-primary" onClick="assetModal()">Asset Reservation</button>
                     <button type="button" class="btn btn-info" onClick="activityModal()">Activity Reservation</button>

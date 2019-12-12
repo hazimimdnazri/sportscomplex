@@ -83,4 +83,8 @@ class HomeController extends Controller
     public function calendar(){
         return view('calendar');
     }
+
+    public function transactions(){
+        return view('transactions');
+    }
 }
