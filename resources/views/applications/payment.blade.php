@@ -70,14 +70,22 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php 
+                        $n = 1;
+                        $total = 0;
+                    @endphp
+                    
+                    @foreach($reservations as $r)
                     <tr>
-                        <td>1</td>
-                        <td>{{ $application->a_asset->asset }}</td>
-                        <td>{{ $application->a_asset->a_type->type }}</td>
-                        <td>{{ $duration }}</td>
-                        <td>{{ number_format($asset->price, 2) }} / {{$asset->min_hour}}</td>
-                        <td>{{ number_format(($duration / $asset->min_hour) * $asset->price, 2) }}</td>
+                        <td>{{ $n++ }}</td>
+                        <td>{{ $r->r_asset->asset }}</td>
+                        <td>{{ $r->r_asset->a_type->type }}</td>
+                        <td>{{ $r->duration }}</td>
+                        <td>{{ number_format($r->r_asset->price, 2) }} / {{$r->r_asset->min_hour}}</td>
+                        <td>{{ number_format(($r->duration / $r->r_asset->min_hour) * $r->r_asset->price, 2) }}</td>
                     </tr>
+                    @php $total += ($r->duration / $r->r_asset->min_hour) * $r->r_asset->price @endphp
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -102,20 +110,20 @@
             <div class="table-responsive">
                 <table class="table">
                     <tr>
-                    <th style="width:50%">Subtotal:</th>
-                    <td>RM {{ number_format(($duration / $asset->min_hour) * $asset->price, 2) }}</td>
+                    <th style="width:50%">Subtotal: </th>
+                    <td>RM {{ number_format($total, 2) }}</td>
                     </tr>
                     <tr>
-                    <th>Tax:</th>
+                    <th>Tax: </th>
                     <td>0%</td>
                     </tr>
                     <tr>
-                    <th>Discount (Membership / Special Offer):</th>
+                    <th>Discount (Membership / Special Offer): </th>
                     <td>{{ $customer->c_membership->discount }}%</td>
                     </tr>
                     <tr>
-                    <th>Total:</th>
-                    <td>RM {{ number_format((($duration / $asset->min_hour)* (100-$customer->c_membership->discount)/100) * $asset->price, 2) }}</td>
+                    <th>Total: </th>
+                    <td>RM {{ number_format($total * (80/100), 2)}}</td>
                     </tr>
                 </table>
             </div>
@@ -123,7 +131,7 @@
     </div>
     <form id="submitPayment" action="{{ url('application/payment/'.$application->id) }}" method="POST">
         @csrf
-        <input type="hidden" name="total" value="{{ number_format((($duration / $asset->min_hour)* (100-$customer->c_membership->discount)/100) * $asset->price, 2) }}">
+        <input type="hidden" name="total" value="">
     </form>
     <div class="row no-print">
         <div class="col-xs-12">
@@ -150,7 +158,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "id": "{{ $application->id }}",
-                    "total": "{{ number_format((($duration / $asset->min_hour)* (100-$customer->c_membership->discount)/100) * $asset->price, 2) }}"
+                    "total": ""
                 }
             }).done(function(response){
                 if(response == "success"){

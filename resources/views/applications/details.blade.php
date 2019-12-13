@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
 @endsection
 
 @section('content')
@@ -53,7 +54,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="text" name="date" value="{{ date('d-m-Y', strtotime($application->date)) }}" class="form-control pull-right" onChange="setDate(this.value)" id="datepicker" placeholder="Reservation date">
+                                    <input type="text" name="date" value="{{ date('d-m-Y', strtotime($date)) }}" class="form-control pull-right" onChange="setDate(this.value)" id="datepicker" placeholder="Reservation date">
                                 </div>
                             </div>
                         </div>

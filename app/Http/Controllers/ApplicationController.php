@@ -8,6 +8,7 @@ use App\Application;
 use Auth;
 use App\Customer;
 use App\Reservation;
+use App\LActivity;
 
 class ApplicationController extends Controller
 {
@@ -19,8 +20,12 @@ class ApplicationController extends Controller
 
     public function details($id){
         $application = Application::find($id);
-        $reservations = Reservation::where('application_id', $id)->get();
-        return view('applications.details', compact('application', 'reservations'));
+        if(isset($application->date)){
+            $date = $application->date;
+        } else {
+            $date = date('Y-m-d');
+        }
+        return view('applications.details', compact('application', 'date'));
     }
 
     public function submitDetails(Request $request, $id){
@@ -46,11 +51,15 @@ class ApplicationController extends Controller
     }
 
     public function itemType(Request $request){
-        $reservations = Reservation::where('application_id', $request->id);
+        $id = $request->id;
         if($request->type == 1){
-            return view('shared.asset', compact('reservations'));
+            $assets = LAsset::all();
+            $reservations = Reservation::where('application_id', $request->id)->where('type',1)->get();
+            return view('shared.asset', compact('reservations', 'assets', 'id'));
         } else if($request->type == 2) {
-            return view('shared.activity', compact('reservations'));
+            $activities = LActivity::all();
+            $reservations = Reservation::where('application_id', $request->id)->where('type',2)->get();
+            return view('shared.activity', compact('reservations', 'activities', 'id'));
         } else {
             return NULL;
         }
@@ -96,13 +105,7 @@ class ApplicationController extends Controller
             }
             $application = new Application;
             $application->customer_id = $cust_id;
-            // $application->event = $request->event;
-            // $application->asset_id = $request->asset;
             $application->registered_by = Auth::user()->id;
-            // $application->remark = $request->remark;
-            // $application->attachment = $request->attachment;
-            // $application->start_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time));
-            // $application->end_date = date('Y-m-d H:i:s', strtotime($request->date." ".$request->time) + 60 * 60 * $request->duration);
 
             if($application->save()){
                 return redirect("application/$application->id");
@@ -112,10 +115,13 @@ class ApplicationController extends Controller
 
     public function payment($id){
         $application = Application::find($id);
-        $customer = Customer::find($application->customer_id);
-        $duration = (strtotime($application->end_date) -  strtotime($application->start_date)) / (60 * 60);
-        $asset = LAsset::find($application->asset_id);
-        return view('applications.payment', compact('customer', 'application', 'duration', 'asset'));
+        $application->status = 2;
+        if($application->save()){
+            $reservations = Reservation::where('application_id', $id)->get();
+            $customer = Customer::find($application->customer_id);
+            $asset = LAsset::find($application->asset_id);
+            return view('applications.payment', compact('customer', 'application', 'reservations'));
+        }
     }
 
     public function ajaxSubmitPayment(Request $request){
@@ -126,5 +132,23 @@ class ApplicationController extends Controller
         } else {
             return "fail";
         }
+    }
+
+    public function submitFacility(Request $request, $id){
+        $reservation = new Reservation;
+        $reservation->application_id = $id;
+        $reservation->asset_id = $request->asset;
+        $reservation->type = 1;
+        $reservation->duration = $request->duration;
+        $reservation->start_date = date('Y-m-d 00:00:00', strtotime(Application::find($id)->date));
+        $reservation->end_date = date('Y-m-d H:i:s', strtotime($reservation->start_date) + (60*60*$reservation->duration));
+
+        if($reservation->save()){
+            return back();
+        }
+    }
+
+    public function submitActivity(Request $request){
+
     }
 }

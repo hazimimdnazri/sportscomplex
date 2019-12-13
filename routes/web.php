@@ -26,6 +26,8 @@ Route::post('application', 'ApplicationController@submitApplication')->middlewar
 Route::get('application/{id}', 'ApplicationController@details')->middleware('auth');
 Route::post('application/{id}', 'ApplicationController@submitDetails')->middleware('auth');
 Route::get('application/payment/{id}', 'ApplicationController@payment')->middleware('auth');
+Route::post('application/{id}/facility', 'ApplicationController@submitFacility')->middleware('auth');
+Route::post('application/{id}/activity', 'ApplicationController@submitActivity')->middleware('auth');
 Route::get('registration', 'HomeController@register')->middleware('auth');
 Route::post('registration', 'HomeController@submitRegister')->middleware('auth');
 Route::get('transactions', 'HomeController@transactions')->middleware('auth');
