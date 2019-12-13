@@ -153,7 +153,8 @@
 
     $('#datepicker').datepicker({
         format: 'dd-mm-yyyy',
-        autoclose: true
+        autoclose: true,
+        endDate: '-1d'
     })
 
     member = (value) => {

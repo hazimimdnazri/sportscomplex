@@ -54,7 +54,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="text" name="date" value="{{ date('d-m-Y', strtotime($date)) }}" class="form-control pull-right" onChange="setDate(this.value)" id="datepicker" placeholder="Reservation date">
+                                    <input type="text" name="date" value="{{ date('d-m-Y', strtotime($application->date)) }}" class="form-control pull-right" onChange="setDate(this.value)" id="datepicker" placeholder="Reservation date">
                                 </div>
                             </div>
                         </div>
@@ -106,7 +106,8 @@
     $(function () {
         $('#datepicker').datepicker({
             format: 'dd-mm-yyyy',
-            autoclose: true
+            autoclose: true,
+            startDate: new Date()
         })
     })
 

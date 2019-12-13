@@ -20,12 +20,7 @@ class ApplicationController extends Controller
 
     public function details($id){
         $application = Application::find($id);
-        if(isset($application->date)){
-            $date = $application->date;
-        } else {
-            $date = date('Y-m-d');
-        }
-        return view('applications.details', compact('application', 'date'));
+        return view('applications.details', compact('application'));
     }
 
     public function submitDetails(Request $request, $id){
@@ -70,12 +65,6 @@ class ApplicationController extends Controller
         return view('shared.asset', compact('reservations'));
     }
 
-    public function detailsModal(Request $request){
-        $id = $request->id;
-        $assets = LAsset::all();
-        return view('shared.details_modal', compact('assets', 'id'));
-    }
-
     public function activityModal(){
         return view('shared.activity_modal');
     }
@@ -106,6 +95,7 @@ class ApplicationController extends Controller
             $application = new Application;
             $application->customer_id = $cust_id;
             $application->registered_by = Auth::user()->id;
+            $application->date = date('Y-m-d');
 
             if($application->save()){
                 return redirect("application/$application->id");
@@ -158,7 +148,24 @@ class ApplicationController extends Controller
         }
     }
 
-    public function submitActivity(Request $request){
+    public function submitActivity(Request $request, $id){
 
+        for($i = 0; $i < $request->quantity; $i++){
+            $reservation = new Reservation;
+            $reservation->application_id = $id;
+            $reservation->activity_id = $request->activity;
+            $reservation->type = 2;
+            $reservation->price_type = $request->price;
+            $reservation->duration = 0;
+            $reservation->start_date = date('Y-m-d 00:00:00', strtotime(Application::find($id)->date));
+            $reservation->end_date = date('Y-m-d 00:00:00', strtotime(Application::find($id)->date));
+
+            if($reservation->save()){
+            } else {
+                echo "error!";
+                die();
+            }
+        }
+        return back();
     }
 }

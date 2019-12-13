@@ -19,6 +19,7 @@ class CreateReservationsTable extends Migration
             $table->integer('asset_id')->nullable();
             $table->integer('activity_id')->nullable();
             $table->integer('type');
+            $table->integer('price_type')->default(1);
             $table->float('duration')->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();

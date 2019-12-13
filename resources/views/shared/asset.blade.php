@@ -25,7 +25,7 @@
                         <td class="text-center">{{ $r->duration }}</td>
                         <td class="text-center">{{ number_format($r->r_asset->price, 2) }}</td>
                         <td class="text-center">{{ number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}  </td>
-                        <td class="text-center"></td>
+                        <td class="text-center"><button class="btn btn-danger">Delete</button></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -34,7 +34,6 @@
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 <button onClick="toPayment()" class="btn btn-primary">Submit</button>
-                <!-- <a href="{{ url('application/payment/'.$id) }}" class="btn btn-primary">Submit</a> -->
             </div>
         </div>
     </div>
@@ -97,13 +96,13 @@
         })
 
         $('#datepicker').datepicker({
+            firstDay: 1,
             format: 'dd-mm-yyyy',
-            autoclose: true
+            autoclose: true,
+            beforeShowDay: $.datepicker.noWeekends
         })
         
-        $(() => {
-            $('.select2').select2()
-        })
+        $('.select2').select2()
     })
 
     waktu = (value) => {

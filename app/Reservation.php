@@ -10,6 +10,10 @@ class Reservation extends Model
         return $this->belongsTo(LAsset::class, 'asset_id');
     }
 
+    public function r_activity(){
+        return $this->belongsTo(LActivity::class, 'activity_id');
+    }
+
     public function r_application(){
         return $this->belongsTo(Application::class, 'application_id');
     }

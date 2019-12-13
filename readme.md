@@ -33,3 +33,4 @@ $ php artisan config:cache
 - Transactions history.
 - Transactions reporting.
 - Trasactions types (M, AC, AS)
+- Price Type (1 = Normal, 2 = Students, 3 = Underage)
