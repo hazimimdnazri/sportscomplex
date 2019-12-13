@@ -26,7 +26,9 @@ $ php artisan config:cache
 
 - ~~Validation of each form.~~
 - ~~Mark on calendar based on duration.~~
-- ~~Application for activities.~~
+- Application for activities.
+- Admin Registration.
+- Editing.
 - Application for renting for days.
 - Transactions history.
 - Transactions reporting.
