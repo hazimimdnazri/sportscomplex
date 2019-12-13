@@ -33,7 +33,8 @@
             <hr>
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <a href="{{ url('application/payment/'.$id) }}" class="btn btn-primary">Submit</a>
+                <button onClick="toPayment()" class="btn btn-primary">Submit</button>
+                <!-- <a href="{{ url('application/payment/'.$id) }}" class="btn btn-primary">Submit</a> -->
             </div>
         </div>
     </div>
@@ -115,6 +116,26 @@
             });
         } else {
             $('#duration').find('option').remove().end().append("<option value=''>-- Duration --</option>")
+        }
+    }
+
+    toPayment = () => {
+        if($("#event").val() == ''){
+            alert("Please enter the event name.")
+        } else {
+            $.ajax({
+                type:"POST",
+                url: "{{ url('ajax/confirmreservation') }}",
+                data : {
+                    "_token": "{{ csrf_token() }}",
+                    "id" : "{{ $id }}",
+                    "event_name" : $("#event").val()
+                }
+            }).done(function(response){
+                if(response == 'success'){
+                    window.location = "{{ url('application/payment/'.$id) }}"
+                }
+            });
         }
     }
 </script>

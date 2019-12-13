@@ -64,7 +64,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Event <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="event" placeholder="Event name">
+                                <input type="text" class="form-control" name="event" value="{{ $application->event }}" id="event" placeholder="Event name">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">I.C Number </label>

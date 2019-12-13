@@ -134,6 +134,16 @@ class ApplicationController extends Controller
         }
     }
 
+    public function confirmReservation(Request $request){
+        $application = Application::find($request->id);
+        $application->event = $request->event_name;
+        if($application->save()){
+            return 'success';
+        } else {
+            return 'fail';
+        }
+    }
+
     public function submitFacility(Request $request, $id){
         $reservation = new Reservation;
         $reservation->application_id = $id;

@@ -49,3 +49,4 @@ Route::post('ajax/detailsmodal', 'ApplicationController@detailsModal');
 Route::post('ajax/membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');
 Route::post('ajax/submitpayment', 'ApplicationController@ajaxSubmitPayment')->middleware('auth');
 Route::post('ajax/setdate', 'ApplicationController@ajaxSetDate')->middleware('auth');
+Route::post('ajax/confirmreservation', 'ApplicationController@confirmReservation')->middleware('auth');

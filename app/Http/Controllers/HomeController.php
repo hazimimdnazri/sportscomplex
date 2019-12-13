@@ -9,6 +9,7 @@ use App\User;
 use App\Application;
 use App\LMembership;
 use App\Customer;
+use App\Reservation;
 
 class HomeController extends Controller
 {
@@ -76,8 +77,8 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
-        $events = Application::where('flag', 1)->where('status', 3)->get();
-        return view('dashboard', compact('events'));
+        $reservations = Reservation::where('type', 1)->get();
+        return view('dashboard', compact('reservations'));
     }
 
     public function calendar(){

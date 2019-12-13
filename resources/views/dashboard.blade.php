@@ -138,14 +138,16 @@ $(() => {
 		},
 		//Random default events
 		events    : [
-			@foreach($events as $e)
-			{
-				title          : '{{ $e->event }}',
-				start          : "{{ $e->start_date }}",
-				end            : "{{ $e->end_date }}",
-				backgroundColor: '#f39c12', //yellow
-				borderColor    : '#f39c12' //yellow
-			},
+			@foreach($reservations as $r)
+				@if($r->r_application->status == 3)
+				{
+					title          : '{{ $r->r_application->event }}',
+					start          : "{{ $r->start_date }}",
+					end            : "{{ $r->end_date }}",
+					backgroundColor: '#f39c12', //yellow
+					borderColor    : '#f39c12' //yellow
+				},
+				@endif
 			@endforeach
 		],
 		editable  : false,

@@ -123,7 +123,7 @@
                     </tr>
                     <tr>
                     <th>Total: </th>
-                    <td>RM {{ number_format($total * (80/100), 2)}}</td>
+                    <td>RM {{ number_format($total * ((100 -$customer->c_membership->discount)/100), 2)}}</td>
                     </tr>
                 </table>
             </div>
