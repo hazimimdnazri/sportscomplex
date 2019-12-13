@@ -48,7 +48,7 @@
             <hr>
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <input type="submit" class="btn btn-primary" value="Submit"/>
+                <input onClick="toPayment()" type="button" class="btn btn-primary" value="Submit"/>
             </div>
         </div>
     </div>
@@ -109,6 +109,7 @@
 
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
     $(function () {
         $('#example1').DataTable()
@@ -129,7 +130,23 @@
         $('.select2').select2()
     })
 
-    addActivity = () => {
-        console.log('activity')
+    toPayment = () => {
+        if($("#event").val() == ''){
+            alert("Please enter the event name.")
+        } else {
+            $.ajax({
+                type:"POST",
+                url: "{{ url('ajax/confirmreservation') }}",
+                data : {
+                    "_token": "{{ csrf_token() }}",
+                    "id" : "{{ $id }}",
+                    "event_name" : $("#event").val()
+                }
+            }).done(function(response){
+                if(response == 'success'){
+                    window.location = "{{ url('application/payment/'.$id) }}"
+                }
+            });
+        }
     }
 </script>

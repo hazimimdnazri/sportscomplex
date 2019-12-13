@@ -45,7 +45,7 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td>{{ $a->a_applicant->name }}</td>
-                                <td class="text-ceter">{{ $a->date }}</td>
+                                <td class="text-center">{{ $a->date }}</td>
                                 <td class="text-center">
                                     @if($a->status == 1)
                                         <span class="label label-default">{{ $a->a_status->status }}</span>
