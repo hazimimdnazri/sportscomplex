@@ -22,7 +22,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary">New User</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#user-modal">New User</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -62,20 +62,37 @@
     </div>
 </section>
 
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="user-modal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Default Modal</h4>
-            </div>
-            <div class="modal-body">
-                <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form action="{{ url('settings/users') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">New User</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="name" value="" id="event" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
+                        <input type="email" class="form-control" name="email" value="" id="event" placeholder="E-mail">
+                        <small>Activation email will be sent. E-mail will be used for login.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Password <span class="text-red">*</span></label>
+                        <input type="password" class="form-control" name="password" value="123456" placeholder="Event name" readonly>
+                        <small>Defualt password will be 123456. Please change when the user login for the first time.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

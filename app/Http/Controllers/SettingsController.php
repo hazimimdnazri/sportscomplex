@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\LAsset;
 use App\User;
 use App\LMembership;
@@ -67,6 +68,18 @@ class SettingsController extends Controller
     public function users(){
         $users = User::all();
         return view('settings.users', compact('users'));
+    }
+
+    public function submitUser(Request $request){
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make(123456);
+        $user->role = 2;
+
+        if($user->save()){
+            return back();
+        }
     }
 
     public function profile(){

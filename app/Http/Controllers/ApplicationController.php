@@ -139,14 +139,15 @@ class ApplicationController extends Controller
     }
 
     public function submitFacility(Request $request, $id){
+        $start_time = date('H:i:s', strtotime($request->start_time));
         $reservation = new Reservation;
         $reservation->application_id = $id;
         $reservation->asset_id = $request->asset;
         $reservation->type = 1;
         $reservation->duration = $request->duration;
-        $reservation->start_date = date('Y-m-d 00:00:00', strtotime(Application::find($id)->date));
+        $reservation->start_date = date("Y-m-d $start_time", strtotime(Application::find($id)->date));
         $reservation->end_date = date('Y-m-d H:i:s', strtotime($reservation->start_date) + (60*60*$reservation->duration));
-
+        
         if($reservation->save()){
             return back();
         }

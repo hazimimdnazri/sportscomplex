@@ -22,7 +22,10 @@
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
                         <td class="text-center">{{ $r->r_asset->asset }}</td>
-                        <td class="text-center">{{ $r->duration }}</td>
+                        <td class="text-center">
+                            {{ $r->duration }} Hour(s) <br>
+                            {{ date('h:i:s a' ,strtotime($r->start_date)) }} - {{ date('h:i:s a' ,strtotime($r->end_date)) }}
+                        </td>
                         <td class="text-center">{{ number_format($r->r_asset->price, 2) }}</td>
                         <td class="text-center">{{ number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}  </td>
                         <td class="text-center"><button class="btn btn-danger">Delete</button></td>
@@ -57,6 +60,25 @@
                                 <option value="{{ $a->id }}">{{ $a->asset }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Reservation Type</label>
+                        <select class="form-control" name="reservation_type" id="">
+                            <option value="1" selected>Single Day</option>
+                            <option value="2">Multiple Days</option>
+                        </select>
+
+                    </div>
+                    <div class="bootstrap-timepicker">
+                        <div class="form-group">
+                            <label>Start Time:</label>
+                            <div class="input-group">
+                                <input name="start_time" type="text" class="form-control timepicker">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div id="variable_2">
                         <div class="form-group">
@@ -103,6 +125,11 @@
         })
         
         $('.select2').select2()
+
+        $('.timepicker').timepicker({
+            showInputs: false,
+            defaultTime: 'current'
+        })
     })
 
     waktu = (value) => {
