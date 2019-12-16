@@ -9,6 +9,8 @@ use Auth;
 use App\Customer;
 use App\Reservation;
 use App\LActivity;
+use QrCode;
+use App\Transaction;
 
 class ApplicationController extends Controller
 {
@@ -120,6 +122,20 @@ class ApplicationController extends Controller
 
     public function ajaxSubmitPayment(Request $request){
         $application = Application::find($request->id);
+        $reservation = Reservation::where('application_id', $application->id)->first();
+        $trasaction = new Transaction;
+
+        $trasaction->trans_number = "R$reservation->id";
+        $trasaction->trans_type = "Walk In";
+        $trasaction->reservation_id = $reservation->id;
+        $trasaction->date = date('Y-m-d');
+        $trasaction->customer_id = $application->customer_id;
+        $trasaction->tax = 0.00;
+        $trasaction->memebership_discount = 0.00;
+        $trasaction->general_discount = 0.00;
+
+        dd($trasaction);
+
         $application->status = 3;
         if($application->save()){
             return "success";
@@ -172,5 +188,9 @@ class ApplicationController extends Controller
             }
         }
         return back();
+    }
+
+    public function qr(){
+        return QrCode::size(500)->generate('123');
     }
 }

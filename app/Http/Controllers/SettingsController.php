@@ -95,4 +95,10 @@ class SettingsController extends Controller
         $memberships = LMembership::all();
         return view('settings.membership', compact('memberships'));
     }
+
+    public function editCustomer(Request $request){
+        $customer = Customer::find($request->id);
+        $memberships = LMembership::all();
+        return view('shared.customer_details', compact('customer', 'memberships'));
+    }
 }

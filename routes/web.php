@@ -50,3 +50,6 @@ Route::post('ajax/membershipprice', 'HomeController@ajaxMembershipPrice')->middl
 Route::post('ajax/submitpayment', 'ApplicationController@ajaxSubmitPayment')->middleware('auth');
 Route::post('ajax/setdate', 'ApplicationController@ajaxSetDate')->middleware('auth');
 Route::post('ajax/confirmreservation', 'ApplicationController@confirmReservation')->middleware('auth');
+Route::post('ajax/editcustomer', 'SettingsController@editCustomer');
+
+Route::get('test', 'ApplicationController@qr');

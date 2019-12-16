@@ -15,15 +15,16 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('trans_number');
             $table->integer('trans_type');
-            $table->integer('item');
+            $table->integer('reservation_id')->nullable();
             $table->date('date');
-            $table->integer('asset');
-            $table->integer('customer');
-            $table->integer('issuer');
-            $table->integer('payment_type');
+            $table->integer('customer_id');
+            $table->integer('issuer')->default('1');
+            $table->integer('payment_type')->default('1');
             $table->float('tax');
-            $table->float('discount');
+            $table->float('membership_discount');
+            $table->float('general_discount');
             $table->float('trans_changes');
             $table->float('total');
             $table->timestamps();

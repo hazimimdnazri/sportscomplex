@@ -2,6 +2,8 @@
 
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
 @endsection
 
 @section('content')
@@ -57,7 +59,7 @@
                                 </td>
                                 <td class="text-center">
                                     <a class="btn btn-primary">View</a>
-                                    <a class="btn btn-info">Edit</a>
+                                    <a onClick="edit({{ $c->id }})" class="btn btn-info">Edit</a>
                                     <a class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
@@ -69,13 +71,17 @@
         </div>
     </div>
 </section>
+
+<div id="variable_1"></div>
 @endsection
 
 @section('postscript')
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
-    $(function () {
+    $(() => {
         $('#example1').DataTable()
         $('#example2').DataTable({
         'paging'      : true,
@@ -86,5 +92,19 @@
         'autoWidth'   : false
         })
     })
+
+    edit = (id) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('ajax/editcustomer') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "id": id
+            }
+        }).done(function(response){
+            $("#variable_1").html(response)
+            $('#user-modal').modal('show');
+        });
+    }
 </script>
 @endsection
