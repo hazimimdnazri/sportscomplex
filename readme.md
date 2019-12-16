@@ -32,5 +32,8 @@ $ php artisan config:cache
 - Application for renting for days.
 - Transactions history.
 - Transactions reporting.
-- Trasactions types (M, AC, AS)
-- ~~Price Type (1 = Normal, 2 = Students, 3 = Underage)~~
+- Trasactions types (M, AC, AS).
+- Transactions graph.
+- ~~Price Type (1 = Normal, 2 = Students, 3 = Underage).~~
+- ~~QR Code.~~
+- Print page lepas submit payment.
