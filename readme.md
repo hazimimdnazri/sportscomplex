@@ -26,11 +26,11 @@ $ php artisan config:cache
 
 - ~~Validation of each form.~~
 - ~~Mark on calendar based on duration.~~
-- Application for activities.
-- Admin Registration.
+- ~~Application for activities.~~
+- ~~Admin Registration.~~
 - Editing.
 - Application for renting for days.
 - Transactions history.
 - Transactions reporting.
 - Trasactions types (M, AC, AS)
-- Price Type (1 = Normal, 2 = Students, 3 = Underage)
+- ~~Price Type (1 = Normal, 2 = Students, 3 = Underage)~~

@@ -1,7 +1,7 @@
 <div class="modal fade" id="user-modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="application_form" action="{{ url('application') }}" method="POST">
+            <form id="application_form" action="{{ url('settings/customers') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -14,7 +14,7 @@
                             <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Membership ID </label>
-                                <input id="member_id" type="text" class="form-control" value="{{ $customer->id }}" placeholder="Member ID (if available)" readonly>
+                                <input name="id" type="text" class="form-control" value="{{ $customer->id }}" placeholder="Member ID (if available)" readonly>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -37,11 +37,8 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Membership Type <span class="text-red">*</span></label>
                                 <select onChange="member(this.value)" class="form-control" name="membership">
-                                    <option value="" selected>-- Membership --</option>
                                     @foreach($memberships as $m)
-                                        @if($m->id !=99)
                                         <option value="{{ $m->id }}" <?= $customer->membership == $m->id ? 'selected' : '' ?>>{{ $m->membership }}</option>
-                                        @endif
                                     @endforeach
                                 </select>
                                 <small><span style="color:gold">Gold</span> = 20% discounted price</small><br>
@@ -96,7 +93,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Payment Cycle <span class="text-red">*</span></label>
-                                <select name="cycle" id="" class="form-control">
+                                <select name="cycle" class="form-control">
                                     <option value="">-- Cycle --</option>
                                     <option id="monthly" value="1" <?= $customer->cycle == 1 ? 'selected' : '' ?> >Monthly</option>
                                     <option id="anually" value="2" <?= $customer->cycle == 2 ? 'selected' : '' ?>>Anually</option>
@@ -105,7 +102,6 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary" value="Submit"/>

@@ -134,7 +134,8 @@ class ApplicationController extends Controller
         $trasaction->memebership_discount = 0.00;
         $trasaction->general_discount = 0.00;
 
-        dd($trasaction);
+        return $trasaction;
+        die();
 
         $application->status = 3;
         if($application->save()){

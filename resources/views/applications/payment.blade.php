@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-xs-12">
             <h2 class="page-header">
-                <i class="fa fa-globe"></i> Sports Complex
+                <i class="fa fa-globe"></i>EduCity Sports Complex
                 <small class="pull-right">Date: {{ date('m/d/Y') }}</small>
             </h2>
         </div>
