@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Reservation Type</label>
-                        <select class="form-control" name="reservation_type" id="">
+                        <select class="form-control" name="reservation_type" name="reservation_type" onChange="dayHour(this.value)">
                             <option value="1" selected>Single Day</option>
                             <option value="2">Multiple Days</option>
                         </select>
@@ -80,12 +80,25 @@
                             </div>
                         </div>
                     </div>
-                    <div id="variable_2">
+                    <div id="hourly">
+                        <div id="variable_2">
+                            <div class="form-group">
+                                <label>Duration (Hour) <span class="text-red">*</span></label>
+                                <select name="duration" class="form-control" id="duration">
+                                    <option value="" selected>-- Duration --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="daily" style="display:none">
                         <div class="form-group">
-                            <label>Duration (Hour) <span class="text-red">*</span></label>
-                            <select name="duration" class="form-control" id="duration">
-                                <option value="" selected>-- Duration --</option>
-                            </select>
+                            <label>Date range:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="reservation">
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -106,16 +119,8 @@
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
-    $(function () {
+    $(() => {
         $('#example1').DataTable()
-        $('#example2').DataTable({
-        'paging'      : true,
-        'lengthChange': false,
-        'searching'   : false,
-        'ordering'    : true,
-        'info'        : true,
-        'autoWidth'   : false
-        })
 
         $('#datepicker').datepicker({
             firstDay: 1,
@@ -130,6 +135,11 @@
             showInputs: false,
             defaultTime: 'current'
         })
+
+        $('#reservation').daterangepicker({
+            startDate: new Date(),
+            minDate: new Date()
+        });
     })
 
     waktu = (value) => {
@@ -162,6 +172,16 @@
                     window.location = "{{ url('application/payment/'.$id) }}"
                 }
             });
+        }
+    }
+
+    dayHour = (value) => {
+        if(value == 1){
+            $("#hourly").show();
+            $("#daily").hide();
+        } else {
+            $("#hourly").hide();
+            $("#daily").show();
         }
     }
 </script>

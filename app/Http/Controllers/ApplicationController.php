@@ -126,19 +126,19 @@ class ApplicationController extends Controller
         $trasaction = new Transaction;
 
         $trasaction->trans_number = "R$reservation->id";
-        $trasaction->trans_type = "Walk In";
+        $trasaction->trans_type = 1;
         $trasaction->reservation_id = $reservation->id;
         $trasaction->date = date('Y-m-d');
         $trasaction->customer_id = $application->customer_id;
         $trasaction->tax = 0.00;
-        $trasaction->memebership_discount = 0.00;
+        $trasaction->membership_discount = 0.00;
         $trasaction->general_discount = 0.00;
-
-        return $trasaction;
-        die();
+        $trasaction->trans_changes = 0.00;
+        $trasaction->total = $request->total;
 
         $application->status = 3;
-        if($application->save()){
+
+        if($trasaction->save() && $application->save()){
             return "success";
         } else {
             return "fail";

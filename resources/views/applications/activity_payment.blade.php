@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        <i class="fa fa-globe"></i>EduCity Sports Complex
+                        EduCity Sports Complex
                         <small class="pull-right">Date: {{ date('m/d/Y') }}</small>
                     </h2>
                 </div>
@@ -173,21 +173,20 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "id": "{{ $application->id }}",
-                    "total": ""
+                    "total": "{{ number_format($total, 2) }}"
                 }
             }).done(function(response){
-                console.log(response)
-                // if(response == "success"){
-                //     Swal.fire(
-                //         'Success!',
-                //         'Payment has been made!',
-                //         'success'
-                //     ).then((result) => {
-                //         if(result.value){
-                //             window.location = "{{ url('application') }}";
-                //         }
-                //     })
-                // }
+                if(response == "success"){
+                    Swal.fire(
+                        'Success!',
+                        'Payment has been made!',
+                        'success'
+                    ).then((result) => {
+                        if(result.value){
+                            window.location = "{{ url('application') }}";
+                        }
+                    })
+                }
             });
         } else {
             Swal.fire(

@@ -145,11 +145,9 @@
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
 <script>
-    $(document).ready(
-        () => {
-            $('.select2').select2()
-        }
-    )
+    $(() => {
+        $('.select2').select2()
+    })
 
     $('#datepicker').datepicker({
         format: 'dd-mm-yyyy',

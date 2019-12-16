@@ -36,4 +36,6 @@ $ php artisan config:cache
 - Transactions graph.
 - ~~Price Type (1 = Normal, 2 = Students, 3 = Underage).~~
 - ~~QR Code.~~
-- Print page lepas submit payment.
+- Print page after payment submitted.
+- List for discounts.
+- List for taxes.
