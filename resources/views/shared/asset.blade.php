@@ -69,7 +69,7 @@
                         </select>
 
                     </div>
-                    <div class="bootstrap-timepicker">
+                    <div class="bootstrap-timepicker" id="start_time">
                         <div class="form-group">
                             <label>Start Time:</label>
                             <div class="input-group">
@@ -98,6 +98,8 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input type="text" class="form-control pull-right" id="reservation">
+                                <input name="start_date" type="hidden" id="start_date">
+                                <input name="end_date" type="hidden" id="end_date">
                             </div>
                         </div>
                     </div>
@@ -137,9 +139,16 @@
         })
 
         $('#reservation').daterangepicker({
-            startDate: new Date(),
-            minDate: new Date()
+            minDate: new Date(),
+            locale: {
+                "format": "DD/MM/YYYY",
+            },
+        },(start, end) => {
+            $("#start_date").val(start.format('YYYY-MM-DD'))
+            $("#end_date").val(end.format('YYYY-MM-DD'))
         });
+
+        $('.input-daterange-datepicker-1').val('');
     })
 
     waktu = (value) => {
@@ -179,9 +188,11 @@
         if(value == 1){
             $("#hourly").show();
             $("#daily").hide();
+            $("#start_time").show();
         } else {
             $("#hourly").hide();
             $("#daily").show();
+            $("#start_time").hide();
         }
     }
 </script>
