@@ -10,7 +10,7 @@
                     <tr>
                         <th width="5%">No. </th>
                         <th class="text-center">Item</th>
-                        <th class="text-center">Duration (Hour)</th>
+                        <th class="text-center">Duration</th>
                         <th class="text-center">Price / Min. Hour (RM)</th>
                         <th class="text-center">Total Price (RM)</th>
                         <th class="text-center" width="20%">Actions</th>
@@ -23,12 +23,19 @@
                         <td class="text-center">{{ $n++ }}</td>
                         <td class="text-center">{{ $r->r_asset->asset }}</td>
                         <td class="text-center">
+                            @if( (strtotime($r->end_date) - strtotime($r->start_date)) / (60*60*24) > 0)
+                            {{(strtotime($r->end_date) - strtotime($r->start_date)) / (60*60*24)}} day(s) <br>
+                            {{ date('d/m/Y' ,strtotime($r->start_date)) }} - {{ date('d/m/Y' ,strtotime($r->end_date)) }}
+                            @else
                             {{ $r->duration }} Hour(s) <br>
                             {{ date('h:i:s a' ,strtotime($r->start_date)) }} - {{ date('h:i:s a' ,strtotime($r->end_date)) }}
+                            @endif
                         </td>
                         <td class="text-center">{{ number_format($r->r_asset->price, 2) }}</td>
                         <td class="text-center">{{ number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}  </td>
-                        <td class="text-center"><button class="btn btn-danger">Delete</button></td>
+                        <td class="text-center">
+                            <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger">Delete</button>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

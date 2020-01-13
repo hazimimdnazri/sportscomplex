@@ -40,7 +40,9 @@
                         @endif
                         </td>
                         <td class="text-center">{{ number_format($r->r_activity->deposit, 2) }}  </td>
-                        <td class="text-center"><button class="btn btn-danger">Delete</button></td>
+                        <td class="text-center">
+                            <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger" >Delete</button>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -113,14 +115,6 @@
 <script>
     $(function () {
         $('#example1').DataTable()
-        $('#example2').DataTable({
-        'paging'      : true,
-        'lengthChange': false,
-        'searching'   : false,
-        'ordering'    : true,
-        'info'        : true,
-        'autoWidth'   : false
-        })
 
         $('#datepicker').datepicker({
             format: 'dd-mm-yyyy',
@@ -136,7 +130,7 @@
         } else {
             $.ajax({
                 type:"POST",
-                url: "{{ url('ajax/confirmreservation') }}",
+                url: "{{ url('pdo.php') }}",
                 data : {
                     "_token": "{{ csrf_token() }}",
                     "id" : "{{ $id }}",

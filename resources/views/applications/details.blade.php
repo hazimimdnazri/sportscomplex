@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.min.css">
 @endsection
 
 @section('content')
@@ -105,6 +106,7 @@
 <script src="{{ asset('assets/bower_components/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.all.min.js"></script>
 <script>
     $(() => {
         $('#datepicker').datepicker({
@@ -145,6 +147,26 @@
                 }
             });
         }
+    }
+
+    deleteAsset = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                )
+            }
+        })
     }
 </script>
 @endsection

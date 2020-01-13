@@ -93,15 +93,10 @@
 
     <div class="row">
         <div class="col-xs-6">
-            <p class="lead">Payment Methods:</p>
-            <img src="{{ asset('assets/dist/img/credit/visa.png') }}" alt="Visa">
-            <img src="{{ asset('assets/dist/img/credit/mastercard.png') }}" alt="Mastercard">
-            <img src="{{ asset('assets/dist/img/credit/american-express.png') }}" alt="American Express">
-            <img src="{{ asset('assets/dist/img/credit/paypal2.png') }}" alt="Paypal) }}">
-
-            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
-            dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+            <p class="lead">Generated QR Code:</p>
+            <p>Please scan the following code at the enterance.</p>
+            <p class=" text-center" style="margin-top: 10px;">
+                {!! QrCode::size(150)->generate('123') !!}
             </p>
         </div>
         <div class="col-xs-6">
