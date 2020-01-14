@@ -63,7 +63,7 @@
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('settings/assets') }}" method="POST">
+            <form action="{{ url('settings/membership') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -76,7 +76,15 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Discount (%) <span class="text-red">*</span></label>
-                        <input type="integer" class="form-control" name="discount" placeholder="Enter asset name">
+                        <input type="number" class="form-control" name="discount">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Monthly (RM) <span class="text-red">*</span></label>
+                        <input type="number" class="form-control text-right" name="monthly">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Anually (RM) <span class="text-red">*</span></label>
+                        <input type="number" class="form-control text-right" name="anually">
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -1,6 +1,6 @@
 <aside class="main-sidebar">
     <section class="sidebar">
-    <div class="user-panel">
+    {{-- <div class="user-panel">
         <div class="pull-left image">
         <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
         </div>
@@ -17,10 +17,10 @@
                 </button>
             </span>
         </div>
-    </form>
+    </form> --}}
 
     <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+        {{-- <li class="header">MAIN NAVIGATION</li> --}}
         <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ url('calendar') }}"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
         <li><a href="{{ url('application') }}"><i class="fa fa-calendar-check-o"></i> <span>Applications</span></a></li>
@@ -43,12 +43,12 @@
                 <li><a href="{{ url('settings/profile') }}"><i class="fa fa-circle-o"></i>My Profile</a></li>
             </ul>
             <li><a href="{{ url('transactions') }}"><i class="fa fa-money"></i> <span>Transactions</span></a></li>
-            <li><a href="{{ url('dashboard') }}"><i class="fa fa-question"></i> <span>F.A.Q</span></a></li>
+            {{-- <li><a href="{{ url('dashboard') }}"><i class="fa fa-question"></i> <span>F.A.Q</span></a></li> --}}
         </li>
-        <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        {{-- <li class="header">LABELS</li> --}}
+        {{-- <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li> --}}
+        {{-- <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li> --}}
+        {{-- <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> --}}
     </ul>
     </section>
     <!-- /.sidebar -->

@@ -13,7 +13,7 @@ class CreateLAssetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('l_assets', function (Blueprint $table) {
+        /*Schema::create('l_assets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('asset');
             $table->integer('type');
@@ -24,7 +24,7 @@ class CreateLAssetsTable extends Migration
             $table->integer('flag')->default(1);
 
             $table->foreign('type')->references('id')->on('l_asset_types');
-        });
+        });*/
     }
 
     /**

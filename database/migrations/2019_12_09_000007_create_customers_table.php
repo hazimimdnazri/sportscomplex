@@ -31,7 +31,7 @@ class CreateCustomersTable extends Migration
             $table->date('cycle_end')->nullable();
             $table->timestamps();
 
-            $table->foreign('membership')->references('id')->on('l_memberships');
+            //$table->foreign('membership')->references('id')->on('l_memberships');
         });
     }
 

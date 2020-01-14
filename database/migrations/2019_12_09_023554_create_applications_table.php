@@ -26,10 +26,10 @@ class CreateApplicationsTable extends Migration
             $table->integer('flag')->default(1);
             $table->timestamps();
 
-            $table->foreign('registered_by')->references('id')->on('users');
+            /*$table->foreign('registered_by')->references('id')->on('users');
             $table->foreign('approved_by')->references('id')->on('users');
             $table->foreign('status')->references('id')->on('l_application_statuses');
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('customer_id')->references('id')->on('customers');*/
         });
     }
 

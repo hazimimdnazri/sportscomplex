@@ -25,9 +25,9 @@ class CreateReservationsTable extends Migration
             $table->timestamp('end_date')->nullable();
             $table->timestamps();
 
-            $table->foreign('application_id')->references('id')->on('applications');
+            /*$table->foreign('application_id')->references('id')->on('applications');
             $table->foreign('asset_id')->references('id')->on('l_assets');
-            $table->foreign('activity_id')->references('id')->on('l_activities');
+            $table->foreign('activity_id')->references('id')->on('l_activities');*/
         });
     }
 

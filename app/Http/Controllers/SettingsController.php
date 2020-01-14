@@ -96,6 +96,19 @@ class SettingsController extends Controller
         return view('settings.membership', compact('memberships'));
     }
 
+    public function submitMembership(Request $request) {
+
+        $membership = new LMembership;
+        $membership->membership = $request->membership;
+        $membership->discount = $request->discount;
+        $membership->monthly = $request->monthly;
+        $membership->anually = $request->anually;
+        
+        if($membership->save()){
+            return back();
+        }
+    }
+
     public function editCustomer(Request $request){
         $customer = Customer::find($request->id);
         $memberships = LMembership::all();
