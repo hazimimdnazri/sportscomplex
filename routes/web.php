@@ -44,8 +44,12 @@ Route::get('settings/assets/deactivate/{id}', 'Settings\AssetsController@deactiv
 Route::get('settings/assets/edit/{id}', 'Settings\AssetsController@edit')->middleware('auth');
 Route::post('settings/assets', 'Settings\AssetsController@submitAsset')->middleware('auth');
 
-Route::get('settings/activities', 'SettingsController@activities')->middleware('auth');
-Route::post('settings/activities', 'SettingsController@submitActivity')->middleware('auth');
+Route::get('settings/activities', 'Settings\ActivitiesController@activities')->middleware('auth');
+Route::post('settings/activities', 'Settings\ActivitiesController@submitActivity')->middleware('auth');
+Route::get('settings/activities/add', 'Settings\ActivitiesController@add')->middleware('auth');
+Route::get('settings/activities/deactivate/{id}', 'Settings\ActivitiesController@deactivate')->middleware('auth');
+Route::get('settings/activities/edit/{id}', 'Settings\ActivitiesController@edit')->middleware('auth');
+
 Route::get('settings/users', 'SettingsController@users')->middleware('auth');
 Route::post('settings/users', 'SettingsController@submitUser')->middleware('auth');
 Route::get('settings/customers', 'SettingsController@customers')->middleware('auth');

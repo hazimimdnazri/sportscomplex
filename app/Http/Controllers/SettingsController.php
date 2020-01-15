@@ -11,25 +11,6 @@ use App\LActivity;
 
 class SettingsController extends Controller
 {
-    
-    public function activities(){
-        $activities = LActivity::all();
-        return view('settings.activities', compact('activities'));
-    }
-
-    public function submitActivity(Request $request){
-        $activity = new LActivity;
-        $activity->activity = $request->activity;
-        $activity->public = $request->public;
-        $activity->students = $request->students;
-        $activity->underage = $request->underage;
-        $activity->deposit = $request->deposit;
-        $activity->remark = $request->remark;
-
-        if($activity->save()){
-            return back();
-        }
-    }
 
     public function users(){
         $users = User::all();
