@@ -39,6 +39,7 @@ class AssetsController extends Controller
         $asset->price = $request->price;
         $asset->min_hour = $request->min_hour;
         $asset->remark = $request->remark;
+        $asset->status = 1;
 
         if($asset->save()){
 

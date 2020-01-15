@@ -22,7 +22,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h2 class="box-title">Asset</h2>
+                    <h2 class="box-title">Assets</h2>
                     <div class="box-tools">
                         <a href="{{ URL::to('settings/assets/add') }}" class="btn btn-primary" {{-- data-toggle="modal" data-target="#modal-default" --}}>New Asset</a>
                     </div>
