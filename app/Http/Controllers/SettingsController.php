@@ -11,19 +11,6 @@ use App\LActivity;
 
 class SettingsController extends Controller
 {
-    public function categories(){
-        $assets = LAssetType::all();
-        return view('settings.categories', compact('assets'));
-    }
-
-    public function submitCategory(Request $request){
-        $assets = new LAssetType;
-        $assets->type = $request->asset;
-
-        if($assets->save()){
-            return back();
-        }
-    }
     
     public function activities(){
         $activities = LActivity::all();

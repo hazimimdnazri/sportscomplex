@@ -64,7 +64,7 @@ class AssetsController extends Controller
 
 	        if($asset->save()){
 
-		        alert()->success('Deleted', 'Successful');
+		        alert()->success('Deactivated', 'Successful');
 		        return redirect()->to('settings/assets');
 	        }
 	    }
