@@ -34,8 +34,13 @@ Route::get('transactions', 'HomeController@transactions')->middleware('auth');
 
 Route::get('settings/categories', 'SettingsController@categories')->middleware('auth');
 Route::post('settings/categories', 'SettingsController@submitCategory')->middleware('auth');
-Route::get('settings/assets', 'SettingsController@assets')->middleware('auth');
-Route::post('settings/assets', 'SettingsController@submitAsset')->middleware('auth');
+
+Route::get('settings/assets', 'Settings\AssetsController@assets')->middleware('auth');
+Route::get('settings/assets/add', 'Settings\AssetsController@add')->middleware('auth');
+Route::get('settings/assets/deactivate/{id}', 'Settings\AssetsController@deactivate')->middleware('auth');
+Route::get('settings/assets/edit/{id}', 'Settings\AssetsController@edit')->middleware('auth');
+Route::post('settings/assets', 'Settings\AssetsController@submitAsset')->middleware('auth');
+
 Route::get('settings/activities', 'SettingsController@activities')->middleware('auth');
 Route::post('settings/activities', 'SettingsController@submitActivity')->middleware('auth');
 Route::get('settings/users', 'SettingsController@users')->middleware('auth');

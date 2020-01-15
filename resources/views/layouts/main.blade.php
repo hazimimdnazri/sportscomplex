@@ -13,6 +13,8 @@
 		<link rel="stylesheet" href="{{ asset('assets/dist/css/skins/_all-skins.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
 
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -24,6 +26,8 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
+    	@include('sweet::alert')
+    	
 		<div class="wrapper">
 			<header class="main-header">
 				<a href="{{ url('/') }}" class="logo">
@@ -226,7 +230,7 @@
 					<li class="dropdown user user-menu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						{{-- <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image"> --}}
-						<span class="hidden-xs">{{ Auth::user()->name }}</span>
+						<span class="hidden-xs"><i class="fa fa-user"></i>&nbsp;{{ Auth::user()->name }}</span>
 						</a>
 						<ul class="dropdown-menu">
 						{{-- <li class="user-header">
@@ -269,6 +273,8 @@
 			@include('shared.sidebar')
 			<div class="content-wrapper">
 				@yield('content')
+
+
 			</div>
 			@include('shared.footer')
 		</div>
@@ -284,6 +290,7 @@
 		<script src="{{ asset('assets/bower_components/fastclick/lib/fastclick.js') }}"></script>
 		<script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 		<script src="{{ asset('assets/dist/js/demo.js') }}"></script>
+		<script src="{{ asset('js/default.js') }}"></script>
 		@yield('postscript')
 	</body>
 </html>

@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\LAsset;
 use App\User;
 use App\LMembership;
 use App\Customer;
-use App\LAssetType;
 use App\LActivity;
 
 class SettingsController extends Controller
@@ -26,25 +24,6 @@ class SettingsController extends Controller
             return back();
         }
     }
-    
-    public function assets(){
-        $assets = LAsset::all();
-        $types = LAssetType::all();
-        return view('settings.assets', compact('assets', 'types'));
-    }
-
-    public function submitAsset(Request $request){
-        $asset = new LAsset;
-        $asset->asset = $request->asset;
-        $asset->type = $request->category;
-        $asset->price = $request->price;
-        $asset->min_hour = $request->min_hour;
-        $asset->remark = $request->remark;
-
-        if($asset->save()){
-            return back();
-        }
-    }   
     
     public function activities(){
         $activities = LActivity::all();
