@@ -30,6 +30,7 @@ class CategoriesController extends Controller
     	}
 
         $asset->type = $request->asset;
+        $asset->status = 1;
 
         if($asset->save()){
 
