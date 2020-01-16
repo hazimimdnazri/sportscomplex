@@ -26,6 +26,7 @@ class UsersController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->status = 1;
 
         if (!empty($request->password) && !empty($request->id)) {
             $user->password = Hash::make($request->password);
