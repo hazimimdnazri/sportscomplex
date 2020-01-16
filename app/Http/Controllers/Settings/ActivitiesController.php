@@ -31,6 +31,7 @@ class ActivitiesController extends Controller
         $activity->underage = $request->underage;
         $activity->deposit = $request->deposit;
         $activity->remark = $request->remark;
+        $activity->status = 1;
         $activity->created_by = Auth()->user()->id;
 
         if($activity->save()){
