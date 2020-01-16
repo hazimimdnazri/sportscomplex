@@ -18,10 +18,10 @@ class UsersController extends Controller
     public function submitUser(Request $request){
 
         if(array_key_exists('id', $request->all())){
-            $asset = User::find($request->id);
+            $user = User::find($request->id);
         }
         else {
-            $asset = new User;
+            $user = new User;
         }
 
         $user->name = $request->name;
