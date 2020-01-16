@@ -1,13 +1,7 @@
 @extends('layouts.main')
 
-@section('prescript')
-<link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
-@endsection
-
 @section('content')
-<section class="content-header">
+{{-- <section class="content-header">
     <h1>
         Customers
         <small>Settings</small>
@@ -17,14 +11,17 @@
         <li>Settings</li>
         <li class="active">Customers</li>
     </ol>
-</section>
+</section> --}}
 
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    <a href="{{ url('registration') }}"><button type="button" class="btn btn-primary">New Members</button></a>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Members</h2>
+                    <div class="box-tools">
+                        <a href="{{ url('settings/customers/add') }}"><button type="button" class="btn btn-primary">New Member</button></a>
+                    </div>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -58,9 +55,10 @@
                                     
                                 </td>
                                 <td class="text-center">
-                                    <a class="btn btn-primary">View</a>
-                                    <a onClick="edit({{ $c->id }})" class="btn btn-info">Edit</a>
-                                    <a class="btn btn-danger">Delete</a>
+                                    <a href="{{ URL::to('settings/customers/edit') }}/{{ $c->id }}" class="btn btn-info">Edit</a>
+                                    {{-- @if($c->status == 1)
+                                        <a class="btn btn-danger confirm" value="{{ URL::to('settings/customers/deactivate') }}/{{ $c->id }}">Deactivate</a>
+                                    @endif --}}
                                 </td>
                             </tr>
                         @endforeach
@@ -76,10 +74,6 @@
 @endsection
 
 @section('postscript')
-<script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
     $(() => {
         $('#example1').DataTable()

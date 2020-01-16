@@ -12,6 +12,9 @@
 		<link rel="stylesheet" href="{{ asset('assets/dist/css/AdminLTE.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/dist/css/skins/_all-skins.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
 
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -291,6 +294,10 @@
 		<script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 		<script src="{{ asset('assets/dist/js/demo.js') }}"></script>
 		<script src="{{ asset('js/default.js') }}"></script>
+		<script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+		<script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+		<script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+		<script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 		@yield('postscript')
 	</body>
 </html>

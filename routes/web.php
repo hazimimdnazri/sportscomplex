@@ -56,8 +56,12 @@ Route::get('settings/users/add', 'Settings\UsersController@add')->middleware('au
 Route::get('settings/users/deactivate/{id}', 'Settings\UsersController@deactivate')->middleware('auth');
 Route::get('settings/users/edit/{id}', 'Settings\UsersController@edit')->middleware('auth');
 
-Route::get('settings/customers', 'SettingsController@customers')->middleware('auth');
-Route::post('settings/customers', 'SettingsController@submitEditCustomer')->middleware('auth');
+Route::get('settings/customers', 'Settings\CustomersController@customers')->middleware('auth');
+Route::post('settings/customers', 'Settings\CustomersController@submitCustomer')->middleware('auth');
+Route::get('settings/customers/add', 'Settings\CustomersController@add')->middleware('auth');
+Route::get('settings/customers/deactivate/{id}', 'Settings\CustomersController@deactivate')->middleware('auth');
+Route::get('settings/customers/edit/{id}', 'Settings\CustomersController@edit')->middleware('auth');
+
 Route::get('settings/membership', 'SettingsController@membership')->middleware('auth');
 Route::post('settings/membership', 'SettingsController@submitMembership')->middleware('auth');
 Route::get('settings/profile', 'SettingsController@profile')->middleware('auth');
