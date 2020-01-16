@@ -62,8 +62,12 @@ Route::get('settings/customers/add', 'Settings\CustomersController@add')->middle
 Route::get('settings/customers/deactivate/{id}', 'Settings\CustomersController@deactivate')->middleware('auth');
 Route::get('settings/customers/edit/{id}', 'Settings\CustomersController@edit')->middleware('auth');
 
-Route::get('settings/membership', 'SettingsController@membership')->middleware('auth');
-Route::post('settings/membership', 'SettingsController@submitMembership')->middleware('auth');
+Route::get('settings/membership', 'Settings\MembershipController@membership')->middleware('auth');
+Route::post('settings/membership', 'Settings\MembershipController@submitMembership')->middleware('auth');
+Route::get('settings/membership/add', 'Settings\MembershipController@add')->middleware('auth');
+Route::get('settings/membership/deactivate/{id}', 'Settings\MembershipController@deactivate')->middleware('auth');
+Route::get('settings/membership/edit/{id}', 'Settings\MembershipController@edit')->middleware('auth');
+
 Route::get('settings/profile', 'SettingsController@profile')->middleware('auth');
 
 Route::post('ajax/itemtype', 'ApplicationController@itemType');
