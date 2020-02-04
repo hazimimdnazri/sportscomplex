@@ -9,10 +9,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Facility Name <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="facility" value="{{ $facility->facility }}" placeholder="Enter asset name">
-                    </div>
-                    <div class="form-group">
                         <label>Category <span class="text-red">*</span></label>
                         <select name="category" class="form-control" style="width: 100%;">
                             <option value="">-- Facility Category --</option>
@@ -20,6 +16,10 @@
                                 <option value="{{ $t->id }}" {{ $facility->type == $t->id ? 'selected' : '' }}>{{ $t->type }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Facility Name <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="facility" value="{{ $facility->facility }}" placeholder="Enter asset name">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Price (RM) <span class="text-red">*</span></label>

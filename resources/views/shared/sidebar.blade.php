@@ -27,6 +27,7 @@
             <ul class="treeview-menu">
                 <li><a href="{{ url('settings/categories') }}"><i class="fa fa-circle-o"></i>Facility Categories</a></li>
                 <li><a href="{{ url('settings/facilities') }}"><i class="fa fa-circle-o"></i>Facilities</a></li>
+                <li><a href="{{ url('settings/equiptments') }}"><i class="fa fa-circle-o"></i>Equiptments</a></li>
                 <li><a href="{{ url('settings/activities') }}"><i class="fa fa-circle-o"></i>Activities</a></li>
                 <li><a href="{{ url('settings/users') }}"><i class="fa fa-circle-o"></i>Users</a></li>
                 <li><a href="{{ url('settings/customers') }}"><i class="fa fa-circle-o"></i>Customers</a></li>

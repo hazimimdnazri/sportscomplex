@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
     Route::post('categories', 'SettingsController@submitCategory');
     Route::get('facilities', 'SettingsController@facilities');
     Route::post('facilities', 'SettingsController@submitFacilities');
+    Route::get('equiptments', 'SettingsController@equiptments');
+    Route::post('equiptments', 'SettingsController@submitEquiptments');
     Route::get('activities', 'SettingsController@activities');
     Route::post('activities', 'SettingsController@submitActivity');
     Route::get('users', 'SettingsController@users');
@@ -52,6 +54,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
         Route::post('facilities-modal', 'SettingsController@facilitiesModal');
         Route::post('activities-modal', 'SettingsController@activitiesModal');
         Route::post('memberships-modal', 'SettingsController@membershipsModal');
+        Route::post('equiptments-modal', 'SettingsController@equiptmentsModal');
     });
 });
 

@@ -14,7 +14,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Remarks <span class="text-red">*</span></label>
-                        <textarea type="text" class="form-control" name="remark" ></textarea>
+                        <textarea type="text" class="form-control" name="remark" >{{ $categories->remark }}</textarea>
                     </div>
                 </div>
                 <input type="hidden" name="id" value="{{ $id }}">

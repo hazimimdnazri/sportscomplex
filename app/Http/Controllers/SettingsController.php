@@ -10,6 +10,7 @@ use App\LMembership;
 use App\Customer;
 use App\LFacilityType;
 use App\LActivity;
+use App\LEquiptment;
 
 class SettingsController extends Controller
 {
@@ -50,7 +51,26 @@ class SettingsController extends Controller
         if($facility->save()){
             return back();
         }
-    }   
+    }
+
+    public function equiptments(){
+        $equiptments = LEquiptment::all();
+        return view('settings.equiptments', compact('equiptments', 'facilities'));
+    }
+
+    public function submitEquiptments(Request $request){
+        $equiptment = new LEquiptment;
+        if($request->id){
+            $equiptment = LEquiptment::find($request->id);
+        }
+        $equiptment->equiptment = $request->equiptment;
+        $equiptment->facility = $request->facility;
+        $equiptment->remark = $request->remark;
+
+        if($equiptment->save()){
+            return back();
+        }
+    }
     
     public function activities(){
         $activities = LActivity::all();
@@ -179,5 +199,15 @@ class SettingsController extends Controller
         }
         $id = $request->id;
         return view('settings.partials.categories-modal', compact('categories', 'id'));
+    }
+
+    public function equiptmentsModal(Request $request){
+        $facilities = LFacility::all();
+        $equiptment = new LEquiptment;
+        if(isset($request->id)){
+            $equiptment = LEquiptment::find($request->id);
+        }
+        $id = $request->id;
+        return view('settings.partials.equiptments-modal', compact('equiptment', 'id', 'facilities'));
     }
 }
