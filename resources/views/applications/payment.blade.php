@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('prescript')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.min.css">
+<link href="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -142,7 +142,7 @@
 @endsection
 
 @section('postscript')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.all.min.js"></script>
+<script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 <script>
     submitPayment = () => {
         var confirmPayment = confirm('Sure to submit payment?')
