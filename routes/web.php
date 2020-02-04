@@ -33,21 +33,25 @@ Route::post('registration', 'HomeController@submitRegister')->middleware('auth')
 Route::get('transactions', 'HomeController@transactions')->middleware('auth');
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
-    Route::get('categories', 'SettingsController@categories')->middleware('auth');
-    Route::post('categories', 'SettingsController@submitCategory')->middleware('auth');
-    Route::get('facilities', 'SettingsController@facilities')->middleware('auth');
-    Route::post('facilities', 'SettingsController@submitAsset')->middleware('auth');
-    Route::get('activities', 'SettingsController@activities')->middleware('auth');
-    Route::post('activities', 'SettingsController@submitActivity')->middleware('auth');
-    Route::get('users', 'SettingsController@users')->middleware('auth');
-    Route::post('users', 'SettingsController@submitUser')->middleware('auth');
-    Route::get('customers', 'SettingsController@customers')->middleware('auth');
-    Route::post('customers', 'SettingsController@submitEditCustomer')->middleware('auth');
-    Route::get('membership', 'SettingsController@membership')->middleware('auth');
-    Route::get('profile', 'SettingsController@profile')->middleware('auth');
+    Route::get('categories', 'SettingsController@categories');
+    Route::post('categories', 'SettingsController@submitCategory');
+    Route::get('facilities', 'SettingsController@facilities');
+    Route::post('facilities', 'SettingsController@submitFacilities');
+    Route::get('activities', 'SettingsController@activities');
+    Route::post('activities', 'SettingsController@submitActivity');
+    Route::get('users', 'SettingsController@users');
+    Route::post('users', 'SettingsController@submitUser');
+    Route::get('customers', 'SettingsController@customers');
+    Route::post('customers', 'SettingsController@submitEditCustomer');
+    Route::get('membership', 'SettingsController@membership');
+    Route::post('membership', 'SettingsController@submitMembership');
+    Route::get('profile', 'SettingsController@profile');
 
     Route::group(['prefix' => 'ajax'], function() {
+        Route::post('categories-modal', 'SettingsController@categoriesModal');
         Route::post('facilities-modal', 'SettingsController@facilitiesModal');
+        Route::post('activities-modal', 'SettingsController@activitiesModal');
+        Route::post('memberships-modal', 'SettingsController@membershipsModal');
     });
 });
 

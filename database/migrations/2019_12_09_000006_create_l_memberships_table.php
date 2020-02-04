@@ -19,6 +19,7 @@ class CreateLMembershipsTable extends Migration
             $table->float('discount');
             $table->float('monthly');
             $table->float('anually');
+            $table->timestamps();
         });
 
         DB::table('l_memberships')->insert(

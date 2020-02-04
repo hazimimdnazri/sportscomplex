@@ -22,6 +22,7 @@ class CreateLFacilitiesTable extends Migration
             $table->integer('status')->default(1);
             $table->text('remark')->nullable();
             $table->integer('flag')->default(1);
+            $table->timestamps();
 
             $table->foreign('type')->references('id')->on('l_facility_types');
         });

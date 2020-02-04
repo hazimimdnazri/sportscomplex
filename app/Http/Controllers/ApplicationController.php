@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\LAsset;
+use App\LFacility;
 use App\Application;
 use Auth;
 use App\Customer;
@@ -15,7 +15,7 @@ use App\Transaction;
 class ApplicationController extends Controller
 {
     public function index(){
-        $assets = LAsset::all();
+        $assets = LFacility::all();
         $applications = Application::all();
         return view('application', compact('assets', 'applications'));
     }
@@ -50,7 +50,7 @@ class ApplicationController extends Controller
     public function itemType(Request $request){
         $id = $request->id;
         if($request->type == 1){
-            $assets = LAsset::all();
+            $assets = LFacility::all();
             $reservations = Reservation::where('application_id', $request->id)->where('type',1)->get();
             return view('shared.asset', compact('reservations', 'assets', 'id'));
         } else if($request->type == 2) {

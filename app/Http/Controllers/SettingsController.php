@@ -20,7 +20,11 @@ class SettingsController extends Controller
 
     public function submitCategory(Request $request){
         $assets = new LFacilityType;
+        if($request->id){
+            $assets = LFacilityType::find($request->id);
+        }
         $assets->type = $request->asset;
+        $assets->remark = $request->remark;
 
         if($assets->save()){
             return back();
@@ -28,19 +32,22 @@ class SettingsController extends Controller
     }
     
     public function facilities(){
-        $assets = LFacility::all();
-        return view('settings.facilities', compact('assets'));
+        $facilities = LFacility::all();
+        return view('settings.facilities', compact('facilities'));
     }
 
     public function submitFacilities(Request $request){
-        $asset = new LFacility;
-        $asset->asset = $request->asset;
-        $asset->type = $request->category;
-        $asset->price = $request->price;
-        $asset->min_hour = $request->min_hour;
-        $asset->remark = $request->remark;
+        $facility = new LFacility;
+        if($request->id){
+            $facility = LFacility::find($request->id);
+        }
+        $facility->facility = $request->facility;
+        $facility->type = $request->category;
+        $facility->price = $request->price;
+        $facility->min_hour = $request->min_hour;
+        $facility->remark = $request->remark;
 
-        if($asset->save()){
+        if($facility->save()){
             return back();
         }
     }   
@@ -52,6 +59,9 @@ class SettingsController extends Controller
 
     public function submitActivity(Request $request){
         $activity = new LActivity;
+        if($request->id){
+            $activity = LActivity::find($request->id);
+        }
         $activity->activity = $request->activity;
         $activity->public = $request->public;
         $activity->students = $request->students;
@@ -60,6 +70,21 @@ class SettingsController extends Controller
         $activity->remark = $request->remark;
 
         if($activity->save()){
+            return back();
+        }
+    }
+    
+    public function submitMembership(Request $request){
+        $membership = new LMembership;
+        if($request->id){
+            $membership = LMembership::find($request->id);
+        }
+        $membership->membership = $request->membership;
+        $membership->discount = $request->discount;
+        $membership->monthly = $request->monthly;
+        $membership->anually = $request->anually;
+
+        if($membership->save()){
             return back();
         }
     }
@@ -119,9 +144,40 @@ class SettingsController extends Controller
         }
     }
 
-    public function facilitiesModal(){
+    public function facilitiesModal(Request $request){
+        $facility = new LFacility;
+        if(isset($request->id)){
+            $facility = LFacility::find($request->id);
+        }
         $types = LFacilityType::all();
-        return view('settings.partials.facilities-modal', compact('types'));
-        
+        $id = $request->id;
+        return view('settings.partials.facilities-modal', compact('types', 'facility', 'id'));
+    }
+
+    public function activitiesModal(Request $request){
+        $activity = new LActivity;
+        if(isset($request->id)){
+            $activity = LActivity::find($request->id);
+        }
+        $id = $request->id;
+        return view('settings.partials.activities-modal', compact('activity', 'id'));
+    }
+
+    public function membershipsModal(Request $request){
+        $membership = new LMembership;
+        if(isset($request->id)){
+            $membership = LMembership::find($request->id);
+        }
+        $id = $request->id;
+        return view('settings.partials.memberships-modal', compact('membership', 'id'));
+    }
+
+    public function categoriesModal(Request $request){
+        $categories = new LFacilityType;
+        if(isset($request->id)){
+            $categories = LFacilityType::find($request->id);
+        }
+        $id = $request->id;
+        return view('settings.partials.categories-modal', compact('categories', 'id'));
     }
 }

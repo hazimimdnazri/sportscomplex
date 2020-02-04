@@ -39,17 +39,16 @@
                         </thead>
                         <tbody>
                         @php $n = 1 @endphp
-                        @foreach($assets as $a)
+                        @foreach($facilities as $f)
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
-                                <td class="text-center">{{ $a->asset }}</td>
-                                <td class="text-center">{{ $a->a_type->type }}</td>
-                                <td class="text-center">{{ number_format($a->price, 2) }}</td>
-                                <td class="text-center">{{ $a->min_hour }}</td>
-                                <td class="text-ceter">{{ $a->remark }}</td>
+                                <td class="text-center">{{ $f->facility }}</td>
+                                <td class="text-center">{{ $f->r_type->type }}</td>
+                                <td class="text-center">{{ number_format($f->price, 2) }}</td>
+                                <td class="text-center">{{ $f->min_hour }}</td>
+                                <td class="text-ceter">{{ $f->remark }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-primary">View</a>
-                                    <a class="btn btn-info">Edit</a>
+                                    <a onClick="editModal({{ $f->id }})" class="btn btn-info">Edit</a>
                                     <a class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
@@ -79,6 +78,20 @@
             url: "{{ url('settings/ajax/facilities-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
+            }
+        }).done(function(response){
+            $("#variable").html(response)
+            $('#facilitiesModal').modal('show')
+        });
+    }
+
+    editModal = (id) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('settings/ajax/facilities-modal') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+                "id" : id
             }
         }).done(function(response){
             $("#variable").html(response)

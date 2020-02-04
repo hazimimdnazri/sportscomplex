@@ -22,7 +22,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Membership</button>
+                    <button type="button" class="btn btn-primary" id="grade" onClick="showModal()">New Membership</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -46,8 +46,7 @@
                                 <td class="text-center">{{ number_format($m->monthly, 2) }}</td>
                                 <td class="text-center">{{ number_format($m->anually, 2) }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-primary">View</a>
-                                    <a class="btn btn-info">Edit</a>
+                                    <a onClick="editModal({{ $m->id }})" class="btn btn-info">Edit</a>
                                     <a class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
@@ -60,33 +59,7 @@
     </div>
 </section>
 
-<div class="modal fade" id="modal-default">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="{{ url('settings/assets') }}" method="POST">
-                @csrf
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">New Membership</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Membership <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="membership" placeholder="Enter asset name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Discount (%) <span class="text-red">*</span></label>
-                        <input type="integer" class="form-control" name="discount" placeholder="Enter asset name">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save"/>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<div id="variable"></div>
 @endsection
 
 @section('postscript')
@@ -96,5 +69,32 @@
     $(() => {
         $('#example1').DataTable()
     })
+
+    showModal = () => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('settings/ajax/memberships-modal') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+            }
+        }).done(function(response){
+            $("#variable").html(response)
+            $('#membershipsModal').modal('show')
+        });
+    }
+
+    editModal = (id) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('settings/ajax/memberships-modal') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+                "id" : id
+            }
+        }).done(function(response){
+            $("#variable").html(response)
+            $('#membershipsModal').modal('show')
+        });
+    }
 </script>
 @endsection

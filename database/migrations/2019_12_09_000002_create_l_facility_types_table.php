@@ -16,6 +16,7 @@ class CreateLFacilityTypesTable extends Migration
         Schema::create('l_facility_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type');
+            $table->string('remark')->nullable();
             $table->timestamps();
         });
 
