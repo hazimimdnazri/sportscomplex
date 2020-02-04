@@ -7,13 +7,13 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Assets
+        Facilities
         <small>Settings</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Settings</li>
-        <li class="active">Assets</li>
+        <li class="active">Facilities</li>
     </ol>
 </section>
 
@@ -22,14 +22,14 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">New Asset</button>
+                    <button type="button" class="btn btn-primary" id="grade" onClick="showModal()">New Facility</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
-                                <th class="text-center">Asset</th>
+                                <th class="text-center">Facility</th>
                                 <th class="text-center">Category</th>
                                 <th class="text-center">Price (RM)</th>
                                 <th class="text-center">Min. Hour</th>
@@ -62,50 +62,7 @@
     </div>
 </section>
 
-<div class="modal fade" id="modal-default">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="{{ url('settings/assets') }}" method="POST">
-                @csrf
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">New Assets</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Asset Name <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="asset" placeholder="Enter asset name">
-                    </div>
-                    <div class="form-group">
-                        <label>Category <span class="text-red">*</span></label>
-                        <select name="category" class="form-control" style="width: 100%;">
-                            <option value="">-- Asset Category --</option>
-                            @foreach($types as $t)
-                                <option value="{{ $t->id }}">{{ $t->type }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Price (RM) <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="price" placeholder="Enter asset name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Minimum Hour <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="min_hour" placeholder="Enter asset name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Remarks </label>
-                        <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save"/>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<div id="variable"></div>
 @endsection
 
 @section('postscript')
@@ -115,5 +72,18 @@
     $(() => {
         $('#example1').DataTable()
     })
+
+    showModal = () => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('settings/ajax/facilities-modal') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+            }
+        }).done(function(response){
+            $("#variable").html(response)
+            $('#facilitiesModal').modal('show')
+        });
+    }
 </script>
 @endsection

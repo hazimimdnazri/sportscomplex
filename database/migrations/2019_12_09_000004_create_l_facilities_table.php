@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLAssetsTable extends Migration
+class CreateLFacilitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateLAssetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('l_assets', function (Blueprint $table) {
+        Schema::create('l_facilities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('asset');
-            $table->integer('type');
+            $table->string('facility');
+            $table->unsignedBigInteger('type');
             $table->float('price');
             $table->float('min_hour');
             $table->integer('status')->default(1);
             $table->text('remark')->nullable();
             $table->integer('flag')->default(1);
 
-            $table->foreign('type')->references('id')->on('l_asset_types');
+            $table->foreign('type')->references('id')->on('l_facility_types');
         });
     }
 
@@ -34,6 +34,6 @@ class CreateLAssetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assets');
+        Schema::dropIfExists('l_facilities');
     }
 }

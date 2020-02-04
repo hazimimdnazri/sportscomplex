@@ -32,25 +32,33 @@ Route::get('registration', 'HomeController@register')->middleware('auth');
 Route::post('registration', 'HomeController@submitRegister')->middleware('auth');
 Route::get('transactions', 'HomeController@transactions')->middleware('auth');
 
-Route::get('settings/categories', 'SettingsController@categories')->middleware('auth');
-Route::post('settings/categories', 'SettingsController@submitCategory')->middleware('auth');
-Route::get('settings/assets', 'SettingsController@assets')->middleware('auth');
-Route::post('settings/assets', 'SettingsController@submitAsset')->middleware('auth');
-Route::get('settings/activities', 'SettingsController@activities')->middleware('auth');
-Route::post('settings/activities', 'SettingsController@submitActivity')->middleware('auth');
-Route::get('settings/users', 'SettingsController@users')->middleware('auth');
-Route::post('settings/users', 'SettingsController@submitUser')->middleware('auth');
-Route::get('settings/customers', 'SettingsController@customers')->middleware('auth');
-Route::post('settings/customers', 'SettingsController@submitEditCustomer')->middleware('auth');
-Route::get('settings/membership', 'SettingsController@membership')->middleware('auth');
-Route::get('settings/profile', 'SettingsController@profile')->middleware('auth');
+Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
+    Route::get('categories', 'SettingsController@categories')->middleware('auth');
+    Route::post('categories', 'SettingsController@submitCategory')->middleware('auth');
+    Route::get('facilities', 'SettingsController@facilities')->middleware('auth');
+    Route::post('facilities', 'SettingsController@submitAsset')->middleware('auth');
+    Route::get('activities', 'SettingsController@activities')->middleware('auth');
+    Route::post('activities', 'SettingsController@submitActivity')->middleware('auth');
+    Route::get('users', 'SettingsController@users')->middleware('auth');
+    Route::post('users', 'SettingsController@submitUser')->middleware('auth');
+    Route::get('customers', 'SettingsController@customers')->middleware('auth');
+    Route::post('customers', 'SettingsController@submitEditCustomer')->middleware('auth');
+    Route::get('membership', 'SettingsController@membership')->middleware('auth');
+    Route::get('profile', 'SettingsController@profile')->middleware('auth');
 
-Route::post('ajax/itemtype', 'ApplicationController@itemType');
-Route::post('ajax/activitymodal', 'ApplicationController@activityModal');
-Route::post('ajax/membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');
-Route::post('ajax/submitpayment', 'ApplicationController@ajaxSubmitPayment')->middleware('auth');
-Route::post('ajax/setdate', 'ApplicationController@ajaxSetDate')->middleware('auth');
-Route::post('ajax/confirmreservation', 'ApplicationController@confirmReservation')->middleware('auth');
-Route::post('ajax/editcustomer', 'SettingsController@editCustomer');
+    Route::group(['prefix' => 'ajax'], function() {
+        Route::post('facilities-modal', 'SettingsController@facilitiesModal');
+    });
+});
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
+    Route::post('itemtype', 'ApplicationController@itemType');
+    Route::post('activitymodal', 'ApplicationController@activityModal');
+    Route::post('membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');
+    Route::post('submitpayment', 'ApplicationController@ajaxSubmitPayment')->middleware('auth');
+    Route::post('setdate', 'ApplicationController@ajaxSetDate')->middleware('auth');
+    Route::post('confirmreservation', 'ApplicationController@confirmReservation')->middleware('auth');
+    Route::post('editcustomer', 'SettingsController@editCustomer');
+});
 
 Route::get('test', 'ApplicationController@qr');

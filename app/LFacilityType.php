@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LAssetType extends Model
+class LFacilityType extends Model
 {
-    public $timestamps = false;
+    //
 }

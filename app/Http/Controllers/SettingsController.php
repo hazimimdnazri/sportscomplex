@@ -4,22 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\LAsset;
+use App\LFacility;
 use App\User;
 use App\LMembership;
 use App\Customer;
-use App\LAssetType;
+use App\LFacilityType;
 use App\LActivity;
 
 class SettingsController extends Controller
 {
     public function categories(){
-        $assets = LAssetType::all();
+        $assets = LFacilityType::all();
         return view('settings.categories', compact('assets'));
     }
 
     public function submitCategory(Request $request){
-        $assets = new LAssetType;
+        $assets = new LFacilityType;
         $assets->type = $request->asset;
 
         if($assets->save()){
@@ -27,14 +27,13 @@ class SettingsController extends Controller
         }
     }
     
-    public function assets(){
-        $assets = LAsset::all();
-        $types = LAssetType::all();
-        return view('settings.assets', compact('assets', 'types'));
+    public function facilities(){
+        $assets = LFacility::all();
+        return view('settings.facilities', compact('assets'));
     }
 
-    public function submitAsset(Request $request){
-        $asset = new LAsset;
+    public function submitFacilities(Request $request){
+        $asset = new LFacility;
         $asset->asset = $request->asset;
         $asset->type = $request->category;
         $asset->price = $request->price;
@@ -118,5 +117,11 @@ class SettingsController extends Controller
         if($customer->save()){
             return back();
         }
+    }
+
+    public function facilitiesModal(){
+        $types = LFacilityType::all();
+        return view('settings.partials.facilities-modal', compact('types'));
+        
     }
 }

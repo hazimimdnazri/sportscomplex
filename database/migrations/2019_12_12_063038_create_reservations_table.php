@@ -15,9 +15,9 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('application_id');
-            $table->integer('asset_id')->nullable();
-            $table->integer('activity_id')->nullable();
+            $table->unsignedBigInteger('application_id');
+            $table->unsignedBigInteger('facility_id')->nullable();
+            $table->unsignedBigInteger('activity_id')->nullable();
             $table->integer('type');
             $table->integer('price_type')->default(1);
             $table->float('duration')->nullable();
@@ -26,7 +26,7 @@ class CreateReservationsTable extends Migration
             $table->timestamps();
 
             $table->foreign('application_id')->references('id')->on('applications');
-            $table->foreign('asset_id')->references('id')->on('l_assets');
+            $table->foreign('facility_id')->references('id')->on('l_facilities');
             $table->foreign('activity_id')->references('id')->on('l_activities');
         });
     }
