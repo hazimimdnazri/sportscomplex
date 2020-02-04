@@ -26,6 +26,7 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="{{ url('settings/categories') }}"><i class="fa fa-circle-o"></i>Facility Categories</a></li>
+                <li><a href="{{ url('settings/groups') }}"><i class="fa fa-circle-o"></i>Facility Groups</a></li>
                 <li><a href="{{ url('settings/facilities') }}"><i class="fa fa-circle-o"></i>Facilities</a></li>
                 <li><a href="{{ url('settings/equiptments') }}"><i class="fa fa-circle-o"></i>Equiptments</a></li>
                 <li><a href="{{ url('settings/activities') }}"><i class="fa fa-circle-o"></i>Activities</a></li>
@@ -37,10 +38,6 @@
             <li><a href="{{ url('transactions') }}"><i class="fa fa-money"></i> <span>Transactions</span></a></li>
             <li><a href="{{ url('dashboard') }}"><i class="fa fa-question"></i> <span>F.A.Q</span></a></li>
         </li>
-        <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
     </ul>
     </section>
 </aside>

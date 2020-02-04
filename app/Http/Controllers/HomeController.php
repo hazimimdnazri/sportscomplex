@@ -8,8 +8,9 @@ use Auth;
 use App\User;
 use App\Application;
 use App\LMembership;
-use App\Customer;
+use App\CustomerDetail;
 use App\Reservation;
+use App\LFacility;
 
 class HomeController extends Controller
 {
@@ -38,28 +39,33 @@ class HomeController extends Controller
     }
 
     public function submitRegister(Request $request){
-        $members = new Customer;
-        $members->name = $request->name;
-        $members->ic = $request->ic;
-        $members->email = $request->email;
-        $members->phone = $request->phone;
-        $members->dob = date('Y-m-d', strtotime($request->dob));
-        $members->address = $request->address;
-        $members->zipcode = $request->zipcode;
-        $members->city = $request->city;
-        $members->state = $request->state;
-        $members->membership = $request->membership;
-        $members->cycle = $request->cycle;
-        $members->cycle_start = date('Y-m-d');
-        if($request->cycle == 1){
-            $members->cycle_end = date('Y-m-d', strtotime('+1 month'));
-        } else {
-            $members->cycle_end = date('Y-m-d', strtotime('+1 year'));
-        }
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = 2;
+        $user->password = Hash::make(123456);
 
-
-        if($members->save()){
-            return back();
+        if($user->save()){
+            $members = new CustomerDetail;
+            $members->user_id = $user->id;
+            $members->ic = $request->ic;
+            $members->phone = $request->phone;
+            $members->dob = date('Y-m-d', strtotime($request->dob));
+            $members->address = $request->address;
+            $members->zipcode = $request->zipcode;
+            $members->city = $request->city;
+            $members->state = $request->state;
+            $members->membership = $request->membership;
+            $members->cycle = $request->cycle;
+            $members->cycle_start = date('Y-m-d');
+            if($request->cycle == 1){
+                $members->cycle_end = date('Y-m-d', strtotime('+1 month'));
+            } else {
+                $members->cycle_end = date('Y-m-d', strtotime('+1 year'));
+            }
+            if($members->save()){
+                return back();
+            }
         }
     }
 
@@ -82,10 +88,17 @@ class HomeController extends Controller
     }
 
     public function calendar(){
-        return view('calendar');
+        $reservations = Reservation::where('type', 1)->get();
+        $facilities = LFacility::all();
+        return view('calendar', compact('reservations', 'facilities'));
     }
 
     public function transactions(){
         return view('transactions');
+    }
+
+    public function calendarModal(Request $request){
+        $date = substr($request->date, 0, 10);
+        return view('partials.calendar-modal', compact('date'));
     }
 }

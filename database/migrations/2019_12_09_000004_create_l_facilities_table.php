@@ -16,7 +16,7 @@ class CreateLFacilitiesTable extends Migration
         Schema::create('l_facilities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('facility');
-            $table->unsignedBigInteger('type');
+            $table->unsignedBigInteger('group');
             $table->float('price');
             $table->float('min_hour');
             $table->integer('status')->default(1);
@@ -24,7 +24,7 @@ class CreateLFacilitiesTable extends Migration
             $table->integer('flag')->default(1);
             $table->timestamps();
 
-            $table->foreign('type')->references('id')->on('l_facility_types');
+            $table->foreign('group')->references('id')->on('l_facility_groups');
         });
     }
 

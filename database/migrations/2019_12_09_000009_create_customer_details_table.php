@@ -17,12 +17,13 @@ class CreateCustomerDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('ic');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->date('dob');
-            $table->string('address');
-            $table->string('zipcode');
-            $table->string('city');
-            $table->integer('state');
+            $table->string('address')->nullable();
+            $table->string('zipcode')->nullable();
+            $table->string('city')->nullable();
+            $table->integer('state')->nullable();
+            $table->integer('type')->nullable();
             $table->unsignedBigInteger('membership')->default(99);
             $table->integer('cycle')->nullable();
             $table->date('cycle_start')->nullable();

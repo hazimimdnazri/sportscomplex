@@ -9,6 +9,7 @@ use App\User;
 use App\LMembership;
 use App\Customer;
 use App\LFacilityType;
+use App\LFacilityGroup;
 use App\LActivity;
 use App\LEquiptment;
 
@@ -31,6 +32,25 @@ class SettingsController extends Controller
             return back();
         }
     }
+
+    public function groups(){
+        $groups = LFacilityGroup::all();
+        return view('settings.groups', compact('groups'));
+    }
+
+    public function submitGroups(Request $request){
+        $groups = new LFacilityGroup;
+        if($request->id){
+            $groups = LFacilityGroup::find($request->id);
+        }
+        $groups->type = $request->category;
+        $groups->group = $request->group;
+        $groups->remark = $request->remark;
+
+        if($groups->save()){
+            return back();
+        }
+    }
     
     public function facilities(){
         $facilities = LFacility::all();
@@ -43,7 +63,7 @@ class SettingsController extends Controller
             $facility = LFacility::find($request->id);
         }
         $facility->facility = $request->facility;
-        $facility->type = $request->category;
+        $facility->group = $request->group;
         $facility->price = $request->price;
         $facility->min_hour = $request->min_hour;
         $facility->remark = $request->remark;
@@ -174,9 +194,9 @@ class SettingsController extends Controller
                 }
             }
         }
-        $types = LFacilityType::all();
+        $groups = LFacilityGroup::all();
         $id = $request->id;
-        return view('settings.partials.facilities-modal', compact('types', 'facility', 'id'));
+        return view('settings.partials.facilities-modal', compact('groups', 'facility', 'id'));
     }
 
     public function activitiesModal(Request $request){
@@ -234,5 +254,20 @@ class SettingsController extends Controller
         }
         $id = $request->id;
         return view('settings.partials.equiptments-modal', compact('equiptment', 'id', 'facilities'));
+    }
+
+    public function groupsModal(Request $request){
+        $types = LFacilityType::all();
+        $group = new LFacilityGroup;
+        if(isset($request->id)){
+            $group = LFacilityGroup::find($request->id);
+            if(isset($request->action) == "delete"){
+                if($group->delete()){
+                    return "success";
+                }
+            }
+        }
+        $id = $request->id;
+        return view('settings.partials.groups-modal', compact('group', 'id', 'types'));
     }
 }

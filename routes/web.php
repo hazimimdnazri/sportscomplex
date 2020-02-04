@@ -32,9 +32,16 @@ Route::get('registration', 'HomeController@register')->middleware('auth');
 Route::post('registration', 'HomeController@submitRegister')->middleware('auth');
 Route::get('transactions', 'HomeController@transactions')->middleware('auth');
 
+
+Route::group(['prefix' => 'ajax'], function() {
+    Route::post('calendar-modal', 'HomeController@calendarModal');
+});
+
 Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
     Route::get('categories', 'SettingsController@categories');
     Route::post('categories', 'SettingsController@submitCategory');
+    Route::get('groups', 'SettingsController@groups');
+    Route::post('groups', 'SettingsController@submitGroups');
     Route::get('facilities', 'SettingsController@facilities');
     Route::post('facilities', 'SettingsController@submitFacilities');
     Route::get('equiptments', 'SettingsController@equiptments');
@@ -55,6 +62,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
         Route::post('activities-modal', 'SettingsController@activitiesModal');
         Route::post('memberships-modal', 'SettingsController@membershipsModal');
         Route::post('equiptments-modal', 'SettingsController@equiptmentsModal');
+        Route::post('groups-modal', 'SettingsController@groupsModal');
     });
 });
 

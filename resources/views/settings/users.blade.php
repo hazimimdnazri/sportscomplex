@@ -43,7 +43,7 @@
                                 <td>{{ $n++ }}</td>
                                 <td>{{ $u->name }}</td>
                                 <td>{{ $u->email }}</td>
-                                <td>{{ $u->role == 1 ? 'User' : 'Admin' }}</td>
+                                <td>{{ $u->role == 2 ? 'User' : 'Admin' }}</td>
                                 <td class="text-center">
                                     <span class="label bg-yellow">{{ $u->u_status->status }}</span>
                                 </td>

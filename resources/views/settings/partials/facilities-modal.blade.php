@@ -10,10 +10,10 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Category <span class="text-red">*</span></label>
-                        <select name="category" class="form-control" style="width: 100%;">
-                            <option value="">-- Facility Category --</option>
-                            @foreach($types as $t)
-                                <option value="{{ $t->id }}" {{ $facility->type == $t->id ? 'selected' : '' }}>{{ $t->type }}</option>
+                        <select name="group" class="form-control" style="width: 100%;">
+                            <option value="">-- Facility Group --</option>
+                            @foreach($groups as $g)
+                                <option value="{{ $g->id }}" {{ $facility->type == $g->id ? 'selected' : '' }}>{{ $g->group }}</option>
                             @endforeach
                         </select>
                     </div>

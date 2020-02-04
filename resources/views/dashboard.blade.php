@@ -9,7 +9,6 @@
 <section class="content-header">
 	<h1>
 		Dashboard
-		<small>Control panel</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -73,12 +72,12 @@
 	<div class="row">
 		<!-- <section class="col-lg-5 connectedSortable">
 		</section> -->
-		<div class="col-md-12">
+		<!-- <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-body no-padding">
                     <div id="calendar"></div>
                 </div>
-            </div>
+            </div> -->
         </div>
 	</div>
 </section>

@@ -8,13 +8,13 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Facilities
+        Facility Groups
         <small>Settings</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Settings</li>
-        <li class="active">Facilities</li>
+        <li class="active">Facility Groups</li>
     </ol>
 </section>
 
@@ -23,34 +23,30 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" id="grade" onClick="showModal()">New Facility</button>
+                    <button type="button" class="btn btn-primary" id="grade" onClick="showModal()">New Group</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
-                                <th class="text-center">Facility</th>
-                                <th class="text-center">Category</th>
-                                <th class="text-center">Price (RM)</th>
-                                <th class="text-center">Min. Hour</th>
+                                <th class="text-center">Facility Category</th>
+                                <th class="text-center">Facility Group</th>
                                 <th class="text-center">Remarks</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         @php $n = 1 @endphp
-                        @foreach($facilities as $f)
+                        @foreach($groups as $g)
                             <tr>
-                                <td class="text-center">{{ $n++ }}</td>
-                                <td class="text-center">{{ $f->facility }}</td>
-                                <td class="text-center">{{ $f->r_group->group }}</td>
-                                <td class="text-center">{{ number_format($f->price, 2) }}</td>
-                                <td class="text-center">{{ $f->min_hour }}</td>
-                                <td class="text-ceter">{{ $f->remark }}</td>
+                                <td>{{ $n++ }}</td>
+                                <td>{{ $g->r_type->type }}</td>
+                                <td>{{ $g->group }}</td>
+                                <td>{{ $g->remark }}</td>
                                 <td class="text-center">
-                                    <a onClick="editModal({{ $f->id }})" class="btn btn-info">Edit</a>
-                                    <a onClick="deleteFx({{ $f->id }})" class="btn btn-danger">Delete</a>
+                                    <a onClick="editModal({{ $g->id }})" class="btn btn-info">Edit</a>
+                                    <a onClick="deleteFx({{ $g->id }})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -77,27 +73,27 @@
     showModal = () => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/facilities-modal') }}",
+            url: "{{ url('settings/ajax/groups-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
             }
         }).done(function(response){
             $("#variable").html(response)
-            $('#facilitiesModal').modal('show')
+            $('#groupsModal').modal('show')
         });
     }
 
     editModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/facilities-modal') }}",
+            url: "{{ url('settings/ajax/groups-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id
             }
         }).done(function(response){
             $("#variable").html(response)
-            $('#facilitiesModal').modal('show')
+            $('#groupsModal').modal('show')
         });
     }
 
@@ -114,7 +110,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('settings/ajax/facilities-modal') }}",
+                    url: "{{ url('settings/ajax/groups-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,
