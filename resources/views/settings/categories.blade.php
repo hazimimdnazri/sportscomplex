@@ -2,6 +2,7 @@
 
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.min.css">
 @endsection
 
 @section('content')
@@ -43,7 +44,7 @@
                                 <td>{{ $a->remark }}</td>
                                 <td class="text-center">
                                     <a onClick="editModal({{ $a->id }})" class="btn btn-info">Edit</a>
-                                    <a class="btn btn-danger">Delete</a>
+                                    <a onClick="deleteFx({{ $a->id }})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -61,6 +62,7 @@
 @section('postscript')
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.all.min.js"></script>
 <script>
     $(() => {
         $('#example1').DataTable()
@@ -90,6 +92,39 @@
         }).done(function(response){
             $("#variable").html(response)
             $('#categoriesModal').modal('show')
+        });
+    }
+
+    deleteFx = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, delete it!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('settings/ajax/categories-modal') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id,
+                        "action" : "delete"
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
         });
     }
 </script>

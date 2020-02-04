@@ -168,6 +168,11 @@ class SettingsController extends Controller
         $facility = new LFacility;
         if(isset($request->id)){
             $facility = LFacility::find($request->id);
+            if(isset($request->action) == "delete"){
+                if($facility->delete()){
+                    return "success";
+                }
+            }
         }
         $types = LFacilityType::all();
         $id = $request->id;
@@ -178,6 +183,11 @@ class SettingsController extends Controller
         $activity = new LActivity;
         if(isset($request->id)){
             $activity = LActivity::find($request->id);
+            if(isset($request->action) == "delete"){
+                if($activity->delete()){
+                    return "success";
+                }
+            }
         }
         $id = $request->id;
         return view('settings.partials.activities-modal', compact('activity', 'id'));
@@ -187,6 +197,11 @@ class SettingsController extends Controller
         $membership = new LMembership;
         if(isset($request->id)){
             $membership = LMembership::find($request->id);
+            if(isset($request->action) == "delete"){
+                if($membership->delete()){
+                    return "success";
+                }
+            }
         }
         $id = $request->id;
         return view('settings.partials.memberships-modal', compact('membership', 'id'));
@@ -196,6 +211,11 @@ class SettingsController extends Controller
         $categories = new LFacilityType;
         if(isset($request->id)){
             $categories = LFacilityType::find($request->id);
+            if(isset($request->action) == "delete"){
+                if($categories->delete()){
+                    return "success";
+                }
+            }
         }
         $id = $request->id;
         return view('settings.partials.categories-modal', compact('categories', 'id'));
@@ -206,6 +226,11 @@ class SettingsController extends Controller
         $equiptment = new LEquiptment;
         if(isset($request->id)){
             $equiptment = LEquiptment::find($request->id);
+            if(isset($request->action) == "delete"){
+                if($equiptment->delete()){
+                    return "success";
+                }
+            }
         }
         $id = $request->id;
         return view('settings.partials.equiptments-modal', compact('equiptment', 'id', 'facilities'));
