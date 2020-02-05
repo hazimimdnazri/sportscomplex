@@ -120,12 +120,8 @@ class ApplicationController extends Controller
         if($application->save()){
             $reservations = Reservation::where('application_id', $id)->get();
             $reservation = Reservation::where('application_id', $id)->first();
-            $customer = Customer::find($application->customer_id);
-            if($reservation->type == 1){
-                return view('applications.payment', compact('customer', 'application', 'reservations'));
-            } else {
-                return view('applications.activity_payment', compact('customer', 'application', 'reservations'));
-            }
+            $customer = User::find($application->user_id);
+            return view('applications.payment', compact('customer', 'application', 'reservations'));
         }
     }
 

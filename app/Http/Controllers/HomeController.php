@@ -80,8 +80,7 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
-        $reservations = Reservation::where('type', 1)->get();
-        return view('dashboard', compact('reservations'));
+        return view('dashboard');
     }
 
     public function calendar(){

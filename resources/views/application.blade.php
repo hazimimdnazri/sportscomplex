@@ -12,12 +12,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Application
-        <small>Control panel</small>
+        Point of Sale
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Application</li>
+        <li class="active">Point of Sale</li>
     </ol>
 </section>
 
@@ -26,7 +25,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" onClick="activityModal()">New Reservation</button>
+                    <button type="button" class="btn btn-primary" onClick="activityModal()">New Walk In</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered">

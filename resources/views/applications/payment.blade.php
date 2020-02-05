@@ -78,8 +78,8 @@
                     @foreach($reservations as $r)
                     <tr>
                         <td>{{ $n++ }}</td>
-                        <td>{{ $r->r_asset->asset }}</td>
-                        <td>{{ $r->r_asset->a_type->type }}</td>
+                        <td>{{ $r->r_asset->facility }}</td>
+                        <td>{{$r->r_group->group}}</td>
                         <td>{{ $r->duration }}</td>
                         <td>{{ number_format($r->r_asset->price, 2) }} / {{$r->r_asset->min_hour}}</td>
                         <td>{{ number_format(($r->duration / $r->r_asset->min_hour) * $r->r_asset->price, 2) }}</td>
@@ -114,11 +114,11 @@
                     </tr>
                     <tr>
                     <th>Discount (Membership / Special Offer): </th>
-                    <td>{{ $customer->c_membership->discount }}%</td>
+                    <td>{{ $customer->r_details->r_membership->discount }}%</td>
                     </tr>
                     <tr>
                     <th>Total: </th>
-                    <td>RM {{ number_format($total * ((100 -$customer->c_membership->discount)/100), 2)}}</td>
+                    <td>RM {{ number_format($total * ((100 - $customer->r_details->r_membership->discount )/100), 2)}}</td>
                     </tr>
                 </table>
             </div>

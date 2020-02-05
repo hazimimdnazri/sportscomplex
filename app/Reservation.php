@@ -10,6 +10,10 @@ class Reservation extends Model
         return $this->belongsTo(LFacility::class, 'facility_id');
     }
 
+    public function r_group(){
+        return $this->belongsTo(LFacilityGroup::class, 'group_id');
+    }
+
     public function r_activity(){
         return $this->belongsTo(LActivity::class, 'activity_id');
     }
