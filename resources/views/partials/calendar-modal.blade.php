@@ -1,11 +1,11 @@
 <div class="modal fade" id="activityModal">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form id="applicationForm" method="POST">
+        <div class="modal-content" id="form">
+            <form id="personalForm" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">New Reservation ( {{ date('d/m/Y', $date)}} )</h4>
+                    <h4 class="modal-title">New Reservation ( {{ date('d/m/Y', $date)}} - {{ App\LFacilityGroup::find($facility)->group }} )</h4>
                 </div>
                 <div class="modal-body">
                     <p>Please fill in all the required fields, denoted with <span class="text-red">*</span>.</p>
@@ -78,6 +78,8 @@
                     </div>
                 </div>
                 <input type="hidden" name="post_id" id="post_id">
+                <input type="hidden" name="date" value="{{$date}}">
+                <input type="hidden" name="facility" value="{{$facility}}">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary" value="Submit"/>
@@ -92,31 +94,59 @@
         $('.select2').select2()
     })
 
-    $("#applicationForm").submit(function(e) {
-	e.preventDefault();    
-	var formData = new FormData(this);
+    $("#personalForm").submit(function(e) {
+        e.preventDefault();    
+        var formData = new FormData(this);
 
-	$.ajax({
-		url: "{{ url('application') }}",
-		type: 'POST',
-		data: formData,
-		cache: false,
-		contentType: false,
-		processData: false
-	}).done((response) => {
-		console.log(response)
-		// if(response == 'success'){
-		// 	$("#educationModal").modal('hide')
-		// 	Swal.fire(
-		// 		'Succes!',
-		// 		'Data saved!!',
-		// 		'success'
-		// 	).then((result) => {
-		// 		if(result.value){
-		// 			location.reload();
-		// 		}
-		// 	})
-		// } 
-	});
-});
+        $.ajax({
+            url: "{{ url('application') }}",
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done((response) => {
+            $("#form").html(response)
+            // if(response == 'success'){
+            // 	$("#educationModal").modal('hide')
+            // 	Swal.fire(
+            // 		'Succes!',
+            // 		'Data saved!!',
+            // 		'success'
+            // 	).then((result) => {
+            // 		if(result.value){
+            // 			location.reload();
+            // 		}
+            // 	})
+            // } 
+        });
+    });
+
+    $("#applicationForm").submit(function(e) {
+        e.preventDefault();    
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: "{{ url('application') }}",
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done((response) => {
+            $("#body").html(response)
+            // if(response == 'success'){
+            // 	$("#educationModal").modal('hide')
+            // 	Swal.fire(
+            // 		'Succes!',
+            // 		'Data saved!!',
+            // 		'success'
+            // 	).then((result) => {
+            // 		if(result.value){
+            // 			location.reload();
+            // 		}
+            // 	})
+            // } 
+        });
+    });
 </script>

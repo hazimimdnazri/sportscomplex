@@ -35,6 +35,9 @@ Route::get('transactions', 'HomeController@transactions')->middleware('auth');
 
 Route::group(['prefix' => 'ajax'], function() {
     Route::post('calendar-modal', 'HomeController@calendarModal');
+    Route::post('calendar', 'HomeController@facilityCalendar');
+    Route::post('duration', 'ApplicationController@ajaxDuration');
+    Route::post('endtime', 'ApplicationController@ajaxEndTime');
 });
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {

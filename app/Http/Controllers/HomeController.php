@@ -11,6 +11,7 @@ use App\LMembership;
 use App\CustomerDetail;
 use App\Reservation;
 use App\LFacility;
+use App\LFacilityGroup;
 
 class HomeController extends Controller
 {
@@ -19,10 +20,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
 
     /**
      * Show the application dashboard.
@@ -88,8 +85,7 @@ class HomeController extends Controller
     }
 
     public function calendar(){
-        $reservations = Reservation::where('type', 1)->get();
-        $facilities = LFacility::all();
+        $facilities = LFacilityGroup::all();
         return view('calendar', compact('reservations', 'facilities'));
     }
 
@@ -98,7 +94,14 @@ class HomeController extends Controller
     }
 
     public function calendarModal(Request $request){
+        $facility = $request->facility;
         $date = substr($request->date, 0, 10);
-        return view('partials.calendar-modal', compact('date'));
+        return view('partials.calendar-modal', compact('date', 'facility'));
+    }
+
+    public function facilityCalendar(Request $request){
+        $facility = $request->facility;
+        $reservations = Reservation::where('type', 1)->get();
+        return view('partials.calendar', compact('reservations', 'facility'));
     }
 }

@@ -9,11 +9,11 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Calendar
+        POS
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Calendar</li>
+        <li class="active">POS</li>
     </ol>
 </section>
 
@@ -22,7 +22,22 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-body no-padding">
-                    <div id="calendar"></div>
+					<div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px;">
+						<div class="col-md-3">
+							<div class="form-group">
+								<label for="exampleInputEmail1">Facility <span class="text-red">*</span></label>
+								<select class="form-control" name="facility" onChange="loadCalendar(this.value)">
+									<option value="" selected>-- Facility --</option>
+									@foreach($facilities as $f)
+									<option value="{{ $f->id }}">{{ $f->group }}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+                    	<div id="calender"></div>
+					</div>
                 </div>
             </div>
         </div>
@@ -37,59 +52,14 @@
 <script src="{{ asset('assets/bower_components/fullcalendar/dist/fullcalendar.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
-$(() => {
-
-    var date = new Date()
-    $('#calendar').fullCalendar({
-		dayClick: function(date, allDay, jsEvent, view) {
-			if(jsEvent.name == 'month'){
-				$('#calendar').fullCalendar('gotoDate',date);
-				$('#calendar').fullCalendar('changeView', 'agendaDay')
-			} else {
-				showModal(date._d.getTime())
-			}
-		},
-		header    : {
-			left  : 'prev,next today',
-			center: 'title',
-			right : 'month,agendaDay'
-		},
-		buttonText: {
-			today: 'today',
-			month: 'month',
-			day  : 'day'
-		},
-		//Random default events
-		events    : [
-			@foreach($reservations as $r)
-				@if($r->r_application->status == 3)
-				{
-					title          : '{{ $r->application_id }}',
-					start          : "{{ $r->start_date }}",
-					end            : "{{ $r->end_date }}",
-					backgroundColor: '#f39c12', //yellow
-					borderColor    : '#f39c12' //yellow
-				},
-				@endif
-			@endforeach
-		],
-		editable  : false,
-		droppable : false,
-		allDaySlot : false,
-		slotDuration : '00:30',
-		minTime: '07:00',
-		aspectRatio: 2.3,
-		timeZone: 'local'
-    })
-})
-
-showModal = (tarikh) => {
+showModal = (date, facility) => {
 	$.ajax({
 		type:"POST",
 		url: "{{ url('ajax/calendar-modal') }}",
 		data: {
 			"_token" : "{{ csrf_token() }}",
-			"date" : tarikh
+			"date" : date,
+			"facility" : facility
 		}
 	}).done(function(response){
 		$("#variable").html(response)
@@ -99,15 +69,56 @@ showModal = (tarikh) => {
 
 userType = (value) => {
 	if(value == 3){
-		$("#students").slideDown()
-		$("#staffs").slideUp()
+		$("#students").show()
+		$("#staffs").hide()
 	} else if(value == 2){
-		$("#students").slideUp()
-		$("#staffs").slideDown()
+		$("#students").hide()
+		$("#staffs").show()
 	} else {
-		$("#students").slideUp()
-		$("#staffs").slideUp()
+		$("#students").hide()
+		$("#staffs").hide()
 	}
+}
+
+loadCalendar = (value) => {
+	$.ajax({
+		type:"POST",
+		url: "{{ url('ajax/calendar') }}",
+		data: {
+			"_token" : "{{ csrf_token() }}",
+			"facility" : value
+		}
+	}).done(function(response){
+		$("#calender").html(response)
+	});
+}
+
+changeDuration = (value) => {
+	$.ajax({
+		type:"POST",
+		url: "{{ url('ajax/duration') }}",
+		data: {
+			"_token" : "{{ csrf_token() }}",
+			"facility" : value
+		}
+	}).done(function(response){
+		$("#duration").html(response)
+	});
+}
+
+changeTime = (value) => {
+	$.ajax({
+		type:"POST",
+		url: "{{ url('ajax/endtime') }}",
+		data: {
+			"_token" : "{{ csrf_token() }}",
+			"start_date" : $("#start_date").val(),
+			"duration" : value
+		}
+	}).done(function(response){
+		$("#end_time").val(response.time)
+		$("#end_date").val(response.unixtime)
+	});
 }
 </script>
 @endsection

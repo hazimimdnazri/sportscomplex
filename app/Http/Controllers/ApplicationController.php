@@ -77,40 +77,45 @@ class ApplicationController extends Controller
     }
 
     public function submitApplication(Request $request){
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make(123456);
+        $group = $request->facility;
+        $date = $request->date;
+        $facilities = LFacility::where('group', $group)->get();
 
-        if($user->save()){
-            $details = new CustomerDetail;
-            $details->user_id = $user->id;
-            $details->ic = $request->ic;
-            $date = str_split(substr($request->ic, 0, 6), 2);
-            $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
-            $details->type = $request->type;
+        return view('partials.application-form', compact('date', 'group', 'facilities'));
+        // $user = new User;
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = Hash::make(123456);
 
-            if($details->save()){
-                if($request->type == 3){
-                    $student = new StudentDetail;
-                    $student->user_id = $user->id;
-                    $student->student_id = $request->student_id;
-                    $student->institution = $request->institution;
-                } else if($request->type == 2){
-                    $staff = new StaffDetail;
-                    $staff->user_id = $user->id;
-                    $staff->staff_id = $request->staff_id;
-                    $staff->company = $request->company;
-                } else {
-                    return "success";
-                }
+        // if($user->save()){
+        //     $details = new CustomerDetail;
+        //     $details->user_id = $user->id;
+        //     $details->ic = $request->ic;
+        //     $date = str_split(substr($request->ic, 0, 6), 2);
+        //     $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
+        //     $details->type = $request->type;
 
-                if($student->save() || $staff->save()){
-                    return "success";
-                }
+        //     if($details->save()){
+        //         if($request->type == 3){
+        //             $student = new StudentDetail;
+        //             $student->user_id = $user->id;
+        //             $student->student_id = $request->student_id;
+        //             $student->institution = $request->institution;
+        //         } else if($request->type == 2){
+        //             $staff = new StaffDetail;
+        //             $staff->user_id = $user->id;
+        //             $staff->staff_id = $request->staff_id;
+        //             $staff->company = $request->company;
+        //         } else {
+        //             return "success";
+        //         }
 
-            }
-        }
+        //         if($student->save() || $staff->save()){
+        //             return "success";
+        //         }
+
+        //     }
+        // }
     }
 
     public function payment($id){
@@ -187,7 +192,6 @@ class ApplicationController extends Controller
     }
 
     public function submitActivity(Request $request, $id){
-
         for($i = 0; $i < $request->quantity; $i++){
             $reservation = new Reservation;
             $reservation->application_id = $id;
@@ -205,6 +209,20 @@ class ApplicationController extends Controller
             }
         }
         return back();
+    }
+
+    public function ajaxDuration(Request $request){
+        $facility = LFacility::find($request->facility);
+        return view('partials.application-duration', compact('facility'));
+    }
+
+    public function ajaxEndTime(Request $request){
+        $response = [
+            "unixtime" => $request->start_date + ($request->duration * 60 * 60),
+            "time" =>  date('H:i A', $request->start_date + ($request->duration * 60 * 60))
+        ];
+
+        return $response;
     }
 
     public function qr(){
