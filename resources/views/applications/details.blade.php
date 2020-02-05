@@ -66,11 +66,11 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Event <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="event" value="{{ $application->event }}" id="event" placeholder="Event name">
+                                <input type="text" class="form-control" name="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">I.C Number </label>
-                                <input type="text" class="form-control" id="ic" name="ic" value="{{ $application->a_applicant->ic }}" placeholder="Applicant MyKad / MyKid" disabled>
+                                <input type="text" class="form-control" id="ic" name="ic" value="{{ $application->a_applicant->r_details->ic }}" placeholder="Applicant MyKad / MyKid" disabled>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -80,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Phone </label>
-                                <input type="text" class="form-control" id="phone" name="phone" value="{{ $application->a_applicant->phone }}" placeholder="Applicant phone number" disabled>
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{ $application->a_applicant->r_details->phone }}" placeholder="Applicant phone number" disabled>
                             </div>
 
                         </div>

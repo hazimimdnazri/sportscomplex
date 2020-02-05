@@ -151,5 +151,18 @@
             $('#activityModal').modal('show');
         });
     }
+
+    userType = (value) => {
+        if(value == 3){
+            $("#students").show()
+            $("#staffs").hide()
+        } else if(value == 2){
+            $("#students").hide()
+            $("#staffs").show()
+        } else {
+            $("#students").hide()
+            $("#staffs").hide()
+        }
+    }
 </script>
 @endsection

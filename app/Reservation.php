@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     public function r_asset(){
-        return $this->belongsTo(LAsset::class, 'asset_id');
+        return $this->belongsTo(LFacility::class, 'facility_id');
     }
 
     public function r_activity(){

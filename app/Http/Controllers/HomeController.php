@@ -93,15 +93,9 @@ class HomeController extends Controller
         return view('transactions');
     }
 
-    public function calendarModal(Request $request){
-        $facility = $request->facility;
-        $date = substr($request->date, 0, 10);
-        return view('partials.calendar-modal', compact('date', 'facility'));
-    }
-
     public function facilityCalendar(Request $request){
         $facility = $request->facility;
-        $reservations = Reservation::where('type', 1)->get();
+        $reservations = Reservation::all();
         return view('partials.calendar', compact('reservations', 'facility'));
     }
 }

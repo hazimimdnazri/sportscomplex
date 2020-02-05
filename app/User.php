@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function u_status(){
         return $this->belongsTo(LUserStatus::class, 'status');
     }
+
+    public function r_details(){
+        return $this->hasOne(CustomerDetail::class, 'user_id', 'id');
+    }
 }

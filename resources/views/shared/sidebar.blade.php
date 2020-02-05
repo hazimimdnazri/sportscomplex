@@ -13,9 +13,8 @@
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="#"><i class="fa fa-calendar-check-o"></i> <span>Availability Calendar</span></a></li>
-        <li><a href="{{ url('calendar') }}"><i class="fa fa-shopping-bag "></i> <span>POS</span></a></li>
-        <!-- <li><a href="{{ url('application') }}"><i class="fa fa-calendar-check-o"></i> <span>Applications</span></a></li> -->
+        <li><a href="{{ url('calendar') }}"><i class="fa fa-calendar-check-o"></i> <span>Availability Calendar</span></a></li>
+        <li><a href="{{ url('application') }}"><i class="fa fa-shopping-bag"></i> <span>POS</span></a></li>
         <li><a href="#"><i class="fa fa-send"></i> <span>Bookings</span></a></li>
         <li><a href="#"><i class="fa fa-users"></i> <span>Memberships</span></a></li>
         <li><a href="#"><i class="fa fa-th-list"></i> <span>Vendor Managment</span></a></li>

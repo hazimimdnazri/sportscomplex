@@ -23,13 +23,8 @@
                         <td class="text-center">{{ $n++ }}</td>
                         <td class="text-center">{{ $r->r_asset->asset }}</td>
                         <td class="text-center">
-                            @if( (strtotime($r->end_date) - strtotime($r->start_date)) / (60*60*24) > 0)
-                            {{(strtotime($r->end_date) - strtotime($r->start_date)) / (60*60*24)}} day(s) <br>
-                            {{ date('d/m/Y' ,strtotime($r->start_date)) }} - {{ date('d/m/Y' ,strtotime($r->end_date)) }}
-                            @else
                             {{ $r->duration }} Hour(s) <br>
                             {{ date('h:i:s a' ,strtotime($r->start_date)) }} - {{ date('h:i:s a' ,strtotime($r->end_date)) }}
-                            @endif
                         </td>
                         <td class="text-center">{{ number_format($r->r_asset->price, 2) }}</td>
                         <td class="text-center">{{ number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}  </td>
@@ -60,20 +55,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Facilities <span class="text-red">*</span></label>
-                        <select onChange="waktu(this.value)" name="asset" class="form-control select2" style="width: 100%;">
-                            <option value="">-- Asset --</option>
-                            @foreach($assets as $a)
-                                <option value="{{ $a->id }}">{{ $a->asset }}</option>
+                        <label>Group <span class="text-red">*</span></label>
+                        <select name="group" class="form-control select2" onChange="selectGroup(this.value)" style="width: 100%;">
+                            <option value="">-- Facility Group --</option>
+                            @foreach($groups as $g)
+                                <option value="{{ $g->id }}">{{ $g->group }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="">Reservation Type</label>
-                        <select class="form-control" name="reservation_type" name="reservation_type" onChange="dayHour(this.value)">
-                            <option value="1" selected>Single Day</option>
-                            <option value="2">Multiple Days</option>
-                        </select>
+                    <div class="form-group" id="facilities">
 
                     </div>
                     <div class="bootstrap-timepicker" id="start_time">
@@ -94,19 +84,6 @@
                                 <select name="duration" class="form-control" id="duration">
                                     <option value="" selected>-- Duration --</option>
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="daily" style="display:none">
-                        <div class="form-group">
-                            <label>Date range:</label>
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" class="form-control pull-right" id="reservation">
-                                <input name="start_date" type="hidden" id="start_date">
-                                <input name="end_date" type="hidden" id="end_date">
                             </div>
                         </div>
                     </div>
@@ -144,21 +121,9 @@
             showInputs: false,
             defaultTime: 'current'
         })
-
-        $('#reservation').daterangepicker({
-            minDate: new Date(),
-            locale: {
-                "format": "DD/MM/YYYY",
-            },
-        },(start, end) => {
-            $("#start_date").val(start.format('YYYY-MM-DD'))
-            $("#end_date").val(end.format('YYYY-MM-DD'))
-        });
-
-        $('.input-daterange-datepicker-1').val('');
     })
 
-    waktu = (value) => {
+    selectFacility = (value) => {
         if(value){
             $.ajax({
                 type:"POST",
@@ -201,5 +166,23 @@
             $("#daily").show();
             $("#start_time").hide();
         }
+    }
+
+    selectGroup = (value) => {
+        if(value){
+            $.ajax({
+                type:"POST",
+                url: "{{ url('ajax/facilities') }}",
+                data : {
+                    "_token": "{{ csrf_token() }}",
+                    "group" : value
+                }
+            }).done(function(response){
+                $("#facilities").html(response)
+            });
+        } else {
+            $("#facilities").html('')
+        }
+
     }
 </script>

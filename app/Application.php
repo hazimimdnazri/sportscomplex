@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Application extends Model
 {
     public function a_applicant(){
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function a_asset(){
-        return $this->belongsTo(LAsset::class, 'asset_id');
+        return $this->belongsTo(LFacility::class, 'asset_id');
     }
 
     public function a_status(){

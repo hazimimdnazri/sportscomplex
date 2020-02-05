@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\LFacilityGroup;
 use App\LFacility;
 use App\Application;
 use Auth;
-use App\Customer;
 use App\Reservation;
 use App\LActivity;
 use QrCode;
@@ -25,7 +25,7 @@ class ApplicationController extends Controller
         return view('application', compact('assets', 'applications'));
     }
 
-    public function details($id){
+    public function details(Request $request, $id){
         $application = Application::find($id);
         return view('applications.details', compact('application'));
     }
@@ -55,20 +55,17 @@ class ApplicationController extends Controller
     public function itemType(Request $request){
         $id = $request->id;
         if($request->type == 1){
-            $assets = LFacility::all();
-            $reservations = Reservation::where('application_id', $request->id)->where('type',1)->get();
-            return view('shared.asset', compact('reservations', 'assets', 'id'));
+            $groups = LFacilityGroup::all();
+            $reservations = Reservation::where('application_id', $request->id)->get();
+            return view('shared.asset', compact('reservations', 'groups', 'id'));
         } else if($request->type == 2) {
-            $activities = LActivity::all();
-            $reservations = Reservation::where('application_id', $request->id)->where('type',2)->get();
-            return view('shared.activity', compact('reservations', 'activities', 'id'));
+
         } else {
             return NULL;
         }
     }
 
     public function activityType(){
-        
         return view('shared.asset', compact('reservations'));
     }
 
@@ -77,45 +74,44 @@ class ApplicationController extends Controller
     }
 
     public function submitApplication(Request $request){
-        $group = $request->facility;
-        $date = $request->date;
-        $facilities = LFacility::where('group', $group)->get();
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make(123456);
 
-        return view('partials.application-form', compact('date', 'group', 'facilities'));
-        // $user = new User;
-        // $user->name = $request->name;
-        // $user->email = $request->email;
-        // $user->password = Hash::make(123456);
+        if($user->save()){
+            $details = new CustomerDetail;
+            $details->user_id = $user->id;
+            $details->ic = $request->ic;
+            $date = str_split(substr($request->ic, 0, 6), 2);
+            $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
+            $details->type = $request->type;
 
-        // if($user->save()){
-        //     $details = new CustomerDetail;
-        //     $details->user_id = $user->id;
-        //     $details->ic = $request->ic;
-        //     $date = str_split(substr($request->ic, 0, 6), 2);
-        //     $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
-        //     $details->type = $request->type;
+            if($details->save()){
+                if($request->type == 3){
+                    $student = new StudentDetail;
+                    $student->user_id = $user->id;
+                    $student->student_id = $request->student_id;
+                    $student->institution = $request->institution;
+                    $student->save();
 
-        //     if($details->save()){
-        //         if($request->type == 3){
-        //             $student = new StudentDetail;
-        //             $student->user_id = $user->id;
-        //             $student->student_id = $request->student_id;
-        //             $student->institution = $request->institution;
-        //         } else if($request->type == 2){
-        //             $staff = new StaffDetail;
-        //             $staff->user_id = $user->id;
-        //             $staff->staff_id = $request->staff_id;
-        //             $staff->company = $request->company;
-        //         } else {
-        //             return "success";
-        //         }
+                } else if($request->type == 2){
+                    $staff = new StaffDetail;
+                    $staff->user_id = $user->id;
+                    $staff->staff_id = $request->staff_id;
+                    $staff->company = $request->company;
+                    $staff->save();
+                }
 
-        //         if($student->save() || $staff->save()){
-        //             return "success";
-        //         }
-
-        //     }
-        // }
+                $application = new Application;
+                $application->user_id = $user->id;
+                $application->date = date('Y-m-d');
+                $application->registered_by = Auth::user()->id;
+                if($application->save()){
+                    return redirect('application/'.$application->id);
+                }
+            }
+        }
     }
 
     public function payment($id){
@@ -170,21 +166,13 @@ class ApplicationController extends Controller
 
     public function submitFacility(Request $request, $id){
         $reservation = new Reservation;
-        if($request->reservation_type == 1){
-            $start_time = date('H:i:s', strtotime($request->start_time));
-            $reservation->application_id = $id;
-            $reservation->asset_id = $request->asset;
-            $reservation->type = 1;
-            $reservation->duration = $request->duration;
-            $reservation->start_date = date("Y-m-d $start_time", strtotime(Application::find($id)->date));
-            $reservation->end_date = date('Y-m-d H:i:s', strtotime($reservation->start_date) + (60*60*$reservation->duration));
-        } else {
-            $reservation->application_id = $id;
-            $reservation->asset_id = $request->asset;
-            $reservation->type = 1;
-            $reservation->start_date = date('Y-m-d 00:00:00', strtotime($request->start_date));
-            $reservation->end_date =  date('Y-m-d 00:00:00', strtotime($request->end_date));
-        }
+        $start_time = date('H:i:s', strtotime($request->start_time));
+        $reservation->application_id = $id;
+        $reservation->group_id = $request->group;
+        $reservation->facility_id = $request->facility;
+        $reservation->duration = $request->duration;
+        $reservation->start_date = date("Y-m-d $start_time", strtotime(Application::find($id)->date));
+        $reservation->end_date = date('Y-m-d H:i:s', strtotime($reservation->start_date) + (60*60*$reservation->duration));
         
         if($reservation->save()){
             return back();
@@ -211,18 +199,9 @@ class ApplicationController extends Controller
         return back();
     }
 
-    public function ajaxDuration(Request $request){
-        $facility = LFacility::find($request->facility);
-        return view('partials.application-duration', compact('facility'));
-    }
-
-    public function ajaxEndTime(Request $request){
-        $response = [
-            "unixtime" => $request->start_date + ($request->duration * 60 * 60),
-            "time" =>  date('H:i A', $request->start_date + ($request->duration * 60 * 60))
-        ];
-
-        return $response;
+    public function ajaxFacilities(Request $request){
+        $facilities = LFacility::where('group', $request->group)->get();
+        return view('partials.select-facilities', compact('facilities'));
     }
 
     public function qr(){

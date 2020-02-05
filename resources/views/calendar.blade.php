@@ -9,11 +9,11 @@
 @section('content')
 <section class="content-header">
     <h1>
-        POS
+        Availability Calendar
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">POS</li>
+        <li class="active">Availability Calendar</li>
     </ol>
 </section>
 
@@ -27,7 +27,7 @@
 							<div class="form-group">
 								<label for="exampleInputEmail1">Facility <span class="text-red">*</span></label>
 								<select class="form-control" name="facility" onChange="loadCalendar(this.value)">
-									<option value="" selected>-- Facility --</option>
+									<option value="" selected>All</option>
 									@foreach($facilities as $f)
 									<option value="{{ $f->id }}">{{ $f->group }}</option>
 									@endforeach
@@ -52,34 +52,6 @@
 <script src="{{ asset('assets/bower_components/fullcalendar/dist/fullcalendar.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
-showModal = (date, facility) => {
-	$.ajax({
-		type:"POST",
-		url: "{{ url('ajax/calendar-modal') }}",
-		data: {
-			"_token" : "{{ csrf_token() }}",
-			"date" : date,
-			"facility" : facility
-		}
-	}).done(function(response){
-		$("#variable").html(response)
-		$('#activityModal').modal('show')
-	});
-}
-
-userType = (value) => {
-	if(value == 3){
-		$("#students").show()
-		$("#staffs").hide()
-	} else if(value == 2){
-		$("#students").hide()
-		$("#staffs").show()
-	} else {
-		$("#students").hide()
-		$("#staffs").hide()
-	}
-}
-
 loadCalendar = (value) => {
 	$.ajax({
 		type:"POST",
@@ -90,34 +62,6 @@ loadCalendar = (value) => {
 		}
 	}).done(function(response){
 		$("#calender").html(response)
-	});
-}
-
-changeDuration = (value) => {
-	$.ajax({
-		type:"POST",
-		url: "{{ url('ajax/duration') }}",
-		data: {
-			"_token" : "{{ csrf_token() }}",
-			"facility" : value
-		}
-	}).done(function(response){
-		$("#duration").html(response)
-	});
-}
-
-changeTime = (value) => {
-	$.ajax({
-		type:"POST",
-		url: "{{ url('ajax/endtime') }}",
-		data: {
-			"_token" : "{{ csrf_token() }}",
-			"start_date" : $("#start_date").val(),
-			"duration" : value
-		}
-	}).done(function(response){
-		$("#end_time").val(response.time)
-		$("#end_date").val(response.unixtime)
 	});
 }
 </script>
