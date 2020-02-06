@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\Customer as CustomerResource;
-use App\Customer;
+use App\CustomerDetail;
 use App\LFacility;
 
 class ApiController extends Controller
@@ -15,8 +15,13 @@ class ApiController extends Controller
     }
 
     public function customer($id){
-        $customers = Customer::find($id);
-        return new CustomerResource($customers);
+        $customers = CustomerDetail::where('ic', $id)->first();
+        if($customers){
+            return new CustomerResource($customers);
+        } else {
+            return "error";
+        }
+        
     }
 
     public function asset($id){

@@ -54,10 +54,11 @@ class ApplicationController extends Controller
 
     public function itemType(Request $request){
         $id = $request->id;
+        $user = User::find($request->user);
         if($request->type == 1){
             $groups = LFacilityGroup::all();
             $reservations = Reservation::where('application_id', $request->id)->get();
-            return view('shared.asset', compact('reservations', 'groups', 'id'));
+            return view('shared.asset', compact('reservations', 'groups', 'id', 'user'));
         } else if($request->type == 2) {
 
         } else {
@@ -74,43 +75,48 @@ class ApplicationController extends Controller
     }
 
     public function submitApplication(Request $request){
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make(123456);
+        if($request->post_id == ''){
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make(123456);
 
-        if($user->save()){
-            $details = new CustomerDetail;
-            $details->user_id = $user->id;
-            $details->ic = $request->ic;
-            $date = str_split(substr($request->ic, 0, 6), 2);
-            $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
-            $details->type = $request->type;
+            if($user->save()){
+                $details = new CustomerDetail;
+                $details->user_id = $user->id;
+                $details->ic = $request->ic;
+                $date = str_split(substr($request->ic, 0, 6), 2);
+                $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
+                $details->type = $request->type;
 
-            if($details->save()){
-                if($request->type == 3){
-                    $student = new StudentDetail;
-                    $student->user_id = $user->id;
-                    $student->student_id = $request->student_id;
-                    $student->institution = $request->institution;
-                    $student->save();
+                if($details->save()){
+                    if($request->type == 3){
+                        $student = new StudentDetail;
+                        $student->user_id = $user->id;
+                        $student->student_id = $request->student_id;
+                        $student->institution = $request->institution;
+                        $student->save();
 
-                } else if($request->type == 2){
-                    $staff = new StaffDetail;
-                    $staff->user_id = $user->id;
-                    $staff->staff_id = $request->staff_id;
-                    $staff->company = $request->company;
-                    $staff->save();
-                }
-
-                $application = new Application;
-                $application->user_id = $user->id;
-                $application->date = date('Y-m-d');
-                $application->registered_by = Auth::user()->id;
-                if($application->save()){
-                    return redirect('application/'.$application->id);
+                    } else if($request->type == 2){
+                        $staff = new StaffDetail;
+                        $staff->user_id = $user->id;
+                        $staff->staff_id = $request->staff_id;
+                        $staff->company = $request->company;
+                        $staff->save();
+                    }
                 }
             }
+
+            $user_id = $user->id;
+        } else {
+            $user_id = $request->post_id;
+        }
+        $application = new Application;
+        $application->user_id = $user_id;
+        $application->date = date('Y-m-d');
+        $application->registered_by = Auth::user()->id;
+        if($application->save()){
+            return redirect('application/'.$application->id);
         }
     }
 
@@ -126,7 +132,32 @@ class ApplicationController extends Controller
     }
 
     public function ajaxPayment(Request $request, $id){
-        return $request;
+        $trasaction = new Transaction;
+        if($request->type == "B"){
+            $application = Application::find($id);
+            $application->event = $request->event;
+            $application->status = 3;
+
+            $user = User::find($application->user_id);
+            $trasaction->trans_number = $request->type.$id;
+            $trasaction->trans_type = $request->type;
+            $trasaction->date = date('Y-m-d');
+            $trasaction->application_id = $id;
+            $trasaction->customer_id = $application->user_id;
+            $trasaction->tax = 0;
+            $trasaction->membership_discount = $user->r_details->r_membership->discount;
+            $trasaction->general_discount = 0;
+            $trasaction->subtotal = number_format($request->subtotal, 2);
+            $trasaction->total = number_format($request->total, 2);
+            $trasaction->paid = number_format($request->paid, 2);
+            $trasaction->trans_changes = number_format($request->change, 2);
+
+            if($application->save() && $trasaction->save()){
+                return "success";
+            }
+        }
+        
+        return $trasaction;
     }
 
     public function ajaxSubmitPayment(Request $request){

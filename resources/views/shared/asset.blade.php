@@ -1,4 +1,3 @@
-
 <div class="col-xs-12">
     <div class="box box-primary">
         <div class="box-header">
@@ -116,18 +115,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Sub Total (RM) </label>
+                        <input type="text" class="form-control" name="subtotal" id="subtotal" value="{{ number_format($total, 2) }}" readOnly>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Discount ({{$user->r_details->r_membership->discount}}%) </label>
+                        <input type="text" class="form-control" name="discount" id="discount" value="{{ $discount = number_format(($user->r_details->r_membership->discount/100) * $total, 2) }}" readOnly>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Total Price (RM) </label>
-                        <input type="text" class="form-control" name="total" id="total" value="{{ number_format($total, 2) }}" readOnly>
+                        <input type="text" class="form-control" name="total" id="total" value="{{ number_format(($total - $discount), 2)  }}" readOnly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Cash Paid (RM) </label>
-                        <input type="text" class="form-control" oninput="calcChange(this.value)" value="0.00" name="paid" id="paid">
+                        <input type="text" class="form-control" oninput="calcChange(this.value)" value="" name="paid" id="paid">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Change (RM) </label>
                         <input type="text" class="form-control" name="change" id="change" value="0.00">
                     </div>
                 </div>
+                <input type="hidden" name="type" value="B">
+                <input type="hidden" name="event" id="event_name" value="B">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary" value="Save"/>
@@ -136,6 +145,8 @@
         </div>
     </div>
 </div>
+
+<div id="variable_3"></div>
 
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
@@ -174,6 +185,7 @@
 
     toPayment = () => {
         $("#paymentModal").modal('show')
+        $("#event_name").val($("#event").val())
     }
 
     dayHour = (value) => {
@@ -216,26 +228,25 @@
         var formData = new FormData(this);
 
         $.ajax({
-            url: "{{ url('application/payment/'.$r->application_id) }}",
+            url: "{{ url('application/payment/'.$id) }}",
             type: 'POST',
             data: formData,
             cache: false,
             contentType: false,
             processData: false
         }).done((response) => {
-            console.log(response)
-            // if(response == 'success'){
-            //     $("#educationModal").modal('hide')
-            //     Swal.fire(
-            //         'Succes!',
-            //         'Data saved!!',
-            //         'success'
-            //     ).then((result) => {
-            //         if(result.value){
-            //             location.reload();
-            //         }
-            //     })
-            // } 
+            if(response == 'success'){
+                $("#paymentModal").modal('hide')
+                Swal.fire(
+                    'Succes!',
+                    'Data saved!!',
+                    'success'
+                ).then((result) => {
+                    if(result.value){
+                        window.location.replace("{{ url('application') }}");
+                    }
+                })
+            } 
         });
     });
 </script>

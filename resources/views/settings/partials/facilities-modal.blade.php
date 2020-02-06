@@ -13,7 +13,7 @@
                         <select name="group" class="form-control" style="width: 100%;">
                             <option value="">-- Facility Group --</option>
                             @foreach($groups as $g)
-                                <option value="{{ $g->id }}" {{ $facility->type == $g->id ? 'selected' : '' }}>{{ $g->group }}</option>
+                                <option value="{{ $g->id }}" {{ $facility->group == $g->id ? 'selected' : '' }}>{{ $g->group }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -8,7 +8,7 @@ $(() => {
                 $('#calendar').fullCalendar('gotoDate',date);
                 $('#calendar').fullCalendar('changeView', 'agendaDay')
             } else {
-                showModal(date._d.getTime(), "{{ $facility }}")
+
             }
         },
         header    : {
@@ -26,7 +26,7 @@ $(() => {
             @foreach($reservations as $r)
                 @if($r->r_application->status == 3)
                 {
-                    title          : '{{ $r->application_id }}',
+                    title          : '{{ $r->r_application->event }} - {{ $r->r_asset->facility }}',
                     start          : "{{ $r->start_date }}",
                     end            : "{{ $r->end_date }}",
                     backgroundColor: '#f39c12', //yellow

@@ -58,10 +58,12 @@
                                 </td>
                                 <td class="text-center">
                                     @if($a->status == 2)
-                                    <a href="{{ url('/application/payment/'.$a->id) }}" class="btn btn-warning">Pay</a>
+                                    <!-- <a href="{{ url('/application/payment/'.$a->id) }}" class="btn btn-warning">Pay</a> -->
                                     @endif
                                     <a class="btn btn-primary">View</a>
+                                    @if($a->status != 3)
                                     <a href="{{ url('application/'.$a->id) }}" class="btn btn-info">Edit</a>
+                                    @endif
                                     <a class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
@@ -109,15 +111,12 @@
             type:"GET",
             url: "{{ url('api/customer') }}"+"/"+$("#member_id").val()
         }).done(function(response){
-            if(response.data != ""){
+            if(response != "error"){
+                $("#name").val(response.data.name);
                 $("#name").val(response.data.name);
                 $("#email").val(response.data.email);
                 $("#ic").val(response.data.ic);
-                $("#city").val(response.data.city);
-                $("#zipcode").val(response.data.zipcode);
-                $("#address").val(response.data.address);
-                $("#phone").val(response.data.phone);
-                $("#state").val(response.data.state).change();
+                $("#type").val(response.data.type).change();
                 $("#post_id").val(response.data.id);
             } else {
                 alert("Pengguna tidak wujud!")

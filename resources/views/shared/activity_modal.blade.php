@@ -25,7 +25,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Type <span class="text-red">*</span></label>
-                                <select name="type" onChange="userType(this.value)" class="form-control" name="membership">
+                                <select name="type" onChange="userType(this.value)" id="type" class="form-control">
                                     <option value="" selected>-- Type --</option>
                                     <option value="1" >Public</option>
                                     <option value="2" >Staff</option>

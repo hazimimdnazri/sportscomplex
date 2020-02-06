@@ -93,8 +93,9 @@ class HomeController extends Controller
     }
 
     public function facilityCalendar(Request $request){
-        $facility = $request->facility;
-        $reservations = Reservation::all();
-        return view('partials.calendar', compact('reservations', 'facility'));
+        $group = $request->facility;
+        $facilities = LFacility::where('group', $group)->pluck('id');
+        $reservations = Reservation::whereIn('facility_id', $facilities)->get();
+        return view('partials.calendar', compact('reservations'));
     }
 }

@@ -66,7 +66,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Event <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name">
+                                <input type="text" class="form-control" name="event" id="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">I.C Number </label>
@@ -125,7 +125,8 @@
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id" : "{{ $application->id }}",
-                "type": value
+                "type": value,
+                "user" : {{$application->a_applicant->id}}
             }
         }).done(function(response){
             $("#variable_1").html(response)
