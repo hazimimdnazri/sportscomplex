@@ -3,6 +3,7 @@
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 <link href="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
 @endsection
 
 @section('content')
@@ -69,6 +70,7 @@
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('assets/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
 <script>
     $(() => {
         $('#example1').DataTable()
@@ -84,6 +86,7 @@
         }).done(function(response){
             $("#variable").html(response)
             $('#facilitiesModal').modal('show')
+            $('.color-picker').colorpicker()
         });
     }
 
@@ -98,6 +101,7 @@
         }).done(function(response){
             $("#variable").html(response)
             $('#facilitiesModal').modal('show')
+            $('.color-picker').colorpicker()
         });
     }
 

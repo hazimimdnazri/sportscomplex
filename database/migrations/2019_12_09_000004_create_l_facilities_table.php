@@ -20,6 +20,7 @@ class CreateLFacilitiesTable extends Migration
             $table->float('price');
             $table->float('min_hour');
             $table->integer('status')->default(1);
+            $table->string('colour')->default('black');
             $table->text('remark')->nullable();
             $table->integer('flag')->default(1);
             $table->timestamps();

@@ -30,6 +30,15 @@
                         <input type="text" class="form-control" name="min_hour" value="{{ $facility->min_hour }}" placeholder="Enter asset name">
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Legend Colour <span class="text-red">*</span></label>
+                        <div class="input-group color-picker">
+                            <input type="text" name="colour" value="{{ $facility->colour }}" class="form-control color-picker">
+                            <div class="input-group-addon">
+                                <i></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Remarks </label>
                         <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name">{{ $facility->remark }}</textarea>
                     </div>

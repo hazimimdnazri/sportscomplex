@@ -29,8 +29,8 @@ $(() => {
                     title          : '{{ $r->r_application->event }} - {{ $r->r_asset->facility }}',
                     start          : "{{ $r->start_date }}",
                     end            : "{{ $r->end_date }}",
-                    backgroundColor: '#f39c12', //yellow
-                    borderColor    : '#f39c12' //yellow
+                    backgroundColor: '{{ $r->r_asset->colour }}',
+                    borderColor    : '{{ $r->r_asset->colour }}' 
                 },
                 @endif
             @endforeach

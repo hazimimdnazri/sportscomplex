@@ -67,6 +67,7 @@ class SettingsController extends Controller
         $facility->price = $request->price;
         $facility->min_hour = $request->min_hour;
         $facility->remark = $request->remark;
+        $facility->colour = $request->colour;
 
         if($facility->save()){
             return back();
