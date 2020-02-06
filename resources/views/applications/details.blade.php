@@ -42,10 +42,10 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Reservation Item <span class="text-red">*</span></label>
-                                <select onChange="itemType(this.value)" name="type" class="form-control">
+                                <select onChange="itemType(this.value)" name="type" id="type" class="form-control">
                                     <option value="" selected>-- Item --</option>
                                     <option value="1" >Facility</option>
-                                    <option value="2" >Activity</option>
+                                    <option value="2" disabled>Activity</option>
                                 </select>
                             </div>
                         </div>
@@ -114,6 +114,8 @@
             autoclose: true,
             startDate: new Date()
         })
+
+        $("#type").val(1).change();
     })
 
     itemType = (value) => {

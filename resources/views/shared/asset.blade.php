@@ -17,11 +17,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $n = 1 @endphp
+                    @php 
+                    $n = 1;
+                    $total = 0;
+                    @endphp
                     @foreach($reservations as $r)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $r->r_asset->asset }}</td>
+                        <td class="text-center">{{ $r->r_asset->facility }} ({{ $r->r_group->group }})</td>
                         <td class="text-center">
                             {{ $r->duration }} Hour(s) <br>
                             {{ date('h:i:s a' ,strtotime($r->start_date)) }} - {{ date('h:i:s a' ,strtotime($r->end_date)) }}
@@ -32,13 +35,14 @@
                             <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
+                    {{ $total += number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}
                     @endforeach
                 </tbody>
             </table>
             <hr>
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <button onClick="toPayment()" class="btn btn-primary">Submit</button>
+                <button onClick="toPayment()" class="btn btn-primary">Pay</button>
             </div>
         </div>
     </div>
@@ -101,6 +105,38 @@
     </div>
 </div>
 
+<div class="modal fade" id="paymentModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form id="paymentForm" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">POS Payment (Cash)</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Total Price (RM) </label>
+                        <input type="text" class="form-control" name="total" id="total" value="{{ number_format($total, 2) }}" readOnly>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Cash Paid (RM) </label>
+                        <input type="text" class="form-control" oninput="calcChange(this.value)" value="0.00" name="paid" id="paid">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Change (RM) </label>
+                        <input type="text" class="form-control" name="change" id="change" value="0.00">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
@@ -137,23 +173,7 @@
     }
 
     toPayment = () => {
-        if($("#event").val() == ''){
-            alert("Please enter the event name.")
-        } else {
-            $.ajax({
-                type:"POST",
-                url: "{{ url('ajax/confirmreservation') }}",
-                data : {
-                    "_token": "{{ csrf_token() }}",
-                    "id" : "{{ $id }}",
-                    "event_name" : $("#event").val()
-                }
-            }).done(function(response){
-                if(response == 'success'){
-                    window.location = "{{ url('application/payment/'.$id) }}"
-                }
-            });
-        }
+        $("#paymentModal").modal('show')
     }
 
     dayHour = (value) => {
@@ -185,4 +205,37 @@
         }
 
     }
+
+    calcChange = (value) => {
+        var change = value - $("#total").val()
+        $("#change").val(change.toFixed(2))
+    }
+
+    $("#paymentForm").submit(function(e) {
+        e.preventDefault();    
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: "{{ url('application/payment/'.$r->application_id) }}",
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done((response) => {
+            console.log(response)
+            // if(response == 'success'){
+            //     $("#educationModal").modal('hide')
+            //     Swal.fire(
+            //         'Succes!',
+            //         'Data saved!!',
+            //         'success'
+            //     ).then((result) => {
+            //         if(result.value){
+            //             location.reload();
+            //         }
+            //     })
+            // } 
+        });
+    });
 </script>

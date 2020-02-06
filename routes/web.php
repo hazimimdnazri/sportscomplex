@@ -21,20 +21,25 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('dashboard', 'HomeController@dashboard')->middleware('auth');
 Route::get('calendar', 'HomeController@calendar')->middleware('auth');
-Route::get('application', 'ApplicationController@index')->middleware('auth');
-Route::post('application', 'ApplicationController@submitApplication')->middleware('auth');
-Route::get('application/{id}', 'ApplicationController@details')->middleware('auth');
-Route::post('application/{id}', 'ApplicationController@submitDetails')->middleware('auth');
-Route::get('application/payment/{id}', 'ApplicationController@payment')->middleware('auth');
-Route::post('application/{id}/facility', 'ApplicationController@submitFacility')->middleware('auth');
-Route::post('application/{id}/activity', 'ApplicationController@submitActivity')->middleware('auth');
 Route::get('registration', 'HomeController@register')->middleware('auth');
 Route::post('registration', 'HomeController@submitRegister')->middleware('auth');
 Route::get('transactions', 'HomeController@transactions')->middleware('auth');
 
+Route::group(['prefix' => 'application'], function() {
+    Route::get('/', 'ApplicationController@index')->middleware('auth');
+    Route::post('/', 'ApplicationController@submitApplication')->middleware('auth');
+    Route::get('{id}', 'ApplicationController@details')->middleware('auth');
+    Route::post('{id}', 'ApplicationController@submitDetails')->middleware('auth');
+    Route::get('payment/{id}', 'ApplicationController@payment')->middleware('auth');
+    Route::post('payment/{id}', 'ApplicationController@ajaxPayment')->middleware('auth');
+    Route::post('{id}/facility', 'ApplicationController@submitFacility')->middleware('auth');
+    Route::post('{id}/activity', 'ApplicationController@submitActivity')->middleware('auth');
+});
+
 
 Route::group(['prefix' => 'ajax'], function() {
     Route::post('calendar', 'HomeController@facilityCalendar');
+    Route::post('facilities', 'ApplicationController@ajaxFacilities');
     Route::post('facilities', 'ApplicationController@ajaxFacilities');
 
 });

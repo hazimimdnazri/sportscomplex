@@ -125,6 +125,10 @@ class ApplicationController extends Controller
         }
     }
 
+    public function ajaxPayment(Request $request, $id){
+        return $request;
+    }
+
     public function ajaxSubmitPayment(Request $request){
         $application = Application::find($request->id);
         $reservation = Reservation::where('application_id', $application->id)->first();
