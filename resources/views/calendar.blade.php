@@ -2,7 +2,6 @@
 
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/fullcalendar/dist/fullcalendar.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/bower_components/fullcalendar/dist/fullcalendar.print.min.css') }}" media="print">
 <link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
 @endsection
 
@@ -49,7 +48,8 @@
 
 @section('postscript')
 <script src="{{ asset('assets/bower_components/moment/moment.js') }}"></script>
-<script src="{{ asset('assets/bower_components/fullcalendar/dist/fullcalendar.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.1/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.1/scheduler.min.js"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
 loadCalendar = (value) => {
