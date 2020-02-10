@@ -154,20 +154,30 @@
 
     deleteAsset = (id) => {
         Swal.fire({
-            title: 'Are you sure?',
+            title: "Are you sure?",
             text: "You won't be able to revert this!",
-            icon: 'warning',
+            type: "warning",
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.value) {
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
+                $.ajax({
+                    type:"POST", 
+                    url: "{{ url('application/ajax/deletefacility') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id" : id,
+                    }
+                }).done(function(response){
+                    console.log(response)
+                });
+                // Swal.fire(
+                // 'Deleted!',
+                // 'Your file has been deleted.',
+                // 'success'
+                // )
             }
         })
     }

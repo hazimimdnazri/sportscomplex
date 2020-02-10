@@ -1,4 +1,4 @@
-<div class="modal fade" id="activityModal">
+<div class="modal fade" id="activityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" id="form">
             <form action="{{ url('application') }}" method="POST">

@@ -1,4 +1,4 @@
-<aside class="main-sidebar skin-blue-light">
+<aside class="main-sidebar">
     <section class="sidebar">
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>

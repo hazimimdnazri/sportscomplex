@@ -12,6 +12,7 @@
                         <th class="text-center">Duration</th>
                         <th class="text-center">Price / Min. Hour (RM)</th>
                         <th class="text-center">Total Price (RM)</th>
+                        <th class="text-center">Equiptments</th>
                         <th class="text-center" width="20%">Actions</th>
                     </tr>
                 </thead>
@@ -30,7 +31,9 @@
                         </td>
                         <td class="text-center">{{ number_format($r->r_asset->price, 2) }}</td>
                         <td class="text-center">{{ number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}  </td>
+                        <td class="text-center"></td>
                         <td class="text-center">
+                            <button onClick="addEquiptment({{ $r->id }})" class="btn btn-success">Add Equiptment</button>
                             <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
@@ -47,7 +50,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="facilityModal">
+<div class="modal fade" id="facilityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="{{ url('application/'.$id.'/facility') }}" method="POST">
@@ -104,7 +107,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="paymentModal">
+<div class="modal fade" id="paymentModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form id="paymentForm" method="POST">

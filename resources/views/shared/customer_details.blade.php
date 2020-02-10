@@ -1,4 +1,4 @@
-<div class="modal fade" id="user-modal">
+<div class="modal fade" id="user-modal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="application_form" action="{{ url('settings/customers') }}" method="POST">

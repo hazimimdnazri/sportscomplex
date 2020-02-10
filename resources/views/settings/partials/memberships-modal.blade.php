@@ -1,4 +1,4 @@
-<div class="modal fade" id="membershipsModal">
+<div class="modal fade" id="membershipsModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="{{ url('settings/membership') }}" method="POST">

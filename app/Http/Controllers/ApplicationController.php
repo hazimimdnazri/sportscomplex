@@ -235,6 +235,13 @@ class ApplicationController extends Controller
         return view('partials.select-facilities', compact('facilities'));
     }
 
+    public function deleteFacility(Request $request){
+        $reservation = Reservation::find($request->id);
+        if($reservation->delete()){
+            return "success";
+        }
+    }
+
     public function qr(){
         return QrCode::size(500)->generate('123');
     }

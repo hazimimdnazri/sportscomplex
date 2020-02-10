@@ -1,4 +1,4 @@
-<div class="modal fade" id="groupsModal">
+<div class="modal fade" id="groupsModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="{{ url('settings/groups') }}" method="POST">

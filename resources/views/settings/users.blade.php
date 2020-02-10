@@ -62,7 +62,7 @@
     </div>
 </section>
 
-<div class="modal fade" id="user-modal">
+<div class="modal fade" id="user-modal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="{{ url('settings/users') }}" method="POST">

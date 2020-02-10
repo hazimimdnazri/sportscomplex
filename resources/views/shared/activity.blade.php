@@ -56,7 +56,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="activityModal">
+<div class="modal fade" id="activityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="{{ url('application/'.$id.'/activity') }}" method="POST">

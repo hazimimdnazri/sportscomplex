@@ -34,14 +34,10 @@ Route::group(['prefix' => 'application'], function() {
     Route::post('payment/{id}', 'ApplicationController@ajaxPayment')->middleware('auth');
     Route::post('{id}/facility', 'ApplicationController@submitFacility')->middleware('auth');
     Route::post('{id}/activity', 'ApplicationController@submitActivity')->middleware('auth');
-});
 
-
-Route::group(['prefix' => 'ajax'], function() {
-    Route::post('calendar', 'HomeController@facilityCalendar');
-    Route::post('facilities', 'ApplicationController@ajaxFacilities');
-    Route::post('facilities', 'ApplicationController@ajaxFacilities');
-
+    Route::group(['prefix' => 'ajax'], function() {
+        Route::post('deletefacility', 'ApplicationController@deleteFacility');
+    });
 });
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
@@ -81,6 +77,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
     Route::post('setdate', 'ApplicationController@ajaxSetDate')->middleware('auth');
     Route::post('confirmreservation', 'ApplicationController@confirmReservation')->middleware('auth');
     Route::post('editcustomer', 'SettingsController@editCustomer');
+    Route::post('calendar', 'HomeController@facilityCalendar');
+    Route::post('facilities', 'ApplicationController@ajaxFacilities');
 });
 
 Route::get('test', 'ApplicationController@qr');
