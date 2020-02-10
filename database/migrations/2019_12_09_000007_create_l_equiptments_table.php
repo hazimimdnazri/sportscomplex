@@ -16,11 +16,12 @@ class CreateLEquiptmentsTable extends Migration
         Schema::create('l_equiptments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('equiptment');
-            $table->unsignedBigInteger('facility');
+            $table->unsignedBigInteger('facility_id');
+            $table->string('serial_number')->unique();
             $table->string('remark')->nullable();
             $table->timestamps();
 
-            $table->foreign('facility')->references('id')->on('l_facilities');
+            $table->foreign('facility_id')->references('id')->on('l_facilities');
         });
     }
 

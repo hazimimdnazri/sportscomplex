@@ -13,13 +13,17 @@
                         <select name="facility" class="form-control" style="width: 100%;">
                             <option value="">-- Facility --</option>
                             @foreach($facilities as $f)
-                                <option value="{{ $f->id }}" {{ $equiptment->facility == $f->id ? 'selected' : '' }}>{{ $f->facility }}</option>
+                                <option value="{{ $f->id }}" {{ $equiptment->facility_id == $f->id ? 'selected' : '' }}>{{ $f->facility }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Equiptment <span class="text-red">*</span></label>
                         <input type="text" class="form-control" name="equiptment" value="{{ $equiptment->equiptment }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Serial Number / ID <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="serial_number" value="{{ $equiptment->serial_number }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Remarks <span class="text-red">*</span></label>

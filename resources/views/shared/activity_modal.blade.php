@@ -32,6 +32,8 @@
                                     <option value="3" >Students</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Name <span class="text-red">*</span></label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Applicant name">
@@ -42,6 +44,8 @@
                                 <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Applicant email">
                             </div>
+                        </div>
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
                                 <input type="text" class="form-control" id="ic" name="ic" placeholder="Applicant MyKad / MyKid">

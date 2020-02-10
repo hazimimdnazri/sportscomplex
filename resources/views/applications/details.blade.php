@@ -152,6 +152,21 @@
         }
     }
 
+    addEquiptment = (id) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('application/ajax/addequiptment') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "id" : "{{ $application->id }}",
+                "id": id
+            }
+        }).done(function(response){
+            $("#variable_3").html(response)
+            $('#equiptmentModal').modal('show');
+        });
+    }
+
     deleteAsset = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -171,13 +186,15 @@
                         "id" : id,
                     }
                 }).done(function(response){
-                    console.log(response)
+                    if(response == 'success'){
+                        Swal.fire("Deleted!", "The reservation has been deleted.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
                 });
-                // Swal.fire(
-                // 'Deleted!',
-                // 'Your file has been deleted.',
-                // 'success'
-                // )
             }
         })
     }

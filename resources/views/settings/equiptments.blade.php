@@ -31,6 +31,7 @@
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Equiptment</th>
+                                <th class="text-center">Serial Number</th>
                                 <th class="text-center">Facility</th>
                                 <th class="text-center">Remark</th>
                                 <th class="text-center" width="20%">Actions</th>
@@ -42,6 +43,7 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $e->equiptment }}</td>
+                                <td class="text-center">{{ $e->serial_number }}</td>
                                 <td class="text-center">{{ $e->r_facility->facility }}</td>
                                 <td>{{ $e->remark }}</td>
                                 <td class="text-center">

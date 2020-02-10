@@ -85,7 +85,8 @@ class SettingsController extends Controller
             $equiptment = LEquiptment::find($request->id);
         }
         $equiptment->equiptment = $request->equiptment;
-        $equiptment->facility = $request->facility;
+        $equiptment->facility_id = $request->facility;
+        $equiptment->serial_number = $request->serial_number;
         $equiptment->remark = $request->remark;
 
         if($equiptment->save()){

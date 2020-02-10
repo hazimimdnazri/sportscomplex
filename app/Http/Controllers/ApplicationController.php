@@ -15,6 +15,7 @@ use App\User;
 use App\StudentDetail;
 use App\StaffDetail;
 use App\CustomerDetail;
+use App\LEquiptment;
 use Hash;
 
 class ApplicationController extends Controller
@@ -228,6 +229,12 @@ class ApplicationController extends Controller
             }
         }
         return back();
+    }
+
+    public function addEquiptment(Request $request){
+        $reservation = Reservation::find($request->id);
+        $equiptments = LEquiptment::where('facility_id', $reservation->facility_id)->get();
+        return view('partials.equiptment-modal', compact('equiptments'));
     }
 
     public function ajaxFacilities(Request $request){
