@@ -137,6 +137,12 @@ class ApplicationController extends Controller
         $trasaction = new Transaction;
         if($request->type == "B"){
             $application = Application::find($id);
+            $reservation = Reservation::where('application_id', $id)->get();
+            foreach($reservation as $r){
+                $equiptment = Equiptment::where('reservation_id', $r->id);
+                $equiptment->update(['status' => 2]);
+            }
+
             $application->event = $request->event;
             $application->status = 3;
 
