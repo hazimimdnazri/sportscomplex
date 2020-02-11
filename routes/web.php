@@ -34,6 +34,7 @@ Route::group(['prefix' => 'application'], function() {
     Route::post('payment/{id}', 'ApplicationController@ajaxPayment')->middleware('auth');
     Route::post('{id}/facility', 'ApplicationController@submitFacility')->middleware('auth');
     Route::post('{id}/activity', 'ApplicationController@submitActivity')->middleware('auth');
+    Route::post('{id}/equiptment', 'ApplicationController@submitEquiptment')->middleware('auth');
 
     Route::group(['prefix' => 'ajax'], function() {
         Route::post('deletefacility', 'ApplicationController@deleteFacility');

@@ -8,11 +8,17 @@
                     <h4 class="modal-title">New Reservation</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12" style="margin-bottom: 10px">
+                            <button type="button" id="new" onClick="searchIC(this.id)" class="btn btn-success">New Customer</button>
+                            <button type="button" id="existing" onClick="searchIC(this.id)" class="btn btn-info">Existing Customer</button>
+                        </div>
+                    </div>
                     <p>Please fill in all the required fields, denoted with <span class="text-red">*</span>.</p>
                     <div class="row">
                         <div class="col-lg-12">
                             <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
-                            <div class="form-group">
+                            <div class="form-group" id="searchIC" style="display:none">
                                 <label for="exampleInputEmail1">IC Number </label>
                                 <div class="input-group">
                                     <input id="member_id" type="text" class="form-control" placeholder="Member ID (if available)">
@@ -84,7 +90,7 @@
                 <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Submit"/>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>

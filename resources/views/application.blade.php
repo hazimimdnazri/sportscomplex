@@ -162,5 +162,31 @@
             $("#staffs").hide()
         }
     }
+
+    searchIC = (id) => {
+        if(id == 'existing'){
+            $("#searchIC").show()
+            $("#name").attr('readOnly','readOnly')
+            $("#ic").attr('readOnly','readOnly')
+            $("#email").attr('readOnly','readOnly')
+            $("#type").attr('readOnly','readOnly')
+            $("#type option").each(function(i){
+                $(this).attr('disabled', 'disabled')
+            });
+        } else {
+            $("#searchIC").hide()
+            $("#name").removeAttr('readOnly','readOnly')
+            $("#ic").removeAttr('readOnly','readOnly')
+            $("#email").removeAttr('readOnly','readOnly')
+            $("#type").removeAttr('readOnly','readOnly')
+            $("#type option").each(function(i){
+                $(this).removeAttr('disabled', 'disabled')
+            });
+            $("#name").val('')
+            $("#ic").val('')
+            $("#email").val('')
+            $("#type").val('')
+        }
+    }
 </script>
 @endsection

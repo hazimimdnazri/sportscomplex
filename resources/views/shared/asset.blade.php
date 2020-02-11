@@ -31,13 +31,21 @@
                         </td>
                         <td class="text-center">{{ number_format($r->r_asset->price, 2) }}</td>
                         <td class="text-center">{{ number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}  </td>
-                        <td class="text-center"></td>
+                        <td>
+                            <ul>
+                                @foreach($r->getEquiptments($r->id) as $e)
+                                <li>
+                                {{ $e->r_equiptment->equiptment }} - {{ $e->r_equiptment->serial_number }}
+                                </li>
+                                @endforeach
+                            </ul>
+                        </td>
                         <td class="text-center">
                             <button onClick="addEquiptment({{ $r->id }})" class="btn btn-success">Add Equiptment</button>
                             <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
-                    {{ $total += number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}
+                    @php $total += number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) @endphp
                     @endforeach
                 </tbody>
             </table>
@@ -169,7 +177,7 @@
 
         $('.timepicker').timepicker({
             showInputs: false,
-            defaultTime: 'current'
+            minuteStep: 30
         })
     })
 

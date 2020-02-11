@@ -16,6 +16,7 @@ use App\StudentDetail;
 use App\StaffDetail;
 use App\CustomerDetail;
 use App\LEquiptment;
+use App\Equiptment;
 use Hash;
 
 class ApplicationController extends Controller
@@ -233,8 +234,18 @@ class ApplicationController extends Controller
 
     public function addEquiptment(Request $request){
         $reservation = Reservation::find($request->id);
+        $id = $reservation->id;
         $equiptments = LEquiptment::where('facility_id', $reservation->facility_id)->get();
-        return view('partials.equiptment-modal', compact('equiptments'));
+        return view('partials.equiptment-modal', compact('equiptments', 'id'));
+    }
+
+    public function submitEquiptment(Request $request, $id){
+        $equiptment = new Equiptment;
+        $equiptment->reservation_id = $id;
+        $equiptment->equiptment_id = $request->equiptment;
+        if($equiptment->save()){
+            return "success";
+        }
     }
 
     public function ajaxFacilities(Request $request){

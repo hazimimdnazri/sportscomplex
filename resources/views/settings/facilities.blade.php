@@ -36,7 +36,8 @@
                                 <th class="text-center">Price (RM)</th>
                                 <th class="text-center">Min. Hour</th>
                                 <th class="text-center">Remarks</th>
-                                <th class="text-center" width="20%">Actions</th>
+                                <th width="10%" class="text-center">Colour Legend</th>
+                                <th width="15%" class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +49,10 @@
                                 <td class="text-center">{{ $f->r_group->group }}</td>
                                 <td class="text-center">{{ number_format($f->price, 2) }}</td>
                                 <td class="text-center">{{ $f->min_hour }}</td>
-                                <td class="text-ceter">{{ $f->remark }}</td>
+                                <td class="text-center">{{ $f->remark }}</td>
+                                <td class="text-center">
+                                    <p style="background-color:{{ $f->colour }};">&nbsp;</p>
+                                </td>
                                 <td class="text-center">
                                     <a onClick="editModal({{ $f->id }})" class="btn btn-info">Edit</a>
                                     <a onClick="deleteFx({{ $f->id }})" class="btn btn-danger">Delete</a>

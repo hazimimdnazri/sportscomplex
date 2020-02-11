@@ -21,4 +21,9 @@ class Reservation extends Model
     public function r_application(){
         return $this->belongsTo(Application::class, 'application_id');
     }
+
+    public function getEquiptments($id){
+        $equiptments = Equiptment::where('reservation_id', $id)->get();
+        return $equiptments;
+    }
 }

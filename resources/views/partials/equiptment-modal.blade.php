@@ -1,7 +1,7 @@
 <div class="modal fade" id="equiptmentModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('settings/groups') }}" method="POST">
+            <form id="equiptmentForm" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -13,7 +13,7 @@
                         <select name="equiptment" class="form-control" style="width: 100%;">
                             <option value="">-- Equiptments --</option>
                             @foreach($equiptments as $e)
-                                <option value="{{ $e->id }}">{{ $e->equiptment }}</option>
+                                <option value="{{ $e->id }}">{{ $e->equiptment }} - {{ $e->serial_number }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -26,3 +26,32 @@
         </div>
     </div>
 </div>
+
+<script>
+    $("#equiptmentForm").submit(function(e) {
+        e.preventDefault();    
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: "{{ url('application/'.$id.'/equiptment') }}",
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done((response) => {
+            if(response == 'success'){
+                $("#equiptmentModal").modal('hide')
+                Swal.fire(
+                    'Succes!',
+                    'Data saved!!',
+                    'success'
+                ).then((result) => {
+                    if(result.value){
+                        location.reload();
+                    }
+                })
+            } 
+        });
+    });
+</script>
