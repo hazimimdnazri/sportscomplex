@@ -17,7 +17,7 @@ class CreateEquiptmentsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('reservation_id')->nullable();
             $table->unsignedBigInteger('equiptment_id')->nullable();
-            $table->integer('status')->default(1); // 1 dalam draf | 2  dalam pinjaman | 3 dah pulang
+            $table->integer('status')->default(1); // 1 dalam draf | 2 dalam pinjaman | 3 dah pulang
             $table->string('remark')->nullable();
             $table->timestamps();
 

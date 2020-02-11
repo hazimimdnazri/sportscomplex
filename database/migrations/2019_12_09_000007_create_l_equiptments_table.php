@@ -18,6 +18,7 @@ class CreateLEquiptmentsTable extends Migration
             $table->string('equiptment');
             $table->unsignedBigInteger('facility_id');
             $table->string('serial_number')->unique();
+            $table->integer('status')->default(1); // 1 baik | 2 rosak
             $table->string('remark')->nullable();
             $table->timestamps();
 

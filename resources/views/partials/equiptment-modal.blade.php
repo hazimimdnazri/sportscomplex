@@ -13,7 +13,7 @@
                         <select name="equiptment" class="form-control" style="width: 100%;">
                             <option value="">-- Equiptments --</option>
                             @foreach($equiptments as $e)
-                                <option value="{{ $e->id }}" {{ $e->getDisableStatus($id, $e->id) }}>{{ $e->equiptment }} - {{ $e->serial_number }}</option>
+                                <option value="{{ $e->id }}" {{ $e->getDisableStatus($e->id) }}>{{ $e->equiptment }} - {{ $e->serial_number }}</option>
                             @endforeach
                         </select>
                     </div>

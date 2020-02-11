@@ -10,10 +10,15 @@ class LEquiptment extends Model
         return $this->belongsTo(LFacility::class, 'facility_id');
     }
 
-    public function getDisableStatus($reservation_id, $equiptment_id){
-        $equiptment = Equiptment::where('reservation_id', $reservation_id)->where('equiptment_id', $equiptment_id)->first();
-        if($equiptment){
+    public function getDisableStatus($equiptment_id){
+        $equiptment = LEquiptment::find($equiptment_id);
+        if($equiptment->status == 2){
             return 'disabled';
+        } else {
+            $equiptment = Equiptment::where('equiptment_id', $equiptment_id)->where('status', '<', 3)->first();
+            if($equiptment){
+                return 'disabled';
+            }
         }
     }
 }
