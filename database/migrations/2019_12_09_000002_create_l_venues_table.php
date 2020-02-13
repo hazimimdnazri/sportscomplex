@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLFacilityGroupsTable extends Migration
+class CreateLVenuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,33 @@ class CreateLFacilityGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('l_facility_groups', function (Blueprint $table) {
+        Schema::create('l_venues', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('group');
-            $table->unsignedBigInteger('type');
+            $table->string('venue');
             $table->string('remark')->nullable();
             $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();
 
-            $table->foreign('type')->references('id')->on('l_facility_types');
             $table->foreign('updated_by')->references('id')->on('users');
         });
+
+        DB::table('l_venues')->insert(
+            array(
+                'venue' => 'Outdoor Arena'
+            )
+        );
+
+        DB::table('l_venues')->insert(
+            array(
+                'venue' => 'Indoor Arena'
+            )
+        );
+
+        DB::table('l_venues')->insert(
+            array(
+                'venue' => 'Stadium'
+            )
+        );
     }
 
     /**
@@ -33,6 +49,6 @@ class CreateLFacilityGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('l_facility_groups');
+        Schema::dropIfExists('l_venues');
     }
 }

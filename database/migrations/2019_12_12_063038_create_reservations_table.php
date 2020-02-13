@@ -16,16 +16,14 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('application_id');
-            $table->unsignedBigInteger('group_id')->nullable();
-            $table->unsignedBigInteger('facility_id')->nullable();
+            $table->unsignedBigInteger('sport');
             $table->float('duration')->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->timestamps();
 
             $table->foreign('application_id')->references('id')->on('applications');
-            $table->foreign('group_id')->references('id')->on('l_facility_groups');
-            $table->foreign('facility_id')->references('id')->on('l_facilities');
+            $table->foreign('sport')->references('id')->on('l_sports');
         });
     }
 

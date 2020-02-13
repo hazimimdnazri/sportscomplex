@@ -43,12 +43,12 @@ Route::group(['prefix' => 'application'], function() {
 });
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
-    Route::get('categories', 'SettingsController@categories');
-    Route::post('categories', 'SettingsController@submitCategory');
-    Route::get('groups', 'SettingsController@groups');
-    Route::post('groups', 'SettingsController@submitGroups');
+    Route::get('venues', 'SettingsController@venues');
+    Route::post('venues', 'SettingsController@submitVenue');
     Route::get('facilities', 'SettingsController@facilities');
-    Route::post('facilities', 'SettingsController@submitFacilities');
+    Route::post('facilities', 'SettingsController@submitFacility');
+    Route::get('sports', 'SettingsController@sports');
+    Route::post('sports', 'SettingsController@submitSport');
     Route::get('equiptments', 'SettingsController@equiptments');
     Route::post('equiptments', 'SettingsController@submitEquiptments');
     Route::get('activities', 'SettingsController@activities');
@@ -62,12 +62,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
     Route::get('profile', 'SettingsController@profile');
 
     Route::group(['prefix' => 'ajax'], function() {
-        Route::post('categories-modal', 'SettingsController@categoriesModal');
-        Route::post('facilities-modal', 'SettingsController@facilitiesModal');
+        Route::post('venues-modal', 'SettingsController@venuesModal');
+        Route::post('sports-modal', 'SettingsController@sportsModal');
         Route::post('activities-modal', 'SettingsController@activitiesModal');
         Route::post('memberships-modal', 'SettingsController@membershipsModal');
         Route::post('equiptments-modal', 'SettingsController@equiptmentsModal');
-        Route::post('groups-modal', 'SettingsController@groupsModal');
+        Route::post('facilities-modal', 'SettingsController@facilitiesModal');
     });
 });
 

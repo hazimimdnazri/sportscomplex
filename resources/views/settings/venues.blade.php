@@ -8,13 +8,13 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Facility Categories
+        Venues
         <small>Settings</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Settings</li>
-        <li class="active">Facility Categories</li>
+        <li class="active">Venues</li>
     </ol>
 </section>
 
@@ -23,28 +23,28 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" id="grade" onClick="showModal()">New Facility</button>
+                    <button type="button" class="btn btn-primary" id="grade" onClick="showModal()">New Venue</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
-                                <th class="text-center">Facility Category</th>
+                                <th class="text-center">Venue</th>
                                 <th class="text-center">Remarks</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         @php $n = 1 @endphp
-                        @foreach($assets as $a)
+                        @foreach($venues as $v)
                             <tr>
-                                <td>{{ $n++ }}</td>
-                                <td>{{ $a->type }}</td>
-                                <td>{{ $a->remark }}</td>
+                                <td class="text-center">{{ $n++ }}</td>
+                                <td>{{ $v->venue }}</td>
+                                <td>{{ $v->remark }}</td>
                                 <td class="text-center">
-                                    <a onClick="editModal({{ $a->id }})" class="btn btn-info">Edit</a>
-                                    <a onClick="deleteFx({{ $a->id }})" class="btn btn-danger">Delete</a>
+                                    <a onClick="editModal({{ $v->id }})" class="btn btn-info">Edit</a>
+                                    <a onClick="deleteFx({{ $v->id }})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -71,7 +71,7 @@
     showModal = () => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/categories-modal') }}",
+            url: "{{ url('settings/ajax/venues-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
             }
@@ -84,7 +84,7 @@
     editModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/categories-modal') }}",
+            url: "{{ url('settings/ajax/venues-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id

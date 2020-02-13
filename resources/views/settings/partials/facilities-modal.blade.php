@@ -10,37 +10,20 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Category <span class="text-red">*</span></label>
-                        <select name="group" class="form-control" style="width: 100%;">
-                            <option value="">-- Facility Group --</option>
-                            @foreach($groups as $g)
-                                <option value="{{ $g->id }}" {{ $facility->group == $g->id ? 'selected' : '' }}>{{ $g->group }}</option>
+                        <select name="category" class="form-control" style="width: 100%;">
+                            <option value="">-- Venue --</option>
+                            @foreach($venues as $v)
+                                <option value="{{ $v->id }}" {{ $facility->venue == $v->id ? 'selected' : '' }}>{{ $v->venue }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Facility Name <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="facility" value="{{ $facility->facility }}" placeholder="Enter asset name">
+                        <label for="exampleInputEmail1">Facility <span class="text-red">*</span></label>
+                        <input type="text" class="form-control" name="group" value="{{ $facility->facility }}">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Price (RM) <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="price" value="{{ $facility->price }}" placeholder="Enter asset name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Minimum Hour <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="min_hour" value="{{ $facility->min_hour }}" placeholder="Enter asset name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Legend Colour <span class="text-red">*</span></label>
-                        <div class="input-group color-picker">
-                            <input type="text" name="colour" value="{{ $facility->colour }}" class="form-control color-picker">
-                            <div class="input-group-addon">
-                                <i></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Remarks </label>
-                        <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name">{{ $facility->remark }}</textarea>
+                        <label for="exampleInputEmail1">Remarks <span class="text-red">*</span></label>
+                        <textarea type="text" class="form-control" name="remark" >{{ $facility->remark }}</textarea>
                     </div>
                 </div>
                 <input type="hidden" name="id" value="{{ $id }}">

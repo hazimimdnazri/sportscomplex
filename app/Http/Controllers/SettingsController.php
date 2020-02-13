@@ -8,68 +8,66 @@ use App\LFacility;
 use App\User;
 use App\LMembership;
 use App\Customer;
-use App\LFacilityType;
-use App\LFacilityGroup;
+use App\LVenue;
+use App\LSport;
 use App\LActivity;
 use App\LEquiptment;
 
 class SettingsController extends Controller
 {
-    public function categories(){
-        $assets = LFacilityType::all();
-        return view('settings.categories', compact('assets'));
+    public function venues(){
+        $venues = LVenue::all();
+        return view('settings.venues', compact('venues'));
     }
 
-    public function submitCategory(Request $request){
-        $assets = new LFacilityType;
+    public function submitVenue(Request $request){
+        $venues = new LVenue;
         if($request->id){
-            $assets = LFacilityType::find($request->id);
+            $venues = LVenue::find($request->id);
         }
-        $assets->type = $request->asset;
-        $assets->remark = $request->remark;
+        $venues->venue = $request->asset;
+        $venues->remark = $request->remark;
 
-        if($assets->save()){
+        if($venues->save()){
             return back();
         }
     }
 
-    public function groups(){
-        $groups = LFacilityGroup::all();
-        return view('settings.groups', compact('groups'));
-    }
-
-    public function submitGroups(Request $request){
-        $groups = new LFacilityGroup;
-        if($request->id){
-            $groups = LFacilityGroup::find($request->id);
-        }
-        $groups->type = $request->category;
-        $groups->group = $request->group;
-        $groups->remark = $request->remark;
-
-        if($groups->save()){
-            return back();
-        }
-    }
-    
     public function facilities(){
         $facilities = LFacility::all();
         return view('settings.facilities', compact('facilities'));
     }
 
-    public function submitFacilities(Request $request){
+    public function submitFacility(Request $request){
         $facility = new LFacility;
         if($request->id){
             $facility = LFacility::find($request->id);
         }
-        $facility->facility = $request->facility;
-        $facility->group = $request->group;
-        $facility->price = $request->price;
-        $facility->min_hour = $request->min_hour;
+        $facility->venue = $request->category;
+        $facility->facility = $request->group;
         $facility->remark = $request->remark;
-        $facility->colour = $request->colour;
 
         if($facility->save()){
+            return back();
+        }
+    }
+    
+    public function sports(){
+        $sports = LSport::all();
+        return view('settings.sports', compact('sports'));
+    }
+
+    public function submitSport(Request $request){
+        $sport = new LSport;
+        if($request->id){
+            $sport = LSport::find($request->id);
+        }
+        $sport->sport = $request->facility;
+        $sport->price = $request->price;
+        $sport->min_hour = $request->min_hour;
+        $sport->remark = $request->remark;
+
+        if($sport->save()){
             return back();
         }
     }
@@ -186,19 +184,19 @@ class SettingsController extends Controller
         }
     }
 
-    public function facilitiesModal(Request $request){
-        $facility = new LFacility;
+    public function sportsModal(Request $request){
+        $sport = new LSport;
         if(isset($request->id)){
-            $facility = LFacility::find($request->id);
+            $sport = LSport::find($request->id);
             if(isset($request->action) == "delete"){
-                if($facility->delete()){
+                if($sport->delete()){
                     return "success";
                 }
             }
         }
-        $groups = LFacilityGroup::all();
+        $facilities = LFacility::all();
         $id = $request->id;
-        return view('settings.partials.facilities-modal', compact('groups', 'facility', 'id'));
+        return view('settings.partials.sports-modal', compact('facilities', 'sport', 'id'));
     }
 
     public function activitiesModal(Request $request){
@@ -229,18 +227,18 @@ class SettingsController extends Controller
         return view('settings.partials.memberships-modal', compact('membership', 'id'));
     }
 
-    public function categoriesModal(Request $request){
-        $categories = new LFacilityType;
+    public function venuesModal(Request $request){
+        $venues = new LVenue;
         if(isset($request->id)){
-            $categories = LFacilityType::find($request->id);
+            $venues = LVenue::find($request->id);
             if(isset($request->action) == "delete"){
-                if($categories->delete()){
+                if($venues->delete()){
                     return "success";
                 }
             }
         }
         $id = $request->id;
-        return view('settings.partials.categories-modal', compact('categories', 'id'));
+        return view('settings.partials.venues-modal', compact('venues', 'id'));
     }
 
     public function equiptmentsModal(Request $request){
@@ -258,18 +256,18 @@ class SettingsController extends Controller
         return view('settings.partials.equiptments-modal', compact('equiptment', 'id', 'facilities'));
     }
 
-    public function groupsModal(Request $request){
-        $types = LFacilityType::all();
-        $group = new LFacilityGroup;
+    public function facilitiesModal(Request $request){
+        $venues = LVenue::all();
+        $facility = new LFacility;
         if(isset($request->id)){
-            $group = LFacilityGroup::find($request->id);
+            $facility = LFacility::find($request->id);
             if(isset($request->action) == "delete"){
-                if($group->delete()){
+                if($facility->delete()){
                     return "success";
                 }
             }
         }
         $id = $request->id;
-        return view('settings.partials.groups-modal', compact('group', 'id', 'types'));
+        return view('settings.partials.facilities-modal', compact('facility', 'id', 'venues'));
     }
 }

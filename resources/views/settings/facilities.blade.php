@@ -3,7 +3,6 @@
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 <link href="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
 @endsection
 
 @section('content')
@@ -32,27 +31,19 @@
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Facility</th>
-                                <th class="text-center">Category</th>
-                                <th class="text-center">Price (RM)</th>
-                                <th class="text-center">Min. Hour</th>
+                                <th class="text-center">Venue</th>
                                 <th class="text-center">Remarks</th>
-                                <th width="10%" class="text-center">Colour Legend</th>
-                                <th width="15%" class="text-center" width="20%">Actions</th>
+                                <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         @php $n = 1 @endphp
                         @foreach($facilities as $f)
                             <tr>
-                                <td class="text-center">{{ $n++ }}</td>
-                                <td class="text-center">{{ $f->facility }}</td>
-                                <td class="text-center">{{ $f->r_group->group }}</td>
-                                <td class="text-center">{{ number_format($f->price, 2) }}</td>
-                                <td class="text-center">{{ $f->min_hour }}</td>
-                                <td class="text-center">{{ $f->remark }}</td>
-                                <td class="text-center">
-                                    <p style="background-color:{{ $f->colour }};">&nbsp;</p>
-                                </td>
+                                <td>{{ $n++ }}</td>
+                                <td>{{ $f->facility }}</td>
+                                <td>{{ $f->venue }}</td>
+                                <td>{{ $f->remark }}</td>
                                 <td class="text-center">
                                     <a onClick="editModal({{ $f->id }})" class="btn btn-info">Edit</a>
                                     <a onClick="deleteFx({{ $f->id }})" class="btn btn-danger">Delete</a>
@@ -74,7 +65,6 @@
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
-<script src="{{ asset('assets/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
 <script>
     $(() => {
         $('#example1').DataTable()
@@ -90,7 +80,6 @@
         }).done(function(response){
             $("#variable").html(response)
             $('#facilitiesModal').modal('show')
-            $('.color-picker').colorpicker()
         });
     }
 
@@ -105,7 +94,6 @@
         }).done(function(response){
             $("#variable").html(response)
             $('#facilitiesModal').modal('show')
-            $('.color-picker').colorpicker()
         });
     }
 
@@ -122,7 +110,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('settings/ajax/facilities-modal') }}",
+                    url: "{{ url('settings/ajax/groups-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,
