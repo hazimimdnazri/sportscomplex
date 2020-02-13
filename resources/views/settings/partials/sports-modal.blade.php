@@ -9,13 +9,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Category <span class="text-red">*</span></label>
-                        <select name="group" class="form-control" style="width: 100%;">
-                            <option value="">-- Facility --</option>
-                            @foreach($facilities as $f)
-                                <option value="{{ $f->id }}" {{ $sport->sport == $f->id ? 'selected' : '' }}>{{ $f->facility }}</option>
+                        <label>Venue <span class="text-red">*</span></label>
+                        <select name="group" class="form-control" onChange="selectVenue(this.value)" style="width: 100%;">
+                            <option value="">-- Venue --</option>
+                            @foreach($venues as $v)
+                                <option value="{{ $v->id }}">{{ $v->venue }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div id="variable_2">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Sport <span class="text-red">*</span></label>

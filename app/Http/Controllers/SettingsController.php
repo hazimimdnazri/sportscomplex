@@ -63,6 +63,7 @@ class SettingsController extends Controller
             $sport = LSport::find($request->id);
         }
         $sport->sport = $request->facility;
+        $sport->facility = json_encode($request->facilities);
         $sport->price = $request->price;
         $sport->min_hour = $request->min_hour;
         $sport->remark = $request->remark;
@@ -194,9 +195,10 @@ class SettingsController extends Controller
                 }
             }
         }
+        $venues = LVenue::all();
         $facilities = LFacility::all();
         $id = $request->id;
-        return view('settings.partials.sports-modal', compact('facilities', 'sport', 'id'));
+        return view('settings.partials.sports-modal', compact('venues', 'facilities', 'sport', 'id'));
     }
 
     public function activitiesModal(Request $request){
@@ -269,5 +271,10 @@ class SettingsController extends Controller
         }
         $id = $request->id;
         return view('settings.partials.facilities-modal', compact('facility', 'id', 'venues'));
+    }
+
+    public function selectFacilities(Request $request){
+        $facilities = LFacility::where('venue', $request->venue_id)->get();
+        return view('settings.partials.select-facilities', compact('facilities'));
     }
 }

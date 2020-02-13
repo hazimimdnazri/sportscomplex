@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 <link href="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
 @endsection
 
 @section('content')
@@ -32,27 +33,32 @@
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Sport</th>
+                                <th class="text-center">Venue</th>
                                 <th class="text-center">Facility Used</th>
                                 <th class="text-center">Price (RM)</th>
                                 <th class="text-center">Min. Hour</th>
                                 <th class="text-center">Remarks</th>
-                                <!-- <th width="10%" class="text-center">Colour Legend</th> -->
                                 <th width="15%" class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         @php $n = 1 @endphp
                         @foreach($sports as $s)
+                        @php $facilities = json_decode($s->facility) @endphp
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $s->sport }}</td>
-                                <td class="text-center">{{ $s->facilities}}</td>
+                                <td class="text-center">{{ $s->getVenueName($facilities[0]) }}</td>
+                                <td class="text-center">
+                                    <ul>
+                                    @for($i = 0; $i < count($facilities); $i++)
+                                        <li>{{ $s->getFacilityName($facilities[$i]) }}</li>
+                                    @endfor
+                                    </ul>
+                                </td>
                                 <td class="text-center">{{ number_format($s->price, 2) }}</td>
                                 <td class="text-center">{{ $s->min_hour }}</td>
                                 <td class="text-center">{{ $s->remark }}</td>
-                                <!-- <td class="text-center">
-                                    <p style="background-color:{{ $f->colour }};">&nbsp;</p>
-                                </td> -->
                                 <td class="text-center">
                                     <a onClick="editModal({{ $s->id }})" class="btn btn-info">Edit</a>
                                     <a onClick="deleteFx({{ $s->id }})" class="btn btn-danger">Delete</a>
@@ -75,9 +81,11 @@
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
+<script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
     $(() => {
         $('#example1').DataTable()
+        $('.select2').select2()
     })
 
     showModal = () => {
@@ -106,6 +114,19 @@
             $("#variable").html(response)
             $('#sportsModal').modal('show')
             $('.color-picker').colorpicker()
+        });
+    }
+
+    selectVenue = (value) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('settings/ajax/select-facilities') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "venue_id" : value
+            }
+        }).done(function(response){
+            $("#variable_2").html(response)
         });
     }
 

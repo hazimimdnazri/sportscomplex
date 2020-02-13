@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LFacility extends Model
 {
-    public function r_group(){
-        return $this->belongsTo(LFacilityGroup::class, 'group');
+    public function r_venue(){
+        return $this->belongsTo(LVenue::class, 'venue');
     }
 }
