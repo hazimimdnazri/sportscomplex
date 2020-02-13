@@ -27,8 +27,8 @@
 								<label for="exampleInputEmail1">Facility <span class="text-red">*</span></label>
 								<select class="form-control" name="facility" onChange="loadCalendar(this.value)">
 									<option value="" selected>All</option>
-									@foreach($facilities as $f)
-									<option value="{{ $f->id }}">{{ $f->group }}</option>
+									@foreach($venues as $v)
+									<option value="{{ $v->id }}">{{ $v->venue }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -58,7 +58,7 @@ loadCalendar = (value) => {
 		url: "{{ url('ajax/calendar') }}",
 		data: {
 			"_token" : "{{ csrf_token() }}",
-			"facility" : value
+			"venue" : value
 		}
 	}).done(function(response){
 		$("#calender").html(response)

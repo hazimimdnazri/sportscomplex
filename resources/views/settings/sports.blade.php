@@ -48,7 +48,7 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $s->sport }}</td>
-                                <td class="text-center">{{ $s->getVenueName($facilities[0]) }}</td>
+                                <td class="text-center">{{ $s->r_venue->venue }}</td>
                                 <td class="text-center">
                                     <ul>
                                     @for($i = 0; $i < count($facilities); $i++)

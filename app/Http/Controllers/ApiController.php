@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\Customer as CustomerResource;
 use App\CustomerDetail;
-use App\LFacility;
+use App\LSport;
 
 class ApiController extends Controller
 {
@@ -25,7 +25,7 @@ class ApiController extends Controller
     }
 
     public function asset($id){
-        $asset = LFacility::find($id);
+        $asset = LSport::find($id);
         return view('shared.duration', compact('asset'));
     }
 }

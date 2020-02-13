@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class LSport extends Model
 {
-    public function getVenueName($id){
-        $facility = LFacility::find($id);
-        return $facility->r_venue->venue;
+    public function r_venue(){
+        return $this->belongsTo(LVenue::class, 'venue');
     }
 
     public function getFacilityName($id){

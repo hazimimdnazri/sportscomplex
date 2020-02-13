@@ -31,14 +31,14 @@ $(() => {
         events    : [
             @foreach($reservations as $r)
                 @if($r->r_application->status == 3)
-                {
-					resourceId	  	: "{{ $r->facility_id }}",
-                    title          	: '{{ $r->r_application->event }} - {{ $r->r_asset->facility }}',
-                    start          	: "{{ $r->start_date }}",
-                    end            	: "{{ $r->end_date }}",
-                    backgroundColor	: '{{ $r->r_asset->colour }}',
-                    borderColor    	: '{{ $r->r_asset->colour }}' 
-                },
+                    @for($i = 0; $i < count(json_decode($r->r_sport->facility)); $i++)
+                    {
+                        resourceId	  	: "{{ json_decode($r->r_sport->facility)[$i] }}",
+                        title          	: '{{ $r->r_application->event }} - {{ $r->r_sport->sport }}',
+                        start          	: "{{ $r->start_date }}",
+                        end            	: "{{ $r->end_date }}",
+                    },
+                    @endfor
                 @endif
             @endforeach
         ],

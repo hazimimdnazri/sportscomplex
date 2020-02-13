@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Venue <span class="text-red">*</span></label>
-                        <select name="group" class="form-control" onChange="selectVenue(this.value)" style="width: 100%;">
+                        <select name="venue" class="form-control" onChange="selectVenue(this.value)" style="width: 100%;">
                             <option value="">-- Venue --</option>
                             @foreach($venues as $v)
                                 <option value="{{ $v->id }}">{{ $v->venue }}</option>

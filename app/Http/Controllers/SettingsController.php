@@ -63,6 +63,7 @@ class SettingsController extends Controller
             $sport = LSport::find($request->id);
         }
         $sport->sport = $request->facility;
+        $sport->venue = $request->venue;
         $sport->facility = json_encode($request->facilities);
         $sport->price = $request->price;
         $sport->min_hour = $request->min_hour;

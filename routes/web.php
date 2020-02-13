@@ -81,7 +81,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
     Route::post('confirmreservation', 'ApplicationController@confirmReservation')->middleware('auth');
     Route::post('editcustomer', 'SettingsController@editCustomer');
     Route::post('calendar', 'HomeController@facilityCalendar');
-    Route::post('facilities', 'ApplicationController@ajaxFacilities');
+    Route::post('sports', 'ApplicationController@ajaxSports');
 });
 
 Route::get('test', 'ApplicationController@qr');

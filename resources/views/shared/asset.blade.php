@@ -12,7 +12,6 @@
                         <th class="text-center">Duration</th>
                         <th class="text-center">Price / Min. Hour (RM)</th>
                         <th class="text-center">Total Price (RM)</th>
-                        <th class="text-center">Equiptments</th>
                         <th class="text-center" width="20%">Actions</th>
                     </tr>
                 </thead>
@@ -24,28 +23,18 @@
                     @foreach($reservations as $r)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $r->r_asset->facility }} ({{ $r->r_group->group }})</td>
+                        <td class="text-center">{{ $r->r_sport->sport }}</td>
                         <td class="text-center">
                             {{ $r->duration }} Hour(s) <br>
                             {{ date('h:i:s a' ,strtotime($r->start_date)) }} - {{ date('h:i:s a' ,strtotime($r->end_date)) }}
                         </td>
-                        <td class="text-center">{{ number_format($r->r_asset->price, 2) }}</td>
-                        <td class="text-center">{{ number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) }}  </td>
-                        <td>
-                            <ul>
-                                @foreach($r->getEquiptments($r->id) as $e)
-                                <li>
-                                {{ $e->r_equiptment->equiptment }} - {{ $e->r_equiptment->serial_number }}
-                                </li>
-                                @endforeach
-                            </ul>
-                        </td>
+                        <td class="text-center">{{ number_format($r->r_sport->price, 2) }}</td>
+                        <td class="text-center">{{ number_format($r->r_sport->price * ($r->duration/$r->r_sport->min_hour), 2) }}  </td>
                         <td class="text-center">
-                            <button onClick="addEquiptment({{ $r->id }})" class="btn btn-success">Add Equiptment</button>
                             <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
-                    @php $total += number_format($r->r_asset->price * ($r->duration/$r->r_asset->min_hour), 2) @endphp
+                    @php $total += number_format($r->r_sport->price * ($r->duration/$r->r_sport->min_hour), 2) @endphp
                     @endforeach
                 </tbody>
             </table>
@@ -70,10 +59,10 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Group <span class="text-red">*</span></label>
-                        <select name="group" class="form-control select2" onChange="selectGroup(this.value)" style="width: 100%;">
+                        <select name="group" class="form-control select2" onChange="selectVenue(this.value)" style="width: 100%;">
                             <option value="">-- Facility Group --</option>
-                            @foreach($groups as $g)
-                                <option value="{{ $g->id }}">{{ $g->group }}</option>
+                            @foreach($venues as $v)
+                                <option value="{{ $v->id }}">{{ $v->venue }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -181,7 +170,7 @@
         })
     })
 
-    selectFacility = (value) => {
+    selectSports = (value) => {
         if(value){
             $.ajax({
                 type:"POST",
@@ -211,14 +200,14 @@
         }
     }
 
-    selectGroup = (value) => {
+    selectVenue = (value) => {
         if(value){
             $.ajax({
                 type:"POST",
-                url: "{{ url('ajax/facilities') }}",
+                url: "{{ url('ajax/sports') }}",
                 data : {
                     "_token": "{{ csrf_token() }}",
-                    "group" : value
+                    "venue" : value
                 }
             }).done(function(response){
                 $("#facilities").html(response)

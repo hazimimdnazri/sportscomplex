@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    public function r_asset(){
-        return $this->belongsTo(LFacility::class, 'facility_id');
+    public function r_sport(){
+        return $this->belongsTo(LSport::class, 'sport');
     }
 
     public function r_group(){

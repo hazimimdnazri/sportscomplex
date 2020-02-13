@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\LFacilityGroup;
+use App\LVenue;
+use App\LSport;
 use App\LFacility;
 use App\Application;
 use Auth;
@@ -58,9 +59,9 @@ class ApplicationController extends Controller
         $id = $request->id;
         $user = User::find($request->user);
         if($request->type == 1){
-            $groups = LFacilityGroup::all();
+            $venues = LVenue::all();
             $reservations = Reservation::where('application_id', $request->id)->get();
-            return view('shared.asset', compact('reservations', 'groups', 'id', 'user'));
+            return view('shared.asset', compact('reservations', 'venues', 'id', 'user'));
         } else if($request->type == 2) {
 
         } else {
@@ -207,8 +208,7 @@ class ApplicationController extends Controller
         $reservation = new Reservation;
         $start_time = date('H:i:s', strtotime($request->start_time));
         $reservation->application_id = $id;
-        $reservation->group_id = $request->group;
-        $reservation->facility_id = $request->facility;
+        $reservation->sport = $request->sport;
         $reservation->duration = $request->duration;
         $reservation->start_date = date("Y-m-d $start_time", strtotime(Application::find($id)->date));
         $reservation->end_date = date('Y-m-d H:i:s', strtotime($reservation->start_date) + (60*60*$reservation->duration));
@@ -254,9 +254,9 @@ class ApplicationController extends Controller
         }
     }
 
-    public function ajaxFacilities(Request $request){
-        $facilities = LFacility::where('group', $request->group)->get();
-        return view('partials.select-facilities', compact('facilities'));
+    public function ajaxSports(Request $request){
+        $sports = LSport::where('venue', $request->venue)->get();
+        return view('partials.select-sports', compact('sports'));
     }
 
     public function deleteFacility(Request $request){

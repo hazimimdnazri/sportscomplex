@@ -11,7 +11,8 @@ use App\LMembership;
 use App\CustomerDetail;
 use App\Reservation;
 use App\LFacility;
-use App\LFacilityGroup;
+use App\LVenue;
+use App\LSport;
 
 class HomeController extends Controller
 {
@@ -84,8 +85,8 @@ class HomeController extends Controller
     }
 
     public function calendar(){
-        $facilities = LFacilityGroup::all();
-        return view('calendar', compact('reservations', 'facilities'));
+        $venues = LVenue::all();
+        return view('calendar', compact('reservations', 'venues'));
     }
 
     public function transactions(){
@@ -93,10 +94,10 @@ class HomeController extends Controller
     }
 
     public function facilityCalendar(Request $request){
-        $group = $request->facility;
-        $facilities_ids = LFacility::where('group', $group)->pluck('id');
-        $facilities = LFacility::where('group', $group)->get();
-        $reservations = Reservation::whereIn('facility_id', $facilities_ids)->get();
+        $venue = $request->venue;
+        $facilities = LFacility::where('venue', $venue)->get();
+        $sports = LSport::where('venue', $venue)->pluck('id');
+        $reservations = Reservation::whereIn('sport', $sports)->get();
         return view('partials.calendar', compact('reservations', 'facilities'));
     }
 }

@@ -16,6 +16,7 @@ class CreateLSportsTable extends Migration
         Schema::create('l_sports', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('sport');
+            $table->unsignedBigInteger('venue');
             $table->string('facility');
             $table->float('price');
             $table->float('min_hour');
@@ -24,6 +25,7 @@ class CreateLSportsTable extends Migration
             $table->timestamps();
 
             $table->foreign('updated_by')->references('id')->on('users');
+            $table->foreign('venue')->references('id')->on('l_venues');
         });
     }
 
