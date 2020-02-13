@@ -16,13 +16,13 @@ class CreateLEquiptmentsTable extends Migration
         Schema::create('l_equiptments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('equiptment');
-            $table->unsignedBigInteger('facility_id');
             $table->string('serial_number')->unique();
             $table->integer('status')->default(1); // 1 baik | 2 rosak
             $table->string('remark')->nullable();
+            $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();
 
-            $table->foreign('facility_id')->references('id')->on('l_facilities');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

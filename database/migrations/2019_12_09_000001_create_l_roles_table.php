@@ -21,6 +21,12 @@ class CreateLRolesTable extends Migration
 
         DB::table('l_roles')->insert(
             array(
+                'role' => 'Superadmin'
+            )
+        );
+
+        DB::table('l_roles')->insert(
+            array(
                 'role' => 'Admin'
             )
         );

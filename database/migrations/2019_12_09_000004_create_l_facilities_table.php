@@ -23,9 +23,11 @@ class CreateLFacilitiesTable extends Migration
             $table->string('colour')->default('black');
             $table->text('remark')->nullable();
             $table->integer('flag')->default(1);
+            $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();
 
             $table->foreign('group')->references('id')->on('l_facility_groups');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

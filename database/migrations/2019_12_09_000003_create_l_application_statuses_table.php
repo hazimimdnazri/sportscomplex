@@ -41,6 +41,12 @@ class CreateLApplicationStatusesTable extends Migration
                 'status' => 'Rejected'
             )
         );
+
+        DB::table('l_application_statuses')->insert(
+            array(
+                'status' => 'Finished'
+            )
+        );
     }
 
     /**

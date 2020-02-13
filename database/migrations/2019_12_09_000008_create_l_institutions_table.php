@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLFacilityGroupsTable extends Migration
+class CreateLInstitutionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateLFacilityGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('l_facility_groups', function (Blueprint $table) {
+        Schema::create('l_institutions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('group');
-            $table->unsignedBigInteger('type');
-            $table->string('remark')->nullable();
+            $table->string('institution');
+            $table->integer('flag');
             $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();
 
-            $table->foreign('type')->references('id')->on('l_facility_types');
             $table->foreign('updated_by')->references('id')->on('users');
         });
     }
@@ -33,6 +31,6 @@ class CreateLFacilityGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('l_facility_groups');
+        Schema::dropIfExists('l_institutions');
     }
 }

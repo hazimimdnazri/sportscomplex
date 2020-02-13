@@ -17,7 +17,11 @@ class CreateLFacilityTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('type');
             $table->string('remark')->nullable();
+            $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();
+
+            $table->foreign('updated_by')->references('id')->on('users');
+            
         });
 
         DB::table('l_facility_types')->insert(

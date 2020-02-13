@@ -19,7 +19,10 @@ class CreateLMembershipsTable extends Migration
             $table->float('discount');
             $table->float('monthly');
             $table->float('anually');
+            $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();
+
+            $table->foreign('updated_by')->references('id')->on('users');
         });
 
         DB::table('l_memberships')->insert(

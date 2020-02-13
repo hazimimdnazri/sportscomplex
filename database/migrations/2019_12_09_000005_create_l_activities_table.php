@@ -21,6 +21,10 @@ class CreateLActivitiesTable extends Migration
             $table->float('underage');
             $table->float('deposit');
             $table->text('remark')->nullable();
+            $table->unsignedBigInteger('updated_by')->default(1);
+            $table->timestamps();
+
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 
