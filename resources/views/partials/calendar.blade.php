@@ -37,6 +37,7 @@ $(() => {
                         title          	: '{{ $r->r_application->event }} - {{ $r->r_sport->sport }}',
                         start          	: "{{ $r->start_date }}",
                         end            	: "{{ $r->end_date }}",
+                        color           : "{{ $r->r_sport->sport }}"
                     },
                     @endfor
                 @endif

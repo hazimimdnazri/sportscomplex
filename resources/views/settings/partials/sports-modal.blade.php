@@ -31,7 +31,7 @@
                         <label for="exampleInputEmail1">Minimum Hour <span class="text-red">*</span></label>
                         <input type="text" class="form-control" name="min_hour" value="{{ $sport->min_hour }}" placeholder="Enter asset name">
                     </div>
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Legend Colour <span class="text-red">*</span></label>
                         <div class="input-group color-picker">
                             <input type="text" name="colour" value="" class="form-control color-picker">
@@ -39,7 +39,7 @@
                                 <i></i>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Remarks </label>
                         <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name">{{ $sport->remark }}</textarea>
