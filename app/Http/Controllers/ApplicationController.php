@@ -58,10 +58,11 @@ class ApplicationController extends Controller
     public function itemType(Request $request){
         $id = $request->id;
         $user = User::find($request->user);
+        $date = Application::find($id)->date;
         if($request->type == 1){
             $venues = LVenue::all();
             $reservations = Reservation::where('application_id', $request->id)->get();
-            return view('shared.asset', compact('reservations', 'venues', 'id', 'user'));
+            return view('shared.asset', compact('reservations', 'venues', 'id', 'user', 'date'));
         } else if($request->type == 2) {
 
         } else {
@@ -264,6 +265,15 @@ class ApplicationController extends Controller
         if($reservation->delete()){
             return "success";
         }
+    }
+
+    public function miniCalendar(Request $request){
+        $date = $request->date;
+        $venue = $request->venue;
+        $facilities = LFacility::where('venue', $venue)->get();
+        $sports = LSport::where('venue', $venue)->pluck('id');
+        $reservations = Reservation::whereIn('sport', $sports)->get();
+        return view("partials.minicalendar", compact('facilities', 'reservations', 'date'));
     }
 
     public function qr(){

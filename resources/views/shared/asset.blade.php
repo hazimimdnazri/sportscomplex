@@ -48,7 +48,7 @@
 </div>
 
 <div class="modal fade" id="facilityModal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form action="{{ url('application/'.$id.'/facility') }}" method="POST">
                 @csrf
@@ -57,42 +57,49 @@
                     <h4 class="modal-title">Reserve a Facility</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Group <span class="text-red">*</span></label>
-                        <select name="group" class="form-control select2" onChange="selectVenue(this.value)" style="width: 100%;">
-                            <option value="">-- Facility Group --</option>
-                            @foreach($venues as $v)
-                                <option value="{{ $v->id }}">{{ $v->venue }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group" id="facilities">
-
-                    </div>
-                    <div class="bootstrap-timepicker" id="start_time">
-                        <div class="form-group">
-                            <label>Start Time:</label>
-                            <div class="input-group">
-                                <input name="start_time" type="text" class="form-control timepicker">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-clock-o"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="hourly">
-                        <div id="variable_2">
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label>Duration (Hour) <span class="text-red">*</span></label>
-                                <select name="duration" class="form-control" id="duration">
-                                    <option value="" selected>-- Duration --</option>
+                                <label>Group <span class="text-red">*</span></label>
+                                <select name="group" class="form-control select2" onChange="selectVenue(this.value)" style="width: 100%;">
+                                    <option value="">-- Venues --</option>
+                                    @foreach($venues as $v)
+                                        <option value="{{ $v->id }}">{{ $v->venue }}</option>
+                                    @endforeach
                                 </select>
                             </div>
+                            <div class="form-group" id="facilities">
+
+                            </div>
+                            <div class="bootstrap-timepicker" id="start_time">
+                                <div class="form-group">
+                                    <label>Start Time:</label>
+                                    <div class="input-group">
+                                        <input name="start_time" type="text" class="form-control timepicker">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="hourly">
+                                <div id="variable_2">
+                                    <div class="form-group">
+                                        <label>Duration (Hour) <span class="text-red">*</span></label>
+                                        <select name="duration" class="form-control" id="duration">
+                                            <option value="" selected>-- Duration --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Remarks </label>
+                                <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Remarks </label>
-                        <textarea type="text" class="form-control" name="remark" placeholder="Enter asset name"></textarea>
+                        <div class="col-md-6">
+                            <div id="cal"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -215,6 +222,18 @@
         } else {
             $("#facilities").html('')
         }
+
+        $.ajax({
+            type:"POST",
+            url: "{{ url('ajax/minicalendar') }}",
+            data : {
+                "_token": "{{ csrf_token() }}",
+                "venue" : value,
+                "date"  : "{{ $date }}"
+            }
+        }).done(function(response){
+            $("#cal").html(response)
+        });
 
     }
 

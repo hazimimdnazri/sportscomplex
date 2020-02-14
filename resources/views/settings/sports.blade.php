@@ -37,6 +37,7 @@
                                 <th class="text-center">Facility Used</th>
                                 <th class="text-center">Price (RM)</th>
                                 <th class="text-center">Min. Hour</th>
+                                <th class="text-center">Colour</th>
                                 <th class="text-center">Remarks</th>
                                 <th width="15%" class="text-center" width="20%">Actions</th>
                             </tr>
@@ -58,6 +59,9 @@
                                 </td>
                                 <td class="text-center">{{ number_format($s->price, 2) }}</td>
                                 <td class="text-center">{{ $s->min_hour }}</td>
+                                <td class="text-center">
+                                    <p style="background-color:{{ $s->colour }};">&nbsp;</p>
+                                </td>
                                 <td class="text-center">{{ $s->remark }}</td>
                                 <td class="text-center">
                                     <a onClick="editModal({{ $s->id }})" class="btn btn-info">Edit</a>

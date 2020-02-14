@@ -67,6 +67,7 @@ class SettingsController extends Controller
         $sport->facility = json_encode($request->facilities);
         $sport->price = $request->price;
         $sport->min_hour = $request->min_hour;
+        $sport->colour = $request->colour;
         $sport->remark = $request->remark;
 
         if($sport->save()){

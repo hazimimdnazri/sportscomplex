@@ -3,32 +3,17 @@
 $(() => {
     var date = new Date()
     $('#calendar').fullCalendar({
-        dayClick: function(date, allDay, jsEvent, view) {
-            if(jsEvent.name == 'month'){
-                $('#calendar').fullCalendar('gotoDate',date);
-                $('#calendar').fullCalendar('changeView', 'agendaDay')
-            } else {
-                console.log(view.id)
-
-            }
-        },
+        defaultDate: "{{$date}}",
         header    : {
-            left  : 'prev,next today',
+            left  : '',
             center: 'title',
-            right : 'month,agendaDay'
+            right : ''
         },
-		schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-        buttonText: {
-            today: 'today',
-            month: 'month',
-            day  : 'day'
-        },
-		resources: [
+        resources: [
 			@foreach($facilities as $f)
 			{ id: "{{ $f->id }}", title: "{{ $f->facility }}" },
 			@endforeach
-		],
-        
+        ],
         events    : [
             @foreach($reservations as $r)
                 @if($r->r_application->status == 3)
@@ -44,13 +29,12 @@ $(() => {
                 @endif
             @endforeach
         ],
-        editable  : false,
-        droppable : false,
+        defaultView : 'agendaDay',
+		schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
         allDaySlot : false,
         slotDuration : '00:30',
         minTime: '07:00',
-        aspectRatio: 2.3,
-        timeZone: 'local'
+        contentHeight: 350
     })
 })
 </script>

@@ -20,7 +20,7 @@ class CreateLSportsTable extends Migration
             $table->string('facility');
             $table->float('price');
             $table->float('min_hour');
-            $table->string('color');
+            $table->string('colour');
             $table->string('remark')->nullable();
             $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();
