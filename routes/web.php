@@ -76,7 +76,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
     Route::post('itemtype', 'ApplicationController@itemType');
     Route::post('activitymodal', 'ApplicationController@activityModal');
     Route::post('membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');
-    Route::post('submitpayment', 'ApplicationController@ajaxSubmitPayment')->middleware('auth');
     Route::post('setdate', 'ApplicationController@ajaxSetDate')->middleware('auth');
     Route::post('confirmreservation', 'ApplicationController@confirmReservation')->middleware('auth');
     Route::post('editcustomer', 'SettingsController@editCustomer');

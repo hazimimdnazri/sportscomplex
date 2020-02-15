@@ -163,7 +163,6 @@
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id" : "{{ $application->id }}",
-                "id": id
             }
         }).done(function(response){
             $("#variable_3").html(response)

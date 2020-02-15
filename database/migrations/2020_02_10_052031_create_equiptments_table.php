@@ -15,13 +15,13 @@ class CreateEquiptmentsTable extends Migration
     {
         Schema::create('equiptments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('reservation_id')->nullable();
+            $table->unsignedBigInteger('application_id')->nullable();
             $table->unsignedBigInteger('equiptment_id')->nullable();
             $table->integer('status')->default(1); // 1 dalam draf | 2 dalam pinjaman | 3 dah pulang
             $table->string('remark')->nullable();
             $table->timestamps();
 
-            $table->foreign('reservation_id')->references('id')->on('reservations');
+            $table->foreign('application_id')->references('id')->on('applications');
             $table->foreign('equiptment_id')->references('id')->on('l_equiptments');
         });
     }

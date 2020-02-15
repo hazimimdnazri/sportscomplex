@@ -9,7 +9,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Category <span class="text-red">*</span></label>
+                        <label>Equiptments <span class="text-red">*</span></label>
                         <select name="equiptment" class="form-control" style="width: 100%;">
                             <option value="">-- Equiptments --</option>
                             @foreach($equiptments as $e)
@@ -20,7 +20,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save"/>
+                    <input type="submit" class="btn btn-primary" value="Rent"/>
                 </div>
             </form>
         </div>

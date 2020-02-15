@@ -62,7 +62,8 @@ class ApplicationController extends Controller
         if($request->type == 1){
             $venues = LVenue::all();
             $reservations = Reservation::where('application_id', $request->id)->get();
-            return view('shared.asset', compact('reservations', 'venues', 'id', 'user', 'date'));
+            $equiptments = Equiptment::where('application_id', $request->id)->get();
+            return view('shared.asset', compact('reservations', 'venues', 'id', 'user', 'date', 'equiptments'));
         } else if($request->type == 2) {
 
         } else {
@@ -140,10 +141,8 @@ class ApplicationController extends Controller
         if($request->type == "B"){
             $application = Application::find($id);
             $reservation = Reservation::where('application_id', $id)->get();
-            foreach($reservation as $r){
-                $equiptment = Equiptment::where('reservation_id', $r->id);
-                $equiptment->update(['status' => 2]);
-            }
+            $equiptment = Equiptment::where('application_id', $id);
+            $equiptment->update(['status' => 2]);
 
             $application->event = $request->event;
             $application->status = 3;
@@ -168,31 +167,6 @@ class ApplicationController extends Controller
         }
         
         return $trasaction;
-    }
-
-    public function ajaxSubmitPayment(Request $request){
-        $application = Application::find($request->id);
-        $reservation = Reservation::where('application_id', $application->id)->first();
-        $trasaction = new Transaction;
-
-        $trasaction->trans_number = "R$reservation->id";
-        $trasaction->trans_type = 1;
-        $trasaction->reservation_id = $reservation->id;
-        $trasaction->date = date('Y-m-d');
-        $trasaction->customer_id = $application->customer_id;
-        $trasaction->tax = 0.00;
-        $trasaction->membership_discount = 0.00;
-        $trasaction->general_discount = 0.00;
-        $trasaction->trans_changes = 0.00;
-        $trasaction->total = $request->total;
-
-        $application->status = 3;
-
-        if($trasaction->save() && $application->save()){
-            return "success";
-        } else {
-            return "fail";
-        }
     }
 
     public function confirmReservation(Request $request){
@@ -240,15 +214,14 @@ class ApplicationController extends Controller
     }
 
     public function addEquiptment(Request $request){
-        $reservation = Reservation::find($request->id);
-        $id = $reservation->id;
-        $equiptments = LEquiptment::where('facility_id', $reservation->facility_id)->get();
+        $id = $request->id;
+        $equiptments = LEquiptment::all();
         return view('partials.equiptment-modal', compact('equiptments', 'id'));
     }
 
     public function submitEquiptment(Request $request, $id){
         $equiptment = new Equiptment;
-        $equiptment->reservation_id = $id;
+        $equiptment->application_id = $id;
         $equiptment->equiptment_id = $request->equiptment;
         if($equiptment->save()){
             return "success";

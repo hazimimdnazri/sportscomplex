@@ -18,6 +18,7 @@ class CreateLEquiptmentsTable extends Migration
             $table->string('equiptment');
             $table->string('serial_number')->unique();
             $table->integer('status')->default(1); // 1 baik | 2 rosak
+            $table->float('price');
             $table->string('remark')->nullable();
             $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();

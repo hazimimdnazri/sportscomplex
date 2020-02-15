@@ -2,13 +2,15 @@
     <div class="box box-primary">
         <div class="box-header">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#facilityModal">Reserve a Facility</button>
+            <button type="button" onClick="addEquiptment()" class="btn btn-success" >Rent Equiptments</button>
         </div>
         <div class="box-body">
+            <h4 class="title">Facilities</h4>
             <table id="example1" class="table table-bordered">
                 <thead>
                     <tr>
                         <th width="5%">No. </th>
-                        <th class="text-center">Item</th>
+                        <th class="text-center">Facility</th>
                         <th class="text-center">Duration</th>
                         <th class="text-center">Price / Min. Hour (RM)</th>
                         <th class="text-center">Total Price (RM)</th>
@@ -18,7 +20,7 @@
                 <tbody>
                     @php 
                     $n = 1;
-                    $total = 0;
+                    $ftotal = 0;
                     @endphp
                     @foreach($reservations as $r)
                     <tr>
@@ -34,7 +36,38 @@
                             <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
-                    @php $total += number_format($r->r_sport->price * ($r->duration/$r->r_sport->min_hour), 2) @endphp
+                    @php $ftotal += number_format($r->r_sport->price * ($r->duration/$r->r_sport->min_hour), 2) @endphp
+                    @endforeach
+                </tbody>
+            </table>
+            <br>
+            <hr>
+            <br>
+            <h4 class="title">Equiptments</h4>
+            <table id="example1" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th width="5%">No. </th>
+                        <th class="text-center">Equiptment</th>
+                        <th class="text-center">Price (RM)</th>
+                        <th class="text-center" width="20%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php 
+                    $n = 1;
+                    $etotal = 0;
+                    @endphp
+                    @foreach($equiptments as $e)
+                    <tr>
+                        <td class="text-center">{{ $n++ }}</td>
+                        <td class="text-center">{{ $e->r_equiptment->equiptment }}</td>
+                        <td class="text-center">{{ number_format($e->r_equiptment->price, 2) }}</td>
+                        <td class="text-center">
+                            <button onClick="deleteEquiptment({{ $r->id }})" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    @php $etotal += number_format($e->r_equiptment->price, 2) @endphp
                     @endforeach
                 </tbody>
             </table>
@@ -60,7 +93,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Group <span class="text-red">*</span></label>
+                                <label>Venue <span class="text-red">*</span></label>
                                 <select name="group" class="form-control select2" onChange="selectVenue(this.value)" style="width: 100%;">
                                     <option value="">-- Venues --</option>
                                     @foreach($venues as $v)
@@ -110,6 +143,8 @@
         </div>
     </div>
 </div>
+
+@php $total = $ftotal + $etotal @endphp
 
 <div class="modal fade" id="paymentModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-sm">
