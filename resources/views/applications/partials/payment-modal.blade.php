@@ -13,12 +13,12 @@
                         <input type="text" class="form-control" name="subtotal" id="subtotal" value="{{ number_format($total, 2) }}" readOnly>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Discount () </label>
-                        <input type="text" class="form-control" name="discount" id="discount" value="" readOnly>
+                        <label for="exampleInputEmail1">Discount ({{$discount}}%) </label>
+                        <input type="text" class="form-control" name="discount" id="discount" value="{{$discount = number_format(($discount/100) * $total, 2)}}" readOnly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Total Price (RM) </label>
-                        <input type="text" class="form-control" name="total" id="total" value="" readOnly>
+                        <input type="text" class="form-control" name="total" id="total" value="{{ number_format($total - $discount, 2) }}" readOnly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Cash Paid (RM) </label>

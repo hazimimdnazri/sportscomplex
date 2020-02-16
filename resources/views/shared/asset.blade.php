@@ -40,6 +40,7 @@
                 </tbody>
             </table>
             <hr>
+            <input type="hidden" id="ftotal" value="{{ $ftotal }}">
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 <button onClick="toPayment()" class="btn btn-primary">Pay</button>
@@ -187,11 +188,6 @@
             $("#cal").html(response)
         });
 
-    }
-
-    calcChange = (value) => {
-        var change = value - $("#total").val()
-        $("#change").val(change.toFixed(2))
     }
 
     $("#paymentForm").submit(function(e) {

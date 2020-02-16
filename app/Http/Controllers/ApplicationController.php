@@ -19,6 +19,7 @@ use App\CustomerDetail;
 use App\LEquiptment;
 use App\Equiptment;
 use App\LCustomerType;
+use App\Membership;
 use Hash;
 
 class ApplicationController extends Controller
@@ -141,15 +142,16 @@ class ApplicationController extends Controller
         }
     }
 
-    public function payment($id){
-        $application = Application::find($id);
-        $application->status = 2;
-        if($application->save()){
-            $reservations = Reservation::where('application_id', $id)->get();
-            $reservation = Reservation::where('application_id', $id)->first();
-            $customer = User::find($application->user_id);
-            return view('applications.payment', compact('customer', 'application', 'reservations'));
+    public function paymentModal(Request $request){
+        $application = Application::find($request->id);
+        $discount = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
+        if($discount){
+            $discount = $discount->r_membership->discount;
+        } else {
+            $discount = 0;
         }
+        $total = $request->ftotal + $request->etotal;
+        return view('applications.partials.payment-modal', compact('ftotal', 'etotal', 'total', 'discount'));
     }
 
     public function ajaxPayment(Request $request, $id){
@@ -253,6 +255,13 @@ class ApplicationController extends Controller
     public function deleteFacility(Request $request){
         $reservation = Reservation::find($request->id);
         if($reservation->delete()){
+            return "success";
+        }
+    }
+
+    public function deleteEquiptment(Request $request){
+        $equiptment = Equiptment::find($request->id);
+        if($equiptment->delete()){
             return "success";
         }
     }

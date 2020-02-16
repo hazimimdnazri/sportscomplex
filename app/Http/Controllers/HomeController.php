@@ -14,6 +14,7 @@ use App\LFacility;
 use App\LVenue;
 use App\LSport;
 use App\LCustomerType;
+use App\Membership;
 
 class HomeController extends Controller
 {
@@ -57,15 +58,18 @@ class HomeController extends Controller
             $members->nationality = $request->nationality;
             $members->city = $request->city;
             $members->state = $request->state;
-            $members->membership = $request->membership;
-            $members->cycle = $request->cycle;
-            $members->cycle_start = date('Y-m-d');
+
+            $memberships = new Membership;
+            $memberships->user_id = $user->id;
+            $memberships->membership = $request->membership;
+            $memberships->cycle = $request->cycle;
+            $memberships->cycle_start = date('Y-m-d');
             if($request->cycle == 1){
-                $members->cycle_end = date('Y-m-d', strtotime('+1 month'));
+                $memberships->cycle_end = date('Y-m-d', strtotime('+1 month'));
             } else {
-                $members->cycle_end = date('Y-m-d', strtotime('+1 year'));
+                $memberships->cycle_end = date('Y-m-d', strtotime('+1 year'));
             }
-            if($members->save()){
+            if($members->save() && $memberships->save() ){
                 return back();
             }
         }

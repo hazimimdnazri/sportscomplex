@@ -121,12 +121,13 @@
                                 <td class="text-center">{{ $e->r_equiptment->equiptment }}</td>
                                 <td class="text-center">{{ number_format($e->r_equiptment->price, 2) }}</td>
                                 <td class="text-center">
-                                    <button onClick="deleteEquiptment({{ $r->id }})" class="btn btn-danger">Delete</button>
+                                    <button onClick="deleteEquiptment({{ $e->id }})" class="btn btn-danger">Delete</button>
                                 </td>
                             </tr>
                             @php $etotal += number_format($e->r_equiptment->price, 2) @endphp
                             @endforeach
                         </tbody>
+                        <input type="hidden" id="etotal" value="{{ $etotal }}">
                     </table>
                 </div>
             </div>
@@ -178,7 +179,21 @@
     }
 
     toPayment = () => {
-        console.log(123)
+        var ftotal = parseFloat($("#ftotal").val())
+        var etotal = parseFloat($("#etotal").val())
+        $.ajax({
+            type:"POST",
+            url: "{{ url('application/ajax/payment-modal') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "ftotal": ftotal,
+                "etotal": etotal,
+                "id": "{{ $application->id }}"
+            }
+        }).done(function(response){
+            $("#variable_3").html(response)
+            $('#paymentModal').modal('show');
+        });
     }
 
     setDate = (value) => {
@@ -213,6 +228,43 @@
             $("#variable_3").html(response)
             $('#equiptmentModal').modal('show');
         });
+    }
+
+    deleteEquiptment = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('application/ajax/deleteequiptment') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id" : id,
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Deleted!", "The equiptment has been deleted.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        })
+    }
+
+    calcChange = (value) => {
+        var change = value - $("#total").val()
+        $("#change").val(change.toFixed(2))
     }
 
     deleteAsset = (id) => {
