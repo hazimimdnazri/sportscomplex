@@ -12,6 +12,7 @@ use App\LVenue;
 use App\LSport;
 use App\LActivity;
 use App\LEquiptment;
+use App\LInstitution;
 
 class SettingsController extends Controller
 {
@@ -71,6 +72,24 @@ class SettingsController extends Controller
         $sport->remark = $request->remark;
 
         if($sport->save()){
+            return back();
+        }
+    }
+
+    public function institutions(){
+        $institutions = LInstitution::all();
+        return view('settings.institutions', compact('institutions'));
+    }
+
+    public function submitInstitutions(Request $request){
+        $institution = new LInstitution;
+        if($request->id){
+            $institution = LInstitution::find($request->id);
+        }
+        $institution->institution = $request->institution;
+        $institution->remark = $request->remark;
+
+        if($institution->save()){
             return back();
         }
     }
@@ -243,6 +262,20 @@ class SettingsController extends Controller
         }
         $id = $request->id;
         return view('settings.partials.venues-modal', compact('venues', 'id'));
+    }
+
+    public function institutionsModal(Request $request){
+        $institutions = new LInstitution;
+        if(isset($request->id)){
+            $institutions = LInstitution::find($request->id);
+            if(isset($request->action) == "delete"){
+                if($institutions->delete()){
+                    return "success";
+                }
+            }
+        }
+        $id = $request->id;
+        return view('settings.partials.institutions-modal', compact('institutions', 'id'));
     }
 
     public function equiptmentsModal(Request $request){

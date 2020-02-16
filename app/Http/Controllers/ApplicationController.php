@@ -20,6 +20,7 @@ use App\LEquiptment;
 use App\Equiptment;
 use App\LCustomerType;
 use App\Membership;
+use App\LInstitution;
 use Hash;
 
 class ApplicationController extends Controller
@@ -85,7 +86,8 @@ class ApplicationController extends Controller
 
     public function activityModal(){
         $types = LCustomerType::all();
-        return view('shared.activity_modal', compact('types'));
+        $institutions = LInstitution::all();
+        return view('shared.activity_modal', compact('types', 'institutions'));
     }
 
     public function viewModal(Request $request){

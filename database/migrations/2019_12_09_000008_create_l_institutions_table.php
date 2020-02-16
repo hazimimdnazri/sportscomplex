@@ -16,7 +16,8 @@ class CreateLInstitutionsTable extends Migration
         Schema::create('l_institutions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('institution');
-            $table->integer('flag');
+            $table->string('remark')->nullable();
+            $table->integer('flag')->default(1);
             $table->unsignedBigInteger('updated_by')->default(1);
             $table->timestamps();
 

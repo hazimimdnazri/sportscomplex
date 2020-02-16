@@ -67,7 +67,12 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Institution <span class="text-red">*</span></label>
-                                    <input type="text" class="form-control" id="institution" name="institution" placeholder="Applicant email">
+                                    <select name="institution" id="institution" class="select2 form-control" style="width: 100%;>
+                                        <option value="" selected>-- Institution --</option>
+                                        @foreach($institutions as $i)
+                                        <option value="{{ $i->id }}" >{{ $i->institution }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
