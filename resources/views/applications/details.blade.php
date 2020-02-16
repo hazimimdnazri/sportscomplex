@@ -179,6 +179,11 @@
     }
 
     toPayment = () => {
+        if ($('#deposit').length){
+            var deposit = parseFloat($("#deposit").val())
+        } else {
+            var deposit = parseFloat(0);
+        }
         var ftotal = parseFloat($("#ftotal").val())
         var etotal = parseFloat($("#etotal").val())
         $.ajax({
@@ -188,6 +193,7 @@
                 "_token": "{{ csrf_token() }}",
                 "ftotal": ftotal,
                 "etotal": etotal,
+                "deposit": deposit,
                 "id": "{{ $application->id }}"
             }
         }).done(function(response){

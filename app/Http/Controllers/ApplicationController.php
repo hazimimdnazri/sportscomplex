@@ -144,6 +144,7 @@ class ApplicationController extends Controller
 
     public function paymentModal(Request $request){
         $application = Application::find($request->id);
+        $deposit = $request->deposit;
         $id = $request->id;
         $discount = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
         if($discount){
@@ -152,7 +153,7 @@ class ApplicationController extends Controller
             $discount = 0;
         }
         $total = $request->ftotal + $request->etotal;
-        return view('applications.partials.payment-modal', compact('ftotal', 'etotal', 'total', 'discount', 'id'));
+        return view('applications.partials.payment-modal', compact('ftotal', 'etotal', 'total', 'discount', 'id', 'deposit'));
     }
 
     public function ajaxPayment(Request $request, $id){

@@ -17,7 +17,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $n = 1 @endphp
+                    @php 
+                    $n = 1;
+                    $ftotal = 0;
+                    $dtotal = 0;
+                    @endphp
                     @foreach($reservations as $r)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
@@ -33,22 +37,28 @@
                         </td>
                         <td class="text-center">
                         @if($r->price_type == 1)
-                            {{ number_format($r->r_activity->public, 2) }}
+                            {{ $price = number_format($r->r_activity->public, 2) }}
                         @elseif($r->price_type == 2)
-                            {{ number_format($r->r_activity->students, 2) }}
+                            {{ $price = number_format($r->r_activity->students, 2) }}
                         @elseif($r->price_type == 3)
-                            {{ number_format($r->r_activity->underage, 2) }}
+                            {{ $price = number_format($r->r_activity->underage, 2) }}
                         @endif
                         </td>
-                        <td class="text-center">{{ number_format($r->r_activity->deposit, 2) }}  </td>
+                        <td class="text-center">{{ $deposit = number_format($r->r_activity->deposit, 2) }}  </td>
                         <td class="text-center">
                             <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger" >Delete</button>
                         </td>
                     </tr>
+                    @php 
+                    $ftotal += number_format($price, 2);
+                    $dtotal += number_format($deposit, 2);
+                    @endphp
                     @endforeach
                 </tbody>
             </table>
             <hr>
+            <input type="hidden" id="ftotal" value="{{ $ftotal }}">
+            <input type="hidden" id="deposit" value="{{ $dtotal }}">
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 <button onClick="toPayment()" class="btn btn-primary">Pay</button>

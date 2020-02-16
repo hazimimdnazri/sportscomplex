@@ -33,6 +33,7 @@
                             <tr>
                                 <th width="5%">No. </th>
                                 <th class="text-center">Applicant</th>
+                                <th class="text-center">Type</th>
                                 <th class="text-center">Reservation Date</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center" width="20%">Actions</th>
@@ -44,6 +45,13 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td>{{ $a->a_applicant->name }}</td>
+                                <td>
+                                    @if($a->type == 1)
+                                        Facility Reservation
+                                    @else
+                                        Activity
+                                    @endif
+                                </td>
                                 <td class="text-center">{{ date('d/m/Y', strtotime($a->date)) }}</td>
                                 <td class="text-center">
                                     @if($a->status == 1)
@@ -57,9 +65,6 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    @if($a->status == 2)
-                                    <!-- <a href="{{ url('/application/payment/'.$a->id) }}" class="btn btn-warning">Pay</a> -->
-                                    @endif
                                     @if($a->status != 1)
                                     <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
                                     @elseif($a->status != 3)
