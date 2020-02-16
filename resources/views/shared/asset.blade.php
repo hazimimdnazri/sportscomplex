@@ -189,31 +189,4 @@
         });
 
     }
-
-    $("#paymentForm").submit(function(e) {
-        e.preventDefault();    
-        var formData = new FormData(this);
-
-        $.ajax({
-            url: "{{ url('application/payment/'.$id) }}",
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        }).done((response) => {
-            if(response == 'success'){
-                $("#paymentModal").modal('hide')
-                Swal.fire(
-                    'Succes!',
-                    'Data saved!!',
-                    'success'
-                ).then((result) => {
-                    if(result.value){
-                        window.location.replace("{{ url('application') }}");
-                    }
-                })
-            } 
-        });
-    });
 </script>

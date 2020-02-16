@@ -144,6 +144,7 @@ class ApplicationController extends Controller
 
     public function paymentModal(Request $request){
         $application = Application::find($request->id);
+        $id = $request->id;
         $discount = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
         if($discount){
             $discount = $discount->r_membership->discount;
@@ -151,7 +152,7 @@ class ApplicationController extends Controller
             $discount = 0;
         }
         $total = $request->ftotal + $request->etotal;
-        return view('applications.partials.payment-modal', compact('ftotal', 'etotal', 'total', 'discount'));
+        return view('applications.partials.payment-modal', compact('ftotal', 'etotal', 'total', 'discount', 'id'));
     }
 
     public function ajaxPayment(Request $request, $id){
@@ -162,6 +163,13 @@ class ApplicationController extends Controller
             $equiptment = Equiptment::where('application_id', $id);
             $equiptment->update(['status' => 2]);
 
+            $discount = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
+            if($discount){
+                $discount = $discount->r_membership->discount;
+            } else {
+                $discount = 0;
+            }
+            
             $application->event = $request->event;
             $application->status = 3;
 
@@ -172,7 +180,7 @@ class ApplicationController extends Controller
             $trasaction->application_id = $id;
             $trasaction->customer_id = $application->user_id;
             $trasaction->tax = 0;
-            $trasaction->membership_discount = $user->r_details->r_membership->discount;
+            $trasaction->membership_discount = $discount;
             $trasaction->general_discount = 0;
             $trasaction->subtotal = number_format($request->subtotal, 2);
             $trasaction->total = number_format($request->total, 2);
