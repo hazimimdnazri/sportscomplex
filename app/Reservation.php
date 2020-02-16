@@ -15,7 +15,7 @@ class Reservation extends Model
     }
 
     public function r_activity(){
-        return $this->belongsTo(LActivity::class, 'activity_id');
+        return $this->belongsTo(LActivity::class, 'activity');
     }
 
     public function r_application(){

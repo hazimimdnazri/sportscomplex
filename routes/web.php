@@ -39,6 +39,7 @@ Route::group(['prefix' => 'application'], function() {
     Route::group(['prefix' => 'ajax'], function() {
         Route::post('deletefacility', 'ApplicationController@deleteFacility');
         Route::post('addequiptment', 'ApplicationController@addEquiptment');
+        Route::post('view-modal', 'ApplicationController@viewModal');
     });
 });
 

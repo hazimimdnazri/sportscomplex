@@ -18,6 +18,7 @@ use App\StaffDetail;
 use App\CustomerDetail;
 use App\LEquiptment;
 use App\Equiptment;
+use App\LCustomerType;
 use Hash;
 
 class ApplicationController extends Controller
@@ -30,7 +31,8 @@ class ApplicationController extends Controller
 
     public function details(Request $request, $id){
         $application = Application::find($id);
-        return view('applications.details', compact('application'));
+        $equiptments = Equiptment::where('application_id', $id)->get();
+        return view('applications.details', compact('application', 'equiptments'));
     }
 
     public function submitDetails(Request $request, $id){
@@ -57,17 +59,22 @@ class ApplicationController extends Controller
 
     public function itemType(Request $request){
         $id = $request->id;
+        $application = Application::find($id);
         $user = User::find($request->user);
         $date = Application::find($id)->date;
-        if($request->type == 1){
-            $venues = LVenue::all();
-            $reservations = Reservation::where('application_id', $request->id)->get();
-            $equiptments = Equiptment::where('application_id', $request->id)->get();
-            return view('shared.asset', compact('reservations', 'venues', 'id', 'user', 'date', 'equiptments'));
-        } else if($request->type == 2) {
-
-        } else {
-            return NULL;
+        $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->get();
+        $venues = LVenue::all();
+        $equiptments = Equiptment::where('application_id', $request->id)->get();
+        $activities = LActivity::all();
+        $application->type = $request->type;
+        if($application->save()){
+            if($request->type == 1){
+                return view('shared.asset', compact('reservations', 'venues', 'id', 'user', 'date', 'equiptments'));
+            } else if($request->type == 2) {
+                return view('shared.activity', compact('reservations', 'activities', 'id', 'user', 'date', 'equiptments'));
+            } else {
+                return NULL;
+            }
         }
     }
 
@@ -76,7 +83,16 @@ class ApplicationController extends Controller
     }
 
     public function activityModal(){
-        return view('shared.activity_modal');
+        $types = LCustomerType::all();
+        return view('shared.activity_modal', compact('types'));
+    }
+
+    public function viewModal(Request $request){
+        $application = Application::find($request->id);
+        $reservations = Reservation::where('application_id', $application->id)->get();
+        $equiptments = Equiptment::where('application_id', $application->id)->get();
+        $types = LCustomerType::all();
+        return view('applications.partials.view-modal', compact('application', 'types', 'reservations', 'equiptments'));
     }
 
     public function submitApplication(Request $request){
@@ -182,6 +198,7 @@ class ApplicationController extends Controller
     public function submitFacility(Request $request, $id){
         $reservation = new Reservation;
         $start_time = date('H:i:s', strtotime($request->start_time));
+        $reservation->type = 1;
         $reservation->application_id = $id;
         $reservation->sport = $request->sport;
         $reservation->duration = $request->duration;
@@ -197,8 +214,8 @@ class ApplicationController extends Controller
         for($i = 0; $i < $request->quantity; $i++){
             $reservation = new Reservation;
             $reservation->application_id = $id;
-            $reservation->activity_id = $request->activity;
             $reservation->type = 2;
+            $reservation->activity = $request->activity;
             $reservation->price_type = $request->price;
             $reservation->duration = 0;
             $reservation->start_date = date('Y-m-d 00:00:00', strtotime(Application::find($id)->date));

@@ -13,6 +13,7 @@ use App\Reservation;
 use App\LFacility;
 use App\LVenue;
 use App\LSport;
+use App\LCustomerType;
 
 class HomeController extends Controller
 {
@@ -33,7 +34,8 @@ class HomeController extends Controller
 
     public function register(){
         $memberships = LMembership::all();
-        return view('registration', compact('memberships'));
+        $types = LCustomerType::all();
+        return view('registration', compact('memberships', 'types'));
     }
 
     public function submitRegister(Request $request){
@@ -51,6 +53,8 @@ class HomeController extends Controller
             $members->dob = date('Y-m-d', strtotime($request->dob));
             $members->address = $request->address;
             $members->zipcode = $request->zipcode;
+            $members->type = $request->type;
+            $members->nationality = $request->nationality;
             $members->city = $request->city;
             $members->state = $request->state;
             $members->membership = $request->membership;

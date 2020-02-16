@@ -16,6 +16,7 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->integer('type')->nullable(); // 1 - facility | 2 - activity
             $table->string('event')->nullable();
             $table->string('attachment')->nullable();
             $table->unsignedBigInteger('status')->default(1);

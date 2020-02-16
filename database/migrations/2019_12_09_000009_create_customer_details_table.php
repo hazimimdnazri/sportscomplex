@@ -22,16 +22,13 @@ class CreateCustomerDetailsTable extends Migration
             $table->string('address')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
+            $table->integer('nationality')->nullable(); // 1 - malaysian | 2 - non-malaysian
             $table->integer('state')->nullable();
-            $table->integer('type')->nullable();
-            $table->unsignedBigInteger('membership')->default(99);
-            $table->integer('cycle')->nullable();
-            $table->date('cycle_start')->nullable();
-            $table->date('cycle_end')->nullable();
+            $table->unsignedBigInteger('type');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('membership')->references('id')->on('l_memberships');
+            $table->foreign('type')->references('id')->on('l_customer_types');
         });
     }
 

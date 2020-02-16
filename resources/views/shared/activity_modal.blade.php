@@ -33,9 +33,9 @@
                                 <label for="exampleInputEmail1">Type <span class="text-red">*</span></label>
                                 <select name="type" onChange="userType(this.value)" id="type" class="form-control">
                                     <option value="" selected>-- Type --</option>
-                                    <option value="1" >Public</option>
-                                    <option value="2" >Staff</option>
-                                    <option value="3" >Students</option>
+                                    @foreach($types as $t)
+                                    <option value="{{ $t->id }}" >{{ $t->type }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

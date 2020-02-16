@@ -1,10 +1,11 @@
 <div class="col-xs-12">
     <div class="box box-primary">
         <div class="box-header">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#activityModal">Reserve an Activity</button>
+            <h4 class="box-title">Activity</h4>
+            <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#activityModal">Reserve an Activity</button>
         </div>
         <div class="box-body">
-            <table id="example1" class="table table-bordered">
+            <table id="activity" class="table table-bordered">
                 <thead>
                     <tr>
                         <th width="5%">No. </th>
@@ -50,7 +51,7 @@
             <hr>
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <input onClick="toPayment()" type="button" class="btn btn-primary" value="Submit"/>
+                <button onClick="toPayment()" class="btn btn-primary">Pay</button>
             </div>
         </div>
     </div>
@@ -109,12 +110,10 @@
     </div>
 </div>
 
-<script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
     $(function () {
-        $('#example1').DataTable()
+        $('#activity').DataTable()
 
         $('#datepicker').datepicker({
             format: 'dd-mm-yyyy',
@@ -123,24 +122,4 @@
 
         $('.select2').select2()
     })
-
-    toPayment = () => {
-        if($("#event").val() == ''){
-            alert("Please enter the event name.")
-        } else {
-            $.ajax({
-                type:"POST",
-                url: "{{ url('pdo.php') }}",
-                data : {
-                    "_token": "{{ csrf_token() }}",
-                    "id" : "{{ $id }}",
-                    "event_name" : $("#event").val()
-                }
-            }).done(function(response){
-                if(response == 'success'){
-                    window.location = "{{ url('application/payment/'.$id) }}"
-                }
-            });
-        }
-    }
 </script>

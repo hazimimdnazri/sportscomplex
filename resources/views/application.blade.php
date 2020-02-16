@@ -44,7 +44,7 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td>{{ $a->a_applicant->name }}</td>
-                                <td class="text-center">{{ $a->date }}</td>
+                                <td class="text-center">{{ date('d/m/Y', strtotime($a->date)) }}</td>
                                 <td class="text-center">
                                     @if($a->status == 1)
                                         <span class="label label-default">{{ $a->a_status->status }}</span>
@@ -60,8 +60,9 @@
                                     @if($a->status == 2)
                                     <!-- <a href="{{ url('/application/payment/'.$a->id) }}" class="btn btn-warning">Pay</a> -->
                                     @endif
-                                    <a class="btn btn-primary">View</a>
-                                    @if($a->status != 3)
+                                    @if($a->status != 1)
+                                    <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
+                                    @elseif($a->status != 3)
                                     <a href="{{ url('application/'.$a->id) }}" class="btn btn-info">Edit</a>
                                     @endif
                                     <a class="btn btn-danger">Delete</a>
@@ -93,16 +94,17 @@
         $('#example1').DataTable()
     })
 
-    assetModal = () => {
+    viewModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('ajax/assetmodal') }}",
+            url: "{{ url('application/ajax/view-modal') }}",
             data: {
-                "_token": "{{ csrf_token() }}",
+                "_token" : "{{ csrf_token() }}",
+                "id" : id
             }
         }).done(function(response){
             $("#variable_1").html(response)
-            $('#assetModal').modal('show');
+            $('#viewModal').modal('show');
         });
     }
 
@@ -124,19 +126,6 @@
         });
     }
 
-    waktu = (value) => {
-        if(value){
-            $.ajax({
-                type:"POST",
-                url: "{{ url('api/asset') }}"+"/"+value
-            }).done(function(response){
-                $("#variable_2").html(response)
-            });
-        } else {
-            $('#duration').find('option').remove().end().append("<option value=''>-- Duration --</option>")
-        }
-    }
-
     activityModal = () => {
         $.ajax({
             type:"POST",
@@ -151,7 +140,7 @@
     }
 
     userType = (value) => {
-        if(value == 3){
+        if(value == 3 || value == 5){
             $("#students").show()
             $("#staffs").hide()
         } else if(value == 2){

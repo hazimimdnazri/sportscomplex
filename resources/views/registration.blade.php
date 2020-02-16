@@ -57,6 +57,15 @@
                                         <input type="email" class="form-control" name="email" placeholder="Enter applicant name">
                                     </div>
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">Customer Type <span class="text-red">*</span></label>
+                                        <select class="form-control" name="type">
+                                            <option value="" selected>-- Type --</option>
+                                            @foreach($types as $t)
+                                                <option value="{{ $t->id }}">{{ $t->type }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">Address <span class="text-red">*</span></label>
                                         <textarea type="text" rows="4" class="form-control" name="address" placeholder="Enter applicant name"></textarea>
                                     </div>
@@ -64,7 +73,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
-                                        <select name="nationality" class="form-control" name="membership">
+                                        <select name="nationality" class="form-control" name="nationality">
                                             <option value="" selected>-- Nationality --</option>
                                             <option value="1" >Malaysian</option>
                                             <option value="2" >Foriegner</option>
