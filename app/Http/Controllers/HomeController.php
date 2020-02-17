@@ -15,6 +15,9 @@ use App\LVenue;
 use App\LSport;
 use App\LCustomerType;
 use App\Membership;
+use App\LInstitution;
+use App\StudentDetail;
+use App\StaffDetail;
 
 class HomeController extends Controller
 {
@@ -36,20 +39,23 @@ class HomeController extends Controller
     public function register(){
         $memberships = LMembership::all();
         $types = LCustomerType::all();
-        return view('registration', compact('memberships', 'types'));
+        $institutions = LInstitution::all();
+        return view('registration', compact('memberships', 'types', 'institutions'));
     }
 
     public function submitRegister(Request $request){
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->role = 2;
+        $user->role = 3;
+        $user->status = 2;
         $user->password = Hash::make(123456);
 
         if($user->save()){
             $members = new CustomerDetail;
             $members->user_id = $user->id;
             $members->ic = $request->ic;
+            $members->passport = $request->passport;
             $members->phone = $request->phone;
             $members->dob = date('Y-m-d', strtotime($request->dob));
             $members->address = $request->address;
@@ -58,6 +64,21 @@ class HomeController extends Controller
             $members->nationality = $request->nationality;
             $members->city = $request->city;
             $members->state = $request->state;
+
+            if($request->type == 3){
+                $student = new StudentDetail;
+                $student->user_id = $user->id;
+                $student->student_id = $request->student_id;
+                $student->institution = $request->institution;
+                $student->save();
+
+            } else if($request->type == 2){
+                $staff = new StaffDetail;
+                $staff->user_id = $user->id;
+                $staff->staff_id = $request->staff_id;
+                $staff->company = $request->company;
+                $staff->save();
+            }
 
             $memberships = new Membership;
             $memberships->user_id = $user->id;
@@ -99,6 +120,11 @@ class HomeController extends Controller
 
     public function transactions(){
         return view('transactions');
+    }
+
+    public function customers(){
+        $customers = User::where('role', 3)->get();
+        return view('customers', compact('customers'));
     }
 
     public function facilityCalendar(Request $request){

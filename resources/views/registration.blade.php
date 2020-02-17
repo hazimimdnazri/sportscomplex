@@ -33,11 +33,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Full Name <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="name" placeholder="Enter applicant name">
+                                        <input type="text" class="form-control" name="name" placeholder="Enter name">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="ic" placeholder="Enter applicant name">
+                                        <input type="text" class="form-control" name="ic" placeholder="Enter IC number">
                                     </div>
                                     <div class="form-group">
                                         <label>Date of Birth <span class="text-red">*</span></label>
@@ -50,15 +50,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Mobile Phone <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="phone" placeholder="Enter applicant name">
+                                        <input type="text" class="form-control" name="phone" placeholder="Enter mobile phone number">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
-                                        <input type="email" class="form-control" name="email" placeholder="Enter applicant name">
+                                        <input type="email" class="form-control" name="email" placeholder="Enter email">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Customer Type <span class="text-red">*</span></label>
-                                        <select class="form-control" name="type">
+                                        <select class="form-control" onChange="userType(this.value)" name="type">
                                             <option value="" selected>-- Type --</option>
                                             @foreach($types as $t)
                                                 <option value="{{ $t->id }}">{{ $t->type }}</option>
@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Address <span class="text-red">*</span></label>
-                                        <textarea type="text" rows="4" class="form-control" name="address" placeholder="Enter applicant name"></textarea>
+                                        <textarea type="text" rows="4" class="form-control" name="address" placeholder="Enter address"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -80,12 +80,16 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">Passport <span class="text-red">*</span></label>
+                                        <input type="text" class="form-control" name="passport" placeholder="Enter passport number">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">Zipcode <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="zipcode" placeholder="Enter applicant name">
+                                        <input type="text" class="form-control" name="zipcode" placeholder="Enter zipcode">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">City <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="city" placeholder="Enter applicant name">
+                                        <input type="text" class="form-control" name="city" placeholder="Enter city">
                                     </div>
                                     <div class="form-group">
                                         <label>State <span class="text-red">*</span></label>
@@ -135,6 +139,41 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div id="students" style="display:none">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Student ID <span class="text-red">*</span></label>
+                                            <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Applicant email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Institution <span class="text-red">*</span></label>
+                                            <select name="institution" id="institution" class="select2 form-control" style="width: 100%;">
+                                                <option value="" selected>-- Institution --</option>
+                                                @foreach($institutions as $i)
+                                                <option value="{{ $i->id }}" >{{ $i->institution }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="staffs" style="display:none">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Staff ID <span class="text-red">*</span></label>
+                                            <input type="text" class="form-control" id="staff_id" name="staff_id" placeholder="Applicant email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Company <span class="text-red">*</span></label>
+                                            <input type="text" class="form-control" id="company" name="company" placeholder="Applicant email">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <div class="text-center">
@@ -157,6 +196,19 @@
     $(() => {
         $('.select2').select2()
     })
+
+    userType = (value) => {
+        if(value == 3 || value == 5){
+            $("#students").show()
+            $("#staffs").hide()
+        } else if(value == 2){
+            $("#students").hide()
+            $("#staffs").show()
+        } else {
+            $("#students").hide()
+            $("#staffs").hide()
+        }
+    }
 
     $('#datepicker').datepicker({
         format: 'dd-mm-yyyy',

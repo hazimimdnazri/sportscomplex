@@ -103,6 +103,7 @@ class ApplicationController extends Controller
             $user = new User;
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->status = 2;
             $user->password = Hash::make(123456);
 
             if($user->save()){

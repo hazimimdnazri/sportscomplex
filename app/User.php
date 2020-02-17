@@ -44,4 +44,38 @@ class User extends Authenticatable
     public function r_details(){
         return $this->hasOne(CustomerDetail::class, 'user_id', 'id');
     }
+
+    public function getMembership($id){
+        $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
+        if($membership){
+            switch ($membership->membership){
+                case 1:
+                    return "<span class='label text-black' style='background-color:gold'>Gold</span>";
+                    break;
+                
+                case 2:
+                    return "<span class='label text-black' style='background-color:silver'>Silver</span>";
+                    break;
+                
+                case 3:
+                    return "<span class='label' style='background-color:brown'>Bronze</span>";
+                    break;
+                
+                default:
+                    return "<span class='label bg-black'>Regular</span>";
+                    break;
+            }
+        } else {
+            return "<span class='label bg-black'>Regular</span>";
+        }
+    }
+
+    public function getMembershipDuration($id){
+        $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
+        if($membership){
+            return date("d/m/Y", strtotime($membership->cycle_end));
+        } else {
+            return "-";
+        }
+    }
 }

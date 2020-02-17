@@ -6,7 +6,7 @@
         <li><a href="{{ url('calendar') }}"><i class="fa fa-calendar-check-o"></i> <span>Availability Calendar</span></a></li>
         <li><a href="{{ url('application') }}"><i class="fa fa-shopping-bag"></i> <span>POS</span></a></li>
         <li><a href="#"><i class="fa fa-send"></i> <span>Bookings</span></a></li>
-        <li><a href="#"><i class="fa fa-users"></i> <span>Memberships</span></a></li>
+        <li><a href="{{ url('customers') }}"><i class="fa fa-users"></i> <span>Customers</span></a></li>
         <li><a href="#"><i class="fa fa-th-list"></i> <span>Vendor Managment</span></a></li>
         <li><a href="#"><i class="fa fa-dollar"></i> <span>Financial</span></a></li>
         <li><a href="#"><i class="fa fa-calendar-check-o"></i> <span>Feedback Management</span></a></li>
@@ -29,7 +29,6 @@
                 <li><a href="{{ url('settings/activities') }}"><i class="fa fa-circle-o"></i>Activities</a></li>
                 <li><a href="{{ url('settings/institutions') }}"><i class="fa fa-circle-o"></i>Institutions</a></li>
                 <li><a href="{{ url('settings/users') }}"><i class="fa fa-circle-o"></i>Users</a></li>
-                <li><a href="{{ url('settings/customers') }}"><i class="fa fa-circle-o"></i>Customers</a></li>
                 <li><a href="{{ url('settings/membership') }}"><i class="fa fa-circle-o"></i>Membership</a></li>
                 <li><a href="{{ url('settings/profile') }}"><i class="fa fa-circle-o"></i>My Profile</a></li>
             </ul>

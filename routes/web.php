@@ -24,6 +24,7 @@ Route::get('calendar', 'HomeController@calendar')->middleware('auth');
 Route::get('registration', 'HomeController@register')->middleware('auth');
 Route::post('registration', 'HomeController@submitRegister')->middleware('auth');
 Route::get('transactions', 'HomeController@transactions')->middleware('auth');
+Route::get('customers', 'HomeController@customers')->middleware('auth');
 
 Route::group(['prefix' => 'application'], function() {
     Route::get('/', 'ApplicationController@index')->middleware('auth');
