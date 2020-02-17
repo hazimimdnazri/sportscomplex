@@ -19,9 +19,9 @@
                         <div class="col-lg-12">
                             <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
                             <div class="form-group" id="searchIC" style="display:none">
-                                <label for="exampleInputEmail1">IC Number </label>
+                                <label for="exampleInputEmail1">IC Number / Passport </label>
                                 <div class="input-group">
-                                    <input id="member_id" type="text" class="form-control" placeholder="Member ID (if available)">
+                                    <input id="member_id" type="text" class="form-control" placeholder="Enter IC / Passport">
                                     <span class="input-group-btn">
                                         <button onClick="member()" class="btn btn-info" type="button">Find</button>
                                     </span>
@@ -53,8 +53,24 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
+                                <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
+                                <select name="nationality" onChange="selectNationality(this.value)" id="nationality" class="form-control">
+                                    <option value="" selected>-- Nationality --</option>
+                                    <option value="1" >Malaysian</option>
+                                    <option value="2" >Foreigner</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6"  id="ic_block" style="display:none">
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="ic" name="ic" placeholder="Applicant MyKad / MyKid">
+                                <input type="text" class="form-control" id="ic" name="ic" placeholder="Applicant IC">
+                            </div>
+                        </div>
+                        <div class="col-lg-6" id="passport_block" style="display:none">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Passport <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="passport" name="passport" placeholder="Applicant passport">
                             </div>
                         </div>
                         <div id="students" style="display:none">
@@ -67,7 +83,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Institution <span class="text-red">*</span></label>
-                                    <select name="institution" id="institution" class="select2 form-control" style="width: 100%;>
+                                    <select name="institution" id="institution" class="select2 form-control" style="width: 100%;">
                                         <option value="" selected>-- Institution --</option>
                                         @foreach($institutions as $i)
                                         <option value="{{ $i->id }}" >{{ $i->institution }}</option>

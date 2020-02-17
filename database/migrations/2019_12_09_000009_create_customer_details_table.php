@@ -16,7 +16,8 @@ class CreateCustomerDetailsTable extends Migration
         Schema::create('customer_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('ic');
+            $table->string('ic')->nullable()->unique();
+            $table->string('passport')->nullable()->unique();
             $table->string('phone')->nullable();
             $table->date('dob');
             $table->string('address')->nullable();

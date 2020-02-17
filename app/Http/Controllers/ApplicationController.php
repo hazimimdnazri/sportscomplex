@@ -108,10 +108,17 @@ class ApplicationController extends Controller
             if($user->save()){
                 $details = new CustomerDetail;
                 $details->user_id = $user->id;
-                $details->ic = $request->ic;
-                $date = str_split(substr($request->ic, 0, 6), 2);
-                $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
                 $details->type = $request->type;
+                $details->nationality = $request->nationality;
+
+                if($request->nationality == 1){
+                    $details->ic = $request->ic;
+                    $date = str_split(substr($request->ic, 0, 6), 2);
+                    $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
+                } else {
+                    $details->passport = $request->passport;
+                    $details->dob = date('Y-m-d', strtotime(0));
+                }
 
                 if($details->save()){
                     if($request->type == 3){

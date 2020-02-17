@@ -19,7 +19,12 @@ class ApiController extends Controller
         if($customers){
             return new CustomerResource($customers);
         } else {
-            return "error";
+            $customers = CustomerDetail::where('passport', $id)->first();
+            if($customers){
+                return new CustomerResource($customers);
+            } else {
+                return "error";
+            }
         }
         
     }

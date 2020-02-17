@@ -123,10 +123,12 @@
                 $("#name").val(response.data.name);
                 $("#email").val(response.data.email);
                 $("#ic").val(response.data.ic);
+                $("#passport").val(response.data.passport);
                 $("#type").val(response.data.type).change();
+                $("#nationality").val(response.data.nationality).change();
                 $("#post_id").val(response.data.id);
             } else {
-                alert("Pengguna tidak wujud!")
+                alert("User does not exist!")
             }
         });
     }
@@ -160,26 +162,36 @@
     searchIC = (id) => {
         if(id == 'existing'){
             $("#searchIC").show()
-            $("#name").attr('readOnly','readOnly')
-            $("#ic").attr('readOnly','readOnly')
-            $("#email").attr('readOnly','readOnly')
-            $("#type").attr('readOnly','readOnly')
-            $("#type option").each(function(i){
+            $("#name, #ic, #email, #type, #nationality").attr('readOnly','readOnly')
+            $("#type, #nationality, option").each(function(i){
                 $(this).attr('disabled', 'disabled')
             });
+            
         } else {
             $("#searchIC").hide()
-            $("#name").removeAttr('readOnly','readOnly')
-            $("#ic").removeAttr('readOnly','readOnly')
-            $("#email").removeAttr('readOnly','readOnly')
-            $("#type").removeAttr('readOnly','readOnly')
-            $("#type option").each(function(i){
+            $("#name, #ic, #email, #type, #nationality").removeAttr('readOnly','readOnly')
+            $("#type, #nationality, option").each(function(i){
                 $(this).removeAttr('disabled', 'disabled')
             });
             $("#name").val('')
             $("#ic").val('')
             $("#email").val('')
             $("#type").val('')
+            $("#nationality").val('')
+            $("#ic_block").hide()
+            $("#passport_block").hide()
+            $("#students").hide()
+            $("#staffs").hide()
+        }
+    }
+
+    selectNationality = (value) => {
+        if(value == 1){
+            $("#ic_block").show()
+            $("#passport_block").hide()
+        } else if(value == 2){
+            $("#ic_block").hide()
+            $("#passport_block").show()
         }
     }
 </script>
