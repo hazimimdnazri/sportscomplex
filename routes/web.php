@@ -90,6 +90,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
     Route::post('calendar', 'HomeController@facilityCalendar');
     Route::post('sports', 'ApplicationController@ajaxSports');
     Route::post('minicalendar', 'ApplicationController@miniCalendar');
+    Route::post('deletecustomer', 'HomeController@deleteCustomer');
 });
 
 Route::get('test', 'ApplicationController@qr');

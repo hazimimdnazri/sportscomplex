@@ -123,8 +123,16 @@ class HomeController extends Controller
     }
 
     public function customers(){
-        $customers = User::where('role', 3)->get();
+        $customers = User::where('role', 3)->where('flag', 1)->get();
         return view('customers', compact('customers'));
+    }
+
+    public function deleteCustomer(Request $request){
+        $user = User::find($request->id);
+        $user->flag = 0;
+        if($user->save()){
+            return 'success';
+        }
     }
 
     public function editCustomer($id){

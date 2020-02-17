@@ -2,6 +2,7 @@
 
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -53,7 +54,7 @@
                                 <td class="text-center">{!! $c->getMembershipDuration($c->id) !!}</td>
                                 <td class="text-center">
                                     <a href="{{ url('customer/'.$c->id.'/edit') }}" class="btn btn-info">Edit</a>
-                                    <a class="btn btn-danger">Delete</a>
+                                    <a onClick="deleteCustomer({{$c->id}})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -69,9 +70,42 @@
 @section('postscript')
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 <script>
     $(() => {
         $('#example1').DataTable()
     })
+
+    deleteCustomer = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, delete it!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('ajax/deletecustomer') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
+    }
 </script>
 @endsection
