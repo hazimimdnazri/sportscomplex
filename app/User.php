@@ -45,6 +45,24 @@ class User extends Authenticatable
         return $this->hasOne(CustomerDetail::class, 'user_id', 'id');
     }
 
+    public function r_student(){
+        return $this->hasOne(StudentDetail::class, 'user_id', 'id');
+    }
+
+    public function r_staff(){
+        return $this->hasOne(StaffDetail::class, 'user_id', 'id');
+    }
+
+    public function getMembershipID($id){
+        $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
+        return $membership->membership;
+    }
+
+    public function getMembershipCycle($id){
+        $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
+        return $membership->cycle;
+    }
+
     public function getMembership($id){
         $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
         if($membership){

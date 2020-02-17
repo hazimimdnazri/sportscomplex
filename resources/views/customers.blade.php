@@ -52,8 +52,7 @@
                                 <td class="text-center">{!! $c->getMembership($c->id) !!}</td>
                                 <td class="text-center">{!! $c->getMembershipDuration($c->id) !!}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-primary">View</a>
-                                    <a class="btn btn-info">Edit</a>
+                                    <a href="{{ url('customer/'.$c->id.'/edit') }}" class="btn btn-info">Edit</a>
                                     <a class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>

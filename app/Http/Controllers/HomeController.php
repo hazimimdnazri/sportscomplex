@@ -127,6 +127,14 @@ class HomeController extends Controller
         return view('customers', compact('customers'));
     }
 
+    public function editCustomer($id){
+        $user = User::find($id);
+        $memberships = LMembership::all();
+        $types = LCustomerType::all();
+        $institutions = LInstitution::all();
+        return view('editcustomer', compact('user', 'memberships', 'types', 'institutions'));
+    }
+
     public function facilityCalendar(Request $request){
         $venue = $request->venue;
         $facilities = LFacility::where('venue', $venue)->get();

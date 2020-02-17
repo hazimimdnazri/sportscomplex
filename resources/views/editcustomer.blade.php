@@ -8,11 +8,11 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Membership Registration
+        {{ $user->name ?? '' }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Membership Registration</li>
+        <li class="active">{{ $user->name ?? '' }}</li>
     </ol>
 </section>
 
@@ -33,11 +33,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Full Name <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="name" placeholder="Enter name">
+                                        <input type="text" class="form-control" name="name" placeholder="Enter name" value="{{ $user->name ?? '' }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="ic" placeholder="Enter IC number">
+                                        <input type="text" class="form-control" name="ic" placeholder="Enter IC number" value="{{ $user->r_details->ic ?? '' }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Date of Birth <span class="text-red">*</span></label>
@@ -45,16 +45,16 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" name="dob" class="form-control pull-right" id="datepicker">
+                                            <input type="text" name="dob" class="form-control pull-right" id="datepicker" value="{{ isset($user->r_details->dob) ? date('m-d-Y', strtotime($user->r_details->dob)) : '' }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Mobile Phone <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="phone" placeholder="Enter mobile phone number">
+                                        <input type="text" class="form-control" name="phone" placeholder="Enter mobile phone number" value="{{ $user->r_details->phone ?? '' }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
-                                        <input type="email" class="form-control" name="email" placeholder="Enter email">
+                                        <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{ $user->email ?? '' }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Customer Type <span class="text-red">*</span></label>
@@ -67,13 +67,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Address <span class="text-red">*</span></label>
-                                        <textarea type="text" rows="4" class="form-control" name="address" placeholder="Enter address"></textarea>
+                                        <textarea type="text" rows="4" class="form-control" name="address" placeholder="Enter address">{{ $user->r_details->address ?? '' }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
-                                        <select name="nationality" class="form-control" name="nationality">
+                                        <select name="nationality" class="form-control" id="nationality" name="nationality">
                                             <option value="" selected>-- Nationality --</option>
                                             <option value="1" >Malaysian</option>
                                             <option value="2" >Foriegner</option>
@@ -81,15 +81,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Passport <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="passport" placeholder="Enter passport number">
+                                        <input type="text" class="form-control" name="passport" placeholder="Enter passport number" value="{{ $user->r_details->passport ?? '' }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Zipcode <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="zipcode" placeholder="Enter zipcode">
+                                        <input type="text" class="form-control" name="zipcode" placeholder="Enter zipcode" value="{{ $user->r_details->zipcode ?? '' }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">City <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="city" placeholder="Enter city">
+                                        <input type="text" class="form-control" name="city" placeholder="Enter city" value="{{ $user->r_details->city ?? '' }}">
                                     </div>
                                     <div class="form-group">
                                         <label>State <span class="text-red">*</span></label>
@@ -144,7 +144,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Student ID <span class="text-red">*</span></label>
-                                            <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Applicant email">
+                                            <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Applicant email" value="{{ $user->r_student->student_id ?? '' }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -163,13 +163,13 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Staff ID <span class="text-red">*</span></label>
-                                            <input type="text" class="form-control" id="staff_id" name="staff_id" placeholder="Applicant email">
+                                            <input type="text" class="form-control" id="staff_id" name="staff_id" placeholder="Applicant email" value="{{ $user->r_staff->staff_id ?? '' }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Company <span class="text-red">*</span></label>
-                                            <input type="text" class="form-control" id="company" name="company" placeholder="Applicant email">
+                                            <input type="text" class="form-control" id="company" name="company" placeholder="Applicant email" value="{{ $user->r_staff->company ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -178,7 +178,7 @@
                         <hr>
                         <div class="text-center">
                             <button type="button" class="btn btn-warning">Reset</button>
-                            <button class="btn btn-primary">Register</button>
+                            <button class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
@@ -198,6 +198,7 @@
 
         @if(isset($user->r_details))
         $("#type").val({{$user->r_details->type}}).change()
+        $("#nationality").val({{$user->r_details->nationality}}).change()
         $("#state").val({{$user->r_details->state}}).change()
         $("#membership").val({{$user->getMembershipID($user->id)}}).change()
         $("#cycle").val({{$user->getMembershipCycle($user->id)}}).change()
