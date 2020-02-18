@@ -17,11 +17,10 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">User Type <span class="text-red">*</span></label>
+                                <label for="exampleInputEmail1">User Type</label>
                                 <select name="type" id="type" class="form-control">
-                                    <option value="" selected>-- Types --</option>
                                     @foreach($types as $t)
-                                    <option value="{{ $t->id }}" {{ $application->a_applicant->r_details->type == $t->id ? 'selected' : '' }}>{{ $t->type }}</option>
+                                    <option value="{{ $t->id }}" {{ $application->a_applicant->r_details->type == $t->id ? 'selected' : 'disabled' }}>{{ $t->type }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -74,22 +73,28 @@
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
-                                @foreach($equiptments as $e)
-                                <tr>
-                                    <td class="text-center">{{ $n++ }}</td>
-                                    <td class="text-center">{{ $e->r_equiptment ->equiptment}}</td>
-                                    <td class="text-center">{{ $e->r_equiptment->serial_number }}</td>
-                                    <td class="text-center">
-                                        @if($e->status == 1)
-                                            <span class="label label-warning">Draf</span>
-                                        @elseif($e->status == 2)
-                                            <span class="label label-primary">Dalam Sewaan</span>
-                                        @elseif($e->status == 3)
-                                            <span class="label label-success">Selesai Dipulangkan</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endforeach
+                                @if(count($equiptments) > 1)
+                                    @foreach($equiptments as $e)
+                                    <tr>
+                                        <td class="text-center">{{ $n++ }}</td>
+                                        <td class="text-center">{{ $e->r_equiptment ->equiptment}}</td>
+                                        <td class="text-center">{{ $e->r_equiptment->serial_number }}</td>
+                                        <td class="text-center">
+                                            @if($e->status == 1)
+                                                <span class="label label-warning">Draf</span>
+                                            @elseif($e->status == 2)
+                                                <span class="label label-primary">Dalam Sewaan</span>
+                                            @elseif($e->status == 3)
+                                                <span class="label label-success">Selesai Dipulangkan</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="text-center" colspan="4">No equiptment</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
