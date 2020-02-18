@@ -27,7 +27,7 @@ class ApplicationController extends Controller
 {
     public function index(){
         $assets = LFacility::all();
-        $applications = Application::all();
+        $applications = Application::all()->where('flag', 1);
         return view('application', compact('assets', 'applications'));
     }
 
@@ -92,10 +92,21 @@ class ApplicationController extends Controller
 
     public function viewModal(Request $request){
         $application = Application::find($request->id);
-        $reservations = Reservation::where('application_id', $application->id)->get();
+        if(isset($request->action) == 'delete'){
+            $application->flag = 0;
+            if($application->save()){
+                return 'success';
+            }
+        }
         $equiptments = Equiptment::where('application_id', $application->id)->get();
         $types = LCustomerType::all();
-        return view('applications.partials.view-modal', compact('application', 'types', 'reservations', 'equiptments'));
+        if($application->type == 1){
+            $reservations = Reservation::where('application_id', $application->id)->where('type', 1)->get();
+            return view('applications.partials.facility-modal', compact('application', 'types', 'reservations', 'equiptments'));
+        } else {
+            $reservations = Reservation::where('application_id', $application->id)->where('type', 2)->get();
+            return view('applications.partials.activity-modal', compact('application', 'types', 'reservations', 'equiptments'));
+        }
     }
 
     public function submitApplication(Request $request){

@@ -25,7 +25,7 @@
                     <p>Please fill in all the required fields, denoted with <span class="text-red">*</span>.</p>
                 </div>
                 <div class="box-body">
-                    <form id="application_form" action="{{ url('registration') }}" method="POST">
+                    <form id="application_form" action="{{ url('customer/'.$user->id.'/edit') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -197,15 +197,23 @@
         $('.select2').select2()
 
         @if(isset($user->r_details))
-        $("#type").val({{$user->r_details->type}}).change()
-        $("#nationality").val({{$user->r_details->nationality}}).change()
-        $("#state").val({{$user->r_details->state}}).change()
-        $("#membership").val({{$user->getMembershipID($user->id)}}).change()
-        $("#cycle").val({{$user->getMembershipCycle($user->id)}}).change()
-        $("#state").val({{$user->r_details->state}}).change()
-        $("#institution").val({{$user->r_student->institution}}).change()
-        @endif
+            $("#type").val({{$user->r_details->type}}).change()
+            $("#nationality").val({{$user->r_details->nationality}}).change()
+            $("#state").val({{$user->r_details->state}}).change()
 
+            @if($user->getMembershipID($user->id))
+                $("#membership").val({{$user->getMembershipID($user->id)}}).change()
+            @endif
+
+            @if($user->getMembershipCycle($user->id))
+                $("#cycle").val({{$user->getMembershipCycle($user->id)}}).change()
+            @endif
+
+            @if($user->r_details->type == 3)
+                $("#institution").val({{$user->r_student->institution}}).change()
+            @endif
+
+        @endif
     })
 
     userType = (value) => {

@@ -96,6 +96,64 @@ class HomeController extends Controller
         }
     }
 
+    public function submitEditCust(Request $request, $id){
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        $members = CustomerDetail::where('user_id', $id)->first();
+        $members->user_id = $id;
+        $members->ic = $request->ic;
+        $members->passport = $request->passport;
+        $members->phone = $request->phone;
+        $members->dob = date('Y-m-d', strtotime($request->dob));
+        $members->address = $request->address;
+        $members->zipcode = $request->zipcode;
+        $members->type = $request->type;
+        $members->nationality = $request->nationality;
+        $members->city = $request->city;
+        $members->state = $request->state;
+
+        if($request->type == 3){
+            $student = StudentDetail::where('user_id', $id)->first();
+            if($student == ''){
+                $student = new StudentDetail;
+            }
+            $student->user_id = $id;
+            $student->student_id = $request->student_id;
+            $student->institution = $request->institution;
+            $student->save();
+
+        } else if($request->type == 2){
+            $staff = StaffDetail::where('user_id', $id)->first();
+            if($staff == ''){
+                $staff = new StaffDetail;
+            }
+            $staff->user_id = $id;
+            $staff->staff_id = $request->staff_id;
+            $staff->company = $request->company;
+            $staff->save();
+        }
+
+        $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
+        if($membership == ''){
+            $membership = new Membership;
+        }
+        $membership->user_id = $id;
+        $membership->membership = $request->membership;
+        $membership->cycle = $request->cycle;
+        $membership->cycle_start = date('Y-m-d');
+        if($request->cycle == 1){
+            $membership->cycle_end = date('Y-m-d', strtotime('+1 month'));
+        } else {
+            $membership->cycle_end = date('Y-m-d', strtotime('+1 year'));
+        }
+
+        if($user->save() && $members->save() && $membership->save()){
+            return back();
+        }
+    }
+
     public function ajaxMembershipPrice(Request $request){
         $price = LMembership::where('id', $request->membership)->first();
         return $price;

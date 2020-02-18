@@ -55,12 +55,20 @@ class User extends Authenticatable
 
     public function getMembershipID($id){
         $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
-        return $membership->membership;
+        if($membership){
+            return $membership->membership;
+        } else {
+            return NULL;
+        }
     }
 
     public function getMembershipCycle($id){
         $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
-        return $membership->cycle;
+        if($membership){
+            return $membership->cycle;
+        } else {
+            return NULL;
+        }
     }
 
     public function getMembership($id){

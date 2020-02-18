@@ -51,9 +51,10 @@
                                 <th class="text-center bg-gray">Duration</th>
                             </thead>
                             <tbody>
+                                @php $n = 1 @endphp
                                 @foreach($reservations as $r)
                                 <tr>
-                                    <td class="text-center">1</td>
+                                    <td class="text-center">{{ $n++ }}</td>
                                     <td class="text-center">{{ $r->r_sport->r_venue->venue }}</td>
                                     <td class="text-center">{{ $r->r_sport->sport }}</td>
                                     <td class="text-center">{{ $r->r_sport->facility }}</td>
@@ -72,9 +73,10 @@
                                 <th class="text-center bg-gray">Status</th>
                             </thead>
                             <tbody>
+                                @php $n = 1 @endphp
                                 @foreach($equiptments as $e)
                                 <tr>
-                                    <td class="text-center">1</td>
+                                    <td class="text-center">{{ $n++ }}</td>
                                     <td class="text-center">{{ $e->r_equiptment ->equiptment}}</td>
                                     <td class="text-center">{{ $e->r_equiptment->serial_number }}</td>
                                     <td class="text-center">
@@ -95,7 +97,6 @@
                 <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
+<link href="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -70,7 +71,7 @@
                                     @elseif($a->status != 3)
                                     <a href="{{ url('application/'.$a->id) }}" class="btn btn-info">Edit</a>
                                     @endif
-                                    <a class="btn btn-danger">Delete</a>
+                                    <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -94,6 +95,7 @@
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 <script>
     $(() => {
         $('#example1').DataTable()
@@ -193,6 +195,39 @@
             $("#ic_block").hide()
             $("#passport_block").show()
         }
+    }
+
+    deleteApplication = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, delete it!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('application/ajax/view-modal') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id,
+                        "action" : "delete"
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Deleted!", "Application has been deleted.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
     }
 </script>
 @endsection
