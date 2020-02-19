@@ -121,13 +121,14 @@
         });
     }
 
-    selectVenue = (value) => {
+    selectVenue = (value, id) => {
         $.ajax({
             type:"POST",
             url: "{{ url('settings/ajax/select-facilities') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "venue_id" : value
+                "venue_id" : value,
+                "id" : id
             }
         }).done(function(response){
             $("#variable_2").html(response)
@@ -147,7 +148,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('settings/ajax/facilities-modal') }}",
+                    url: "{{ url('settings/ajax/sports-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,

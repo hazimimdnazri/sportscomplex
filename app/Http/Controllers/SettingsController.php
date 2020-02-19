@@ -345,7 +345,8 @@ class SettingsController extends Controller
     }
 
     public function selectFacilities(Request $request){
+        $selectedFac = LSport::find($request->id);
         $facilities = LFacility::where('venue', $request->venue_id)->get();
-        return view('settings.partials.select-facilities', compact('facilities'));
+        return view('settings.partials.select-facilities', compact('facilities', 'id', 'selectedFac'));
     }
 }

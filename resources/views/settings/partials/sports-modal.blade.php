@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Venue <span class="text-red">*</span></label>
-                        <select name="venue" class="form-control" onChange="selectVenue(this.value)" style="width: 100%;">
+                        <select name="venue" class="form-control" onChange="selectVenue(this.value, {{$id}})" id="venue" style="width: 100%;">
                             <option value="">-- Venue --</option>
                             @foreach($venues as $v)
                                 <option value="{{ $v->id }}">{{ $v->venue }}</option>
@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Legend Colour <span class="text-red">*</span></label>
                         <div class="input-group color-picker">
-                            <input type="text" name="colour" value="" class="form-control color-picker">
+                            <input type="text" name="colour" value="{{ $sport->colour }}" class="form-control color-picker">
                             <div class="input-group-addon">
                                 <i></i>
                             </div>
@@ -54,3 +54,11 @@
         </div>
     </div>
 </div>
+
+<script>
+$(() => {
+    @if(isset($sport->venue))
+        $("#venue").val({{$sport->venue}}).change()
+    @endif
+})
+</script>
