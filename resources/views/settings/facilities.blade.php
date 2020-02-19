@@ -110,7 +110,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('settings/ajax/groups-modal') }}",
+                    url: "{{ url('settings/ajax/facilities-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,
