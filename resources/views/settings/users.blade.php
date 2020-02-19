@@ -65,7 +65,7 @@
                                 <td class="text-center">
                                     <a onClick="editModal({{ $u->id }})" class="btn btn-info">Edit</a>
                                     @if($u->flag == 1)
-                                    <a onClick="deleteFx({{ $u->id }})" class="btn btn-danger">Diactivate</a>
+                                    <a onClick="deleteFx({{ $u->id }})" class="btn btn-danger">Deactivate</a>
                                     @else 
                                     <a onClick="deleteFx({{ $u->id }})" class="btn btn-success">Reactivate</a>
                                     @endif
