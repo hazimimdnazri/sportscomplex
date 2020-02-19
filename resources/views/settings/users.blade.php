@@ -2,6 +2,7 @@
 
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link href="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -22,7 +23,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#user-modal">New User</button>
+                    <button type="button" class="btn btn-primary" onClick="showModal()">New User</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -32,7 +33,8 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">E-Mail</th>
                                 <th class="text-center">Role</th>
-                                <th class="text-center">Status</th>
+                                <th class="text-center">Verification Status</th>
+                                <th class="text-center">User Status</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
@@ -43,14 +45,30 @@
                                 <td>{{ $n++ }}</td>
                                 <td>{{ $u->name }}</td>
                                 <td>{{ $u->email }}</td>
-                                <td>{{ $u->role == 2 ? 'User' : 'Admin' }}</td>
+                                <td class="text-center">
+                                    <select class="form-control" name="role" id="role" onChange="changeRole(this.value, {{$u->id}})">
+                                    @foreach($roles as $r)
+                                        <option value="{{ $r->id }}" {{$u->role == $r->id ? 'selected' : ''}}>{{ $r->role }}</option>
+                                    @endforeach
+                                    </select>
+                                </td>
                                 <td class="text-center">
                                     <span class="label bg-yellow">{{ $u->u_status->status }}</span>
                                 </td>
                                 <td class="text-center">
-                                    <a class="btn btn-primary">View</a>
-                                    <a class="btn btn-info">Edit</a>
-                                    <a class="btn btn-danger">Delete</a>
+                                    @if($u->flag == 1)
+                                        <span class="label bg-green">Active</span>
+                                    @else
+                                        <span class="label bg-red">Inactive</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <a onClick="editModal({{ $u->id }})" class="btn btn-info">Edit</a>
+                                    @if($u->flag == 1)
+                                    <a onClick="deleteFx({{ $u->id }})" class="btn btn-danger">Diactivate</a>
+                                    @else 
+                                    <a onClick="deleteFx({{ $u->id }})" class="btn btn-success">Reactivate</a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -62,48 +80,94 @@
     </div>
 </section>
 
-<div class="modal fade" id="user-modal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="{{ url('settings/users') }}" method="POST">
-                @csrf
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">New User</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Name <span class="text-red">*</span></label>
-                        <input type="text" class="form-control" name="name" value="" id="event" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
-                        <input type="email" class="form-control" name="email" value="" id="event" placeholder="E-mail">
-                        <small>Activation email will be sent. E-mail will be used for login.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Password <span class="text-red">*</span></label>
-                        <input type="password" class="form-control" name="password" value="123456" placeholder="Event name" readonly>
-                        <small>Defualt password will be 123456. Please change when the user login for the first time.</small>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<div id="variable"></div>
 @endsection
 
 @section('postscript')
 <script src="{{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 <script>
     $(() => {
         $('#example1').DataTable()
     })
+
+    showModal = () => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('settings/ajax/users-modal') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+            }
+        }).done(function(response){
+            $("#variable").html(response)
+            $('#usersModal').modal('show')
+        });
+    }
+
+    editModal = (id) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('settings/ajax/users-modal') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+                "id" : id
+            }
+        }).done(function(response){
+            $("#variable").html(response)
+            $('#usersModal').modal('show')
+        });
+    }
+
+    changeRole = (role, id) => {
+        var change = confirm("Change the role of this user?");
+        if(change){
+            $.ajax({
+            type:"POST",
+            url: "{{ url('settings/ajax/changerole') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+                "id" : id,
+                "role" : role
+            }
+            }).done(function(response){
+                alert(response);
+                location.reload();
+            }); 
+        }
+    }
+
+    deleteFx = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, delete it!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('settings/ajax/users-modal') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id,
+                        "action" : "delete"
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Done!", "User activation has been changed.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
+    }
 </script>
 @endsection

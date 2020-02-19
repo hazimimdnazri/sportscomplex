@@ -77,7 +77,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
         Route::post('equiptments-modal', 'SettingsController@equiptmentsModal');
         Route::post('institutions-modal', 'SettingsController@institutionsModal');
         Route::post('facilities-modal', 'SettingsController@facilitiesModal');
+        Route::post('users-modal', 'SettingsController@usersModal');
         Route::post('select-facilities', 'SettingsController@selectFacilities');
+        Route::post('changerole', 'SettingsController@changeRole');
     });
 });
 

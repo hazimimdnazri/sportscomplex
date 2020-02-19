@@ -13,6 +13,7 @@ use App\LSport;
 use App\LActivity;
 use App\LEquiptment;
 use App\LInstitution;
+use App\LRole;
 
 class SettingsController extends Controller
 {
@@ -153,14 +154,30 @@ class SettingsController extends Controller
 
     public function users(){
         $users = User::all();
-        return view('settings.users', compact('users'));
+        $roles = LRole::all();
+        return view('settings.users', compact('users', 'roles'));
+    }
+
+    public function changeRole(Request $request){
+        $user = User::find($request->id);
+        $user->role = $request->role;
+        if($user->save()){
+            return "Role for ".$user->name." has been changed.";
+        } else {
+            return "An error occured!";
+        }
     }
 
     public function submitUser(Request $request){
         $user = new User;
+        if($request->id){
+            $user = User::find($request->id);
+            $user->password = Hash::make($request->password);
+        } else {
+            $user->password = Hash::make(123456);
+        }
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make(123456);
         $user->role = 2;
 
         if($user->save()){
@@ -291,6 +308,25 @@ class SettingsController extends Controller
         }
         $id = $request->id;
         return view('settings.partials.equiptments-modal', compact('equiptment', 'id', 'facilities'));
+    }
+
+    public function usersModal(Request $request){
+        $user = new User;
+        if(isset($request->id)){
+            $user = User::find($request->id);
+            if(isset($request->action) == "delete"){
+                if( $user->flag == 1){
+                    $user->flag = 0;
+                } else {
+                    $user->flag = 1;
+                }
+                if($user->save()){
+                    return "success";
+                }
+            }
+        }
+        $id = $request->id;
+        return view('settings.partials.users-modal', compact('user', 'id'));
     }
 
     public function facilitiesModal(Request $request){
