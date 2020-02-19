@@ -108,7 +108,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('settings/ajax/categories-modal') }}",
+                    url: "{{ url('settings/ajax/venues-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,
