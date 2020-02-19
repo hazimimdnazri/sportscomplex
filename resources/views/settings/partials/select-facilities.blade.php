@@ -11,6 +11,6 @@
 <script>
     $(() => {
         $('.select2').select2()
-        $("#facilityList").val(<?= $selectedFac->facility ?>).trigger("change")
+        $("#facilityList").val(<?= $selectedFac ?>).trigger("change")
     })
 </script>
