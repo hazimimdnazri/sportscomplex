@@ -91,7 +91,7 @@ class HomeController extends Controller
                 $memberships->cycle_end = date('Y-m-d', strtotime('+1 year'));
             }
             if($members->save() && $memberships->save() ){
-                return back();
+                return redirect('customers');
             }
         }
     }
