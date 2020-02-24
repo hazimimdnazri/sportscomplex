@@ -12,7 +12,7 @@
 */
 
 // Auth::routes();
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->middleware('auth');
 Route::get('unauthorized', 'HomeController@unauthorized');
 
 Route::get('login', 'Auth\LoginController@showLoginForm');
