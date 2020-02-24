@@ -175,10 +175,10 @@ class SettingsController extends Controller
             $user->password = Hash::make($request->password);
         } else {
             $user->password = Hash::make(123456);
+            $user->role = 2;
         }
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->role = 2;
 
         if($user->save()){
             return back();
