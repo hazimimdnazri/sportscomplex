@@ -172,7 +172,9 @@ class SettingsController extends Controller
         $user = new User;
         if($request->id){
             $user = User::find($request->id);
-            $user->password = Hash::make($request->password);
+            if($request->password != '123456'){
+                $user->password = Hash::make($request->password);
+            }
         } else {
             $user->password = Hash::make(123456);
             $user->role = 2;
