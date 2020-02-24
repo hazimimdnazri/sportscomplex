@@ -33,7 +33,16 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        return redirect('dashboard');
+        $role = Auth::user()->role;
+        if($role == 1 || $role == 2){
+            return redirect('dashboard');
+        } else {
+            return view('patience');
+        }
+    }
+
+    public function unauthorized(){
+        return "You're unauthorized";
     }
 
     public function register(){

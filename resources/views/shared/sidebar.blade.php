@@ -13,6 +13,7 @@
         <!-- <li><a href="#"><i class="fa fa-bullhorn"></i> <span>Promotion & Events</span></a></li> -->
         <li><a href="{{ url('registration') }}"><i class="fa fa-user"></i> <span>Registration</span></a></li>
         <!-- <li><a href="{{ url('transactions') }}"><i class="fa fa-money"></i> <span>Transactions</span></a></li> -->
+        @if(Auth::user()->role == 1)
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-gear"></i>
@@ -33,6 +34,7 @@
                 <!-- <li><a href="{{ url('settings/profile') }}"><i class="fa fa-circle-o"></i>My Profile</a></li> -->
             </ul>
         </li>
+        @endif
         <!-- <li><a href="#"><i class="fa fa-question"></i> <span>F.A.Q</span></a></li> -->
     </ul>
     </section>

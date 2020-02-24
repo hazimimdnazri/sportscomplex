@@ -13,6 +13,7 @@
 
 // Auth::routes();
 Route::get('/', 'HomeController@index');
+Route::get('unauthorized', 'HomeController@unauthorized');
 
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login');
@@ -28,16 +29,16 @@ Route::get('customers', 'HomeController@customers')->middleware('auth');
 Route::get('customer/{id}/edit', 'HomeController@editCustomer')->middleware('auth');
 Route::post('customer/{id}/edit', 'HomeController@submitEditCust')->middleware('auth');
 
-Route::group(['prefix' => 'application'], function() {
-    Route::get('/', 'ApplicationController@index')->middleware('auth');
-    Route::post('/', 'ApplicationController@submitApplication')->middleware('auth');
-    Route::get('{id}', 'ApplicationController@details')->middleware('auth');
-    Route::post('{id}', 'ApplicationController@submitDetails')->middleware('auth');
-    Route::get('payment/{id}', 'ApplicationController@payment')->middleware('auth');
-    Route::post('payment/{id}', 'ApplicationController@ajaxPayment')->middleware('auth');
-    Route::post('{id}/facility', 'ApplicationController@submitFacility')->middleware('auth');
-    Route::post('{id}/activity', 'ApplicationController@submitActivity')->middleware('auth');
-    Route::post('{id}/equiptment', 'ApplicationController@submitEquiptment')->middleware('auth');
+Route::group(['middleware' => ['auth'], 'prefix' => 'application'], function() {
+    Route::get('/', 'ApplicationController@index');
+    Route::post('/', 'ApplicationController@submitApplication');
+    Route::get('{id}', 'ApplicationController@details');
+    Route::post('{id}', 'ApplicationController@submitDetails');
+    Route::get('payment/{id}', 'ApplicationController@payment');
+    Route::post('payment/{id}', 'ApplicationController@ajaxPayment');
+    Route::post('{id}/facility', 'ApplicationController@submitFacility');
+    Route::post('{id}/activity', 'ApplicationController@submitActivity');
+    Route::post('{id}/equiptment', 'ApplicationController@submitEquiptment');
 
     Route::group(['prefix' => 'ajax'], function() {
         Route::post('deletefacility', 'ApplicationController@deleteFacility');
@@ -48,7 +49,7 @@ Route::group(['prefix' => 'application'], function() {
     });
 });
 
-Route::group(['middleware' => ['auth'], 'prefix' => 'settings'], function() {
+Route::group(['middleware' => ['role:1'], 'prefix' => 'settings'], function() {
     Route::get('venues', 'SettingsController@venues');
     Route::post('venues', 'SettingsController@submitVenue');
     Route::get('facilities', 'SettingsController@facilities');
