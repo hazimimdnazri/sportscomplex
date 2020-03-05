@@ -8,7 +8,7 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Membership Registration
+        User Registration
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -112,7 +112,7 @@
                                             <option value="15" >W.P. Labuan</option>
                                             <option value="16" >W.P. Putrajaya</option>
                                         </select>
-                                    </div>
+                                    <!-- </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Membership Type <span class="text-red">*</span></label>
                                         <select onChange="member(this.value)" id="membership" class="form-control" name="membership">
@@ -136,7 +136,7 @@
                                             <option id="monthly" value="1">Monthly</option>
                                             <option id="anually" value="2">Anually</option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-md-12">

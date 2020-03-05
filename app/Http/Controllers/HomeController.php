@@ -89,17 +89,17 @@ class HomeController extends Controller
                 $staff->save();
             }
 
-            $memberships = new Membership;
-            $memberships->user_id = $user->id;
-            $memberships->membership = $request->membership;
-            $memberships->cycle = $request->cycle;
-            $memberships->cycle_start = date('Y-m-d');
-            if($request->cycle == 1){
-                $memberships->cycle_end = date('Y-m-d', strtotime('+1 month'));
-            } else {
-                $memberships->cycle_end = date('Y-m-d', strtotime('+1 year'));
-            }
-            if($members->save() && $memberships->save() ){
+            // $memberships = new Membership;
+            // $memberships->user_id = $user->id;
+            // $memberships->membership = $request->membership;
+            // $memberships->cycle = $request->cycle;
+            // $memberships->cycle_start = date('Y-m-d');
+            // if($request->cycle == 1){
+            //     $memberships->cycle_end = date('Y-m-d', strtotime('+1 month'));
+            // } else {
+            //     $memberships->cycle_end = date('Y-m-d', strtotime('+1 year'));
+            // }
+            if($members->save()){
                 return redirect('customers');
             }
         }
