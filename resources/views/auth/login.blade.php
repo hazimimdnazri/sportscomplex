@@ -34,7 +34,7 @@
             </div>
             <div class="login-box-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-                <form action="{{ url('login') }}" method="post">
+                <form action="{{ url('guest/login') }}" method="post">
                     @csrf
                     <div class="form-group has-feedback">
                         <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">

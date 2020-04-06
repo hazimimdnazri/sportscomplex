@@ -52,7 +52,7 @@
 <div class="modal fade" id="facilityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ url('application/'.$id.'/facility') }}" method="POST">
+            <form action="{{ url('admin/application/'.$id.'/facility') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -164,7 +164,7 @@
         if(value){
             $.ajax({
                 type:"POST",
-                url: "{{ url('ajax/sports') }}",
+                url: "{{ url('admin/ajax/sports') }}",
                 data : {
                     "_token": "{{ csrf_token() }}",
                     "venue" : value
@@ -178,7 +178,7 @@
 
         $.ajax({
             type:"POST",
-            url: "{{ url('ajax/minicalendar') }}",
+            url: "{{ url('admin/ajax/minicalendar') }}",
             data : {
                 "_token": "{{ csrf_token() }}",
                 "venue" : value,

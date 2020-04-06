@@ -35,7 +35,7 @@ class HomeController extends Controller
     public function index(){
         $role = Auth::user()->role;
         if($role == 1 || $role == 2){
-            return redirect('dashboard');
+            return redirect('admin/dashboard');
         } else {
             return view('patience');
         }
@@ -100,7 +100,7 @@ class HomeController extends Controller
             //     $memberships->cycle_end = date('Y-m-d', strtotime('+1 year'));
             // }
             if($members->save()){
-                return redirect('customers');
+                return redirect('admin/customers');
             }
         }
     }

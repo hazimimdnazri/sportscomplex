@@ -12,7 +12,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Membership Registration</li>
+        <li class="active">User Registration</li>
     </ol>
 </section>
 
@@ -25,7 +25,7 @@
                     <p>Please fill in all the required fields, denoted with <span class="text-red">*</span>.</p>
                 </div>
                 <div class="box-body">
-                    <form id="application_form" action="{{ url('registration') }}" method="POST">
+                    <form id="application_form" action="{{ url('admin/registration/user') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -230,7 +230,7 @@
     member = (value) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('ajax/membershipprice') }}",
+            url: "{{ url('admin/ajax/membershipprice') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "membership" : value

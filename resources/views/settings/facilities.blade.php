@@ -73,7 +73,7 @@
     showModal = () => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/facilities-modal') }}",
+            url: "{{ url('admin/settings/ajax/facilities-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
             }
@@ -86,7 +86,7 @@
     editModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/facilities-modal') }}",
+            url: "{{ url('admin/settings/ajax/facilities-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id
@@ -110,7 +110,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('settings/ajax/facilities-modal') }}",
+                    url: "{{ url('admin/settings/ajax/facilities-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,

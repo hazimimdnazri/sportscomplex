@@ -13,7 +13,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li>Settings</li>
+        <!-- <li>Settings</li> -->
         <li class="active">Customers</li>
     </ol>
 </section>
@@ -53,7 +53,7 @@
                                 <td class="text-center">{!! $c->getMembership($c->id) !!}</td>
                                 <td class="text-center">{!! $c->getMembershipDuration($c->id) !!}</td>
                                 <td class="text-center">
-                                    <a href="{{ url('customer/'.$c->id.'/edit') }}" class="btn btn-info">Edit</a>
+                                    <a href="{{ url('admin/customer/'.$c->id.'/edit') }}" class="btn btn-info">Edit</a>
                                     <a onClick="deleteCustomer({{$c->id}})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>

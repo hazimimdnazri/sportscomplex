@@ -166,7 +166,7 @@
     itemType = (value) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('ajax/itemtype') }}",
+            url: "{{ url('admin/ajax/itemtype') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id" : "{{ $application->id }}",
@@ -188,7 +188,7 @@
         var etotal = parseFloat($("#etotal").val())
         $.ajax({
             type:"POST",
-            url: "{{ url('application/ajax/payment-modal') }}",
+            url: "{{ url('admin/application/ajax/payment-modal') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "ftotal": ftotal,
@@ -207,7 +207,7 @@
         if(confirmDate){
             $.ajax({
                 type:"POST",
-                url: "{{ url('ajax/setdate') }}",
+                url: "{{ url('admin/ajax/setdate') }}",
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "id" : "{{ $application->id }}",
@@ -225,7 +225,7 @@
     addEquiptment = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('application/ajax/addequiptment') }}",
+            url: "{{ url('admin/application/ajax/addequiptment') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id" : "{{ $application->id }}",
@@ -249,7 +249,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('application/ajax/deleteequiptment') }}",
+                    url: "{{ url('admin/application/ajax/deleteequiptment') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "id" : id,
@@ -286,7 +286,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST", 
-                    url: "{{ url('application/ajax/deletefacility') }}",
+                    url: "{{ url('admin/application/ajax/deletefacility') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "id" : id,

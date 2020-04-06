@@ -24,7 +24,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <a href="{{ url('registration') }}"><button type="button" class="btn btn-primary">New Members</button></a>
+                    <a href="{{ url('admin/registration') }}"><button type="button" class="btn btn-primary">New Members</button></a>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -88,7 +88,7 @@
     edit = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('ajax/editcustomer') }}",
+            url: "{{ url('admin/ajax/editcustomer') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id": id

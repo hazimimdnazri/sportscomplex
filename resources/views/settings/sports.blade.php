@@ -95,7 +95,7 @@
     showModal = () => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/sports-modal') }}",
+            url: "{{ url('admin/settings/ajax/sports-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
             }
@@ -109,7 +109,7 @@
     editModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/sports-modal') }}",
+            url: "{{ url('admin/settings/ajax/sports-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id
@@ -124,7 +124,7 @@
     selectVenue = (value, id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/select-facilities') }}",
+            url: "{{ url('admin/settings/ajax/select-facilities') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "venue_id" : value,
@@ -148,7 +148,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('settings/ajax/sports-modal') }}",
+                    url: "{{ url('admin/settings/ajax/sports-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,

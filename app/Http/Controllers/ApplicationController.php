@@ -159,7 +159,7 @@ class ApplicationController extends Controller
         $application->date = date('Y-m-d');
         $application->registered_by = Auth::user()->id;
         if($application->save()){
-            return redirect('application/'.$application->id);
+            return redirect('admin/application/'.$application->id);
         }
     }
 

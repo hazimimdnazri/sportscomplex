@@ -14,18 +14,18 @@ class Role
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ... $role)
     {
         // 1 => Normal User
         // 2 => Admin
         
         if (!Auth::check()){
-            return redirect('guest/login');
+            return redirect('zzz');
         }
 
         $user = Auth::user();
-
-        if($user->role == $role){
+        
+        if(in_array($user->role, $role)){
             return $next($request);
         }
 

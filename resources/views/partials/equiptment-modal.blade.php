@@ -33,7 +33,7 @@
         var formData = new FormData(this);
 
         $.ajax({
-            url: "{{ url('application/'.$id.'/equiptment') }}",
+            url: "{{ url('admin/application/'.$id.'/equiptment') }}",
             type: 'POST',
             data: formData,
             cache: false,

@@ -95,7 +95,7 @@
     showModal = () => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/users-modal') }}",
+            url: "{{ url('admin/settings/ajax/users-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
             }
@@ -108,7 +108,7 @@
     editModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/users-modal') }}",
+            url: "{{ url('admin/settings/ajax/users-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id
@@ -124,7 +124,7 @@
         if(change){
             $.ajax({
             type:"POST",
-            url: "{{ url('settings/ajax/changerole') }}",
+            url: "{{ url('admin/settings/ajax/changerole') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id,
@@ -150,7 +150,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('settings/ajax/users-modal') }}",
+                    url: "{{ url('admin/settings/ajax/users-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,

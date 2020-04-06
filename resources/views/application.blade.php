@@ -69,7 +69,7 @@
                                     @if($a->status != 1)
                                     <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
                                     @elseif($a->status != 3)
-                                    <a href="{{ url('application/'.$a->id) }}" class="btn btn-info">Edit</a>
+                                    <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info">Edit</a>
                                     @endif
                                     <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger">Delete</a>
                                 </td>
@@ -104,7 +104,7 @@
     viewModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('application/ajax/view-modal') }}",
+            url: "{{ url('admin/application/ajax/view-modal') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id
@@ -138,7 +138,7 @@
     activityModal = () => {
         $.ajax({
             type:"POST",
-            url: "{{ url('ajax/activitymodal') }}",
+            url: "{{ url('admin/ajax/activitymodal') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
             }
@@ -210,7 +210,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('application/ajax/view-modal') }}",
+                    url: "{{ url('admin/application/ajax/view-modal') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,

@@ -1,7 +1,7 @@
 <div class="modal fade" id="equiptmentsModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('settings/equiptments') }}" method="POST">
+            <form action="{{ url('admin/settings/equiptments') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

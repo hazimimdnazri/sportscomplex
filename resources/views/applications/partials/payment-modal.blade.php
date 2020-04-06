@@ -54,7 +54,7 @@
         var formData = new FormData(this);
 
         $.ajax({
-            url: "{{ url('application/payment/'.$id) }}",
+            url: "{{ url('admin/application/payment/'.$id) }}",
             type: 'POST',
             data: formData,
             cache: false,
@@ -69,7 +69,7 @@
                     'success'
                 ).then((result) => {
                     if(result.value){
-                        window.location.replace("{{ url('application') }}");
+                        window.location.replace("{{ url('admin/application') }}");
                     }
                 })
             } 

@@ -25,7 +25,7 @@
                     <p>Please fill in all the required fields, denoted with <span class="text-red">*</span>.</p>
                 </div>
                 <div class="box-body">
-                    <form id="application_form" action="{{ url('customer/'.$user->id.'/edit') }}" method="POST">
+                    <form id="application_form" action="{{ url('admin/customer/'.$user->id.'/edit') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -239,7 +239,7 @@
     member = (value) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('ajax/membershipprice') }}",
+            url: "{{ url('admin/ajax/membershipprice') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "membership" : value
