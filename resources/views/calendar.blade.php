@@ -55,7 +55,7 @@
 loadCalendar = (value) => {
 	$.ajax({
 		type:"POST",
-		url: "{{ url('admin/ajax/calendar') }}",
+		url: "{{ url('ajax/calendar') }}",
 		data: {
 			"_token" : "{{ csrf_token() }}",
 			"venue" : value

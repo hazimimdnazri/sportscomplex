@@ -69,8 +69,8 @@
                                 <input type="text" class="form-control" name="event" id="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">I.C Number </label>
-                                <input type="text" class="form-control" id="ic" name="ic" value="{{ $application->a_applicant->r_details->ic }}" placeholder="Applicant MyKad / MyKid" disabled>
+                                <label for="exampleInputEmail1">Company Registration No. </label>
+                                <input type="text" class="form-control" id="ic" name="ic" value="{{ $application->a_applicant->r_vendor->company_registration }}" placeholder="Applicant MyKad / MyKid" disabled>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -80,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Phone </label>
-                                <input type="text" class="form-control" id="phone" name="phone" value="{{ $application->a_applicant->r_details->phone }}" placeholder="Applicant phone number" disabled>
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{ $application->a_applicant->r_vendor->phone_mobile }}" placeholder="Applicant phone number" disabled>
                             </div>
 
                         </div>

@@ -13,11 +13,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Point of Sale
+        Reservation Application
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Point of Sale</li>
+        <li class="active">Reservation Application</li>
     </ol>
 </section>
 
@@ -26,7 +26,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" onClick="activityModal()">New Walk In</button>
+                    <button type="button" class="btn btn-primary" onClick="newReservation()">New Reservation</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered">
@@ -46,7 +46,7 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td>{{ $a->a_applicant->name }}</td>
-                                <td>
+                                <td class="text-center">
                                     @if($a->type == 1)
                                         Facility Reservation
                                     @else
@@ -69,7 +69,7 @@
                                     @if($a->status != 1)
                                     <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
                                     @elseif($a->status != 3)
-                                    <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info">Edit</a>
+                                    <a href="{{ url('vendor/applications/'.$a->id) }}" class="btn btn-info">Edit</a>
                                     @endif
                                     <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger">Delete</a>
                                 </td>
@@ -115,86 +115,30 @@
         });
     }
 
-    member = () => {
-        $.ajax({
-            type:"GET",
-            url: "{{ url('api/customer') }}"+"/"+$("#member_id").val()
-        }).done(function(response){
-            if(response != "error"){
-                $("#name").val(response.data.name);
-                $("#name").val(response.data.name);
-                $("#email").val(response.data.email);
-                $("#ic").val(response.data.ic);
-                $("#passport").val(response.data.passport);
-                $("#type").val(response.data.type).change();
-                $("#nationality").val(response.data.nationality).change();
-                $("#post_id").val(response.data.id);
-            } else {
-                alert("User does not exist!")
+    newReservation = () => {
+        Swal.fire({
+            title: "Apply for new reservation?",
+            text: "New application will be created as draft, you can delete it later.",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, apply!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('vendor/applications/new') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}"
+                    }
+                }).done(function(response){
+                    if(response.status == 'success'){
+                        window.location.replace("{{ url('vendor/applications') }}/"+response.data);
+                    }
+                });
             }
         });
-    }
-
-    activityModal = () => {
-        $.ajax({
-            type:"POST",
-            url: "{{ url('ajax/activitymodal') }}",
-            data: {
-                "_token": "{{ csrf_token() }}",
-            }
-        }).done(function(response){
-            $("#variable_1").html(response)
-            $('#activityModal').modal('show');
-        });
-    }
-
-    userType = (value) => {
-        if(value == 3 || value == 5){
-            $("#students").show()
-            $("#staffs").hide()
-        } else if(value == 2){
-            $("#students").hide()
-            $("#staffs").show()
-        } else {
-            $("#students").hide()
-            $("#staffs").hide()
-        }
-    }
-
-    searchIC = (id) => {
-        if(id == 'existing'){
-            $("#searchIC").show()
-            $("#name, #ic, #email, #type, #nationality").attr('readOnly','readOnly')
-            $("#type, #nationality, option").each(function(i){
-                $(this).attr('disabled', 'disabled')
-            });
-            
-        } else {
-            $("#searchIC").hide()
-            $("#name, #ic, #email, #type, #nationality").removeAttr('readOnly','readOnly')
-            $("#type, #nationality, option").each(function(i){
-                $(this).removeAttr('disabled', 'disabled')
-            });
-            $("#name").val('')
-            $("#ic").val('')
-            $("#email").val('')
-            $("#type").val('')
-            $("#nationality").val('')
-            $("#ic_block").hide()
-            $("#passport_block").hide()
-            $("#students").hide()
-            $("#staffs").hide()
-        }
-    }
-
-    selectNationality = (value) => {
-        if(value == 1){
-            $("#ic_block").show()
-            $("#passport_block").hide()
-        } else if(value == 2){
-            $("#ic_block").hide()
-            $("#passport_block").show()
-        }
     }
 
     deleteApplication = (id) => {

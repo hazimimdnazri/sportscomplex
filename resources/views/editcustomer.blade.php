@@ -239,7 +239,7 @@
     member = (value) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/ajax/membershipprice') }}",
+            url: "{{ url('ajax/membershipprice') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "membership" : value

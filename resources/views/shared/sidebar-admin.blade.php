@@ -7,7 +7,7 @@
         <li><a href="{{ url('admin/application') }}"><i class="fa fa-shopping-bag"></i> <span>POS</span></a></li>
         <!-- <li><a href="#"><i class="fa fa-send"></i> <span>Bookings</span></a></li> -->
         <li><a href="{{ url('admin/customers') }}"><i class="fa fa-users"></i> <span>Customers</span></a></li>
-        <!-- <li><a href="#"><i class="fa fa-th-list"></i> <span>Vendor Managment</span></a></li> -->
+        <li><a href="{{ url('admin/vendors') }}"><i class="fa fa-th-list"></i> <span>Vendors</span></a></li>
         <!-- <li><a href="#"><i class="fa fa-dollar"></i> <span>Financial</span></a></li> -->
         <!-- <li><a href="#"><i class="fa fa-calendar-check-o"></i> <span>Feedback Management</span></a></li> -->
         <!-- <li><a href="#"><i class="fa fa-bullhorn"></i> <span>Promotion & Events</span></a></li> -->
@@ -21,7 +21,7 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="{{ url('admin/registration/user') }}"><i class="fa fa-circle-o"></i>User</a></li>
-                <li><a href="{{ url('aadmin/registration/vendor') }}"><i class="fa fa-circle-o"></i>Vendor</a></li>
+                <li><a href="{{ url('admin/registration/vendor') }}"><i class="fa fa-circle-o"></i>Vendor</a></li>
                 <!-- <li><a href="{{ url('settings/profile') }}"><i class="fa fa-circle-o"></i>My Profile</a></li> -->
             </ul>
         </li>

@@ -24,16 +24,16 @@ Route::group(['prefix' => 'guest'], function() {
 });
 
 Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], function() {
-    Route::get('dashboard', 'HomeController@dashboard')->middleware('auth');
-    Route::get('calendar', 'HomeController@calendar')->middleware('auth');
-    Route::get('registration/user', 'HomeController@register')->middleware('auth');
-    Route::post('registration/user', 'HomeController@submitRegister')->middleware('auth');
-    Route::get('registration/vendor', 'HomeController@')->middleware('auth');
-    Route::post('registration/vendor', 'HomeController@')->middleware('auth');
-    Route::get('transactions', 'HomeController@transactions')->middleware('auth');
-    Route::get('customers', 'HomeController@customers')->middleware('auth');
-    Route::get('customer/{id}/edit', 'HomeController@editCustomer')->middleware('auth');
-    Route::post('customer/{id}/edit', 'HomeController@submitEditCust')->middleware('auth');
+    Route::get('dashboard', 'HomeController@dashboard');
+    Route::get('calendar', 'HomeController@calendar');
+    Route::get('registration/user', 'HomeController@register');
+    Route::post('registration/user', 'HomeController@submitRegister');
+    Route::get('registration/vendor', 'HomeController@registerVendor');
+    Route::post('registration/vendor', 'HomeController@submitRegisterVendor');
+    Route::get('transactions', 'HomeController@transactions');
+    Route::get('customers', 'HomeController@customers');
+    Route::get('customer/{id}/edit', 'HomeController@editCustomer');
+    Route::post('customer/{id}/edit', 'HomeController@submitEditCust');
 
     Route::group(['prefix' => 'application'], function() {
         Route::get('/', 'ApplicationController@index');
@@ -44,15 +44,17 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
         Route::post('payment/{id}', 'ApplicationController@ajaxPayment');
         Route::post('{id}/facility', 'ApplicationController@submitFacility');
         Route::post('{id}/activity', 'ApplicationController@submitActivity');
-        Route::post('{id}/equiptment', 'ApplicationController@submitEquiptment');
     
         Route::group(['prefix' => 'ajax'], function() {
             Route::post('deletefacility', 'ApplicationController@deleteFacility');
-            Route::post('addequiptment', 'ApplicationController@addEquiptment');
-            Route::post('deleteequiptment', 'ApplicationController@deleteEquiptment');
             Route::post('view-modal', 'ApplicationController@viewModal');
             Route::post('payment-modal', 'ApplicationController@paymentModal');
         });
+    });
+
+    Route::group(['prefix' => 'vendors'], function() {
+        Route::get('/', 'HomeController@vendors');
+    
     });
     
     Route::group(['prefix' => 'settings'], function() {
@@ -89,18 +91,35 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
             Route::post('changerole', 'SettingsController@changeRole');
         });
     });
-    
-    Route::group(['prefix' => 'ajax'], function() {
-        Route::post('itemtype', 'ApplicationController@itemType');
-        Route::post('activitymodal', 'ApplicationController@activityModal');
-        Route::post('membershipprice', 'HomeController@ajaxMembershipPrice')->middleware('auth');
-        Route::post('setdate', 'ApplicationController@ajaxSetDate')->middleware('auth');
-        Route::post('confirmreservation', 'ApplicationController@confirmReservation')->middleware('auth');
-        Route::post('editcustomer', 'SettingsController@editCustomer');
-        Route::post('calendar', 'HomeController@facilityCalendar');
-        Route::post('sports', 'ApplicationController@ajaxSports');
-        Route::post('minicalendar', 'ApplicationController@miniCalendar');
-        Route::post('deletecustomer', 'HomeController@deleteCustomer');
+});
+
+Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], function() {
+    Route::get('dashboard', 'VendorController@dashboard');
+    Route::get('calendar', 'VendorController@calendar');
+
+    Route::group(['prefix' => 'applications'], function() {
+        Route::get('/', 'VendorController@application');
+        Route::post('new', 'VendorController@applicationNew');
+        Route::get('{id}', 'VendorController@applicationDetails');
+    });
+});
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
+    Route::post('itemtype', 'ApplicationController@itemType');
+    Route::post('activitymodal', 'ApplicationController@activityModal');
+    Route::post('membershipprice', 'HomeController@ajaxMembershipPrice');
+    Route::post('setdate', 'ApplicationController@ajaxSetDate');
+    Route::post('confirmreservation', 'ApplicationController@confirmReservation');
+    Route::post('editcustomer', 'SettingsController@editCustomer');
+    Route::post('calendar', 'HomeController@facilityCalendar');
+    Route::post('sports', 'ApplicationController@ajaxSports');
+    Route::post('minicalendar', 'ApplicationController@miniCalendar');
+    Route::post('deletecustomer', 'HomeController@deleteCustomer');
+
+    Route::group(['prefix' => 'application'], function() {
+        Route::post('{id}/equiptment', 'ApplicationController@submitEquiptment');
+        Route::post('equiptment/add', 'ApplicationController@addEquiptment');
+        Route::post('equiptment/delete', 'ApplicationController@deleteEquiptment');
     });
     
 });

@@ -8,12 +8,12 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Customers
+        Vendors
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <!-- <li>Settings</li> -->
-        <li class="active">Customers</li>
+        <li class="active">Vendors</li>
     </ol>
 </section>
 
@@ -22,38 +22,34 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <a href="{{ url('admin/registration/user') }}" class="btn btn-primary" >New User</a>
+                    <a href="{{ url('admin/registration/vendor') }}" class="btn btn-primary" >New Vendor</a>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">IC / Passport</th>
+                                <th class="text-center">Company Name</th>
+                                <th class="text-center">Company Registration</th>
                                 <th class="text-center">E-Mail</th>
                                 <th class="text-center">Status</th>
-                                <th class="text-center">Membership</th>
-                                <th class="text-center">Expiry</th>
                                 <th class="text-center" width="20%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php $n = 1 @endphp
-                            @foreach($customers as $c)
+                            @foreach($vendors as $v)
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
-                                <td class="text-center">{{ $c->name }}</td>
-                                <td class="text-center">{{ $c->r_details->ic ?? $c->r_details->passport}}</td>
-                                <td class="text-center">{{ $c->email }}</td>
+                                <td class="text-center">{{ $v->name }}</td>
+                                <td class="text-center">{{ $v->r_vendor->company_registration }}</td>
+                                <td class="text-center">{{ $v->email }}</td>
                                 <td class="text-center">
-                                    <span class="label bg-red">{{ $c->u_status->status }}</span>
+                                    <span class="label bg-red">{{ $v->u_status->status }}</span>
                                 </td>
-                                <td class="text-center">{!! $c->getMembership($c->id) !!}</td>
-                                <td class="text-center">{!! $c->getMembershipDuration($c->id) !!}</td>
                                 <td class="text-center">
-                                    <a href="{{ url('admin/customer/'.$c->id.'/edit') }}" class="btn btn-info">Edit</a>
-                                    <a onClick="deleteCustomer({{$c->id}})" class="btn btn-danger">Delete</a>
+                                    <a href="" class="btn btn-info">Edit</a>
+                                    <a onClick="deleteCustomer({{$v->id}})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                             @endforeach

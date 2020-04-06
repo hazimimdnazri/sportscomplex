@@ -164,7 +164,7 @@
         if(value){
             $.ajax({
                 type:"POST",
-                url: "{{ url('admin/ajax/sports') }}",
+                url: "{{ url('ajax/sports') }}",
                 data : {
                     "_token": "{{ csrf_token() }}",
                     "venue" : value
@@ -178,7 +178,7 @@
 
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/ajax/minicalendar') }}",
+            url: "{{ url('ajax/minicalendar') }}",
             data : {
                 "_token": "{{ csrf_token() }}",
                 "venue" : value,

@@ -112,6 +112,7 @@
                                             <option value="15" >W.P. Labuan</option>
                                             <option value="16" >W.P. Putrajaya</option>
                                         </select>
+                                    </div>
                                     <!-- </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Membership Type <span class="text-red">*</span></label>
@@ -195,16 +196,6 @@
 <script>
     $(() => {
         $('.select2').select2()
-
-        @if(isset($user->r_details))
-        $("#type").val({{$user->r_details->type}}).change()
-        $("#state").val({{$user->r_details->state}}).change()
-        $("#membership").val({{$user->getMembershipID($user->id)}}).change()
-        $("#cycle").val({{$user->getMembershipCycle($user->id)}}).change()
-        $("#state").val({{$user->r_details->state}}).change()
-        $("#institution").val({{$user->r_student->institution}}).change()
-        @endif
-
     })
 
     userType = (value) => {
@@ -230,7 +221,7 @@
     member = (value) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/ajax/membershipprice') }}",
+            url: "{{ url('ajax/membershipprice') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "membership" : value

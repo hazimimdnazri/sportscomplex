@@ -22,6 +22,13 @@
 
 		<!-- Google Font -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+		<style>
+		.swal2-popup {
+			font-size: 1.4rem !important;
+		}
+		</style>
+
 	</head>
 	<body class="hold-transition skin-blue-light sidebar-mini">
 		<div class="wrapper">
@@ -81,7 +88,11 @@
 				</div>
 				</nav>
 			</header>
-			@include('shared.sidebar')
+			@if(Auth::user()->role == 1 || Auth::user()->role == 2 )
+				@include('shared.sidebar-admin')
+			@elseif(Auth::user()->role == 4)
+				@include('shared.sidebar-vendor')
+			@endif
 			<div class="content-wrapper">
 				@yield('content')
 			</div>

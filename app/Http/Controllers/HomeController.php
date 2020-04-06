@@ -18,6 +18,8 @@ use App\Membership;
 use App\LInstitution;
 use App\StudentDetail;
 use App\StaffDetail;
+use App\VendorDetail;
+use App\VendorPic;
 
 class HomeController extends Controller
 {
@@ -36,20 +38,22 @@ class HomeController extends Controller
         $role = Auth::user()->role;
         if($role == 1 || $role == 2){
             return redirect('admin/dashboard');
+        } else if($role == 4){
+            return redirect('vendor/dashboard');
         } else {
             return view('patience');
         }
     }
 
     public function unauthorized(){
-        return "You're unauthorized";
+        return "You are unauthorized";
     }
 
     public function register(){
         $memberships = LMembership::all();
         $types = LCustomerType::all();
         $institutions = LInstitution::all();
-        return view('registration', compact('memberships', 'types', 'institutions'));
+        return view('registration-user', compact('memberships', 'types', 'institutions'));
     }
 
     public function submitRegister(Request $request){
@@ -103,6 +107,46 @@ class HomeController extends Controller
                 return redirect('admin/customers');
             }
         }
+    }
+
+    public function registerVendor(){
+        return view('registration-vendor');
+    }
+
+    public function submitRegisterVendor(Request $request){
+        $vendor = new User;
+        $vendor->name = $request->name;
+        $vendor->email = $request->email;
+        $vendor->role = 4;
+        $vendor->status = 2;
+        $vendor->password = Hash::make(123456);
+
+        if($vendor->save()){
+            $vendorDetail = new VendorDetail;
+            $vendorDetail->user_id = $vendor->id;
+            $vendorDetail->phone_mobile = $request->phone_mobile;
+            $vendorDetail->phone_office = $request->phone_office;
+            $vendorDetail->company_registration = $request->company_reg;
+            $vendorDetail->address = $request->address;
+            $vendorDetail->city = $request->city;
+            $vendorDetail->state = $request->state;
+            $vendorDetail->zipcode = $request->zipcode;
+            $vendorDetail->nationality = $request->nationality;
+
+            if($vendorDetail->save()){
+                for($i = 0; $i < count($request->pic_email); $i++){
+                    $pic = new VendorPic;
+                    $pic->vendor_id = $vendor->id;
+                    $pic->name = $request->pic_name[$i];
+                    $pic->email = $request->pic_email[$i];
+                    $pic->phone_mobile = $request->pic_phone[$i];
+                    $pic->type = $i;
+                    $pic->save();
+                }
+            }
+        }
+
+        return "success";
     }
 
     public function submitEditCust(Request $request, $id){
@@ -216,5 +260,10 @@ class HomeController extends Controller
         $sports = LSport::where('venue', $venue)->pluck('id');
         $reservations = Reservation::whereIn('sport', $sports)->get();
         return view('partials.calendar', compact('reservations', 'facilities'));
+    }
+
+    public function vendors(){
+        $vendors = User::where('role', 4)->where('flag', 1)->get();
+        return view('vendors', compact('vendors'));
     }
 }
