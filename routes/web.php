@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
 
     Route::group(['prefix' => 'application'], function() {
         Route::get('/', 'ApplicationController@index');
+        Route::post('approve', 'ApplicationController@applicationApprove');
+        Route::post('reject', 'ApplicationController@applicationReject');
         Route::post('/', 'ApplicationController@submitApplication');
         Route::get('{id}', 'ApplicationController@details');
         Route::post('{id}', 'ApplicationController@submitDetails');

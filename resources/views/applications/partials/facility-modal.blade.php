@@ -109,7 +109,8 @@
                 <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
                     @if($application->status == 2)
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Approve</button>
+                    <button type="button" onClick="approve()" class="btn btn-primary">Approve</button>
+                    <button type="button" onClick="reject()" class="btn btn-danger">Reject</button>
                     @endif
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -123,5 +124,67 @@
         $('.select2').select2()
     })
 
-    
+    approve = () => {
+        Swal.fire({
+            title: "Approve this reservation?",
+            text: "This will confirm the reservation.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, approve!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/application/approve') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : "{{ $application->id }}"
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Approved!", "The reservation has been approved.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
+    }
+
+    reject = () => {
+        Swal.fire({
+            title: "Reject this reservation?",
+            text: "This will cancel the reservation.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, reject!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/application/reject') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : "{{ $application->id }}"
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Rejected!", "The reservation has been cancelled.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
+    }
 </script>

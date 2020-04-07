@@ -308,4 +308,32 @@ class ApplicationController extends Controller
     public function qr(){
         return QrCode::size(500)->generate('123');
     }
+
+    public function applicationApprove(Request $request){
+        $application = Application::find($request->id);
+        $application->status = 3;
+
+        if($application->save()){
+            $equiptments = Equiptment::where('application_id', $request->id)->get();
+            foreach($equiptments as $e){
+                $e->status = 2;
+                $e->save();
+            }
+        }
+        return "success";
+    }
+
+    public function applicationReject(Request $request){
+        $application = Application::find($request->id);
+        $application->status = 4;
+
+        if($application->save()){
+            $equiptments = Equiptment::where('application_id', $request->id)->get();
+            foreach($equiptments as $e){
+                $e->status = 1;
+                $e->save();
+            }
+        }
+        return "success";
+    }
 }
