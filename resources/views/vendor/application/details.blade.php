@@ -14,11 +14,11 @@
 <section class="content-header">
     <h1>
         Reservation Details
-        <small>Control panel</small>
+        <small>Applications</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li>Reservation</li>
+        <li>Applications</li>
         <li class="active">{{$application->id}}</li>
     </ol>
 </section>
@@ -202,6 +202,22 @@
         });
     }
 
+    toQuotation = () => {
+        Swal.fire({
+            title: "Lock the reservation and proceed to quotation?",
+            text: "You still can alter the reservation later.",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, proceed!"
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace("{{ url('vendor/applications/'.$application->id.'/quotation') }}");
+            }
+        })
+    }
+
     setDate = (value) => {
         var confirmDate = confirm('Reserve this date? ('+value+')')
         if(confirmDate){
@@ -286,7 +302,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST", 
-                    url: "{{ url('admin/application/ajax/deletefacility') }}",
+                    url: "{{ url('ajax/application/facility/delete') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "id" : id,

@@ -286,7 +286,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST", 
-                    url: "{{ url('admin/application/ajax/deletefacility') }}",
+                    url: "{{ url('ajax/application/facility/delete') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "id" : id,

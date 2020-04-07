@@ -61,7 +61,11 @@
             <input type="hidden" id="deposit" value="{{ $dtotal }}">
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                @if(Auth::user()->role == 1 || Auth::user()->role == 2)
                 <button onClick="toPayment()" class="btn btn-primary">Pay</button>
+                @elseif(Auth::user()->role == 4)
+                <button onClick="toQuotation()" class="btn btn-primary">View Quotation</button>
+                @endif
             </div>
         </div>
     </div>
@@ -70,7 +74,7 @@
 <div class="modal fade" id="activityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('application/'.$id.'/activity') }}" method="POST">
+            <form action="{{ url('ajax/application/'.$id.'/activity') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

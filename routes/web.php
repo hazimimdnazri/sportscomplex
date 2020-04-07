@@ -42,11 +42,8 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
         Route::post('{id}', 'ApplicationController@submitDetails');
         Route::get('payment/{id}', 'ApplicationController@payment');
         Route::post('payment/{id}', 'ApplicationController@ajaxPayment');
-        Route::post('{id}/facility', 'ApplicationController@submitFacility');
-        Route::post('{id}/activity', 'ApplicationController@submitActivity');
     
         Route::group(['prefix' => 'ajax'], function() {
-            Route::post('deletefacility', 'ApplicationController@deleteFacility');
             Route::post('view-modal', 'ApplicationController@viewModal');
             Route::post('payment-modal', 'ApplicationController@paymentModal');
         });
@@ -101,6 +98,8 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::get('/', 'VendorController@application');
         Route::post('new', 'VendorController@applicationNew');
         Route::get('{id}', 'VendorController@applicationDetails');
+        Route::get('{id}/quotation', 'VendorController@quotationView');
+        Route::post('{id}/quotation', 'VendorController@quotationSubmit');
     });
 });
 
@@ -117,9 +116,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
     Route::post('deletecustomer', 'HomeController@deleteCustomer');
 
     Route::group(['prefix' => 'application'], function() {
+        Route::post('{id}/facility', 'ApplicationController@submitFacility');
+        Route::post('{id}/activity', 'ApplicationController@submitActivity');
         Route::post('{id}/equiptment', 'ApplicationController@submitEquiptment');
         Route::post('equiptment/add', 'ApplicationController@addEquiptment');
         Route::post('equiptment/delete', 'ApplicationController@deleteEquiptment');
+        Route::post('facility/delete', 'ApplicationController@deleteFacility');
     });
     
 });

@@ -15,6 +15,7 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ $application->a_applicant->name }}" disabled>
                             </div>
                         </div>
+                        @if($application->a_applicant->r_details)
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">User Type</label>
@@ -25,6 +26,7 @@
                                 </select>
                             </div>
                         </div>
+                        @endif
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">E-Mail </label>
@@ -56,7 +58,12 @@
                                     <td class="text-center">{{ $n++ }}</td>
                                     <td class="text-center">{{ $r->r_sport->r_venue->venue }}</td>
                                     <td class="text-center">{{ $r->r_sport->sport }}</td>
-                                    <td class="text-center">{{ $r->r_sport->facility }}</td>
+                                    <td class="text-center">
+                                        @php $facility = json_decode($r->r_sport->facility) @endphp
+                                        @for($i = 0; $i < count($facility); $i++)
+                                            {{ App\LFacility::find($facility[$i])->facility }}<br>
+                                        @endfor
+                                    </td>
                                     <td class="text-center">{{ date('H:i A', strtotime($r->start_date)) }} - {{ date('H:i A', strtotime($r->end_date)) }}</td>
                                 </tr>
                                 @endforeach
@@ -73,7 +80,7 @@
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
-                                @if(count($equiptments) > 1)
+                                @if(count($equiptments) > 0)
                                     @foreach($equiptments as $e)
                                     <tr>
                                         <td class="text-center">{{ $n++ }}</td>
@@ -101,6 +108,9 @@
                 </div>
                 <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
+                    @if($application->status == 2)
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Approve</button>
+                    @endif
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -113,4 +123,5 @@
         $('.select2').select2()
     })
 
+    
 </script>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\LVenue;
 use App\Application;
 use App\Equiptment;
+use App\User;
+use App\Reservation;
 use Auth;
 
 class VendorController extends Controller
@@ -45,5 +47,21 @@ class VendorController extends Controller
         $application = Application::find($id);
         $equiptments = Equiptment::where('application_id', $id)->get();
         return view('vendor.application.details', compact('application', 'equiptments'));
+    }
+
+    public function quotationView($id){
+        $application = Application::find($id);
+        $reservations = Reservation::where('application_id', $id)->get();
+        $customer = User::find(Auth::user()->id);
+        $equiptments = Equiptment::where('application_id', $id)->get();
+        return view('vendor.application.quotation', compact('application', 'customer', 'reservations', 'equiptments'));
+    }
+
+    public function quotationSubmit($id){
+        $application = Application::find($id);
+        $application->status = 2;
+        if($application->save()){
+            return "success";
+        }
     }
 }
