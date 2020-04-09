@@ -16,42 +16,33 @@
         <link rel="stylesheet" href="{{ asset('assets/dist/css/AdminLTE.min.css') }}">
         <!-- iCheck -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/iCheck/square/blue.css') }}">
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     </head>
     <body class="hold-transition register-page">
         <div class="register-box">
             <div class="register-logo">
-                <a href="../../index2.html"><b>Sports</b>Complex</a>
+                <a href="{{ url('/') }}"><b>Sports</b>Complex</a>
             </div>
 
             <div class="register-box-body">
                 <p class="login-box-msg">Register a new membership</p>
-                <form action="{{ url('register') }}" method="POST">
+                <form id="userData">
                     @csrf
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" name="name" placeholder="Full name">
-                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
-                    <div class="form-group has-feedback">
+                    <div class="form-group div_email">
                         <input type="email" class="form-control" name="email" placeholder="Email">
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        <span class="help-block error-email"></span>
                     </div>
-                    <div class="form-group has-feedback">
-                        <input type="password" class="form-control" name="password" placeholder="Password">
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <div class="form-group div_password">
+                        <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+                        <span class="help-block error-password"></span>
                     </div>
-                    <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="Retype password">
-                        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    <div class="form-group div_retype">
+                        <input type="password" id="retype_password" class="form-control" placeholder="Retype password">
+                        <span class="help-block error-retype"></span>
                     </div>
                     <div class="row">
                         <div class="col-xs-8">
@@ -63,7 +54,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                            <button type="button" onClick="register()" class="btn btn-primary btn-block btn-flat">Register</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -71,10 +62,8 @@
 
                 <div class="social-auth-links text-center">
                     <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using Facebook</a>
-                    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using Google+</a>
                 </div>
-                <a href="login.html" class="text-center">I already have a membership</a>
+                <a href="{{ url('guest/login') }}" class="text-center">I already have a membership</a>
             </div>
         </div>
 
@@ -85,13 +74,52 @@
         <!-- iCheck -->
         <script src="{{ asset('assets/plugins/iCheck/icheck.min.js') }}"></script>
         <script>
-        $(function() {
+        $(() => {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
-                });
             });
+        })
+
+        register = () => { 
+            if(!($("#password").val())){
+                    $(".div_password").addClass('has-error')
+                    $(".div_retype").removeClass('has-error')
+                    $(".error-password").text('Please enter your password')
+                    $(".error-retype").text('')
+            } else {
+                if($("#password").val() == $("#retype_password").val()){
+                    var formData = new FormData($('#userData')[0]);
+
+                    $.ajax({
+                        url: "",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    }).done((response) => {
+                        if(response == 'exist'){
+                            $(".div_retype, .div_password").removeClass('has-error')
+                            $(".error-retype, .error-password").text('')
+                            $(".div_email").addClass('has-error')
+                            $(".error-email").text('E-Mail already registered')
+                        } else if(response == 'success'){
+                            window.location.replace("{{ url('guest/verify') }}");
+                        } else {
+                            console.log(response)
+                        }
+                    });
+
+                } else {
+                    $(".div_retype").addClass('has-error')
+                    $(".error-password").text('')
+                    $(".div_password").removeClass('has-error')
+                    $(".error-retype").text('Retype password does not match')
+                }
+            }
+        }
         </script>
     </body>
 </html>

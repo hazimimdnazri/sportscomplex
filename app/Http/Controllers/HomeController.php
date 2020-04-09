@@ -20,6 +20,7 @@ use App\StudentDetail;
 use App\StaffDetail;
 use App\VendorDetail;
 use App\VendorPic;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -50,13 +51,58 @@ class HomeController extends Controller
     }
 
     public function register(){
+        return view('auth.register');
+    }
+
+    public function verify(){
+        return view('verify');
+    }
+
+    public function verifyAccount(){
+        $token = base64_decode($_GET['token_id']);
+        $user = User::where('email', $token)->first();
+        $user->status = 2;
+        if($user->save()){
+            return view('activated');
+        }
+    }
+
+    public function submitRegister(Request $request){
+        if(User::where('email', strtolower($request->email))->first()){
+            return 'exist';
+        } else {
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+
+            if($user->save()){
+                $vars["email"] = $user->email;
+                $vars["name"] = $user->name;
+                $vars["token"] = base64_encode($user->email);
+                try {
+                    Mail::send(["html" => "shared.mail-verify"], $vars, function($message) use ($vars){
+                        $message->from("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
+                        $message->to($vars["email"]);
+                        $message->sender("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
+                        $message->subject("EduCity Sports Centre Account Activation");
+                    });
+                } catch(\Exception $err) {
+                    return $err;
+                }
+            }
+            return "success";
+        }
+    }
+
+    public function registerUser(){
         $memberships = LMembership::all();
         $types = LCustomerType::all();
         $institutions = LInstitution::all();
         return view('admin.registration-user', compact('memberships', 'types', 'institutions'));
     }
 
-    public function submitRegister(Request $request){
+    public function submitUserRegister(Request $request){
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;

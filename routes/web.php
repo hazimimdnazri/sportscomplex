@@ -15,19 +15,22 @@
 Route::get('/', 'HomeController@index')->middleware('auth');
 Route::get('unauthorized', 'HomeController@unauthorized');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
 Route::get('home', 'HomeController@index')->name('home');
+Route::get('verify', 'HomeController@verifyAccount');
 
 Route::group(['prefix' => 'guest'], function() {
     Route::get('login', 'Auth\LoginController@showLoginForm');
+    Route::get('register', 'HomeController@register');
+    Route::post('register', 'HomeController@submitRegister');
     Route::post('login', 'Auth\LoginController@login');
+    Route::get('verify', 'HomeController@verify');
 });
 
 Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], function() {
     Route::get('dashboard', 'HomeController@dashboard');
     Route::get('calendar', 'HomeController@calendar');
-    Route::get('registration/user', 'HomeController@register');
-    Route::post('registration/user', 'HomeController@submitRegister');
+    Route::get('registration/user', 'HomeController@registerUser');
+    Route::post('registration/user', 'HomeController@submitUserRegister');
     Route::get('registration/vendor', 'HomeController@registerVendor');
     Route::post('registration/vendor', 'HomeController@submitRegisterVendor');
     Route::get('transactions', 'HomeController@transactions');

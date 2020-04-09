@@ -261,7 +261,7 @@ class ApplicationController extends Controller
     public function addEquiptment(Request $request){
         $id = $request->id;
         $equiptments = LEquiptment::all();
-        return view('partials.equiptment-modal', compact('equiptments', 'id'));
+        return view('partials.modal-equiptment', compact('equiptments', 'id'));
     }
 
     public function submitEquiptment(Request $request, $id){
@@ -298,7 +298,7 @@ class ApplicationController extends Controller
         $facilities = LFacility::where('venue', $venue)->get();
         $sports = LSport::where('venue', $venue)->pluck('id');
         $reservations = Reservation::whereIn('sport', $sports)->get();
-        return view("partials.minicalendar", compact('facilities', 'reservations', 'date'));
+        return view("partials.calendar-mini", compact('facilities', 'reservations', 'date'));
     }
 
     public function qr(){
