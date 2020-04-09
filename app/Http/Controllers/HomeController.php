@@ -53,7 +53,7 @@ class HomeController extends Controller
         $memberships = LMembership::all();
         $types = LCustomerType::all();
         $institutions = LInstitution::all();
-        return view('registration-user', compact('memberships', 'types', 'institutions'));
+        return view('admin.registration-user', compact('memberships', 'types', 'institutions'));
     }
 
     public function submitRegister(Request $request){
@@ -110,7 +110,7 @@ class HomeController extends Controller
     }
 
     public function registerVendor(){
-        return view('registration-vendor');
+        return view('admin.registration-vendor');
     }
 
     public function submitRegisterVendor(Request $request){
@@ -221,21 +221,21 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
-        return view('dashboard');
+        return view('admin.dashboard');
     }
 
     public function calendar(){
         $venues = LVenue::all();
-        return view('calendar', compact('reservations', 'venues'));
+        return view('admin.calendar', compact('reservations', 'venues'));
     }
 
     public function transactions(){
-        return view('transactions');
+        return view('admin.transactions');
     }
 
     public function customers(){
         $customers = User::where('role', 3)->where('flag', 1)->get();
-        return view('customers', compact('customers'));
+        return view('admin.customers', compact('customers'));
     }
 
     public function deleteCustomer(Request $request){
@@ -251,7 +251,7 @@ class HomeController extends Controller
         $memberships = LMembership::all();
         $types = LCustomerType::all();
         $institutions = LInstitution::all();
-        return view('editcustomer', compact('user', 'memberships', 'types', 'institutions'));
+        return view('admin.customer-edit', compact('user', 'memberships', 'types', 'institutions'));
     }
 
     public function facilityCalendar(Request $request){
@@ -264,7 +264,7 @@ class HomeController extends Controller
 
     public function vendors(){
         $vendors = User::where('role', 4)->where('flag', 1)->get();
-        return view('vendors', compact('vendors'));
+        return view('admin.vendors', compact('vendors'));
     }
 
     public function membershipModal(Request $request){

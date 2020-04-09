@@ -28,7 +28,7 @@ class ApplicationController extends Controller
     public function index(){
         $assets = LFacility::all();
         $applications = Application::all()->where('flag', 1);
-        return view('application', compact('assets', 'applications'));
+        return view('admin.applications.application', compact('assets', 'applications'));
     }
 
     public function details(Request $request, $id){

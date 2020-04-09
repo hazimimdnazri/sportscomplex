@@ -19,7 +19,7 @@ class SettingsController extends Controller
 {
     public function venues(){
         $venues = LVenue::all();
-        return view('settings.venues', compact('venues'));
+        return view('admin.settings.venues', compact('venues'));
     }
 
     public function submitVenue(Request $request){
@@ -37,7 +37,7 @@ class SettingsController extends Controller
 
     public function facilities(){
         $facilities = LFacility::all();
-        return view('settings.facilities', compact('facilities'));
+        return view('admin.settings.facilities', compact('facilities'));
     }
 
     public function submitFacility(Request $request){
@@ -56,7 +56,7 @@ class SettingsController extends Controller
     
     public function sports(){
         $sports = LSport::all();
-        return view('settings.sports', compact('sports'));
+        return view('admin.settings.sports', compact('sports'));
     }
 
     public function submitSport(Request $request){
@@ -79,7 +79,7 @@ class SettingsController extends Controller
 
     public function institutions(){
         $institutions = LInstitution::all();
-        return view('settings.institutions', compact('institutions'));
+        return view('admin.settings.institutions', compact('institutions'));
     }
 
     public function submitInstitutions(Request $request){
@@ -97,7 +97,7 @@ class SettingsController extends Controller
 
     public function equiptments(){
         $equiptments = LEquiptment::all();
-        return view('settings.equiptments', compact('equiptments', 'facilities'));
+        return view('admin.settings.equiptments', compact('equiptments', 'facilities'));
     }
 
     public function submitEquiptments(Request $request){
@@ -117,7 +117,7 @@ class SettingsController extends Controller
     
     public function activities(){
         $activities = LActivity::all();
-        return view('settings.activities', compact('activities'));
+        return view('admin.settings.activities', compact('activities'));
     }
 
     public function submitActivity(Request $request){
@@ -155,7 +155,7 @@ class SettingsController extends Controller
     public function users(){
         $users = User::all();
         $roles = LRole::all();
-        return view('settings.users', compact('users', 'roles'));
+        return view('admin.settings.users', compact('users', 'roles'));
     }
 
     public function changeRole(Request $request){
@@ -188,17 +188,17 @@ class SettingsController extends Controller
     }
 
     public function profile(){
-        return view('settings.profile');
+        return view('admin.settings.profile');
     }
 
     public function customers(){
         $customers = Customer::all();
-        return view('settings.customers', compact('customers'));
+        return view('admin.settings.customers', compact('customers'));
     }
 
     public function membership(){
         $memberships = LMembership::all();
-        return view('settings.membership', compact('memberships'));
+        return view('admin.settings.membership', compact('memberships'));
     }
 
     public function editCustomer(Request $request){
@@ -238,7 +238,7 @@ class SettingsController extends Controller
         $venues = LVenue::all();
         $facilities = LFacility::all();
         $id = $request->id;
-        return view('settings.partials.sports-modal', compact('venues', 'facilities', 'sport', 'id'));
+        return view('admin.settings.partials.sports-modal', compact('venues', 'facilities', 'sport', 'id'));
     }
 
     public function activitiesModal(Request $request){
@@ -252,7 +252,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('settings.partials.activities-modal', compact('activity', 'id'));
+        return view('admin.settings.partials.activities-modal', compact('activity', 'id'));
     }
 
     public function membershipsModal(Request $request){
@@ -266,7 +266,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('settings.partials.memberships-modal', compact('membership', 'id'));
+        return view('admin.settings.partials.memberships-modal', compact('membership', 'id'));
     }
 
     public function venuesModal(Request $request){
@@ -280,7 +280,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('settings.partials.venues-modal', compact('venues', 'id'));
+        return view('admin.settings.partials.venues-modal', compact('venues', 'id'));
     }
 
     public function institutionsModal(Request $request){
@@ -294,7 +294,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('settings.partials.institutions-modal', compact('institutions', 'id'));
+        return view('admin.settings.partials.institutions-modal', compact('institutions', 'id'));
     }
 
     public function equiptmentsModal(Request $request){
@@ -309,7 +309,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('settings.partials.equiptments-modal', compact('equiptment', 'id', 'facilities'));
+        return view('admin.settings.partials.equiptments-modal', compact('equiptment', 'id', 'facilities'));
     }
 
     public function usersModal(Request $request){
@@ -328,7 +328,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('settings.partials.users-modal', compact('user', 'id'));
+        return view('admin.settings.partials.users-modal', compact('user', 'id'));
     }
 
     public function facilitiesModal(Request $request){
@@ -343,7 +343,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('settings.partials.facilities-modal', compact('facility', 'id', 'venues'));
+        return view('admin.settings.partials.facilities-modal', compact('facility', 'id', 'venues'));
     }
 
     public function selectFacilities(Request $request){
@@ -354,6 +354,6 @@ class SettingsController extends Controller
         }
         
         $facilities = LFacility::where('venue', $request->venue_id)->get();
-        return view('settings.partials.select-facilities', compact('facilities', 'id', 'selectedFac'));
+        return view('admin.settings.partials.select-facilities', compact('facilities', 'id', 'selectedFac'));
     }
 }
