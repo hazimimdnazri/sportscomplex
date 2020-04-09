@@ -34,7 +34,7 @@ class ApplicationController extends Controller
     public function details(Request $request, $id){
         $application = Application::find($id);
         $equiptments = Equiptment::where('application_id', $id)->get();
-        return view('applications.details', compact('application', 'equiptments'));
+        return view('admin.applications.details', compact('application', 'equiptments'));
     }
 
     public function submitDetails(Request $request, $id){
@@ -102,10 +102,10 @@ class ApplicationController extends Controller
         $types = LCustomerType::all();
         if($application->type == 1){
             $reservations = Reservation::where('application_id', $application->id)->where('type', 1)->get();
-            return view('applications.partials.facility-modal', compact('application', 'types', 'reservations', 'equiptments'));
+            return view('admin.applications.partials.facility-modal', compact('application', 'types', 'reservations', 'equiptments'));
         } else {
             $reservations = Reservation::where('application_id', $application->id)->where('type', 2)->get();
-            return view('applications.partials.activity-modal', compact('application', 'types', 'reservations', 'equiptments'));
+            return view('admin.applications.partials.activity-modal', compact('application', 'types', 'reservations', 'equiptments'));
         }
     }
 
@@ -174,7 +174,7 @@ class ApplicationController extends Controller
             $discount = 0;
         }
         $total = $request->ftotal + $request->etotal;
-        return view('applications.partials.payment-modal', compact('ftotal', 'etotal', 'total', 'discount', 'id', 'deposit'));
+        return view('admin.applications.partials.payment-modal', compact('ftotal', 'etotal', 'total', 'discount', 'id', 'deposit'));
     }
 
     public function ajaxPayment(Request $request, $id){
