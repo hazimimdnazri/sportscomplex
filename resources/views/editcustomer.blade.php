@@ -118,9 +118,7 @@
                                         <select onChange="member(this.value)" id="membership" class="form-control" name="membership">
                                             <option value="" selected>-- Membership --</option>
                                             @foreach($memberships as $m)
-                                                @if($m->id !=99)
                                                 <option value="{{ $m->id }}">{{ $m->membership }}</option>
-                                                @endif
                                             @endforeach
                                         </select>
                                         <small><span style="color:gold">Gold</span> = 20% discounted price</small><br>
@@ -203,6 +201,8 @@
 
             @if($user->getMembershipID($user->id))
                 $("#membership").val({{$user->getMembershipID($user->id)}}).change()
+            @else
+                $("#membership").val(99).change()
             @endif
 
             @if($user->getMembershipCycle($user->id))
@@ -237,17 +237,22 @@
     })
 
     member = (value) => {
-        $.ajax({
-            type:"POST",
-            url: "{{ url('ajax/membershipprice') }}",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "membership" : value
-            }
-        }).done(function(response){
-            document.getElementById("monthly").innerHTML = "Monthly (RM"+response.monthly+")"
-            document.getElementById("anually").innerHTML = "Anually (RM"+response.anually+")";
-        });
+        if(value == 99){
+            $("#cycle").attr("disabled", "disabled").val("");
+        } else {
+            $("#cycle").removeAttr("disabled");
+            $.ajax({
+                type:"POST",
+                url: "{{ url('ajax/membershipprice') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "membership" : value
+                }
+            }).done(function(response){
+                document.getElementById("monthly").innerHTML = "Monthly (RM"+response.monthly+")"
+                document.getElementById("anually").innerHTML = "Anually (RM"+response.anually+")";
+            });
+        }
     }
 
     $("#application_form").validate({

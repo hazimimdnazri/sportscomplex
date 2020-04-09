@@ -12,7 +12,6 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <!-- <li>Settings</li> -->
         <li class="active">Customers</li>
     </ol>
 </section>
@@ -52,6 +51,7 @@
                                 <td class="text-center">{!! $c->getMembership($c->id) !!}</td>
                                 <td class="text-center">{!! $c->getMembershipDuration($c->id) !!}</td>
                                 <td class="text-center">
+                                    <a onClick="membership({{$c->id}})" class="btn btn-success">Membership</a>
                                     <a href="{{ url('admin/customer/'.$c->id.'/edit') }}" class="btn btn-info">Edit</a>
                                     <a onClick="deleteCustomer({{$c->id}})" class="btn btn-danger">Delete</a>
                                 </td>
@@ -64,6 +64,7 @@
         </div>
     </div>
 </section>
+<div id="variable"></div>
 @endsection
 
 @section('postscript')
@@ -74,6 +75,39 @@
     $(() => {
         $('#example1').DataTable()
     })
+
+    membership = (id) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('admin/ajax/membership-modal') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+                "id" : id
+            }
+        }).done(function(response){
+            $("#variable").html(response)
+            $('#membershipModal').modal('show');
+        });
+    }
+
+    member = (value) => {
+        if(value == 99){
+            $("#cycle").attr("disabled", "disabled").val("");
+        } else {
+            $("#cycle").removeAttr("disabled");
+            $.ajax({
+                type:"POST",
+                url: "{{ url('ajax/membershipprice') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "membership" : value
+                }
+            }).done(function(response){
+                document.getElementById("monthly").innerHTML = "Monthly (RM"+response.monthly+")"
+                document.getElementById("anually").innerHTML = "Anually (RM"+response.anually+")";
+            });
+        }
+    }
 
     deleteCustomer = (id) => {
         Swal.fire({

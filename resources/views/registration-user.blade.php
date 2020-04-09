@@ -113,22 +113,18 @@
                                             <option value="16" >W.P. Putrajaya</option>
                                         </select>
                                     </div>
-                                    <!-- </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Membership Type <span class="text-red">*</span></label>
                                         <select onChange="member(this.value)" id="membership" class="form-control" name="membership">
                                             <option value="" selected>-- Membership --</option>
                                             @foreach($memberships as $m)
-                                                @if($m->id !=99)
                                                 <option value="{{ $m->id }}">{{ $m->membership }}</option>
-                                                @endif
                                             @endforeach
                                         </select>
                                         <small><span style="color:gold">Gold</span> = 20% discounted price</small><br>
                                         <small><span style="color:silver">Silver</span> = 15% discounted price</small><br>
                                         <small><span style="color:brown">Bronze</span> = 10% discounted price</small><br>
                                         <small><span style="color:blue">EduCity Students</span> = 20% discounted price</small>
-
                                     </div>
                                     <div class="form-group">
                                         <label>Payment Cycle <span class="text-red">*</span></label>
@@ -137,7 +133,7 @@
                                             <option id="monthly" value="1">Monthly</option>
                                             <option id="anually" value="2">Anually</option>
                                         </select>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -219,17 +215,22 @@
     })
 
     member = (value) => {
-        $.ajax({
-            type:"POST",
-            url: "{{ url('ajax/membershipprice') }}",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "membership" : value
-            }
-        }).done(function(response){
-            document.getElementById("monthly").innerHTML = "Monthly (RM"+response.monthly+")"
-            document.getElementById("anually").innerHTML = "Anually (RM"+response.anually+")";
-        });
+        if(value == 99){
+            $("#cycle").attr("disabled", "disabled").val("");
+        } else {
+            $("#cycle").removeAttr("disabled");
+            $.ajax({
+                type:"POST",
+                url: "{{ url('ajax/membershipprice') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "membership" : value
+                }
+            }).done(function(response){
+                document.getElementById("monthly").innerHTML = "Monthly (RM"+response.monthly+")"
+                document.getElementById("anually").innerHTML = "Anually (RM"+response.anually+")";
+            });
+        }
     }
 
     $("#application_form").validate({

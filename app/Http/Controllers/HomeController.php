@@ -266,4 +266,27 @@ class HomeController extends Controller
         $vendors = User::where('role', 4)->where('flag', 1)->get();
         return view('vendors', compact('vendors'));
     }
+
+    public function membershipModal(Request $request){
+        $id = $request->id;
+        $memberships = LMembership::all();
+        $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->get();
+        return view('partials.modal-membership', compact('memberships', 'id', 'membership'));
+    }
+
+    public function renewMembership(Request $request, $id){
+        $membership = new Membership;
+        $membership->user_id = $id;
+        $membership->membership = $request->membership;
+        $membership->cycle = $request->cycle;
+        $membership->cycle_start = date('Y-m-d');
+        if($request->cycle == 1){
+            $membership->cycle_end = date('Y-m-d', strtotime('+1 month'));
+        } else {
+            $membership->cycle_end = date('Y-m-d', strtotime('+1 year'));
+        }
+        if($membership->save()){
+            return "success";
+        }
+    }
 }

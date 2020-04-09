@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
     Route::get('customers', 'HomeController@customers');
     Route::get('customer/{id}/edit', 'HomeController@editCustomer');
     Route::post('customer/{id}/edit', 'HomeController@submitEditCust');
+    Route::post('membership/{id}', 'HomeController@renewMembership');
 
     Route::group(['prefix' => 'application'], function() {
         Route::get('/', 'ApplicationController@index');
@@ -89,6 +90,10 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
             Route::post('select-facilities', 'SettingsController@selectFacilities');
             Route::post('changerole', 'SettingsController@changeRole');
         });
+    });
+
+    Route::group(['prefix' => 'ajax'], function() {
+        Route::post('membership-modal', 'HomeController@membershipModal');
     });
 });
 
