@@ -201,12 +201,6 @@ class SettingsController extends Controller
         return view('admin.settings.membership', compact('memberships'));
     }
 
-    public function editCustomer(Request $request){
-        $customer = Customer::find($request->id);
-        $memberships = LMembership::all();
-        return view('shared.customer_details', compact('customer', 'memberships'));
-    }
-
     public function submitEditCustomer(Request $request){
         $customer = Customer::find($request->id);
         $customer->name = $request->name;

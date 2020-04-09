@@ -116,7 +116,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
     Route::post('membershipprice', 'HomeController@ajaxMembershipPrice');
     Route::post('setdate', 'ApplicationController@ajaxSetDate');
     Route::post('confirmreservation', 'ApplicationController@confirmReservation');
-    Route::post('editcustomer', 'SettingsController@editCustomer');
     Route::post('calendar', 'HomeController@facilityCalendar');
     Route::post('sports', 'ApplicationController@ajaxSports');
     Route::post('minicalendar', 'ApplicationController@miniCalendar');

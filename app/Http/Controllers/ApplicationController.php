@@ -80,14 +80,10 @@ class ApplicationController extends Controller
         }
     }
 
-    public function activityType(){
-        return view('shared.asset', compact('reservations'));
-    }
-
     public function activityModal(){
         $types = LCustomerType::all();
         $institutions = LInstitution::all();
-        return view('shared.activity_modal', compact('types', 'institutions'));
+        return view('admin.applications.partials.modal-application', compact('types', 'institutions'));
     }
 
     public function viewModal(Request $request){
@@ -102,10 +98,10 @@ class ApplicationController extends Controller
         $types = LCustomerType::all();
         if($application->type == 1){
             $reservations = Reservation::where('application_id', $application->id)->where('type', 1)->get();
-            return view('admin.applications.partials.facility-modal', compact('application', 'types', 'reservations', 'equiptments'));
+            return view('admin.applications.partials.modal-facility', compact('application', 'types', 'reservations', 'equiptments'));
         } else {
             $reservations = Reservation::where('application_id', $application->id)->where('type', 2)->get();
-            return view('admin.applications.partials.activity-modal', compact('application', 'types', 'reservations', 'equiptments'));
+            return view('admin.applications.partials.modal-activity', compact('application', 'types', 'reservations', 'equiptments'));
         }
     }
 
@@ -174,7 +170,7 @@ class ApplicationController extends Controller
             $discount = 0;
         }
         $total = $request->ftotal + $request->etotal;
-        return view('admin.applications.partials.payment-modal', compact('ftotal', 'etotal', 'total', 'discount', 'id', 'deposit'));
+        return view('admin.applications.partials.modal-payment', compact('ftotal', 'etotal', 'total', 'discount', 'id', 'deposit'));
     }
 
     public function ajaxPayment(Request $request, $id){
