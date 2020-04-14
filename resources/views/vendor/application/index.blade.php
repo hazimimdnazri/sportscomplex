@@ -55,20 +55,12 @@
                                 </td>
                                 <td class="text-center">{{ date('d/m/Y', strtotime($a->date)) }}</td>
                                 <td class="text-center">
-                                    @if($a->status == 1)
-                                        <span class="label label-default">{{ $a->a_status->status }}</span>
-                                    @elseif($a->status == 2)
-                                        <span class="label label-info">{{ $a->a_status->status }}</span>
-                                    @elseif($a->status == 3)
-                                        <span class="label label-success">{{ $a->a_status->status }}</span>
-                                    @elseif($a->status == 4)
-                                        <span class="label label-danger">{{ $a->a_status->status }}</span>
-                                    @endif
+                                    <span class="label label-default">{{ $a->a_status->status }}</span>
                                 </td>
                                 <td class="text-center">
                                     @if($a->status != 1)
-                                    <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
-                                    @elseif($a->status != 3)
+                                    <a class="btn btn-primary" onClick="viewAdminApproval({{ $a->id }})">View</a>
+                                    @elseif($a->status != 5)
                                     <a href="{{ url('vendor/applications/'.$a->id) }}" class="btn btn-info">Edit</a>
                                     @endif
                                     <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger">Delete</a>
@@ -101,10 +93,10 @@
         $('#example1').DataTable()
     })
 
-    viewModal = (id) => {
+    viewAdminApproval = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/application/ajax/view-modal') }}",
+            url: "{{ url('vendor/ajax/modal-adminApproval') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id

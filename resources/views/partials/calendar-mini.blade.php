@@ -16,7 +16,7 @@ $(() => {
         ],
         events    : [
             @foreach($reservations as $r)
-                @if($r->r_application->status == 3)
+                @if($r->r_application->status == 5)
                     @for($i = 0; $i < count(json_decode($r->r_sport->facility)); $i++)
                     {
                         resourceId	  	: "{{ json_decode($r->r_sport->facility)[$i] }}",

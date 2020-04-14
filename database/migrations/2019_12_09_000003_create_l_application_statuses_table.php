@@ -32,6 +32,18 @@ class CreateLApplicationStatusesTable extends Migration
 
         DB::table('l_application_statuses')->insert(
             array(
+                'status' => 'Approved by Admin'
+            )
+        );
+
+        DB::table('l_application_statuses')->insert(
+            array(
+                'status' => 'Accepted by Vendor'
+            )
+        );
+
+        DB::table('l_application_statuses')->insert(
+            array(
                 'status' => 'Paid'
             )
         );

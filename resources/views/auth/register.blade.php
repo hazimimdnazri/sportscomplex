@@ -26,44 +26,48 @@
             </div>
 
             <div class="register-box-body">
-                <p class="login-box-msg">Register a new membership</p>
-                <form id="userData">
-                    @csrf
-                    <div class="form-group has-feedback">
-                        <input type="text" class="form-control" name="name" placeholder="Full name">
-                    </div>
-                    <div class="form-group div_email">
-                        <input type="email" class="form-control" name="email" placeholder="Email">
-                        <span class="help-block error-email"></span>
-                    </div>
-                    <div class="form-group div_password">
-                        <input type="password" id="password" class="form-control" name="password" placeholder="Password">
-                        <span class="help-block error-password"></span>
-                    </div>
-                    <div class="form-group div_retype">
-                        <input type="password" id="retype_password" class="form-control" placeholder="Retype password">
-                        <span class="help-block error-retype"></span>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-8">
-                            <div class="checkbox icheck">
-                                <label>
-                                    <input type="checkbox"> I agree to the <a href="#">terms</a>
-                                </label>
+                <div id="register_div">
+                    <p class="login-box-msg">Register a new membership</p>
+                    <form id="userData">
+                        @csrf
+                        <div class="form-group has-feedback">
+                            <input type="text" class="form-control" name="name" placeholder="Full name">
+                        </div>
+                        <div class="form-group div_email">
+                            <input type="email" class="form-control" name="email" placeholder="Email">
+                            <span class="help-block error-email"></span>
+                        </div>
+                        <div class="form-group div_password">
+                            <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+                            <span class="help-block error-password"></span>
+                        </div>
+                        <div class="form-group div_retype">
+                            <input type="password" id="retype_password" class="form-control" placeholder="Retype password">
+                            <span class="help-block error-retype"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox"> I agree to the <a href="#">terms</a>
+                                    </label>
+                                </div>
                             </div>
+                            <!-- /.col -->
+                            <div class="col-xs-4">
+                                <button type="button" onClick="register()" class="btn btn-primary btn-block btn-flat">Register</button>
+                            </div>
+                            <!-- /.col -->
                         </div>
-                        <!-- /.col -->
-                        <div class="col-xs-4">
-                            <button type="button" onClick="register()" class="btn btn-primary btn-block btn-flat">Register</button>
-                        </div>
-                        <!-- /.col -->
+                    </form>
+                    <div class="social-auth-links text-center">
+                        <p>- OR -</p>
                     </div>
-                </form>
-
-                <div class="social-auth-links text-center">
-                    <p>- OR -</p>
+                    <a href="{{ url('guest/login') }}" class="text-center">I already have a membership</a>
                 </div>
-                <a href="{{ url('guest/login') }}" class="text-center">I already have a membership</a>
+                <div id="spinner_div" class="text-center" style="display:none">
+                    <h3><i class='fa fa-spin fa-spinner'></i><br><br>&nbsp; Registering</h3>
+                </div>
             </div>
         </div>
 
@@ -90,6 +94,8 @@
                     $(".error-retype").text('')
             } else {
                 if($("#password").val() == $("#retype_password").val()){
+                    $("#register_div").toggle();
+                    $("#spinner_div").toggle();
                     var formData = new FormData($('#userData')[0]);
 
                     $.ajax({
@@ -101,6 +107,8 @@
                         processData: false
                     }).done((response) => {
                         if(response == 'exist'){
+                            $("#register_div").toggle();
+                            $("#spinner_div").toggle();
                             $(".div_retype, .div_password").removeClass('has-error')
                             $(".error-retype, .error-password").text('')
                             $(".div_email").addClass('has-error')

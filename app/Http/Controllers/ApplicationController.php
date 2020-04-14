@@ -21,6 +21,7 @@ use App\Equiptment;
 use App\LCustomerType;
 use App\Membership;
 use App\LInstitution;
+use App\Quotation;
 use Hash;
 
 class ApplicationController extends Controller
@@ -34,7 +35,11 @@ class ApplicationController extends Controller
     public function details(Request $request, $id){
         $application = Application::find($id);
         $equiptments = Equiptment::where('application_id', $id)->get();
-        return view('admin.applications.details', compact('application', 'equiptments'));
+        if(User::find($application->user_id)->role != 4){
+            return view('admin.applications.details', compact('application', 'equiptments'));
+        } else {
+            return view('admin.applications.details-vendor', compact('application', 'equiptments'));
+        }
     }
 
     public function submitDetails(Request $request, $id){
@@ -56,6 +61,27 @@ class ApplicationController extends Controller
             return 'success';
         } else {
             return 'fail';
+        }
+    }
+
+    public function vendorItemType(Request $request){
+        $id = $request->id;
+        $application = Application::find($id);
+        $user = User::find($request->user);
+        $date = Application::find($id)->date;
+        $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->get();
+        $venues = LVenue::all();
+        $equiptments = Equiptment::where('application_id', $request->id)->get();
+        $activities = LActivity::all();
+        $application->type = $request->type;
+        if($application->save()){
+            if($request->type == 1){
+                return view('admin.applications.partials.vendor-facility', compact('reservations', 'venues', 'id', 'user', 'date', 'equiptments'));
+            } else if($request->type == 2) {
+                return view('admin.applications.partials.vendor-activity', compact('reservations', 'activities', 'id', 'user', 'date', 'equiptments'));
+            } else {
+                return NULL;
+            }
         }
     }
 
@@ -189,7 +215,7 @@ class ApplicationController extends Controller
             }
             
             $application->event = $request->event;
-            $application->status = 3;
+            $application->status = 5;
 
             $user = User::find($application->user_id);
             $trasaction->trans_number = $request->type.$id;
@@ -307,7 +333,7 @@ class ApplicationController extends Controller
 
     public function applicationApprove(Request $request){
         $application = Application::find($request->id);
-        $application->status = 3;
+        $application->status = 5;
 
         if($application->save()){
             $equiptments = Equiptment::where('application_id', $request->id)->get();
@@ -321,7 +347,7 @@ class ApplicationController extends Controller
 
     public function applicationReject(Request $request){
         $application = Application::find($request->id);
-        $application->status = 4;
+        $application->status = 6;
 
         if($application->save()){
             $equiptments = Equiptment::where('application_id', $request->id)->get();
@@ -331,5 +357,29 @@ class ApplicationController extends Controller
             }
         }
         return "success";
+    }
+
+    public function approveQuotation(Request $request, $id){
+        $application = Application::find($id);
+
+        foreach(array_keys($request->facility) as $f){
+            $quotation = new Quotation;
+            $quotation->application_id = $id;
+            $quotation->reservation_id = $f;
+            $quotation->price = $request->facility[$f];
+            $quotation->save();
+        }
+        $application->status = 3;
+        if($application->save()){
+            return "success";
+        }   
+    }
+
+    public function confirmPayment(Request $request){
+        $application = Application::find($request->id);
+        $application->status = 5;
+        if($application->save()){
+            return "success";
+        }
     }
 }

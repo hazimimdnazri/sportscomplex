@@ -59,11 +59,19 @@ class HomeController extends Controller
     }
 
     public function verifyAccount(){
-        $token = base64_decode($_GET['token_id']);
-        $user = User::where('email', $token)->first();
-        $user->status = 2;
-        if($user->save()){
-            return view('activated');
+        if(isset($_GET['token_id'])){
+            $token = base64_decode($_GET['token_id']);
+            $user = User::where('email', $token)->first();
+            if($user){
+                $user->status = 2;
+                if($user->save()){
+                    return view('activated');
+                }
+            } else {
+                return view('whut');
+            }
+        } else {
+            return view('whut');
         }
     }
 
@@ -334,5 +342,9 @@ class HomeController extends Controller
         if($membership->save()){
             return "success";
         }
+    }
+
+    public function loading(){
+        return view('modal-loading');
     }
 }

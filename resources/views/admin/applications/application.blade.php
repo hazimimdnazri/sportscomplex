@@ -55,21 +55,23 @@
                                 </td>
                                 <td class="text-center">{{ date('d/m/Y', strtotime($a->date)) }}</td>
                                 <td class="text-center">
-                                    @if($a->status == 1)
-                                        <span class="label label-default">{{ $a->a_status->status }}</span>
-                                    @elseif($a->status == 2)
-                                        <span class="label label-info">{{ $a->a_status->status }}</span>
-                                    @elseif($a->status == 3)
-                                        <span class="label label-success">{{ $a->a_status->status }}</span>
-                                    @elseif($a->status == 4)
-                                        <span class="label label-danger">{{ $a->a_status->status }}</span>
-                                    @endif
+                                    <span class="label label-default">{{ $a->a_status->status }}</span>
                                 </td>
                                 <td class="text-center">
-                                    @if($a->status != 1)
-                                    <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
-                                    @elseif($a->status != 3)
-                                    <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info">Edit</a>
+                                    @if($a->a_applicant->role == 4)
+                                        @if($a->status == 4)
+                                            <a class="btn btn-success" onClick="confirmPayment({{ $a->id }})">Confirm Payment</a>
+                                        @elseif($a->status == 5)
+                                            <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
+                                        @else
+                                            <a class="btn btn-primary" href="{{ url('admin/application/'.$a->id) }}">Review Application</a>
+                                        @endif
+                                    @else
+                                        @if($a->status != 1)
+                                        <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
+                                        @elseif($a->status != 5)
+                                        <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info">Edit</a>
+                                        @endif
                                     @endif
                                     <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger">Delete</a>
                                 </td>
@@ -219,6 +221,38 @@
                 }).done(function(response){
                     if(response == 'success'){
                         Swal.fire("Deleted!", "Application has been deleted.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
+    }
+
+    confirmPayment = (id) => {
+        Swal.fire({
+            title: "Confirm reservation payment?",
+            text: "Make sure that vendor has submitted proof of payment.",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, payment recieved!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/application/ajax/confirmpayment') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Confirmed!", "Reservation has been confirmed, waiting for the arrival.", "success")
                         .then((result) => {
                             if(result.value){
                                 location.reload();

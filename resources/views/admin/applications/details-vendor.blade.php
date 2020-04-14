@@ -13,7 +13,7 @@
 @section('content')
 <section class="content-header">
     <h1>
-        Reservation Details
+        Vendor Reservation Details
         <small>Applications</small>
     </h1>
     <ol class="breadcrumb">
@@ -43,7 +43,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Reservation Item <span class="text-red">*</span></label>
-                                <select onChange="itemType(this.value)" name="type" id="type" class="form-control">
+                                <select onChange="itemType(this.value)" name="type" id="type" class="form-control" disabled>
                                     <option value="" selected>-- Reservation Type --</option>
                                     <option value="1" >Facility</option>
                                     <option value="2" >Activity</option>
@@ -57,7 +57,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="text" name="date" value="{{ date('d-m-Y', strtotime($application->date)) }}" class="form-control pull-right" onChange="setDate(this.value)" id="datepicker" placeholder="Reservation date">
+                                    <input type="text" name="date" value="{{ date('d-m-Y', strtotime($application->date)) }}" class="form-control pull-right" onChange="setDate(this.value)" id="datepicker" placeholder="Reservation date" disabled>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Event <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="event" id="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name">
+                                <input type="text" class="form-control" name="event" id="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Company Registration No. </label>
@@ -97,8 +97,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h4 class="box-title">Equiptments</h4>  
-                    <button type="button" onClick="addEquiptment()" class="btn btn-success pull-right" >Rent Equiptments</button>
+                    <h4 class="box-title">Equiptments</h4>
                 </div>
                 <div class="box-body">
                     <table id="equiptments" class="table table-bordered">
@@ -107,7 +106,7 @@
                                 <th width="5%">No. </th>
                                 <th class="text-center">Equiptment</th>
                                 <!-- <th class="text-center">Price (RM)</th> -->
-                                <th class="text-center" width="20%">Actions</th>
+                                <th class="text-center" width="20%">Price</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,7 +120,7 @@
                                 <td class="text-center">{{ $e->r_equiptment->equiptment }}</td>
                                 <!-- <td class="text-center">{{ number_format($e->r_equiptment->price, 2) }}</td> -->
                                 <td class="text-center">
-                                    <button onClick="deleteEquiptment({{ $e->id }})" class="btn btn-danger">Delete</button>
+                                    <input type="text" name="equiptment[{{ $e->id }}]" class="form-control" value="{{ number_format($e->r_equiptment->price, 2) }}">
                                 </td>
                             </tr>
                             @php $etotal += number_format($e->r_equiptment->price, 2) @endphp
@@ -166,7 +165,7 @@
     itemType = (value) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('vendor/ajax/itemtype') }}",
+            url: "{{ url('admin/application/ajax/itemtype-vendor') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id" : "{{ $application->id }}",
@@ -178,131 +177,39 @@
         });
     }
 
-    toQuotation = () => {
+    approve = () => {
         Swal.fire({
-            title: "Submit the reservation for admin approval?",
-            text: "You still can alter the reservation later.",
+            title: "Confirm the price and approve the reservation?",
+            text: "Price set cannot be changed.",
             type: "question",
             showCancelButton: true,
             confirmButtonColor: "#47bd9a",
             cancelButtonColor: "#e74c5e",
-            confirmButtonText: "Yes, proceed!"
+            confirmButtonText: "Yes, approve!"
         }).then((result) => {
             if (result.value) {
+                var formData = new FormData($('#quotationData')[0]);
                 $.ajax({
-                    type:"POST",
-                    url: "{{ url('vendor/ajax/submitreservation') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id" : "{{ $application->id }}"
-                    }
-                }).done(function(response){
-                    if(response == 'success'){
-                        alert(response)
-                    }
-                });
-            }
-        })
-    }
-
-    setDate = (value) => {
-        var confirmDate = confirm('Reserve this date? ('+value+')')
-        if(confirmDate){
-            $.ajax({
-                type:"POST",
-                url: "{{ url('ajax/setdate') }}",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "id" : "{{ $application->id }}",
-                    "date": value
-                }
-            }).done(function(response){
-                if(response == 'success'){
-                    alert('Date set!')
-                    location.reload()
-                }
-            });
-        }
-    }
-
-    addEquiptment = (id) => {
-        $.ajax({
-            type:"POST",
-            url: "{{ url('ajax/application/equiptment/add') }}",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "id" : "{{ $application->id }}",
-            }
-        }).done(function(response){
-            $("#variable_3").html(response)
-            $('#equiptmentModal').modal('show');
-        });
-    }
-
-    deleteEquiptment = (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#47bd9a",
-            cancelButtonColor: "#e74c5e",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    type:"POST",
-                    url: "{{ url('ajax/application/equiptment/delete') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id" : id,
-                    }
-                }).done(function(response){
-                    if(response == 'success'){
-                        Swal.fire("Deleted!", "The equiptment has been deleted.", "success")
-                        .then((result) => {
-                            if(result.value){
-                                location.reload();
-                            }
-                        })
-                    }
-                });
-            }
-        })
-    }
-
-    calcChange = (value) => {
-        var change = value - $("#total").val()
-        $("#change").val(change.toFixed(2))
-    }
-
-    deleteAsset = (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#47bd9a",
-            cancelButtonColor: "#e74c5e",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    type:"POST", 
-                    url: "{{ url('ajax/application/facility/delete') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id" : id,
-                    }
-                }).done(function(response){
-                    if(response == 'success'){
-                        Swal.fire("Deleted!", "The reservation has been deleted.", "success")
-                        .then((result) => {
-                            if(result.value){
-                                location.reload();
-                            }
-                        })
-                    }
+                    url: "{{ url('admin/application/quotation/'.$application->id) }}",
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                }).done((response) => {
+                    console.log(response)
+                    // if(response == 'success'){
+                    //     $('#membershipModal').modal('hide')
+                    //     Swal.fire(
+                    //         'Success!',
+                    //         'Membership added!',
+                    //         'success'
+                    //     ).then((result) => {
+                    //         if(result.value){
+                    //             location.reload()
+                    //         }
+                    //     })
+                    // } 
                 });
             }
         })

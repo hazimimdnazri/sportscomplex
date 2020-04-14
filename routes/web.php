@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
         Route::get('/', 'ApplicationController@index');
         Route::post('approve', 'ApplicationController@applicationApprove');
         Route::post('reject', 'ApplicationController@applicationReject');
+        Route::post('quotation/{id}', 'ApplicationController@approveQuotation');
         Route::post('/', 'ApplicationController@submitApplication');
         Route::get('{id}', 'ApplicationController@details');
         Route::post('{id}', 'ApplicationController@submitDetails');
@@ -50,8 +51,11 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
         Route::post('payment/{id}', 'ApplicationController@ajaxPayment');
     
         Route::group(['prefix' => 'ajax'], function() {
+            Route::post('itemtype-vendor', 'ApplicationController@vendorItemType');
             Route::post('view-modal', 'ApplicationController@viewModal');
             Route::post('payment-modal', 'ApplicationController@paymentModal');
+            Route::post('approvequotation', 'ApplicationController@approveQuotation');
+            Route::post('confirmpayment', 'ApplicationController@confirmPayment');
         });
     });
 
@@ -111,6 +115,13 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::get('{id}/quotation', 'VendorController@quotationView');
         Route::post('{id}/quotation', 'VendorController@quotationSubmit');
     });
+
+    Route::group(['prefix' => 'ajax'], function() {
+        Route::post('itemtype', 'VendorController@itemType');
+        Route::post('submitreservation', 'VendorController@submitReservation');
+        Route::post('acceptreservation', 'VendorController@acceptReservation');
+        Route::post('modal-adminApproval', 'VendorController@modalAdminApproval');
+    });
 });
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
@@ -123,6 +134,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
     Route::post('sports', 'ApplicationController@ajaxSports');
     Route::post('minicalendar', 'ApplicationController@miniCalendar');
     Route::post('deletecustomer', 'HomeController@deleteCustomer');
+    Route::post('modal-loading', 'HomeController@loading');
 
     Route::group(['prefix' => 'application'], function() {
         Route::post('{id}/facility', 'ApplicationController@submitFacility');
