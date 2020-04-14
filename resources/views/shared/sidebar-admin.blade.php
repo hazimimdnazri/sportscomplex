@@ -5,7 +5,7 @@
         <li><a href="{{ url('admin/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ url('admin/calendar') }}"><i class="fa fa-calendar-check-o"></i> <span>Availability Calendar</span></a></li>
         <li><a href="{{ url('admin/application') }}"><i class="fa fa-shopping-bag"></i> <span>POS</span></a></li>
-        <!-- <li><a href="#"><i class="fa fa-send"></i> <span>Bookings</span></a></li> -->
+        <li><a href="#"><i class="fa fa-send"></i> <span>Pencil Booking</span></a></li>
         <li><a href="{{ url('admin/customers') }}"><i class="fa fa-users"></i> <span>Customers</span></a></li>
         <li><a href="{{ url('admin/vendors') }}"><i class="fa fa-th-list"></i> <span>Vendors</span></a></li>
         <!-- <li><a href="#"><i class="fa fa-dollar"></i> <span>Financial</span></a></li> -->
