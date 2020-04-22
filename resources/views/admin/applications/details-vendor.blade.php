@@ -197,19 +197,17 @@
                     contentType: false,
                     processData: false
                 }).done((response) => {
-                    console.log(response)
-                    // if(response == 'success'){
-                    //     $('#membershipModal').modal('hide')
-                    //     Swal.fire(
-                    //         'Success!',
-                    //         'Membership added!',
-                    //         'success'
-                    //     ).then((result) => {
-                    //         if(result.value){
-                    //             location.reload()
-                    //         }
-                    //     })
-                    // } 
+                    if(response == 'success'){
+                        Swal.fire(
+                            'Success!',
+                            'Quotation Sent!',
+                            'success'
+                        ).then((result) => {
+                            if(result.value){
+                                window.location.replace("{{ url('admin/application') }}");
+                            }
+                        })
+                    } 
                 });
             }
         })

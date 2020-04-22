@@ -64,7 +64,9 @@
                                         @elseif($a->status == 5)
                                             <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
                                         @else
-                                            <a class="btn btn-primary" href="{{ url('admin/application/'.$a->id) }}">Review Application</a>
+                                            @if($a->status != 3)
+                                                <a class="btn btn-primary" href="{{ url('admin/application/'.$a->id) }}">Review Application</a>
+                                            @endif
                                         @endif
                                     @else
                                         @if($a->status != 1)

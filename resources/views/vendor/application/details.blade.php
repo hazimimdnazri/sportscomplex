@@ -198,8 +198,16 @@
                     }
                 }).done(function(response){
                     if(response == 'success'){
-                        alert(response)
-                    }
+                        Swal.fire(
+                            'Success!',
+                            'Reservation submitted for review!',
+                            'success'
+                        ).then((result) => {
+                            if(result.value){
+                                window.location.replace("{{ url('vendor/applications') }}");
+                            }
+                        })
+                    } 
                 });
             }
         })

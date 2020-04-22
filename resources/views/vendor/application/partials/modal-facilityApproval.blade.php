@@ -50,7 +50,9 @@
                                 <th class="text-center bg-gray">Sport</th>
                                 <th class="text-center bg-gray">Facility</th>
                                 <th class="text-center bg-gray">Duration</th>
-                                <th class="text-center bg-gray">Price</th>
+                                @if($application->status != 5)
+                                <th class="text-center bg-gray">Price (RM)</th>
+                                @endif
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
@@ -65,8 +67,12 @@
                                             {{ App\LFacility::find($facility[$i])->facility }}<br>
                                         @endfor
                                     </td>
-                                    <td class="text-center">{{ date('H:i A', strtotime($r->start_date)) }} - {{ date('H:i A', strtotime($r->end_date)) }}</td>
-                                    <td>{{ number_format(App\Quotation::where('application_id', $r->application_id)->where('reservation_id', $r->id)->first()->price, 2) }}</td>
+                                    <td class="text-center">{{ date('h:i A', strtotime($r->start_date)) }} - {{ date('h:i A', strtotime($r->end_date)) }}</td>
+                                    @if($application->status != 5)
+                                    <td class="text-center">
+                                        {{ isset(App\Quotation::where('application_id', $r->application_id)->where('reservation_id', $r->id)->first()->price) ? number_format(App\Quotation::where('application_id', $r->application_id)->where('reservation_id', $r->id)->first()->price, 2) : 'TBD' }}
+                                    </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -78,7 +84,11 @@
                                 <th width="5%" class="text-center bg-gray">#</th>
                                 <th class="text-center bg-gray">Equiptment</th>
                                 <th class="text-center bg-gray">Serial Number / ID</th>
-                                <th class="text-center bg-gray">Price</th>
+                                @if($application->status != 5)
+                                <th class="text-center bg-gray">Price (RM)</th>
+                                @else
+                                <th class="text-center bg-gray">Status</th>
+                                @endif
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
@@ -88,8 +98,21 @@
                                         <td class="text-center">{{ $n++ }}</td>
                                         <td class="text-center">{{ $e->r_equiptment ->equiptment}}</td>
                                         <td class="text-center">{{ $e->r_equiptment->serial_number }}</td>
+                                        @if($application->status != 5)
                                         <td class="text-center">
+                                            TBD
                                         </td>
+                                        @else
+                                        <td class="text-center">
+                                            @if($e->status == 1)
+                                                <span class="label label-warning">Draft</span>
+                                            @elseif($e->status == 2)
+                                                <span class="label label-primary">In Usage</span>
+                                            @elseif($e->status == 3)
+                                                <span class="label label-success">Returned</span>
+                                            @endif
+                                        </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 @else

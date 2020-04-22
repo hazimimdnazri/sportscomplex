@@ -379,6 +379,10 @@ class ApplicationController extends Controller
         $application = Application::find($request->id);
         $application->status = 5;
         if($application->save()){
+            foreach(Equiptment::where('application_id', $request->id) as $e){
+                $e->status = 2;
+                $e->save();
+            }
             return "success";
         }
     }
