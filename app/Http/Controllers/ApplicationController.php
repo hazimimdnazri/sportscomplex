@@ -348,6 +348,7 @@ class ApplicationController extends Controller
     public function applicationReject(Request $request){
         $application = Application::find($request->id);
         $application->status = 6;
+        $application->remark = $request->remark;
 
         if($application->save()){
             $equiptments = Equiptment::where('application_id', $request->id)->get();

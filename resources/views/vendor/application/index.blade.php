@@ -63,7 +63,9 @@
                                     @elseif($a->status != 5)
                                     <a href="{{ url('vendor/applications/'.$a->id) }}" class="btn btn-info">Edit</a>
                                     @endif
+                                    @if($a->status == 1 || $a->status == 2 || $a->status == 3)
                                     <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger">Delete</a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

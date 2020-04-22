@@ -177,6 +177,53 @@
         });
     }
 
+    reject = () => {
+        Swal.fire({
+            title: "Reject this reservation?",
+            text: "This action cannot be undone.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, reject!"
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                    title: 'Enter remark regarding your rejection.',
+                    input: 'textarea',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    cancelButtonColor: "#e74c5e",
+                    confirmButtonText: 'Reject'
+                }).then((result) => {
+                    $.ajax({
+                        type:"POST",
+                        url: "{{ url('admin/application/reject') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id" : "{{ $application->id }}",
+                            "remark" : result.value
+                        }
+                    }).done(function(response){
+                        if(response == 'success'){
+                            Swal.fire(
+                                'Success!',
+                                'Reservation rejected!',
+                                'success'
+                            ).then((result) => {
+                                if(result.value){
+                                    window.location.replace("{{ url('admin/application') }}");
+                                }
+                            })
+                        } 
+                    });
+                })
+            }
+        })
+    }
+
     approve = () => {
         Swal.fire({
             title: "Confirm the price and approve the reservation?",

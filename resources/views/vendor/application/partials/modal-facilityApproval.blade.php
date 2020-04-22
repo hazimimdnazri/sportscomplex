@@ -39,6 +39,14 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ date('d/m/Y', strtotime($application->date)) }}" disabled>
                             </div>
                         </div>
+                        @if($application->status == 6)
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Remark </label>
+                                <textarea type="text" class="form-control" disabled>This application was rejected due to: {{ $application->remark }}</textarea>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <hr>
                     <h4 class="modal-title">Facilities & Equiptments</h4>
@@ -190,7 +198,8 @@
                     url: "{{ url('admin/application/reject') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
-                        "id" : "{{ $application->id }}"
+                        "id" : "{{ $application->id }}",
+                        "remark": "Rejected by vendor."
                     }
                 }).done(function(response){
                     if(response == 'success'){
