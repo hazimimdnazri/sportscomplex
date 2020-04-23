@@ -58,6 +58,9 @@
                                     {!! $a->getStatus($a->status) !!}
                                 </td>
                                 <td class="text-center">
+                                    @if($a->status == 4 && !isset($a->r_payment->file))
+                                    <a class="btn btn-warning" onClick="uploadPayment({{ $a->id }})">Upload Payment</a>
+                                    @endif
                                     @if($a->status != 1)
                                     <a class="btn btn-primary" onClick="viewAdminApproval({{ $a->id }})">View</a>
                                     @elseif($a->status != 5)
@@ -132,6 +135,20 @@
                     }
                 });
             }
+        });
+    }
+
+    uploadPayment = (id) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('vendor/ajax/modal-payment') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+                "id" : id
+            }
+        }).done(function(response){
+            $("#variable_1").html(response)
+            $('#paymentModal').modal('show');
         });
     }
 

@@ -11,6 +11,8 @@ use App\Facility;
 use App\Activity;
 use App\LActivity;
 use App\LCustomerType;
+use App\Quotation;
+use App\Payment;
 use Auth;
 
 class VendorController extends Controller
@@ -122,5 +124,24 @@ class VendorController extends Controller
             }
         }
         return "success";
+    }
+
+    public function modalPayment(Request $request){
+        $application = Application::find($request->id);
+        $price = Quotation::where('application_id', $request->id)->sum('price');
+        return view('vendor.application.partials.modal-payment', compact('application', 'price'));
+    }
+
+    public function uploadPayment(Request $request, $id){
+        $filename = uniqid().'.'.$request->receipt->extension();  
+        if($request->receipt->move(public_path('uploads/payments'), $filename)){
+            $payment = new Payment;
+            $payment->application_id = $id;
+            $payment->file = $filename;
+            if($payment->save()){
+                return "success";
+            }
+        }
+
     }
 }

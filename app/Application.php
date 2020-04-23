@@ -18,6 +18,10 @@ class Application extends Model
         return $this->belongsTo(LApplicationStatus::class, 'status');
     }
 
+    public function r_payment(){
+        return $this->hasOne(Payment::class, 'application_id', 'id');
+    }
+
     public function getStatus($status){
         switch ($status) {
             case 1:
@@ -29,11 +33,11 @@ class Application extends Model
                 break;
             
             case 3:
-                return '<span class="label label-default">Approved by Vendor</span>';
+                return '<span class="label label-warning">Approved by Admin</span>';
                 break;
             
             case 4:
-                return '<span class="label label-primary">Approved by Admin</span>';
+                return '<span class="label label-primary">Approved by Vemdor</span>';
                 break;
             
             case 5:

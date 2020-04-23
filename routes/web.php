@@ -114,6 +114,7 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::post('new', 'VendorController@applicationNew');
         Route::post('cancel', 'VendorController@applicationCancel');
         Route::get('{id}', 'VendorController@applicationDetails');
+        Route::post('{id}/payment', 'VendorController@uploadPayment');
     });
 
     Route::group(['prefix' => 'ajax'], function() {
@@ -121,6 +122,7 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::post('submitreservation', 'VendorController@submitReservation');
         Route::post('acceptreservation', 'VendorController@acceptReservation');
         Route::post('modal-adminApproval', 'VendorController@modalAdminApproval');
+        Route::post('modal-payment', 'VendorController@modalPayment');
     });
 });
 
