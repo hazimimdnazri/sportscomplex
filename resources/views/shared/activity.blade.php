@@ -22,31 +22,31 @@
                     $ftotal = 0;
                     $dtotal = 0;
                     @endphp
-                    @foreach($reservations as $r)
+                    @foreach($activities as $a)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $r->r_activity->activity }}</td>
+                        <td class="text-center">{{ $a->r_activity->activity }}</td>
                         <td class="text-center">
-                            @if($r->price_type == 1)
+                            @if($a->price_type == 1)
                                 Public
-                            @elseif($r->price_type == 2)
+                            @elseif($a->price_type == 2)
                                 Student
-                            @elseif($r->price_type == 3)
+                            @elseif($a->price_type == 3)
                                 Under 12
                             @endif
                         </td>
                         <td class="text-center">
-                        @if($r->price_type == 1)
-                            {{ $price = number_format($r->r_activity->public, 2) }}
+                        @if($a->price_type == 1)
+                            {{ $price = number_format($a->r_activity->public, 2) }}
                         @elseif($r->price_type == 2)
-                            {{ $price = number_format($r->r_activity->students, 2) }}
+                            {{ $price = number_format($a->r_activity->students, 2) }}
                         @elseif($r->price_type == 3)
-                            {{ $price = number_format($r->r_activity->underage, 2) }}
+                            {{ $price = number_format($a->r_activity->underage, 2) }}
                         @endif
                         </td>
-                        <td class="text-center">{{ $deposit = number_format($r->r_activity->deposit, 2) }}  </td>
+                        <td class="text-center">{{ $deposit = number_format($a->r_activity->deposit, 2) }}  </td>
                         <td class="text-center">
-                            <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger" >Delete</button>
+                            <button onClick="deleteItem({{ $a->id }}, 2)" class="btn btn-danger" >Delete</button>
                         </td>
                     </tr>
                     @php 
@@ -85,8 +85,8 @@
                         <label>Activity <span class="text-red">*</span></label>
                         <select name="activity" class="form-control select2" style="width: 100%;">
                             <option value="">-- Activities --</option>
-                            @foreach($activities as $a)
-                                <option value="{{ $a->id }}">{{ $a->activity }}</option>
+                            @foreach($list_activity as $l)
+                                <option value="{{ $l->id }}">{{ $l->activity }}</option>
                             @endforeach
                         </select>
                     </div>

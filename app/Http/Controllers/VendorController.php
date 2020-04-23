@@ -7,7 +7,8 @@ use App\LVenue;
 use App\Application;
 use App\Equiptment;
 use App\User;
-use App\Reservation;
+use App\Facility;
+use App\Activity;
 use App\LActivity;
 use App\LCustomerType;
 use Auth;
@@ -51,14 +52,6 @@ class VendorController extends Controller
         return view('vendor.application.details', compact('application', 'equiptments'));
     }
 
-    public function quotationView($id){
-        $application = Application::find($id);
-        $reservations = Reservation::where('application_id', $id)->get();
-        $customer = User::find(Auth::user()->id);
-        $equiptments = Equiptment::where('application_id', $id)->get();
-        return view('vendor.application.quotation', compact('application', 'customer', 'reservations', 'equiptments'));
-    }
-
     public function submitReservation(Request $request){
         $application = Application::find($request->id);
         $application->status = 2;
@@ -80,16 +73,17 @@ class VendorController extends Controller
         $application = Application::find($id);
         $user = User::find($request->user);
         $date = Application::find($id)->date;
-        $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->get();
         $venues = LVenue::all();
         $equiptments = Equiptment::where('application_id', $request->id)->get();
-        $activities = LActivity::all();
+        $list_activity = LActivity::all();
         $application->type = $request->type;
         if($application->save()){
             if($request->type == 1){
-                return view('vendor.application.partials.facility', compact('reservations', 'venues', 'id', 'user', 'date', 'equiptments'));
+                $facilities = Facility::where('application_id', $request->id)->get();
+                return view('vendor.application.partials.facility', compact('facilities', 'venues', 'id', 'user', 'date', 'equiptments'));
             } else if($request->type == 2) {
-                return view('vendor.application.partials.activity', compact('reservations', 'activities', 'id', 'user', 'date', 'equiptments'));
+                $activities = Activity::where('application_id', $request->id)->get();
+                return view('vendor.application.partials.activity', compact('list_activity', 'activities', 'id', 'user', 'date', 'equiptments'));
             } else {
                 return NULL;
             }
@@ -107,11 +101,11 @@ class VendorController extends Controller
         $equiptments = Equiptment::where('application_id', $application->id)->get();
         $types = LCustomerType::all();
         if($application->type == 1){
-            $reservations = Reservation::where('application_id', $application->id)->where('type', 1)->get();
-            return view('vendor.application.partials.modal-facility', compact('application', 'types', 'reservations', 'equiptments'));
+            $facilities = Facility::where('application_id', $application->id)->get();
+            return view('vendor.application.partials.modal-facility', compact('application', 'types', 'facilities', 'equiptments'));
         } else {
-            $reservations = Reservation::where('application_id', $application->id)->where('type', 2)->get();
-            return view('admin.applications.partials.modal-activity', compact('application', 'types', 'reservations', 'equiptments'));
+            $activities = Activity::where('application_id', $application->id)->groupBy('activity_id')->get();
+            return view('vendor.application.partials.modal-activity', compact('application', 'types', 'activities', 'equiptments'));
         }
     }
 

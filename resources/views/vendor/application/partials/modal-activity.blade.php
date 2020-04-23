@@ -27,46 +27,35 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ date('d/m/Y', strtotime($application->date)) }}" disabled>
                             </div>
                         </div>
-                        @if($application->status == 6)
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Remark </label>
-                                <textarea type="text" class="form-control" disabled>This application was rejected due to: {{ $application->remark }}</textarea>
-                            </div>
-                        </div>
-                        @endif
                     </div>
                     <hr>
-                    <h4 class="modal-title">Facilities & Equiptments</h4>
+                    <h4 class="modal-title">Activities & Equiptments</h4>
                     <div class="box-body">
                         <table class="table table-bordered">
                             <thead>
                                 <th width="5%" class="text-center bg-gray">#</th>
-                                <th class="text-center bg-gray">Venue</th>
-                                <th class="text-center bg-gray">Sport</th>
-                                <th class="text-center bg-gray">Facility</th>
-                                <th class="text-center bg-gray">Duration</th>
+                                <th class="text-center bg-gray">Activity</th>
+                                <th class="text-center bg-gray">Type</th>
+                                <th class="text-center bg-gray">Quantity</th>
                                 @if($application->status != 5)
                                 <th class="text-center bg-gray">Price (RM)</th>
                                 @endif
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
-                                @foreach($facilities as $f)
+                                @foreach($activities as $a)
                                 <tr>
                                     <td class="text-center">{{ $n++ }}</td>
-                                    <td class="text-center">{{ $f->r_sport->r_venue->venue }}</td>
-                                    <td class="text-center">{{ $f->r_sport->sport }}</td>
+                                    <td class="text-center">{{$a->r_activity->activity}}</td>
                                     <td class="text-center">
-                                        @php $facility = json_decode($f->r_sport->facility) @endphp
-                                        @for($i = 0; $i < count($facility); $i++)
-                                            {{ App\LFacility::find($facility[$i])->facility }}<br>
-                                        @endfor
+                                        {{ $a->getPriceType($a->price_type) }}
                                     </td>
-                                    <td class="text-center">{{ date('h:i A', strtotime($f->start_date)) }} - {{ date('h:i A', strtotime($f->end_date)) }}</td>
+                                    <td class="text-center">
+                                        {{ $a->getCount($a->application_id, $a->activity_id) }}
+                                    </td>
                                     @if($application->status != 5)
                                     <td class="text-center">
-                                        {{ isset(App\Quotation::where('application_id', $f->application_id)->where('item_id', $f->id)->first()->price) ? number_format(App\Quotation::where('application_id', $f->application_id)->where('item_id', $f->id)->first()->price, 2) : 'TBD' }}
+                                        {{ isset(App\Quotation::where('application_id', $a->application_id)->where('item_id', $a->id)->first()->price) ? number_format(App\Quotation::where('application_id', $a->application_id)->where('item_id', $a->id)->first()->price * $a->getCount($a->application_id, $a->activity_id), 2) : 'TBD' }}
                                     </td>
                                     @endif
                                 </tr>
@@ -80,35 +69,25 @@
                                 <th width="5%" class="text-center bg-gray">#</th>
                                 <th class="text-center bg-gray">Equiptment</th>
                                 <th class="text-center bg-gray">Serial Number / ID</th>
-                                @if($application->status != 5)
-                                <th class="text-center bg-gray">Price (RM)</th>
-                                @else
                                 <th class="text-center bg-gray">Status</th>
-                                @endif
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
-                                @if(count($equiptments) > 0)
+                                @if(count($equiptments) > 1)
                                     @foreach($equiptments as $e)
                                     <tr>
-                                        <td class="text-center">{{ $n++ }}</td>
+                                        <td class="text-center">{{$n++}}</td>
                                         <td class="text-center">{{ $e->r_equiptment ->equiptment}}</td>
                                         <td class="text-center">{{ $e->r_equiptment->serial_number }}</td>
-                                        @if($application->status != 5)
-                                        <td class="text-center">
-                                            TBD
-                                        </td>
-                                        @else
                                         <td class="text-center">
                                             @if($e->status == 1)
-                                                <span class="label label-warning">Draft</span>
+                                                <span class="label label-warning">Draf</span>
                                             @elseif($e->status == 2)
-                                                <span class="label label-primary">In Usage</span>
+                                                <span class="label label-primary">Dalam Sewaan</span>
                                             @elseif($e->status == 3)
-                                                <span class="label label-success">Returned</span>
+                                                <span class="label label-success">Selesai Dipulangkan</span>
                                             @endif
                                         </td>
-                                        @endif
                                     </tr>
                                     @endforeach
                                 @else

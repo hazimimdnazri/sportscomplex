@@ -19,12 +19,12 @@
                     $ftotal = 0;
                     $dtotal = 0;
                     @endphp
-                    @foreach($reservations as $r)
+                    @foreach($activities as $a)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $r->r_activity->activity }}</td>
+                        <td class="text-center">{{ $a->r_activity->activity }}</td>
                         <td class="text-center">
-                            <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger" >Delete</button>
+                            <button onClick="deleteAsset({{ $a->id }}, 2)" class="btn btn-danger" >Delete</button>
                         </td>
                     </tr>
                     @endforeach
@@ -53,8 +53,8 @@
                         <label>Activity <span class="text-red">*</span></label>
                         <select name="activity" class="form-control select2" style="width: 100%;">
                             <option value="">-- Activities --</option>
-                            @foreach($activities as $a)
-                                <option value="{{ $a->id }}">{{ $a->activity }}</option>
+                            @foreach($list_activity as $l)
+                                <option value="{{ $l->id }}">{{ $l->activity }}</option>
                             @endforeach
                         </select>
                     </div>

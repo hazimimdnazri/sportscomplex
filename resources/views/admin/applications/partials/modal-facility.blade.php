@@ -53,18 +53,18 @@
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
-                                @foreach($reservations as $r)
+                                @foreach($facilities as $f)
                                 <tr>
                                     <td class="text-center">{{ $n++ }}</td>
-                                    <td class="text-center">{{ $r->r_sport->r_venue->venue }}</td>
-                                    <td class="text-center">{{ $r->r_sport->sport }}</td>
+                                    <td class="text-center">{{ $f->r_sport->r_venue->venue }}</td>
+                                    <td class="text-center">{{ $f->r_sport->sport }}</td>
                                     <td class="text-center">
-                                        @php $facility = json_decode($r->r_sport->facility) @endphp
+                                        @php $facility = json_decode($f->r_sport->facility) @endphp
                                         @for($i = 0; $i < count($facility); $i++)
                                             {{ App\LFacility::find($facility[$i])->facility }}<br>
                                         @endfor
                                     </td>
-                                    <td class="text-center">{{ date('H:i A', strtotime($r->start_date)) }} - {{ date('H:i A', strtotime($r->end_date)) }}</td>
+                                    <td class="text-center">{{ date('h:i A', strtotime($f->start_date)) }} - {{ date('h:i A', strtotime($f->end_date)) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

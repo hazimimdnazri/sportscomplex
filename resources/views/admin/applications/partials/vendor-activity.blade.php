@@ -4,33 +4,36 @@
             <h4 class="box-title">Activity</h4>
         </div>
         <div class="box-body">
-            <table id="activity" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th width="5%">No. </th>
-                        <th class="text-center">Activity</th>
-                        <th class="text-center">Number</th>
-                        <th width="5%" class="text-center">Price (RM)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php 
-                    $n = 1;
-                    @endphp
-                    @foreach($reservations as $r)
-                    <tr>
-                        <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $r->r_activity->activity }}</td>
-                        <td class="text-center">
-                            {{ $r->getCount($r->application_id, $r->activity) }}
-                        </td>
-                        <td class="text-center">
-                                <input type="text" name="activity[{{ $r->id }}]" class="form-control" value="0.00">
+            <form id="quotationData">
+                @csrf
+                <table id="activity" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="5%">No. </th>
+                            <th class="text-center">Activity</th>
+                            <th class="text-center">Number</th>
+                            <th width="5%" class="text-center">Price (RM)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php 
+                        $n = 1;
+                        @endphp
+                        @foreach($reservations as $r)
+                        <tr>
+                            <td class="text-center">{{ $n++ }}</td>
+                            <td class="text-center">{{ $r->r_activity->activity }}</td>
+                            <td class="text-center">
+                                {{ $r->getCount($r->application_id, $r->activity_id) }}
                             </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                            <td class="text-center">
+                                    <input type="text" name="activity" class="form-control" value="0.00">
+                                </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </form>
             <hr>
             <div class="text-center">
                 <button onClick="reject()" type="button" class="btn btn-danger" data-dismiss="modal">Reject</button>

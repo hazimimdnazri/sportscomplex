@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
             Route::post('payment-modal', 'ApplicationController@paymentModal');
             Route::post('approvequotation', 'ApplicationController@approveQuotation');
             Route::post('confirmpayment', 'ApplicationController@confirmPayment');
+            Route::post('delete-item', 'ApplicationController@deleteItem');
         });
     });
 
@@ -113,8 +114,6 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::post('new', 'VendorController@applicationNew');
         Route::post('cancel', 'VendorController@applicationCancel');
         Route::get('{id}', 'VendorController@applicationDetails');
-        Route::get('{id}/quotation', 'VendorController@quotationView');
-        Route::post('{id}/quotation', 'VendorController@quotationSubmit');
     });
 
     Route::group(['prefix' => 'ajax'], function() {
@@ -143,7 +142,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'ajax'], function() {
         Route::post('{id}/equiptment', 'ApplicationController@submitEquiptment');
         Route::post('equiptment/add', 'ApplicationController@addEquiptment');
         Route::post('equiptment/delete', 'ApplicationController@deleteEquiptment');
-        Route::post('facility/delete', 'ApplicationController@deleteFacility');
     });
     
 });

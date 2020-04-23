@@ -55,7 +55,7 @@
                                 </td>
                                 <td class="text-center">{{ date('d/m/Y', strtotime($a->date)) }}</td>
                                 <td class="text-center">
-                                    <span class="label label-default">{{ $a->a_status->status }}</span>
+                                    {!! $a->getStatus($a->status) !!}
                                 </td>
                                 <td class="text-center">
                                     @if($a->status != 1)

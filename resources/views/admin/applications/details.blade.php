@@ -273,7 +273,7 @@
         $("#change").val(change.toFixed(2))
     }
 
-    deleteAsset = (id) => {
+    deleteItem = (id, type) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -286,14 +286,14 @@
             if (result.value) {
                 $.ajax({
                     type:"POST", 
-                    url: "{{ url('ajax/application/facility/delete') }}",
+                    url: "{{ url('admin/application/ajax/delete-item') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "id" : id,
                     }
                 }).done(function(response){
                     if(response == 'success'){
-                        Swal.fire("Deleted!", "The reservation has been deleted.", "success")
+                        Swal.fire("Deleted!", "The item has been deleted.", "success")
                         .then((result) => {
                             if(result.value){
                                 location.reload();

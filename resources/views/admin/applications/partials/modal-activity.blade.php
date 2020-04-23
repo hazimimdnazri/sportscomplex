@@ -15,6 +15,7 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ $application->a_applicant->name }}" disabled>
                             </div>
                         </div>
+                        @if($application->a_applicant->r_details)
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">User Type</label>
@@ -25,6 +26,7 @@
                                 </select>
                             </div>
                         </div>
+                        @endif
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">E-Mail </label>
@@ -50,11 +52,13 @@
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
-                                @foreach($reservations as $r)
+                                @foreach($activities as $a)
                                 <tr>
                                     <td class="text-center">{{ $n++ }}</td>
-                                    <td class="text-center">{{$r->r_activity->activity}}</td>
-                                    <td class="text-center">{{$r->price_type == 1 ? 'Public' : ($r->price_type == 2 ? 'Student' : 'Underage')}}</td>
+                                    <td class="text-center">{{$a->r_activity->activity}}</td>
+                                    <td class="text-center">
+                                        {{ $a->getPriceType($a->price_type) }}
+                                    </td>
                                     <td class="text-center"></td>
                                 </tr>
                                 @endforeach

@@ -9,7 +9,7 @@ use App\User;
 use App\Application;
 use App\LMembership;
 use App\CustomerDetail;
-use App\Reservation;
+use App\Facility;
 use App\LFacility;
 use App\LVenue;
 use App\LSport;
@@ -312,7 +312,7 @@ class HomeController extends Controller
         $venue = $request->venue;
         $facilities = LFacility::where('venue', $venue)->get();
         $sports = LSport::where('venue', $venue)->pluck('id');
-        $reservations = Reservation::whereIn('sport', $sports)->get();
+        $reservations = Facility::whereIn('sport_id', $sports)->get();
         return view('partials.calendar', compact('reservations', 'facilities'));
     }
 

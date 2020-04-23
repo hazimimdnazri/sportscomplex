@@ -22,6 +22,8 @@ use App\LCustomerType;
 use App\Membership;
 use App\LInstitution;
 use App\Quotation;
+use App\Activity;
+use App\Facility;
 use Hash;
 
 class ApplicationController extends Controller
@@ -70,9 +72,9 @@ class ApplicationController extends Controller
         $user = User::find($request->user);
         $date = Application::find($id)->date;
         if($request->type == 1){
-            $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->get();
+            $reservations = Facility::where('application_id', $request->id)->get();
         } else {
-            $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->groupBy('type')->get();
+            $reservations = Activity::where('application_id', $request->id)->groupBy('activity_id')->get();
         }
         $venues = LVenue::all();
         $equiptments = Equiptment::where('application_id', $request->id)->get();
@@ -94,16 +96,17 @@ class ApplicationController extends Controller
         $application = Application::find($id);
         $user = User::find($request->user);
         $date = Application::find($id)->date;
-        $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->get();
         $venues = LVenue::all();
         $equiptments = Equiptment::where('application_id', $request->id)->get();
-        $activities = LActivity::all();
+        $list_activity = LActivity::all();
         $application->type = $request->type;
         if($application->save()){
             if($request->type == 1){
-                return view('shared.asset', compact('reservations', 'venues', 'id', 'user', 'date', 'equiptments'));
+                $facilities = Facility::where('application_id', $request->id)->get();
+                return view('shared.asset', compact('facilities', 'venues', 'id', 'user', 'date', 'equiptments'));
             } else if($request->type == 2) {
-                return view('shared.activity', compact('reservations', 'activities', 'id', 'user', 'date', 'equiptments'));
+                $activities = Activity::where('application_id', $request->id)->get();
+                return view('shared.activity', compact('list_activity', 'activities', 'id', 'user', 'date', 'equiptments'));
             } else {
                 return NULL;
             }
@@ -127,11 +130,11 @@ class ApplicationController extends Controller
         $equiptments = Equiptment::where('application_id', $application->id)->get();
         $types = LCustomerType::all();
         if($application->type == 1){
-            $reservations = Reservation::where('application_id', $application->id)->where('type', 1)->get();
-            return view('admin.applications.partials.modal-facility', compact('application', 'types', 'reservations', 'equiptments'));
+            $facilities = Facility::where('application_id', $application->id)->get();
+            return view('admin.applications.partials.modal-facility', compact('application', 'types', 'facilities', 'equiptments'));
         } else {
-            $reservations = Reservation::where('application_id', $application->id)->where('type', 2)->get();
-            return view('admin.applications.partials.modal-activity', compact('application', 'types', 'reservations', 'equiptments'));
+            $activities = Activity::where('application_id', $application->id)->get();
+            return view('admin.applications.partials.modal-activity', compact('application', 'types', 'activities', 'equiptments'));
         }
     }
 
@@ -207,7 +210,6 @@ class ApplicationController extends Controller
         $trasaction = new Transaction;
         if($request->type == "B"){
             $application = Application::find($id);
-            $reservation = Reservation::where('application_id', $id)->get();
             $equiptment = Equiptment::where('application_id', $id);
             $equiptment->update(['status' => 2]);
 
@@ -254,32 +256,32 @@ class ApplicationController extends Controller
     }
 
     public function submitFacility(Request $request, $id){
-        $reservation = new Reservation;
+        $facility = new Facility;
         $start_time = date('H:i:s', strtotime($request->start_time));
-        $reservation->type = 1;
-        $reservation->application_id = $id;
-        $reservation->sport = $request->sport;
-        $reservation->duration = $request->duration;
-        $reservation->start_date = date("Y-m-d $start_time", strtotime(Application::find($id)->date));
-        $reservation->end_date = date('Y-m-d H:i:s', strtotime($reservation->start_date) + (60*60*$reservation->duration));
+        $facility->application_id = $id;
+        $facility->sport_id = $request->sport;
+        $facility->duration = $request->duration;
+        $facility->start_date = date("Y-m-d $start_time", strtotime(Application::find($id)->date));
+        $facility->end_date = date('Y-m-d H:i:s', strtotime($facility->start_date) + (60*60*$facility->duration));
         
-        if($reservation->save()){
+        if($facility->save()){
             return back();
         }
     }
 
     public function submitActivity(Request $request, $id){
         for($i = 0; $i < $request->quantity; $i++){
-            $reservation = new Reservation;
-            $reservation->application_id = $id;
-            $reservation->type = 2;
-            $reservation->activity = $request->activity;
-            $reservation->price_type = $request->price;
-            $reservation->duration = 0;
-            $reservation->start_date = date('Y-m-d 00:00:00', strtotime(Application::find($id)->date));
-            $reservation->end_date = date('Y-m-d 00:00:00', strtotime(Application::find($id)->date));
+            $activity = new Activity;
+            $activity->application_id = $id;
+            $activity->activity_id = $request->activity;
 
-            if($reservation->save()){
+            if(Auth::user()->role == 4){
+                $activity->price_type = 4;
+            } else {
+                $activity->price_type = $request->price;
+            }
+
+            if($activity->save()){
             } else {
                 echo "error!";
                 die();
@@ -308,9 +310,14 @@ class ApplicationController extends Controller
         return view('partials.select-sports', compact('sports'));
     }
 
-    public function deleteFacility(Request $request){
-        $reservation = Reservation::find($request->id);
-        if($reservation->delete()){
+    public function deleteItem(Request $request){
+        if($request->type == 1){
+            $item = Facility::find($request->id);
+        } else {
+            $item = Activity::find($request->id);
+        }
+        
+        if($item->delete()){
             return "success";
         }
     }
@@ -327,7 +334,7 @@ class ApplicationController extends Controller
         $venue = $request->venue;
         $facilities = LFacility::where('venue', $venue)->get();
         $sports = LSport::where('venue', $venue)->pluck('id');
-        $reservations = Reservation::whereIn('sport', $sports)->get();
+        $reservations = Facility::whereIn('sport_id', $sports)->get();
         return view("partials.calendar-mini", compact('facilities', 'reservations', 'date'));
     }
 
@@ -367,13 +374,25 @@ class ApplicationController extends Controller
     public function approveQuotation(Request $request, $id){
         $application = Application::find($id);
 
-        foreach(array_keys($request->facility) as $f){
-            $quotation = new Quotation;
-            $quotation->application_id = $id;
-            $quotation->reservation_id = $f;
-            $quotation->price = $request->facility[$f];
-            $quotation->save();
+        if(isset($request->facility)){
+            foreach(array_keys($request->facility) as $f){
+                $quotation = new Quotation;
+                $quotation->application_id = $id;
+                $quotation->item_id = $f;
+                $quotation->price = $request->facility[$f];
+                $quotation->save();
+            }
+        } else {
+            $activities = Activity::where('application_id', $id)->get();
+            foreach($activities as $a){
+                $quotation = new Quotation;
+                $quotation->application_id = $id;
+                $quotation->item_id = $a->id;
+                $quotation->price = $request->activity;
+                $quotation->save();
+            }
         }
+
         $application->status = 3;
         if($application->save()){
             return "success";

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuotationsTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateQuotationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('quotations', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('application_id');
-            $table->integer('item_id');
-            $table->float('price')->nullable();
+            $table->unsignedBigInteger('activity_id')->nullable();
+            $table->integer('price_type')->nullable();
             $table->timestamps();
 
             $table->foreign('application_id')->references('id')->on('applications');
+            $table->foreign('activity_id')->references('id')->on('l_activities');
         });
     }
 
@@ -31,6 +32,6 @@ class CreateQuotationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quotations');
+        Schema::dropIfExists('activities');
     }
 }

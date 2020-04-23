@@ -11,36 +11,29 @@
                         <th width="5%">No. </th>
                         <th class="text-center">Facility</th>
                         <th class="text-center">Duration</th>
-                        <!-- <th class="text-center">Price / Min. Hour (RM)</th>
-                        <th class="text-center">Total Price (RM)</th> -->
                         <th class="text-center" width="20%">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php 
                     $n = 1;
-                    $ftotal = 0;
                     @endphp
-                    @foreach($reservations as $r)
+                    @foreach($facilities as $f)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $r->r_sport->sport }}</td>
+                        <td class="text-center">{{ $f->r_sport->sport }}</td>
                         <td class="text-center">
-                            {{ $r->duration }} Hour(s) <br>
-                            {{ date('h:i:s a' ,strtotime($r->start_date)) }} - {{ date('h:i:s a' ,strtotime($r->end_date)) }}
+                            {{ $f->duration }} Hour(s) <br>
+                            {{ date('h:i:s a' ,strtotime($f->start_date)) }} - {{ date('h:i:s a' ,strtotime($f->end_date)) }}
                         </td>
-                        <!-- <td class="text-center">{{ number_format($r->r_sport->price, 2) }}</td>
-                        <td class="text-center">{{ number_format($r->r_sport->price * ($r->duration/$r->r_sport->min_hour), 2) }}  </td> -->
                         <td class="text-center">
-                            <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger">Delete</button>
+                            <button onClick="deleteAsset({{ $f->id }}, 1)" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
-                    @php $ftotal += number_format($r->r_sport->price * ($r->duration/$r->r_sport->min_hour), 2) @endphp
                     @endforeach
                 </tbody>
             </table>
             <hr>
-            <input type="hidden" id="ftotal" value="{{ $ftotal }}">
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 <button onClick="toQuotation()" class="btn btn-primary">Submit Reservation</button>
@@ -112,8 +105,6 @@
         </div>
     </div>
 </div>
-
-@php $total = $ftotal @endphp
 
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
