@@ -111,6 +111,7 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
     Route::group(['prefix' => 'applications'], function() {
         Route::get('/', 'VendorController@application');
         Route::post('new', 'VendorController@applicationNew');
+        Route::post('cancel', 'VendorController@applicationCancel');
         Route::get('{id}', 'VendorController@applicationDetails');
         Route::get('{id}/quotation', 'VendorController@quotationView');
         Route::post('{id}/quotation', 'VendorController@quotationSubmit');

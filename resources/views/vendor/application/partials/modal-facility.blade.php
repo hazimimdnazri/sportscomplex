@@ -184,24 +184,25 @@
 
     reject = () => {
         Swal.fire({
-            title: "Reject this quotation?",
+            title: "Cancel this reservation?",
             text: "This will cancel the reservation.",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#47bd9a",
             cancelButtonColor: "#e74c5e",
-            confirmButtonText: "Yes, reject!"
+            confirmButtonText: "Yes, cancel."
         }).then(function (result) {
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/application/reject') }}",
+                    url: "{{ url('vendor/applications/cancel') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : "{{ $application->id }}",
-                        "remark": "Rejected by vendor."
+                        "remark": "Quotation rejected by vendor."
                     }
                 }).done(function(response){
+                    console.log(response);
                     if(response == 'success'){
                         Swal.fire("Rejected!", "The reservation has been cancelled.", "success")
                         .then((result) => {

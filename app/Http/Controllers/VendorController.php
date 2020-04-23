@@ -108,10 +108,25 @@ class VendorController extends Controller
         $types = LCustomerType::all();
         if($application->type == 1){
             $reservations = Reservation::where('application_id', $application->id)->where('type', 1)->get();
-            return view('vendor.application.partials.modal-facilityApproval', compact('application', 'types', 'reservations', 'equiptments'));
+            return view('vendor.application.partials.modal-facility', compact('application', 'types', 'reservations', 'equiptments'));
         } else {
             $reservations = Reservation::where('application_id', $application->id)->where('type', 2)->get();
-            return view('admin.applications.partials.modal-activityApproval', compact('application', 'types', 'reservations', 'equiptments'));
+            return view('admin.applications.partials.modal-activity', compact('application', 'types', 'reservations', 'equiptments'));
         }
+    }
+
+    public function applicationCancel(Request $request){
+        $application = Application::find($request->id);
+        $application->status = 6;
+        $application->remark = $request->remark;
+
+        if($application->save()){
+            $equiptments = Equiptment::where('application_id', $request->id)->get();
+            foreach($equiptments as $e){
+                $e->status = 1;
+                $e->save();
+            }
+        }
+        return "success";
     }
 }

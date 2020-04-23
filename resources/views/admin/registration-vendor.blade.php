@@ -242,8 +242,8 @@
             if(response == 'success'){
                 $("#familyModal").modal('hide')
                 Swal.fire(
-                    'Succes!',
-                    'Evaluation submitted!',
+                    'Success!',
+                    'Vendor has been registered!',
                     'success'
                 ).then((result) => {
                     if(result.value){

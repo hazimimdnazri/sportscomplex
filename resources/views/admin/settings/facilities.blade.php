@@ -41,8 +41,8 @@
                         @foreach($facilities as $f)
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
-                                <td>{{ $f->facility }}</td>
-                                <td>{{ $f->r_venue->venue }}</td>
+                                <td class="text-center">{{ $f->facility }}</td>
+                                <td class="text-center">{{ $f->r_venue->venue }}</td>
                                 <td>{{ $f->remark }}</td>
                                 <td class="text-center">
                                     <a onClick="editModal({{ $f->id }})" class="btn btn-info">Edit</a>

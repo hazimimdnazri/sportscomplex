@@ -69,7 +69,11 @@ class ApplicationController extends Controller
         $application = Application::find($id);
         $user = User::find($request->user);
         $date = Application::find($id)->date;
-        $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->get();
+        if($request->type == 1){
+            $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->get();
+        } else {
+            $reservations = Reservation::where('application_id', $request->id)->where('type', $request->type)->groupBy('type')->get();
+        }
         $venues = LVenue::all();
         $equiptments = Equiptment::where('application_id', $request->id)->get();
         $activities = LActivity::all();

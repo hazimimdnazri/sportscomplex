@@ -10,9 +10,6 @@
                     <tr>
                         <th width="5%">No. </th>
                         <th class="text-center">Activity</th>
-                        <th class="text-center">Price Type</th>
-                        <th class="text-center">Price / Entry (RM)</th>
-                        <th class="text-center">Deposit (RM)</th>
                         <th class="text-center" width="20%">Actions</th>
                     </tr>
                 </thead>
@@ -27,45 +24,16 @@
                         <td class="text-center">{{ $n++ }}</td>
                         <td class="text-center">{{ $r->r_activity->activity }}</td>
                         <td class="text-center">
-                            @if($r->price_type == 1)
-                                Public
-                            @elseif($r->price_type == 2)
-                                Student
-                            @elseif($r->price_type == 3)
-                                Under 12
-                            @endif
-                        </td>
-                        <td class="text-center">
-                        @if($r->price_type == 1)
-                            {{ $price = number_format($r->r_activity->public, 2) }}
-                        @elseif($r->price_type == 2)
-                            {{ $price = number_format($r->r_activity->students, 2) }}
-                        @elseif($r->price_type == 3)
-                            {{ $price = number_format($r->r_activity->underage, 2) }}
-                        @endif
-                        </td>
-                        <td class="text-center">{{ $deposit = number_format($r->r_activity->deposit, 2) }}  </td>
-                        <td class="text-center">
                             <button onClick="deleteAsset({{ $r->id }})" class="btn btn-danger" >Delete</button>
                         </td>
                     </tr>
-                    @php 
-                    $ftotal += number_format($price, 2);
-                    $dtotal += number_format($deposit, 2);
-                    @endphp
                     @endforeach
                 </tbody>
             </table>
             <hr>
-            <input type="hidden" id="ftotal" value="{{ $ftotal }}">
-            <input type="hidden" id="deposit" value="{{ $dtotal }}">
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                @if(Auth::user()->role == 1 || Auth::user()->role == 2)
-                <button onClick="toPayment()" class="btn btn-primary">Pay</button>
-                @elseif(Auth::user()->role == 4)
-                <button onClick="toQuotation()" class="btn btn-primary">View Quotation</button>
-                @endif
+                <button onClick="toQuotation()" class="btn btn-primary">Submit Reservation</button>
             </div>
         </div>
     </div>
@@ -88,15 +56,6 @@
                             @foreach($activities as $a)
                                 <option value="{{ $a->id }}">{{ $a->activity }}</option>
                             @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Price <span class="text-red">*</span></label>
-                        <select name="price" class="form-control select2" style="width: 100%;">
-                            <option value="">-- Price --</option>
-                            <option value="1">Public</option>
-                            <option value="2">Student</option>
-                            <option value="3">Under 12</option>
                         </select>
                     </div>
                     <div class="form-group">

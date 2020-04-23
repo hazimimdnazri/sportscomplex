@@ -26,4 +26,8 @@ class Reservation extends Model
         $equiptments = Equiptment::where('reservation_id', $id)->get();
         return $equiptments;
     }
+
+    public function getCount($id, $activity){
+        return $this->where('application_id', $id)->where('activity', $activity)->count();
+    }
 }

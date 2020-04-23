@@ -61,7 +61,7 @@
                                     @if($a->a_applicant->role == 4)
                                         @if($a->status == 4)
                                             <a class="btn btn-success" onClick="confirmPayment({{ $a->id }})">Confirm Payment</a>
-                                        @elseif($a->status == 5)
+                                        @elseif($a->status == 5 || $a->status == 4 || $a->status == 3)
                                             <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
                                         @else
                                             @if($a->status != 3)
