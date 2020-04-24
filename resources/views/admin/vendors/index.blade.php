@@ -48,7 +48,7 @@
                                     <span class="label bg-red">{{ $v->u_status->status }}</span>
                                 </td>
                                 <td class="text-center">
-                                    <a href="" class="btn btn-info">Edit</a>
+                                    <a href="{{ url('admin/vendors/'.$v->id) }}" class="btn btn-info">Edit</a>
                                     <a onClick="deleteCustomer({{$v->id}})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>

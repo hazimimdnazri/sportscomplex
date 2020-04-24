@@ -24,12 +24,13 @@ class CreateCustomerDetailsTable extends Migration
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
             $table->integer('nationality')->nullable(); // 1 - malaysian | 2 - non-malaysian
-            $table->integer('state')->nullable();
+            $table->unsignedBigInteger('state')->nullable();
             $table->unsignedBigInteger('type');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('type')->references('id')->on('l_customer_types');
+            $table->foreign('state')->references('id')->on('l_states');
         });
     }
 

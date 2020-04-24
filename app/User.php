@@ -61,6 +61,10 @@ class User extends Authenticatable
         return $this->hasOne(VendorDetail::class, 'user_id', 'id');
     }
 
+    public function r_pic(){
+        return $this->hasMany(VendorPic::class, 'vendor_id', 'id');
+    }
+
     public function getMembershipID($id){
         $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
         if($membership){

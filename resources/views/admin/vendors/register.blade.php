@@ -84,22 +84,9 @@
                                         <label>State <span class="text-red">*</span></label>
                                         <select name="state" id="state" class="select2 form-control" style="width: 100%;">
                                             <option value="" selected>-- State --</option>
-                                            <option value="1" >Johor</option>
-                                            <option value="2" >Kedah</option>
-                                            <option value="3" >Kelantan</option>
-                                            <option value="4" >Melaka</option>
-                                            <option value="5" >Negeri Sembilan</option>
-                                            <option value="6" >Pahang</option>
-                                            <option value="7" >Perak</option>
-                                            <option value="8" >Perlis</option>
-                                            <option value="9" >Pulau Pinang</option>
-                                            <option value="10" >Sabah</option>
-                                            <option value="11" >Sarawak</option>
-                                            <option value="12" >Selangor</option>
-                                            <option value="13" >Terengganu</option>
-                                            <option value="14" >W.P. Kuala Lumpur</option>
-                                            <option value="15" >W.P. Labuan</option>
-                                            <option value="16" >W.P. Putrajaya</option>
+                                            @foreach($states as $s)
+                                            <option value="{{ $s->id }}" >{{ $s->state }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

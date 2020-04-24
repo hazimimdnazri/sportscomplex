@@ -13,6 +13,7 @@ use App\Facility;
 use App\LFacility;
 use App\LVenue;
 use App\LSport;
+use App\LState;
 use App\LCustomerType;
 use App\Membership;
 use App\LInstitution;
@@ -105,9 +106,10 @@ class HomeController extends Controller
 
     public function registerUser(){
         $memberships = LMembership::all();
+        $states = LState::all();
         $types = LCustomerType::all();
         $institutions = LInstitution::all();
-        return view('admin.registration-user', compact('memberships', 'types', 'institutions'));
+        return view('admin.registration-user', compact('memberships', 'types', 'institutions', 'states'));
     }
 
     public function submitUserRegister(Request $request){
@@ -164,7 +166,14 @@ class HomeController extends Controller
     }
 
     public function registerVendor(){
-        return view('admin.registration-vendor');
+        $states = LState::all();
+        return view('admin.vendors.register', compact('states'));
+    }
+
+    public function viewVendor($id){
+        $vendor = User::find($id);
+        $states = LState::all();
+        return view('admin.vendors.details', compact('vendor', 'states'));
     }
 
     public function submitRegisterVendor(Request $request){
@@ -318,7 +327,7 @@ class HomeController extends Controller
 
     public function vendors(){
         $vendors = User::where('role', 4)->where('flag', 1)->get();
-        return view('admin.vendors', compact('vendors'));
+        return view('admin.vendors.index', compact('vendors'));
     }
 
     public function membershipModal(Request $request){

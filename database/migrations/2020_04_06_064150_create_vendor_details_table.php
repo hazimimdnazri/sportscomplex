@@ -22,11 +22,12 @@ class CreateVendorDetailsTable extends Migration
             $table->string('address')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
-            $table->integer('state')->nullable();
+            $table->unsignedBigInteger('state')->nullable();
             $table->integer('nationality')->nullable(); // 1 - malaysian | 2 - non-malaysian
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('state')->references('id')->on('l_states');
         });
     }
 
