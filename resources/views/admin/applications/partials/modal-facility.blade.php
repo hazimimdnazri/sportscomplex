@@ -39,6 +39,18 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ date('d/m/Y', strtotime($application->date)) }}" disabled>
                             </div>
                         </div>
+                        @if($application->a_applicant->role == 4)
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Proof of Payment</label>
+                                @if(isset($application->r_payment->file))
+                                <p><a target="_blank" href="{{ url('uploads/payments/'.$application->r_payment->file) }}"><button type="button" class="btn bg-navy">View Payment</button></a></p>
+                                @else
+                                <p><span class="label bg-navy">Payment still pending</span></p>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <hr>
                     <h4 class="modal-title">Facilities & Equiptments</h4>
@@ -112,6 +124,13 @@
                     <button type="button" onClick="approve()" class="btn btn-primary">Approve</button>
                     <button type="button" onClick="reject()" class="btn btn-danger">Reject</button>
                     @endif
+                    @if($application->status == 4)
+                        @if(isset($application->r_payment->file))
+                        <a class="btn btn-success" onClick="confirmPayment({{ $application->id }})">Confirm</a>
+                        @else
+                        <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Payment still pending" disabled>Confirm</a>
+                        @endif
+                    @endif
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -122,6 +141,7 @@
 <script>
     $(() => {
         $('.select2').select2()
+        $('[data-toggle="tooltip"]').tooltip()
     })
 
     approve = () => {

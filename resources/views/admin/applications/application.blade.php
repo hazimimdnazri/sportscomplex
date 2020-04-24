@@ -59,12 +59,7 @@
                                 </td>
                                 <td class="text-center">
                                     @if($a->a_applicant->role == 4)
-                                        @if($a->status == 4)
-                                            @if(isset($a->r_payment->file))
-                                            <a class="btn btn-info" target="_blank" href="{{ url('uploads/payments/'.$a->r_payment->file) }}">Receipt</a>
-                                            @endif
-                                            <a class="btn btn-success" onClick="confirmPayment({{ $a->id }})">Confirm</a>
-                                        @elseif($a->status == 5 || $a->status == 4 || $a->status == 3)
+                                        @if($a->status == 5 || $a->status == 4 || $a->status == 3)
                                             <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
                                         @else
                                             @if($a->status != 3)

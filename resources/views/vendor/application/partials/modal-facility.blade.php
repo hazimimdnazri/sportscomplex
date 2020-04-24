@@ -27,6 +27,16 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ date('d/m/Y', strtotime($application->date)) }}" disabled>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Proof of Payment</label>
+                                @if(isset($application->r_payment->file))
+                                <p><a target="_blank" href="{{ url('uploads/payments/'.$application->r_payment->file) }}"><button type="button" class="btn bg-navy">View Payment</button></a></p>
+                                @else
+                                <p><span class="label bg-navy">Payment still pending</span></p>
+                                @endif
+                            </div>
+                        </div>
                         @if($application->status == 6)
                         <div class="col-lg-12">
                             <div class="form-group">
