@@ -60,20 +60,20 @@
                                 <td class="text-center">
                                     @if($a->a_applicant->role == 4)
                                         @if($a->status == 5 || $a->status == 4 || $a->status == 3)
-                                            <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
+                                            <a class="btn btn-primary" onClick="viewModal({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></a>
                                         @else
                                             @if($a->status != 3)
-                                                <a class="btn btn-primary" href="{{ url('admin/application/'.$a->id) }}">Review Application</a>
+                                                <a class="btn btn-primary" href="{{ url('admin/application/'.$a->id) }}" data-toggle="tooltip" data-placement="top" title="Review Application"><i class="glyphicon glyphicon-zoom-in"></i></a>
                                             @endif
                                         @endif
                                     @else
                                         @if($a->status != 1)
-                                        <a class="btn btn-primary" onClick="viewModal({{ $a->id }})">View</a>
+                                        <a class="btn btn-primary" onClick="viewModal({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></a>
                                         @elseif($a->status != 5)
-                                        <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info">Edit</a>
+                                        <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></a>
                                         @endif
                                     @endif
-                                    <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger">Delete</a>
+                                    <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach

@@ -59,15 +59,15 @@
                                 </td>
                                 <td class="text-center">
                                     @if($a->status == 4 && !isset($a->r_payment->file))
-                                    <a class="btn btn-warning" onClick="uploadPayment({{ $a->id }})">Upload Payment</a>
+                                    <a class="btn btn-warning" onClick="uploadPayment({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="Upload Payment"><i class="glyphicon glyphicon-upload"></i></a>
                                     @endif
                                     @if($a->status != 1)
-                                    <a class="btn btn-primary" onClick="viewAdminApproval({{ $a->id }})">View</a>
+                                    <a class="btn btn-primary" onClick="viewAdminApproval({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></a>
                                     @elseif($a->status != 5)
-                                    <a href="{{ url('vendor/applications/'.$a->id) }}" class="btn btn-info">Edit</a>
+                                    <a href="{{ url('vendor/applications/'.$a->id) }}" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                     @endif
                                     @if($a->status == 1 || $a->status == 2 || $a->status == 3)
-                                    <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger">Delete</a>
+                                    <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
                                     @endif
                                 </td>
                             </tr>
