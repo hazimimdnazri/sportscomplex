@@ -56,9 +56,7 @@
                                 <th class="text-center bg-gray">Sport</th>
                                 <th class="text-center bg-gray">Facility</th>
                                 <th class="text-center bg-gray">Duration</th>
-                                @if($application->status != 5)
                                 <th class="text-center bg-gray">Price (RM)</th>
-                                @endif
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
@@ -74,10 +72,10 @@
                                         @endfor
                                     </td>
                                     <td class="text-center">{{ date('h:i A', strtotime($f->start_date)) }} - {{ date('h:i A', strtotime($f->end_date)) }}</td>
-                                    @if($application->status != 5)
-                                    <td class="text-center">
-                                        {{ isset(App\Quotation::where('application_id', $f->application_id)->where('item_id', $f->id)->first()->price) ? number_format(App\Quotation::where('application_id', $f->application_id)->where('item_id', $f->id)->first()->price, 2) : 'TBD' }}
-                                    </td>
+                                    @if($application->status == 3 || $application->status == 4 ||  $application->status == 5)
+                                    <td class="text-center">{{ number_format($f->price, 2) }}</td>
+                                    @else
+                                    <td class="text-center">TBA</td>
                                     @endif
                                 </tr>
                                 @endforeach

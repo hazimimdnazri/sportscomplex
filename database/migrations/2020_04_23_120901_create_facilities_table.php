@@ -20,6 +20,8 @@ class CreateFacilitiesTable extends Migration
             $table->float('duration')->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
+            $table->float('price')->nullable();
+            $table->float('discount')->nullable();
             $table->timestamps();
 
             $table->foreign('application_id')->references('id')->on('applications');

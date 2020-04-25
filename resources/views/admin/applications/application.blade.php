@@ -70,7 +70,7 @@
                                         @if($a->status != 1)
                                         <a class="btn btn-primary" onClick="viewModal({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></a>
                                         @elseif($a->status != 5)
-                                        <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></a>
+                                        <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                         @endif
                                     @endif
                                     <a onClick="deleteApplication({{$a->id}})" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>

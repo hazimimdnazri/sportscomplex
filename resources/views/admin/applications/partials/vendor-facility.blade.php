@@ -32,7 +32,7 @@
                             <td class="text-center">{{ number_format($r->r_sport->price, 2) }}</td>
                             <!-- <td class="text-center">{{ number_format($r->r_sport->price * ($r->duration/$r->r_sport->min_hour), 2) }}  </td> -->
                             <td class="text-center">
-                                <input type="text" name="facility[{{ $r->id }}]" class="form-control" value="{{ number_format($r->r_sport->price * ($r->duration/$r->r_sport->min_hour), 2) }}">
+                                <input type="text" name="facility[{{ $r->id }}]" class="form-control" value="{{ number_format($r->price, 2) }}">
                             </td>
                         </tr>
                         @endforeach

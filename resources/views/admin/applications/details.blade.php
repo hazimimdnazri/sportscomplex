@@ -119,12 +119,12 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $e->r_equiptment->equiptment }}</td>
-                                <td class="text-center">{{ number_format($e->r_equiptment->price, 2) }}</td>
+                                <td class="text-center">{{ number_format($e->price, 2) }}</td>
                                 <td class="text-center">
                                     <button onClick="deleteEquiptment({{ $e->id }})" class="btn btn-danger">Delete</button>
                                 </td>
                             </tr>
-                            @php $etotal += number_format($e->r_equiptment->price, 2) @endphp
+                            @php $etotal += number_format($e->price, 2) @endphp
                             @endforeach
                         </tbody>
                         <input type="hidden" id="etotal" value="{{ $etotal }}">
@@ -290,6 +290,7 @@
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "id" : id,
+                        "type" : type
                     }
                 }).done(function(response){
                     if(response == 'success'){

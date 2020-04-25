@@ -27,7 +27,7 @@
                                 {{ $r->getCount($r->application_id, $r->activity_id) }}
                             </td>
                             <td class="text-center">
-                                    <input type="text" name="activity" class="form-control" value="0.00">
+                                    <input type="text" name="activity" class="form-control" value="{{ number_format($r->sum, 2) }}">
                                 </td>
                         </tr>
                         @endforeach

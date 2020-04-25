@@ -21,7 +21,6 @@ use App\Equiptment;
 use App\LCustomerType;
 use App\Membership;
 use App\LInstitution;
-use App\Quotation;
 use App\Activity;
 use App\Facility;
 use Hash;
@@ -74,7 +73,7 @@ class ApplicationController extends Controller
         if($request->type == 1){
             $reservations = Facility::where('application_id', $request->id)->get();
         } else {
-            $reservations = Activity::where('application_id', $request->id)->groupBy('activity_id')->get();
+            $reservations = Activity::where('application_id', $request->id)->groupBy('activity_id')->selectRaw('*, sum(price) as sum')->get();
         }
         $venues = LVenue::all();
         $equiptments = Equiptment::where('application_id', $request->id)->get();
@@ -222,6 +221,7 @@ class ApplicationController extends Controller
             
             $application->event = $request->event;
             $application->status = 5;
+            $application->approved_by = Auth::user()->id;
 
             $user = User::find($application->user_id);
             $trasaction->trans_number = $request->type.$id;
@@ -261,6 +261,8 @@ class ApplicationController extends Controller
         $facility->application_id = $id;
         $facility->sport_id = $request->sport;
         $facility->duration = $request->duration;
+        $facility->price = $request->duration * LSport::find($request->sport)->price;
+        $facility->discount = 0;
         $facility->start_date = date("Y-m-d $start_time", strtotime(Application::find($id)->date));
         $facility->end_date = date('Y-m-d H:i:s', strtotime($facility->start_date) + (60*60*$facility->duration));
         
@@ -274,9 +276,19 @@ class ApplicationController extends Controller
             $activity = new Activity;
             $activity->application_id = $id;
             $activity->activity_id = $request->activity;
+            if($request->price == 1){
+                $activity->price = LActivity::find($request->activity)->public;
+            } else if($request->price == 2){
+                $activity->price = LActivity::find($request->activity)->students;
+            } else {
+                $activity->price = LActivity::find($request->activity)->underage;
+            }
+            
+            $activity->discount = 0;
 
             if(Auth::user()->role == 4){
                 $activity->price_type = 4;
+                $activity->price = LActivity::find($request->activity)->public;
             } else {
                 $activity->price_type = $request->price;
             }
@@ -299,6 +311,8 @@ class ApplicationController extends Controller
     public function submitEquiptment(Request $request, $id){
         $equiptment = new Equiptment;
         $equiptment->application_id = $id;
+        $equiptment->price = LEquiptment::find($request->equiptment)->price;
+        $equiptment->discount = 0;
         $equiptment->equiptment_id = $request->equiptment;
         if($equiptment->save()){
             return "success";
@@ -316,7 +330,7 @@ class ApplicationController extends Controller
         } else {
             $item = Activity::find($request->id);
         }
-        
+
         if($item->delete()){
             return "success";
         }
@@ -376,11 +390,10 @@ class ApplicationController extends Controller
 
         if(isset($request->facility)){
             foreach(array_keys($request->facility) as $f){
-                $quotation = new Quotation;
-                $quotation->application_id = $id;
-                $quotation->item_id = $f;
-                $quotation->price = $request->facility[$f];
-                $quotation->save();
+                $facility = Facility::find($f);
+                $facility->price = $request->facility[$f];
+                $facility->discount = 0;
+                $facility->save();
             }
         } else {
             $activities = Activity::where('application_id', $id)->get();

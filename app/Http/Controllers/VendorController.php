@@ -11,7 +11,6 @@ use App\Facility;
 use App\Activity;
 use App\LActivity;
 use App\LCustomerType;
-use App\Quotation;
 use App\Payment;
 use Auth;
 
@@ -128,7 +127,12 @@ class VendorController extends Controller
 
     public function modalPayment(Request $request){
         $application = Application::find($request->id);
-        $price = Quotation::where('application_id', $request->id)->sum('price');
+        if($application->type == 1){
+            $price = Facility::where('application_id', $request->id)->sum('price');
+        } else {
+            $price = Activity::where('application_id', $request->id)->sum('price');
+        }
+        
         return view('vendor.application.partials.modal-payment', compact('application', 'price'));
     }
 

@@ -30,7 +30,7 @@
                             {{ date('h:i:s a' ,strtotime($f->start_date)) }} - {{ date('h:i:s a' ,strtotime($f->end_date)) }}
                         </td>
                         <td class="text-center">{{ number_format($f->r_sport->price, 2) }}</td>
-                        <td class="text-center">{{ number_format($f->r_sport->price * ($f->duration/$f->r_sport->min_hour), 2) }}  </td>
+                        <td class="text-center">{{ number_format($f->price, 2) }}  </td>
                         <td class="text-center">
                             <button onClick="deleteItem({{ $f->id }}, 1)" class="btn btn-danger">Delete</button>
                         </td>

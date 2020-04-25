@@ -18,6 +18,8 @@ class CreateActivitiesTable extends Migration
             $table->unsignedBigInteger('application_id');
             $table->unsignedBigInteger('activity_id')->nullable();
             $table->integer('price_type')->nullable();
+            $table->float('price')->nullable();
+            $table->float('discount')->nullable();
             $table->timestamps();
 
             $table->foreign('application_id')->references('id')->on('applications');

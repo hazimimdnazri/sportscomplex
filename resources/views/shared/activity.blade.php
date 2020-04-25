@@ -35,15 +35,7 @@
                                 Under 12
                             @endif
                         </td>
-                        <td class="text-center">
-                        @if($a->price_type == 1)
-                            {{ $price = number_format($a->r_activity->public, 2) }}
-                        @elseif($r->price_type == 2)
-                            {{ $price = number_format($a->r_activity->students, 2) }}
-                        @elseif($r->price_type == 3)
-                            {{ $price = number_format($a->r_activity->underage, 2) }}
-                        @endif
-                        </td>
+                        <td class="text-center">{{ $price = number_format($a->price, 2) }}</td>
                         <td class="text-center">{{ $deposit = number_format($a->r_activity->deposit, 2) }}  </td>
                         <td class="text-center">
                             <button onClick="deleteItem({{ $a->id }}, 2)" class="btn btn-danger" >Delete</button>
