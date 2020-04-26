@@ -25,27 +25,27 @@ class Application extends Model
     public function getStatus($status){
         switch ($status) {
             case 1:
-                return '<span class="label label-default">Draft</span>';
+                return '<span class="label label-default">'.$this->a_status->status.'</span>';
                 break;
             
             case 2:
-                return '<span class="label label-info">Processing</span>';
+                return '<span class="label label-info">'.$this->a_status->status.'</span>';
                 break;
             
             case 3:
-                return '<span class="label label-warning">Approved by Admin</span>';
+                return '<span class="label label-warning">'.$this->a_status->status.'</span>';
                 break;
             
             case 4:
-                return '<span class="label label-primary">Approved by Vemdor</span>';
+                return '<span class="label label-primary">'.$this->a_status->status.'</span>';
                 break;
             
             case 5:
-                return '<span class="label label-success">Paid</span>';
+                return '<span class="label label-success">'.$this->a_status->status.'</span>';
                 break;
             
             case 6:
-                return '<span class="label label-danger">Rejected</span>';
+                return '<span class="label label-danger">'.$this->a_status->status.'</span>';
                 break;
     
             default:

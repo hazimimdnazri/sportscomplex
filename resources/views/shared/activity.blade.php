@@ -53,11 +53,7 @@
             <input type="hidden" id="deposit" value="{{ $dtotal }}">
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                @if(Auth::user()->role == 1 || Auth::user()->role == 2)
                 <button onClick="toPayment()" class="btn btn-primary">Pay</button>
-                @elseif(Auth::user()->role == 4)
-                <button onClick="toQuotation()" class="btn btn-primary">View Quotation</button>
-                @endif
             </div>
         </div>
     </div>

@@ -132,7 +132,6 @@ class ApplicationController extends Controller
             $facilities = Facility::where('application_id', $application->id)->get();
             return view('admin.applications.partials.modal-facility', compact('application', 'types', 'facilities', 'equiptments'));
         } else {
-            // $activities = Activity::where('application_id', $application->id)->get();
             $activities = Activity::where('application_id', $application->id)->groupBy('activity_id')->get();
             return view('admin.applications.partials.modal-activity', compact('application', 'types', 'activities', 'equiptments'));
         }
@@ -359,7 +358,7 @@ class ApplicationController extends Controller
 
     public function applicationApprove(Request $request){
         $application = Application::find($request->id);
-        $application->status = 5;
+        $application->status = 4;
 
         if($application->save()){
             $equiptments = Equiptment::where('application_id', $request->id)->get();

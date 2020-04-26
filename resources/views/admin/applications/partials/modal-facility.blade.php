@@ -39,7 +39,7 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ date('d/m/Y', strtotime($application->date)) }}" disabled>
                             </div>
                         </div>
-                        @if($application->a_applicant->role == 4)
+                        @if($application->a_applicant->role == 4 || $application->a_applicant->role == 3)
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Proof of Payment</label>
@@ -136,6 +136,9 @@
                         @else
                         <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Payment still pending" disabled>Confirm</a>
                         @endif
+                    @elseif($application->status == 2)
+                        <button type="button" onClick="approve({{ $application->id }})" class="btn btn-primary">Accept</button>
+                        <button type="button" onClick="reject({{ $application->id }})" class="btn btn-danger">Reject</button>
                     @endif
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -149,68 +152,4 @@
         $('.select2').select2()
         $('[data-toggle="tooltip"]').tooltip()
     })
-
-    approve = () => {
-        Swal.fire({
-            title: "Approve this reservation?",
-            text: "This will confirm the reservation.",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#47bd9a",
-            cancelButtonColor: "#e74c5e",
-            confirmButtonText: "Yes, approve!"
-        }).then(function (result) {
-            if (result.value) {
-                $.ajax({
-                    type:"POST",
-                    url: "{{ url('admin/application/approve') }}",
-                    data: {
-                        "_token" : "{{ csrf_token() }}",
-                        "id" : "{{ $application->id }}"
-                    }
-                }).done(function(response){
-                    if(response == 'success'){
-                        Swal.fire("Approved!", "The reservation has been approved.", "success")
-                        .then((result) => {
-                            if(result.value){
-                                location.reload();
-                            }
-                        })
-                    }
-                });
-            }
-        });
-    }
-
-    reject = () => {
-        Swal.fire({
-            title: "Reject this reservation?",
-            text: "This will cancel the reservation.",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#47bd9a",
-            cancelButtonColor: "#e74c5e",
-            confirmButtonText: "Yes, reject!"
-        }).then(function (result) {
-            if (result.value) {
-                $.ajax({
-                    type:"POST",
-                    url: "{{ url('admin/application/reject') }}",
-                    data: {
-                        "_token" : "{{ csrf_token() }}",
-                        "id" : "{{ $application->id }}"
-                    }
-                }).done(function(response){
-                    if(response == 'success'){
-                        Swal.fire("Rejected!", "The reservation has been cancelled.", "success")
-                        .then((result) => {
-                            if(result.value){
-                                location.reload();
-                            }
-                        })
-                    }
-                });
-            }
-        });
-    }
 </script>

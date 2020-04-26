@@ -69,4 +69,54 @@ class CustomerController extends Controller
             }
         }
     }
+    
+    public function submitReservation(Request $request){
+        $application = Application::find($request->id);
+        $application->status = 2;
+        if($application->save()){
+            return "success";
+        }
+    }
+
+    public function modalReservation(Request $request){
+        $application = Application::find($request->id);
+        if(isset($request->action) == 'delete'){
+            $application->flag = 0;
+            if($application->save()){
+                return 'success';
+            }
+        }
+        $equiptments = Equiptment::where('application_id', $application->id)->get();
+        $types = LCustomerType::all();
+        if($application->type == 1){
+            $facilities = Facility::where('application_id', $application->id)->get();
+            return view('customer.application.partials.modal-facility', compact('application', 'types', 'facilities', 'equiptments'));
+        } else {
+            $activities = Activity::where('application_id', $application->id)->groupBy('activity_id')->get();
+            return view('customer.application.partials.modal-activity', compact('application', 'types', 'activities', 'equiptments'));
+        }
+    }
+
+    public function modalPayment(Request $request){
+        $application = Application::find($request->id);
+        if($application->type == 1){
+            $price = Facility::where('application_id', $request->id)->sum('price');
+        } else {
+            $price = Activity::where('application_id', $request->id)->sum('price');
+        }
+        return view('customer.application.partials.modal-payment', compact('application', 'price'));
+    }
+
+    public function uploadPayment(Request $request, $id){
+        $filename = uniqid().'.'.$request->receipt->extension();  
+        if($request->receipt->move(public_path('uploads/payments'), $filename)){
+            $payment = new Payment;
+            $payment->application_id = $id;
+            $payment->file = $filename;
+            if($payment->save()){
+                return "success";
+            }
+        }
+
+    }
 }

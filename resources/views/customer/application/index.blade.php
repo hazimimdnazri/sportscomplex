@@ -62,7 +62,7 @@
                                     <button class="btn btn-warning" onClick="paymentModal({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="Upload Payment"><i class="glyphicon glyphicon-upload"></i></button>
                                     @endif
                                     @if($a->status != 1)
-                                    <button class="btn btn-primary" onClick="viewAdminApproval({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></button>
+                                    <button class="btn btn-primary" onClick="viewReservation({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></button>
                                     @elseif($a->status != 5)
                                     <a href="{{ url('customer/applications/'.$a->id) }}" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                     @endif
@@ -98,10 +98,10 @@
         $('#example1').DataTable()
     })
 
-    viewAdminApproval = (id) => {
+    viewReservation = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('vendor/ajax/modal-adminApproval') }}",
+            url: "{{ url('customer/ajax/modal-reservation') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id
@@ -141,7 +141,7 @@
     paymentModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('vendor/ajax/modal-payment') }}",
+            url: "{{ url('customer/ajax/modal-payment') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id

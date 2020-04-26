@@ -178,28 +178,39 @@
         });
     }
 
-    toPayment = () => {
-        if ($('#deposit').length){
-            var deposit = parseFloat($("#deposit").val())
-        } else {
-            var deposit = parseFloat(0);
-        }
-        var ftotal = parseFloat($("#ftotal").val())
-        var etotal = parseFloat($("#etotal").val())
-        $.ajax({
-            type:"POST",
-            url: "{{ url('admin/application/ajax/payment-modal') }}",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "ftotal": ftotal,
-                "etotal": etotal,
-                "deposit": deposit,
-                "id": "{{ $application->id }}"
+    toQuotation = () => {
+        Swal.fire({
+            title: "Submit the reservation for admin approval?",
+            text: "You still can alter the reservation later.",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, proceed!"
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('customer/ajax/submitreservation') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id" : "{{ $application->id }}"
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire(
+                            'Success!',
+                            'Reservation submitted for review!',
+                            'success'
+                        ).then((result) => {
+                            if(result.value){
+                                window.location.replace("{{ url('customer/applications') }}");
+                            }
+                        })
+                    } 
+                });
             }
-        }).done(function(response){
-            $("#variable_3").html(response)
-            $('#paymentModal').modal('show');
-        });
+        })
     }
 
     setDate = (value) => {
@@ -266,11 +277,6 @@
                 });
             }
         })
-    }
-
-    calcChange = (value) => {
-        var change = value - $("#total").val()
-        $("#change").val(change.toFixed(2))
     }
 
     deleteItem = (id, type) => {

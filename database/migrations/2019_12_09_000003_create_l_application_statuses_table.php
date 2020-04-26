@@ -38,7 +38,7 @@ class CreateLApplicationStatusesTable extends Migration
 
         DB::table('l_application_statuses')->insert(
             array(
-                'status' => 'Accepted by Vendor'
+                'status' => 'Waiting for Payment'
             )
         );
 

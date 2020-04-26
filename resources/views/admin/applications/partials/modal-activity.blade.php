@@ -139,6 +139,10 @@
                         @else
                         <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Payment still pending" disabled>Confirm</a>
                         @endif
+                    @elseif($application->status == 2)
+                        <button type="button" onClick="approve({{ $application->id }})" class="btn btn-primary">Accept</button>
+                        <button type="button" onClick="reject({{ $application->id }})" class="btn btn-danger">Reject</button>
+                    @endif
                     @endif
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -152,5 +156,4 @@
         $('.select2').select2()
         $('[data-toggle="tooltip"]').tooltip()
     })
-
 </script>

@@ -63,7 +63,7 @@
         var formData = new FormData($('#paymentData')[0]);
 
         $.ajax({
-            url: "{{ url('vendor/applications/'.$application->id.'/payment') }}",
+            url: "{{ url('customer/applications/'.$application->id.'/payment') }}",
             type: 'POST',
             data: formData,
             cache: false,

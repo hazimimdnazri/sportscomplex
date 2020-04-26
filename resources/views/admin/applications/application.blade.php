@@ -235,7 +235,7 @@
     confirmPayment = (id) => {
         Swal.fire({
             title: "Confirm reservation payment?",
-            text: "Make sure that vendor has submitted proof of payment.",
+            text: "Make sure that proof of payment has been submitted.",
             type: "question",
             showCancelButton: true,
             confirmButtonColor: "#47bd9a",
@@ -253,6 +253,38 @@
                 }).done(function(response){
                     if(response == 'success'){
                         Swal.fire("Confirmed!", "Reservation has been confirmed, waiting for the arrival.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
+    }
+
+    approve = (id) => {
+        Swal.fire({
+            title: "Approve this reservation?",
+            text: "This will confirm the reservation.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, approve!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/application/approve') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Approved!", "The reservation has been approved.", "success")
                         .then((result) => {
                             if(result.value){
                                 location.reload();

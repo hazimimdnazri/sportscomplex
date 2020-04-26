@@ -140,6 +140,9 @@ Route::group(['middleware' => ['auth', "role:3"], 'prefix' => 'customer'], funct
 
     Route::group(['prefix' => 'ajax'], function() {
         Route::post('itemtype', 'CustomerController@itemType');
+        Route::post('submitreservation', 'CustomerController@submitReservation');
+        Route::post('modal-reservation', 'CustomerController@modalReservation');
+        Route::post('modal-payment', 'CustomerController@modalPayment');
     });
 });
 

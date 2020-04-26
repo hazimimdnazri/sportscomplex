@@ -279,11 +279,6 @@
         })
     }
 
-    calcChange = (value) => {
-        var change = value - $("#total").val()
-        $("#change").val(change.toFixed(2))
-    }
-
     deleteAsset = (id) => {
         Swal.fire({
             title: "Are you sure?",
