@@ -100,11 +100,11 @@ class User extends Authenticatable
                     break;
                 
                 default:
-                    return "<span class='label bg-black'>Regular</span>";
+                    return "<span class='label bg-navy'>Regular</span>";
                     break;
             }
         } else {
-            return "<span class='label bg-black'>Regular</span>";
+            return "<span class='label bg-navy'>Regular</span>";
         }
     }
 
@@ -114,6 +114,22 @@ class User extends Authenticatable
             return date("d/m/Y", strtotime($membership->cycle_end));
         } else {
             return "-";
+        }
+    }
+
+    public function getStatus($status){
+        switch ($status) {
+            case 1:
+                return '<span class="label bg-red">'.$this->u_status->status.'</span>';
+                break;
+            
+            case 2:
+                return '<span class="label bg-green">'.$this->u_status->status.'</span>';
+                break;
+            
+            default:
+                return '<span class="label bg-navy">Error</span>';
+                break;
         }
     }
 }

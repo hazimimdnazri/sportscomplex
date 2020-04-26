@@ -13,11 +13,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Point of Sale
+        Reservation Application
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Point of Sale</li>
+        <li class="active">Reservation Application</li>
     </ol>
 </section>
 
@@ -26,7 +26,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <button type="button" class="btn btn-primary" onClick="activityModal()">New Walk In</button>
+                    <button type="button" class="btn btn-primary" onClick="newReservation()">New Reservation</button>
                 </div>
                 <div class="box-body">
                     <table id="example1" class="table table-bordered">
@@ -58,22 +58,17 @@
                                     {!! $a->getStatus($a->status) !!}
                                 </td>
                                 <td class="text-center">
-                                    @if($a->a_applicant->role == 4)
-                                        @if($a->status == 5 || $a->status == 4 || $a->status == 3)
-                                            <button class="btn btn-primary" onClick="viewModal({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></button>
-                                        @else
-                                            @if($a->status != 3)
-                                                <a class="btn btn-primary" href="{{ url('admin/application/'.$a->id) }}" data-toggle="tooltip" data-placement="top" title="Review Application"><i class="glyphicon glyphicon-zoom-in"></i></a>
-                                            @endif
-                                        @endif
-                                    @else
-                                        @if($a->status != 1)
-                                        <button class="btn btn-primary" onClick="viewModal({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></button>
-                                        @elseif($a->status != 5)
-                                        <a href="{{ url('admin/application/'.$a->id) }}" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                        @endif
+                                    @if($a->status == 4 && !isset($a->r_payment->file))
+                                    <button class="btn btn-warning" onClick="paymentModal({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="Upload Payment"><i class="glyphicon glyphicon-upload"></i></button>
                                     @endif
-                                    <button onClick="deleteApplication({{$a->id}})" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                    @if($a->status != 1)
+                                    <button class="btn btn-primary" onClick="viewAdminApproval({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></button>
+                                    @elseif($a->status != 5)
+                                    <a href="{{ url('customer/applications/'.$a->id) }}" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    @endif
+                                    @if($a->status == 1 || $a->status == 2 || $a->status == 3)
+                                    <button onClick="deleteApplication({{$a->id}})" class="btn btn-danger" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -103,10 +98,10 @@
         $('#example1').DataTable()
     })
 
-    viewModal = (id) => {
+    viewAdminApproval = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('admin/application/ajax/view-modal') }}",
+            url: "{{ url('vendor/ajax/modal-adminApproval') }}",
             data: {
                 "_token" : "{{ csrf_token() }}",
                 "id" : id
@@ -117,86 +112,44 @@
         });
     }
 
-    member = () => {
-        $.ajax({
-            type:"GET",
-            url: "{{ url('api/customer') }}"+"/"+$("#member_id").val()
-        }).done(function(response){
-            if(response != "error"){
-                $("#name").val(response.data.name);
-                $("#name").val(response.data.name);
-                $("#email").val(response.data.email);
-                $("#ic").val(response.data.ic);
-                $("#passport").val(response.data.passport);
-                $("#type").val(response.data.type).change();
-                $("#nationality").val(response.data.nationality).change();
-                $("#post_id").val(response.data.id);
-            } else {
-                alert("User does not exist!")
+    newReservation = () => {
+        Swal.fire({
+            title: "Apply for new reservation?",
+            text: "New application will be created as draft, you can delete it later.",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, apply!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('customer/applications/new') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}"
+                    }
+                }).done(function(response){
+                    if(response.status == 'success'){
+                        window.location.replace("{{ url('customer/applications') }}/"+response.data);
+                    }
+                });
             }
         });
     }
 
-    activityModal = () => {
+    paymentModal = (id) => {
         $.ajax({
             type:"POST",
-            url: "{{ url('ajax/activitymodal') }}",
+            url: "{{ url('vendor/ajax/modal-payment') }}",
             data: {
-                "_token": "{{ csrf_token() }}",
+                "_token" : "{{ csrf_token() }}",
+                "id" : id
             }
         }).done(function(response){
             $("#variable_1").html(response)
-            $('#activityModal').modal('show');
+            $('#paymentModal').modal('show');
         });
-    }
-
-    userType = (value) => {
-        if(value == 3 || value == 5){
-            $("#students").show()
-            $("#staffs").hide()
-        } else if(value == 2){
-            $("#students").hide()
-            $("#staffs").show()
-        } else {
-            $("#students").hide()
-            $("#staffs").hide()
-        }
-    }
-
-    searchIC = (id) => {
-        if(id == 'existing'){
-            $("#searchIC").show()
-            $("#name, #ic, #email, #type, #nationality").attr('readOnly','readOnly')
-            $("#type, #nationality, option").each(function(i){
-                $(this).attr('disabled', 'disabled')
-            });
-            
-        } else {
-            $("#searchIC").hide()
-            $("#name, #ic, #email, #type, #nationality").removeAttr('readOnly','readOnly')
-            $("#type, #nationality, option").each(function(i){
-                $(this).removeAttr('disabled', 'disabled')
-            });
-            $("#name").val('')
-            $("#ic").val('')
-            $("#email").val('')
-            $("#type").val('')
-            $("#nationality").val('')
-            $("#ic_block").hide()
-            $("#passport_block").hide()
-            $("#students").hide()
-            $("#staffs").hide()
-        }
-    }
-
-    selectNationality = (value) => {
-        if(value == 1){
-            $("#ic_block").show()
-            $("#passport_block").hide()
-        } else if(value == 2){
-            $("#ic_block").hide()
-            $("#passport_block").show()
-        }
     }
 
     deleteApplication = (id) => {
@@ -221,38 +174,6 @@
                 }).done(function(response){
                     if(response == 'success'){
                         Swal.fire("Deleted!", "Application has been deleted.", "success")
-                        .then((result) => {
-                            if(result.value){
-                                location.reload();
-                            }
-                        })
-                    }
-                });
-            }
-        });
-    }
-
-    confirmPayment = (id) => {
-        Swal.fire({
-            title: "Confirm reservation payment?",
-            text: "Make sure that vendor has submitted proof of payment.",
-            type: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#47bd9a",
-            cancelButtonColor: "#e74c5e",
-            confirmButtonText: "Yes, payment recieved!"
-        }).then(function (result) {
-            if (result.value) {
-                $.ajax({
-                    type:"POST",
-                    url: "{{ url('admin/application/ajax/confirmpayment') }}",
-                    data: {
-                        "_token" : "{{ csrf_token() }}",
-                        "id" : id
-                    }
-                }).done(function(response){
-                    if(response == 'success'){
-                        Swal.fire("Confirmed!", "Reservation has been confirmed, waiting for the arrival.", "success")
                         .then((result) => {
                             if(result.value){
                                 location.reload();

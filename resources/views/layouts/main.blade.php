@@ -27,7 +27,7 @@
 		<div class="wrapper">
 			<header class="main-header">
 				<a href="{{ url('/') }}" class="logo">
-				<span class="logo-mini"><b>A</b>LT</span>
+				<span class="logo-mini"><b>ESC</b></span>
 				<span class="logo-lg"><b>Sports</b>Complex</span>
 				</a>
 				<nav class="navbar navbar-static-top">
@@ -83,6 +83,8 @@
 			</header>
 			@if(Auth::user()->role == 1 || Auth::user()->role == 2 )
 				@include('shared.sidebar-admin')
+			@elseif(Auth::user()->role == 3)
+				@include('shared.sidebar-customer')
 			@elseif(Auth::user()->role == 4)
 				@include('shared.sidebar-vendor')
 			@endif

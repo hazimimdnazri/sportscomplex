@@ -73,7 +73,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
-                                        <select name="nationality" class="form-control" name="nationality">
+                                        <select id="nationality" class="form-control" name="nationality">
                                             <option value="" selected>-- Nationality --</option>
                                             <option value="1" >Malaysian</option>
                                             <option value="2" >Foriegner</option>

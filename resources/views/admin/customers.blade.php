@@ -46,7 +46,7 @@
                                 <td class="text-center">{{ $c->r_details->ic ?? $c->r_details->passport}}</td>
                                 <td class="text-center">{{ $c->email }}</td>
                                 <td class="text-center">
-                                    <span class="label bg-red">{{ $c->u_status->status }}</span>
+                                    {!! $c->getStatus($c->status) !!}
                                 </td>
                                 <td class="text-center">{!! $c->getMembership($c->id) !!}</td>
                                 <td class="text-center">{!! $c->getMembershipDuration($c->id) !!}</td>

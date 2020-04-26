@@ -45,6 +45,19 @@
                             <input type="password" id="retype_password" class="form-control" placeholder="Retype password">
                             <span class="help-block error-retype"></span>
                         </div>
+                        <div class="form-group">
+                            <select onChange="nat(this.value)" class="form-control" name="nationality">
+                                <option value="" selected>-- Nationality --</option>
+                                <option value="1" >Malaysian</option>
+                                <option value="2" >Foriegner</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="ic" style="display:none">
+                            <input type="text" class="form-control" name="ic" placeholder="Enter IC number">
+                        </div>
+                        <div class="form-group" id="passport" style="display:none">
+                            <input type="text" class="form-control" name="passport" placeholder="Enter passport number">
+                        </div>
                         <div class="row">
                             <div class="col-xs-8">
                                 <div class="checkbox icheck">
@@ -86,6 +99,18 @@
             });
         })
 
+        nat = (value) => {
+            if(value == 1){
+                $("#ic").show();
+                $("#passport").hide();
+            } else if(value == 2){
+                $("#ic").hide();
+                $("#passport").show();
+            } else {
+                $("#ic").hide();
+                $("#passport").hide();
+            }
+        }
         register = () => { 
             if(!($("#password").val())){
                     $(".div_password").addClass('has-error')
@@ -96,6 +121,7 @@
                 if($("#password").val() == $("#retype_password").val()){
                     $("#register_div").toggle();
                     $("#spinner_div").toggle();
+                    
                     var formData = new FormData($('#userData')[0]);
 
                     $.ajax({
@@ -106,7 +132,7 @@
                         contentType: false,
                         processData: false
                     }).done((response) => {
-                        if(response == 'exist'){
+                        if(response == 'email exist'){
                             $("#register_div").toggle();
                             $("#spinner_div").toggle();
                             $(".div_retype, .div_password").removeClass('has-error')
@@ -119,7 +145,6 @@
                             console.log(response)
                         }
                     });
-
                 } else {
                     $(".div_retype").addClass('has-error')
                     $(".error-password").text('')
