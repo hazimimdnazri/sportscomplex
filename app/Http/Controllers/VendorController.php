@@ -132,7 +132,7 @@ class VendorController extends Controller
         } else {
             $price = Activity::where('application_id', $request->id)->sum('price');
         }
-        
+    
         return view('vendor.application.partials.modal-payment', compact('application', 'price'));
     }
 

@@ -62,6 +62,9 @@
                                 <th class="text-center bg-gray">Sport</th>
                                 <th class="text-center bg-gray">Facility</th>
                                 <th class="text-center bg-gray">Duration</th>
+                                @if($application->a_applicant->role == 4)
+                                <th class="text-center bg-gray">Price (RM)</th>
+                                @endif
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
@@ -77,6 +80,13 @@
                                         @endfor
                                     </td>
                                     <td class="text-center">{{ date('h:i A', strtotime($f->start_date)) }} - {{ date('h:i A', strtotime($f->end_date)) }}</td>
+                                    @if($application->a_applicant->role == 4)
+                                        @if($application->status == 3 || $application->status == 4 ||  $application->status == 5)
+                                        <td class="text-center">{{ number_format($f->price, 2) }}</td>
+                                        @else
+                                        <td class="text-center">TBA</td>
+                                        @endif
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -120,10 +130,6 @@
                 </div>
                 <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
-                    @if($application->status == 2)
-                    <button type="button" onClick="approve()" class="btn btn-primary">Approve</button>
-                    <button type="button" onClick="reject()" class="btn btn-danger">Reject</button>
-                    @endif
                     @if($application->status == 4)
                         @if(isset($application->r_payment->file))
                         <a class="btn btn-success" onClick="confirmPayment({{ $application->id }})">Confirm</a>

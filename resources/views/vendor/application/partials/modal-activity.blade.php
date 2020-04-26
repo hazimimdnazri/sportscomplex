@@ -37,9 +37,7 @@
                                 <th class="text-center bg-gray">Activity</th>
                                 <th class="text-center bg-gray">Type</th>
                                 <th class="text-center bg-gray">Quantity</th>
-                                @if($application->status != 5)
                                 <th class="text-center bg-gray">Price (RM)</th>
-                                @endif
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
@@ -53,10 +51,10 @@
                                     <td class="text-center">
                                         {{ $a->getCount($a->application_id, $a->activity_id) }}
                                     </td>
-                                    @if($application->status != 5)
-                                    <td class="text-center">
-                                        {{ isset(App\Quotation::where('application_id', $a->application_id)->where('item_id', $a->id)->first()->price) ? number_format(App\Quotation::where('application_id', $a->application_id)->where('item_id', $a->id)->first()->price * $a->getCount($a->application_id, $a->activity_id), 2) : 'TBD' }}
-                                    </td>
+                                    @if($application->status == 3 || $application->status == 4 ||  $application->status == 5)
+                                    <td class="text-center">{{ number_format($a->price * $a->getCount($a->application_id, $a->activity_id), 2) }}</td>
+                                    @else
+                                    <td class="text-center">TBA</td>
                                     @endif
                                 </tr>
                                 @endforeach

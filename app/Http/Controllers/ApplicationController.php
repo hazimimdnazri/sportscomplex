@@ -132,7 +132,8 @@ class ApplicationController extends Controller
             $facilities = Facility::where('application_id', $application->id)->get();
             return view('admin.applications.partials.modal-facility', compact('application', 'types', 'facilities', 'equiptments'));
         } else {
-            $activities = Activity::where('application_id', $application->id)->get();
+            // $activities = Activity::where('application_id', $application->id)->get();
+            $activities = Activity::where('application_id', $application->id)->groupBy('activity_id')->get();
             return view('admin.applications.partials.modal-activity', compact('application', 'types', 'activities', 'equiptments'));
         }
     }
@@ -396,13 +397,13 @@ class ApplicationController extends Controller
                 $facility->save();
             }
         } else {
-            $activities = Activity::where('application_id', $id)->get();
-            foreach($activities as $a){
-                $quotation = new Quotation;
-                $quotation->application_id = $id;
-                $quotation->item_id = $a->id;
-                $quotation->price = $request->activity;
-                $quotation->save();
+            foreach(array_keys($request->activity) as $a){
+                $count = Activity::where('activity_id', $a)->count();
+                foreach(Activity::where('activity_id', $a)->get() as $act){
+                    $act->price = $request->activity[$a] / $count;
+                    $act->discount = 0;
+                    $act->save();
+                }
             }
         }
 

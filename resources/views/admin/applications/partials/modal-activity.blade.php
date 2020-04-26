@@ -39,6 +39,18 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ date('d/m/Y', strtotime($application->date)) }}" disabled>
                             </div>
                         </div>
+                        @if($application->a_applicant->role == 4)
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Proof of Payment</label>
+                                @if(isset($application->r_payment->file))
+                                <p><a target="_blank" href="{{ url('uploads/payments/'.$application->r_payment->file) }}"><button type="button" class="btn bg-navy">View Payment</button></a></p>
+                                @else
+                                <p><span class="label bg-navy">Payment still pending</span></p>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <hr>
                     <h4 class="modal-title">Activities & Equiptments</h4>
@@ -49,9 +61,15 @@
                                 <th class="text-center bg-gray">Activity</th>
                                 <th class="text-center bg-gray">Type</th>
                                 <th class="text-center bg-gray">Access Card ID</th>
+                                @if($application->a_applicant->role == 4)
+                                <th class="text-center bg-gray">Price (RM)</th>
+                                @endif
                             </thead>
                             <tbody>
-                                @php $n = 1 @endphp
+                                @php 
+                                $n = 1;
+                                $price = 0;
+                                @endphp
                                 @foreach($activities as $a)
                                 <tr>
                                     <td class="text-center">{{ $n++ }}</td>
@@ -60,8 +78,20 @@
                                         {{ $a->getPriceType($a->price_type) }}
                                     </td>
                                     <td class="text-center"></td>
+                                    @if($application->a_applicant->role == 4)
+                                        @if($application->status == 3 || $application->status == 4 ||  $application->status == 5)
+                                        <td class="text-center">{{ number_format($a->price * $a->getCount($a->application_id, $a->activity_id), 2) }}</td>
+                                        @else
+                                        <td class="text-center">TBA</td>
+                                        @endif
+                                        @php $price = $price + number_format($a->price * $a->getCount($a->application_id, $a->activity_id), 2) @endphp
+                                    @endif
                                 </tr>
                                 @endforeach
+                                <tr>
+                                    <th class="text-right" colspan="4">Total (RM)</td>
+                                    <td class="text-center">{{ number_format($price, 2) }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -103,6 +133,13 @@
                 </div>
                 <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
+                    @if($application->status == 4)
+                        @if(isset($application->r_payment->file))
+                        <a class="btn btn-success" onClick="confirmPayment({{ $application->id }})">Confirm</a>
+                        @else
+                        <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Payment still pending" disabled>Confirm</a>
+                        @endif
+                    @endif
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -113,6 +150,7 @@
 <script>
     $(() => {
         $('.select2').select2()
+        $('[data-toggle="tooltip"]').tooltip()
     })
 
 </script>
