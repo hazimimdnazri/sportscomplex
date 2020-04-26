@@ -132,7 +132,12 @@ class ApplicationController extends Controller
             $facilities = Facility::where('application_id', $application->id)->get();
             return view('admin.applications.partials.modal-facility', compact('application', 'types', 'facilities', 'equiptments'));
         } else {
-            $activities = Activity::where('application_id', $application->id)->groupBy('activity_id')->get();
+            if($application->a_applicant->role == 4){
+                $activities = Activity::where('application_id', $application->id)->groupBy('activity_id')->get();
+            } else {
+                $activities = Activity::where('application_id', $application->id)->get();
+            }
+
             return view('admin.applications.partials.modal-activity', compact('application', 'types', 'activities', 'equiptments'));
         }
     }

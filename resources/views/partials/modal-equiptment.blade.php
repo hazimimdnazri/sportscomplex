@@ -43,8 +43,8 @@
             if(response == 'success'){
                 $("#equiptmentModal").modal('hide')
                 Swal.fire(
-                    'Succes!',
-                    'Data saved!!',
+                    'Success!',
+                    'Equiptment has been successfully added!',
                     'success'
                 ).then((result) => {
                     if(result.value){

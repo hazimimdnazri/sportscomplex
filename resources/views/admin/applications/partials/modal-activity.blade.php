@@ -74,9 +74,7 @@
                                 <tr>
                                     <td class="text-center">{{ $n++ }}</td>
                                     <td class="text-center">{{$a->r_activity->activity}}</td>
-                                    <td class="text-center">
-                                        {{ $a->getPriceType($a->price_type) }}
-                                    </td>
+                                    <td class="text-center">{{ $a->getPriceType($a->price_type) }}</td>
                                     <td class="text-center"></td>
                                     @if($application->a_applicant->role == 4)
                                         @if($application->status == 3 || $application->status == 4 ||  $application->status == 5)
@@ -88,10 +86,12 @@
                                     @endif
                                 </tr>
                                 @endforeach
+                                @if($application->a_applicant->role == 4)
                                 <tr>
                                     <th class="text-right" colspan="4">Total (RM)</td>
                                     <td class="text-center">{{ number_format($price, 2) }}</td>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -142,7 +142,6 @@
                     @elseif($application->status == 2)
                         <button type="button" onClick="approve({{ $application->id }})" class="btn btn-primary">Accept</button>
                         <button type="button" onClick="reject({{ $application->id }})" class="btn btn-danger">Reject</button>
-                    @endif
                     @endif
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>

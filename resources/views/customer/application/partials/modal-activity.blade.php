@@ -37,6 +37,7 @@
                                 <th class="text-center bg-gray">Activity</th>
                                 <th class="text-center bg-gray">Type</th>
                                 <th class="text-center bg-gray">Quantity</th>
+                                <th class="text-center bg-gray">Access Card ID</th>
                                 <th class="text-center bg-gray">Price (RM)</th>
                             </thead>
                             <tbody>
@@ -45,12 +46,8 @@
                                 <tr>
                                     <td class="text-center">{{ $n++ }}</td>
                                     <td class="text-center">{{$a->r_activity->activity}}</td>
-                                    <td class="text-center">
-                                        {{ $a->getPriceType($a->price_type) }}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ $a->getCount($a->application_id, $a->activity_id) }}
-                                    </td>
+                                    <td class="text-center">{{ $a->getPriceType($a->price_type) }}</td>
+                                    <td class="text-center">{{ $a->getCount($a->application_id, $a->activity_id) }}</td>
                                     @if($application->status == 3 || $application->status == 4 ||  $application->status == 5)
                                     <td class="text-center">{{ number_format($a->price * $a->getCount($a->application_id, $a->activity_id), 2) }}</td>
                                     @else
