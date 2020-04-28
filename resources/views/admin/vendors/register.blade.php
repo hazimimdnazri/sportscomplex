@@ -203,7 +203,7 @@
                 $("#familyModal").modal('hide')
                 Swal.fire(
                     'Success!',
-                    'Vendor has been registered!',
+                    'Vendor has been registered. E-mail has been successfully sent.',
                     'success'
                 ).then((result) => {
                     if(result.value){
