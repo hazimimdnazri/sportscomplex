@@ -66,11 +66,11 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Event <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" name="event" id="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name">
+                                <input type="text" class="form-control" name="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">I.C Number </label>
-                                <input type="text" class="form-control" id="ic" name="ic" value="{{ $application->a_applicant->r_details->ic }}" placeholder="Applicant MyKad / MyKid" disabled>
+                                <input type="text" class="form-control" id="ic" name="ic" value="{{ $application->a_applicant->r_details->ic ?? '' }}" placeholder="Applicant MyKad / MyKid" disabled>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -80,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Phone </label>
-                                <input type="text" class="form-control" id="phone" name="phone" value="{{ $application->a_applicant->r_details->phone }}" placeholder="Applicant phone number" disabled>
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{ $application->a_applicant->r_details->phone ?? '' }}" placeholder="Applicant phone number" disabled>
                             </div>
 
                         </div>
@@ -200,6 +200,42 @@
             $("#variable_3").html(response)
             $('#paymentModal').modal('show');
         });
+    }
+
+    toSubmit = () => {
+        Swal.fire({
+            title: "Submit this reservation?",
+            text: "This reservation will be instantaneously confirmed.",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, proceed!"
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/application/pencil-booking/confirm') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id" : "{{ $application->id }}",
+                        "event" : $("#event").val()
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire(
+                            'Success!',
+                            'Reservation has been confirmed!',
+                            'success'
+                        ).then((result) => {
+                            if(result.value){
+                                window.location.replace("{{ url('admin/application') }}");
+                            }
+                        })
+                    } 
+                });
+            }
+        })
     }
 
     setDate = (value) => {

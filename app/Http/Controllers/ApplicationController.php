@@ -102,10 +102,10 @@ class ApplicationController extends Controller
         if($application->save()){
             if($request->type == 1){
                 $facilities = Facility::where('application_id', $request->id)->get();
-                return view('shared.asset', compact('facilities', 'venues', 'id', 'user', 'date', 'equiptments'));
+                return view('shared.asset', compact('facilities', 'venues', 'id', 'user', 'date', 'equiptments', 'application'));
             } else if($request->type == 2) {
                 $activities = Activity::where('application_id', $request->id)->get();
-                return view('shared.activity', compact('list_activity', 'activities', 'id', 'user', 'date', 'equiptments'));
+                return view('shared.activity', compact('list_activity', 'activities', 'id', 'user', 'date', 'equiptments', 'application'));
             } else {
                 return NULL;
             }
@@ -427,5 +427,37 @@ class ApplicationController extends Controller
             }
             return "success";
         }
+    }
+
+    public function pencilBooking(){
+        return view('admin.applications.booking-pencil');
+    }
+
+    public function submitPencilBooking(Request $request){
+        $application = new Application;
+        $application->user_id = Auth::user()->id;
+        $application->date = date('Y-m-d');
+        $application->registered_by = Auth::user()->id;
+        if($application->save()){
+            $response = [
+                'code' => 200,
+                'status' => 'success',
+                'data' => $application->id
+            ];
+
+            return $response;
+        }
+    }
+
+    public function confirmPencilBooking(Request $request){
+        $application = Application::find($request->id);
+        $application->status = 5;
+        $application->event = $request->event;
+        $application->approved_by = Auth::user()->id;
+
+        if($application->save()){
+            return "success";
+        }
+
     }
 }
