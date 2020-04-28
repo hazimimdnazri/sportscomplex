@@ -9,7 +9,6 @@ $(() => {
                 $('#calendar').fullCalendar('changeView', 'agendaDay')
             } else {
                 console.log(view.id)
-
             }
         },
         header    : {

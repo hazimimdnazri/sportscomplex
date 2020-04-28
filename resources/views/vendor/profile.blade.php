@@ -201,7 +201,6 @@
             contentType: false,
             processData: false
         }).done((response) => {
-            console.log(response)
             if(response == 'success'){
                 $("#familyModal").modal('hide')
                 Swal.fire(

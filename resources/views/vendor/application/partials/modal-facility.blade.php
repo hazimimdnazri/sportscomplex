@@ -198,7 +198,6 @@
                         "remark": "Quotation rejected by vendor."
                     }
                 }).done(function(response){
-                    console.log(response);
                     if(response == 'success'){
                         Swal.fire("Rejected!", "The reservation has been cancelled.", "success")
                         .then((result) => {

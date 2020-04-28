@@ -244,7 +244,6 @@
                     contentType: false,
                     processData: false
                 }).done((response) => {
-                    console.log(response);
                     if(response == 'success'){
                         Swal.fire(
                             'Success!',
