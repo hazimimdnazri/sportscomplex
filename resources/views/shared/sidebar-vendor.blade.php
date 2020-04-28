@@ -16,7 +16,7 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="#"><i class="fa fa-circle-o"></i>Change Password</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i>My Profile</a></li>
+                <li><a href="{{ url('vendor/settings/profile') }}"><i class="fa fa-circle-o"></i>My Profile</a></li>
             </ul>
         </li>
     </ul>

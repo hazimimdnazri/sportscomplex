@@ -12,6 +12,7 @@ use App\Activity;
 use App\LActivity;
 use App\LCustomerType;
 use App\Payment;
+use App\LState;
 use Auth;
 
 class VendorController extends Controller
@@ -147,5 +148,11 @@ class VendorController extends Controller
             }
         }
 
+    }
+
+    public function profile(){
+        $states = LState::all();
+        $user = User::find(Auth::user()->id);
+        return view('vendor.profile', compact('states', 'user'));
     }
 }

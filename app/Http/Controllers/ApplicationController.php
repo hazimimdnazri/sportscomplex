@@ -102,10 +102,10 @@ class ApplicationController extends Controller
         if($application->save()){
             if($request->type == 1){
                 $facilities = Facility::where('application_id', $request->id)->get();
-                return view('shared.asset', compact('facilities', 'venues', 'id', 'user', 'date', 'equiptments', 'application'));
+                return view('admin.applications.partials.facility', compact('facilities', 'venues', 'id', 'user', 'date', 'equiptments', 'application'));
             } else if($request->type == 2) {
                 $activities = Activity::where('application_id', $request->id)->get();
-                return view('shared.activity', compact('list_activity', 'activities', 'id', 'user', 'date', 'equiptments', 'application'));
+                return view('admin.applications.partials.activity', compact('list_activity', 'activities', 'id', 'user', 'date', 'equiptments', 'application'));
             } else {
                 return NULL;
             }

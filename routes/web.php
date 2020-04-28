@@ -121,6 +121,10 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::post('{id}/payment', 'VendorController@uploadPayment');
     });
 
+    Route::group(['prefix' => 'settings'], function() {
+        Route::get('profile', 'VendorController@profile');
+    });
+
     Route::group(['prefix' => 'ajax'], function() {
         Route::post('itemtype', 'VendorController@itemType');
         Route::post('submitreservation', 'VendorController@submitReservation');
