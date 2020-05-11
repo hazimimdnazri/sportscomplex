@@ -50,9 +50,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
-                                        <input type="email" class="form-control" name="email" placeholder="Enter email">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
+                                                <input type="email" class="form-control" name="email" placeholder="Enter email">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Password <span class="text-red">*</span></label>
+                                                <input type="password" class="form-control" name="password">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Address <span class="text-red">*</span></label>
@@ -187,8 +197,17 @@
     })
 
     $("#vendorData").submit(function(e) {
-        e.preventDefault();    
         var formData = new FormData(this);
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Registering vendor!',
+            html: 'Please wait for a moment.',
+            allowOutsideClick: false,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+            }
+        })
 
         $.ajax({
             url: "{{ url('admin/registration/vendor') }}",

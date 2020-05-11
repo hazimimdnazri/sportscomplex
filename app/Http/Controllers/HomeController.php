@@ -133,7 +133,7 @@ class HomeController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->role = 3;
-        $user->status = 2;
+        $user->status = 1;
         $user->password = Hash::make(123456);
 
         if($user->save()){
@@ -197,8 +197,8 @@ class HomeController extends Controller
         $vendor->name = $request->name;
         $vendor->email = $request->email;
         $vendor->role = 4;
-        $vendor->status = 2;
-        $vendor->password = Hash::make(123456);
+        $vendor->status = 1;
+        $vendor->password = Hash::make($request->password);
 
         if($vendor->save()){
             $vendorDetail = new VendorDetail;
@@ -221,6 +221,20 @@ class HomeController extends Controller
                     $pic->phone_mobile = $request->pic_phone[$i];
                     $pic->type = $i;
                     $pic->save();
+                }
+
+                $vars["email"] = $vendor->email;
+                $vars["name"] = $vendor->name;
+                $vars["token"] = base64_encode($vendor->email);
+                try {
+                    Mail::send(["html" => "shared.mail-verify"], $vars, function($message) use ($vars){
+                        $message->from("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
+                        $message->to($vars["email"]);
+                        $message->sender("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
+                        $message->subject("EduCity Sports Centre Account Activation");
+                    });
+                } catch(\Exception $err) {
+                    return $err;
                 }
             }
         }
