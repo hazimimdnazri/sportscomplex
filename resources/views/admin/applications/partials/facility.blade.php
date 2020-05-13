@@ -43,10 +43,12 @@
             <input type="hidden" id="ftotal" value="{{ $ftotal }}">
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                @if($application->a_applicant->role == 1 || $application->a_applicant->role == 2)
-                <button onClick="toSubmit()" class="btn btn-primary">Submit</button>
-                @else
-                <button onClick="toPayment()" class="btn btn-primary">Pay</button>
+                @if($facilities->count() > 0)
+                    @if($application->a_applicant->role == 1 || $application->a_applicant->role == 2)
+                    <button onClick="toSubmit()" class="btn btn-primary">Submit</button>
+                    @else
+                    <button onClick="toPayment()" class="btn btn-primary">Pay</button>
+                    @endif
                 @endif
             </div>
         </div>
