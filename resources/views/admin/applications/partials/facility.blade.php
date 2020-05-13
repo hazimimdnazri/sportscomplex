@@ -56,7 +56,7 @@
 <div class="modal fade" id="facilityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="facilityForm" action="{{ url('ajax/application/'.$id.'/facility') }}" method="POST">
+            <form id="facilityData" action="{{ url('ajax/application/'.$id.'/facility') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -65,7 +65,9 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
+                            <div id="errors" style="display:none" class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            </div>
                             <div class="form-group">
                                 <label>Venue <span class="text-red">*</span></label>
                                 <select name="venue" class="form-control select2" onChange="selectVenue(this.value)" style="width: 100%;">
@@ -195,7 +197,7 @@
 
     }
 
-    $("#facilityForm").validate({
+    $("#facilityData").validate({
         ignore: [],
         rules: {
             venue: {

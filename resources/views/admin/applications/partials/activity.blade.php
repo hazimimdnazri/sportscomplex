@@ -66,13 +66,16 @@
 <div class="modal fade" id="activityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('ajax/application/'.$id.'/activity') }}" method="POST">
+            <form id="activityData" action="{{ url('ajax/application/'.$id.'/activity') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Reserve an Activity</h4>
                 </div>
                 <div class="modal-body">
+                    <div id="errors" style="display:none" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    </div>
                     <div class="form-group">
                         <label>Activity <span class="text-red">*</span></label>
                         <select name="activity" class="form-control select2" style="width: 100%;">
@@ -128,4 +131,26 @@
 
         $('.select2').select2()
     })
+
+    $("#activityData").validate({
+        ignore: [],
+        rules: {
+            activity: {
+                required: true
+            },
+            price: {
+                required: true
+            }
+        },
+        messages: {
+            activity: {
+                required: "Select an activity.",
+            },
+            price: {
+                required: "Select a price type.",
+            },
+        },
+        errorLabelContainer: "#errors", 
+        errorElement: "li",
+    });
 </script>
