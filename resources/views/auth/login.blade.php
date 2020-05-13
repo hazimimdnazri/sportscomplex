@@ -27,6 +27,11 @@
             </div>
             <div class="login-box-body">
                 <p class="login-box-msg">Sign in to start your session</p>
+                @if (session('status'))
+                    <div class="alert alert-danger">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <form action="{{ url('guest/login') }}" method="post">
                     @csrf
                     <div class="form-group has-feedback">

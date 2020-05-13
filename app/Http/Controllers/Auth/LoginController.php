@@ -123,7 +123,19 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        echo 123;
+        if($user->flag == 0){
+            $this->guard()->logout();
+            $request->session()->invalidate();
+            
+            return redirect('guest/login')->with('status', 'Your account has been terminated, please contact the admin.');
+        }
+
+        if($user->status == 1){
+            $this->guard()->logout();
+            $request->session()->invalidate();
+
+            return redirect('guest/login')->with('status', 'Your account is still not verified, please check your e-mail.');
+        }
     }
 
     /**
@@ -136,9 +148,7 @@ class LoginController extends Controller
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
-        ]);
+        return redirect('guest/login')->with('status', 'The login credential is invalid!');
     }
 
     /**

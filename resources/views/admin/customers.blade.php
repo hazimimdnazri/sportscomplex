@@ -122,14 +122,14 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/ajax/deletecustomer') }}",
+                    url: "{{ url('ajax/deletecustomer') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id
                     }
                 }).done(function(response){
                     if(response == 'success'){
-                        Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                        Swal.fire("Deleted!", "The user has been deleted.", "success")
                         .then((result) => {
                             if(result.value){
                                 location.reload();
