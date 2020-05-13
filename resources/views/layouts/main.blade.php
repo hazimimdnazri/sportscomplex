@@ -110,6 +110,7 @@
 		<script src="{{ asset('assets/bower_components/fastclick/lib/fastclick.js') }}"></script>
 		<script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 		<script src="{{ asset('assets/dist/js/demo.js') }}"></script>
+		<script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
 		@yield('postscript')
 	</body>
 </html>

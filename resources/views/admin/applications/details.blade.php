@@ -33,7 +33,6 @@
                 </div>
                 <div class="box-body">
                     <div class="row">
-                        <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Membership / Customer ID </label>

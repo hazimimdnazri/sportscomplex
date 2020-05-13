@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Equiptments <span class="text-red">*</span></label>
-                        <select name="equiptment" class="form-control" style="width: 100%;">
+                        <select name="equiptment" id="equiptment" class="form-control" style="width: 100%;">
                             <option value="">-- Equiptments --</option>
                             @foreach($equiptments as $e)
                                 <option value="{{ $e->id }}" {{ $e->getDisableStatus($e->id) }}>{{ $e->equiptment }} - {{ $e->serial_number }}</option>
@@ -29,29 +29,44 @@
 
 <script>
     $("#equiptmentForm").submit(function(e) {
-        e.preventDefault();    
-        var formData = new FormData(this);
+        e.preventDefault();
+        
+        if($("#equiptment").val() == ''){
+            Swal.fire(
+                'No Equiptment!',
+                'Please select an equiptment!',
+                'warning'
+            )
+        } else {
+            var formData = new FormData(this);
 
-        $.ajax({
-            url: "{{ url('ajax/application/'.$id.'/equiptment') }}",
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        }).done((response) => {
-            if(response == 'success'){
-                $("#equiptmentModal").modal('hide')
-                Swal.fire(
-                    'Success!',
-                    'Equiptment has been successfully added!',
-                    'success'
-                ).then((result) => {
-                    if(result.value){
-                        location.reload();
-                    }
-                })
-            } 
-        });
+            $.ajax({
+                url: "{{ url('ajax/application/'.$id.'/equiptment') }}",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done((response) => {
+                if(response == 'success'){
+                    $("#equiptmentModal").modal('hide')
+                    Swal.fire(
+                        'Success!',
+                        'Equiptment has been successfully added!',
+                        'success'
+                    ).then((result) => {
+                        if(result.value){
+                            location.reload();
+                        }
+                    })
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        'Oops!',
+                        'error'
+                    )
+                }
+            });
+        }
     });
 </script>

@@ -96,7 +96,6 @@
 <script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
 <script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 <script>
     $(() => {
