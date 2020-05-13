@@ -218,7 +218,6 @@
             processData: false
         }).done((response) => {
             if(response == 'success'){
-                $("#familyModal").modal('hide')
                 Swal.fire(
                     'Success!',
                     'Vendor has been registered. E-mail has been successfully sent.',
@@ -227,6 +226,12 @@
                     if(result.value){
                         window.location.replace("{{ url('admin/settings/users') }}");
                     }
+                })
+            } else if(response == 'duplicate'){
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error!',
+                    text: 'The e-mail address already exist, please use different e-mail or login to your existing account.'
                 })
             }
         });

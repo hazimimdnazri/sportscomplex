@@ -193,6 +193,12 @@ class HomeController extends Controller
     }
 
     public function submitRegisterVendor(Request $request){
+
+        $email = User::where('email', $request->email)->first();
+        if($email){
+            return 'duplicate';
+        }
+
         $vendor = new User;
         $vendor->name = $request->name;
         $vendor->email = $request->email;
