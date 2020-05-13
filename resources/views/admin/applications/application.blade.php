@@ -170,6 +170,12 @@
             $("#type, #nationality, option").each(function(i){
                 $(this).attr('disabled', 'disabled')
             });
+            $("#type").val('')
+            $("#nationality").val('')
+            $("#ic_block").hide()
+            $("#passport_block").hide()
+            $("#students").hide()
+            $("#staffs").hide()
             
         } else {
             $("#searchIC").hide()

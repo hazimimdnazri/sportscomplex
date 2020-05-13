@@ -1,7 +1,7 @@
 <div class="modal fade" id="activityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" id="form">
-            <form action="{{ url('admin/application') }}" method="POST">
+            <form id="applicationForm" action="{{ url('admin/application') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -122,5 +122,94 @@
     $(() => {
         $('.select2').select2()
     })
+
+    $("#applicationForm").validate({
+        ignore: [],
+        rules: {
+            type: {
+                required: true
+            },
+            name: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            nationality: {
+                required: true
+            },
+            ic: {
+                required: () => {
+                    return $('#searchIC').is(':visible')
+                },
+            },
+            ic: {
+                required: () => {
+                    return $('#ic_block').is(':visible')
+                },
+            },
+            passport: {
+                required: () => {
+                    return $('#passport_block').is(':visible')
+                },
+            },
+            student_id: {
+                required: () => {
+                    return $('#students').is(':visible')
+                },
+            },
+            institution: {
+                required: () => {
+                    return $('#students').is(':visible')
+                },
+            },
+            staff_id: {
+                required: () => {
+                    return $('#staffs').is(':visible')
+                },
+            },
+            company: {
+                required: () => {
+                    return $('#staffs').is(':visible')
+                },
+            }
+        },
+        messages: {
+            type: {
+                required: "Type is required.",
+            },
+            name: {
+                required: "Name is required.",
+            },
+            email: {
+                required: "E-Mail is required.",
+                email: "Please enter a valid e-mail address."
+            },
+            nationality: {
+                required: "Nationality is required.",
+            },
+            ic: {
+                required: "Please enter an IC / Passport number.",
+            },
+            passport: {
+                required: "Please enter a passport number.",
+            },
+            student_id: {
+                required: "Please enter studnent ID.",
+            },
+            institution: {
+                required: "Please select an institution.",
+            },
+            staff_id: {
+                required: "Please enter staff ID.",
+            },
+            company: {
+                required: "Please enter a company name.",
+            },
+        },
+        errorLabelContainer: "#errors", 
+        errorElement: "li",
+    });
 
 </script>
