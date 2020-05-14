@@ -155,4 +155,18 @@ class VendorController extends Controller
         $user = User::find(Auth::user()->id);
         return view('vendor.profile', compact('states', 'user'));
     }
+
+    public function deleteFacility(Request $request){
+        $facility = Facility::find($request->id);
+        if($facility->delete()){
+            return 'success';
+        }
+    }
+
+    public function deleteActivity(Request $request){
+        $activity = Activity::find($request->id);
+        if($activity->delete()){
+            return 'success';
+        }
+    }
 }

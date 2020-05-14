@@ -33,7 +33,6 @@
                 </div>
                 <div class="box-body">
                     <div class="row">
-                        <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Membership / Customer ID </label>
@@ -279,7 +278,7 @@
         })
     }
 
-    deleteAsset = (id) => {
+    deleteFacility = (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -292,14 +291,46 @@
             if (result.value) {
                 $.ajax({
                     type:"POST", 
-                    url: "{{ url('ajax/application/facility/delete') }}",
+                    url: "{{ url('vendor/applications/delete-facility') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "id" : id,
                     }
                 }).done(function(response){
                     if(response == 'success'){
-                        Swal.fire("Deleted!", "The reservation has been deleted.", "success")
+                        Swal.fire("Deleted!", "The facility has been deleted.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        })
+    }
+
+    deleteActivity = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type:"POST", 
+                    url: "{{ url('vendor/applications/delete-activity') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id" : id,
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Deleted!", "The activity has been deleted.", "success")
                         .then((result) => {
                             if(result.value){
                                 location.reload();

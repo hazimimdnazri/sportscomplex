@@ -27,7 +27,7 @@
                             {{ date('h:i:s a' ,strtotime($f->start_date)) }} - {{ date('h:i:s a' ,strtotime($f->end_date)) }}
                         </td>
                         <td class="text-center">
-                            <button onClick="deleteAsset({{ $f->id }}, 1)" class="btn btn-danger">Delete</button>
+                            <button onClick="deleteFacility({{ $f->id }}, 1)" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
                     @endforeach
@@ -36,7 +36,9 @@
             <hr>
             <div class="text-center">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                @if($facilities->count() > 0)
                 <button onClick="toQuotation()" class="btn btn-primary">Submit Reservation</button>
+                @endif
             </div>
         </div>
     </div>
@@ -45,7 +47,7 @@
 <div class="modal fade" id="facilityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ url('ajax/application/'.$id.'/facility') }}" method="POST">
+            <form id="facilityData" action="{{ url('ajax/application/'.$id.'/facility') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -54,9 +56,12 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
+                            <div id="errors" style="display:none" class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            </div>
                             <div class="form-group">
                                 <label>Venue <span class="text-red">*</span></label>
-                                <select name="group" class="form-control select2" onChange="selectVenue(this.value)" style="width: 100%;">
+                                <select name="venue" class="form-control select2" onChange="selectVenue(this.value)" style="width: 100%;">
                                     <option value="">-- Venues --</option>
                                     @foreach($venues as $v)
                                         <option value="{{ $v->id }}">{{ $v->venue }}</option>
@@ -180,4 +185,34 @@
         });
 
     }
+    
+    $("#facilityData").validate({
+        ignore: [],
+        rules: {
+            venue: {
+                required: true
+            },
+            sport: {
+                required: () => {
+                    return $('#sport').is(':visible')
+                },
+            },
+            duration: {
+                required: true
+            },
+        },
+        messages: {
+            venue: {
+                required: "Select a venue.",
+            },
+            sport: {
+                required: "Select a sport.",
+            },
+            duration: {
+                required: "Select a duration.",
+            },
+        },
+        errorLabelContainer: "#errors", 
+        errorElement: "li",
+    });
 </script>

@@ -119,6 +119,8 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::post('cancel', 'VendorController@applicationCancel');
         Route::get('{id}', 'VendorController@applicationDetails');
         Route::post('{id}/payment', 'VendorController@uploadPayment');
+        Route::post('delete-facility', 'VendorController@deleteFacility');
+        Route::post('delete-activity', 'VendorController@deleteActivity');
     });
 
     Route::group(['prefix' => 'settings'], function() {
