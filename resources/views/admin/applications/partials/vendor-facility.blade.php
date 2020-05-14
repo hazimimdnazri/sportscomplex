@@ -41,8 +41,10 @@
             </form>
             <hr>
             <div class="text-center">
-                <button onClick="reject()" type="button" class="btn btn-danger" data-dismiss="modal">Reject</button>
-                <button onClick="approve()" class="btn btn-primary">Approve</button>
+                @if($reservations->count() > 0)
+                    <button onClick="reject()" type="button" class="btn btn-danger" data-dismiss="modal">Reject</button>
+                    <button onClick="approve()" class="btn btn-primary">Approve</button>
+                @endif
             </div>
         </div>
     </div>
