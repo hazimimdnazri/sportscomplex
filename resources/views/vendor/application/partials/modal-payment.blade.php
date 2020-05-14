@@ -36,7 +36,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputFile">Proof of Payment</label>
-                                <input type="file" name="receipt" id="exampleInputFile">
+                                <input type="file" name="receipt" id="proof">
 
                                 <p class="help-block">Please upload your transaction receipt.</p>
                             </div>
@@ -60,29 +60,42 @@
     })
 
     uploadPayment = () => {
-        var formData = new FormData($('#paymentData')[0]);
+        var format = ['jpeg', 'png', 'jpg', 'pdf']
+        var fileName = $("#proof").val()
+        var fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
 
-        $.ajax({
-            url: "{{ url('vendor/applications/'.$application->id.'/payment') }}",
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        }).done((response) => {
-            if(response == 'success'){
-                $('#paymentModal').modal('hide')
-                Swal.fire(
-                    'Success!',
-                    'Proof of payment uploaded!',
-                    'success'
-                ).then((result) => {
-                    if(result.value){
-                        location.reload()
-                    }
-                })
-            } 
-        });
+        if(format.includes(fileExtension)){
+            var formData = new FormData($('#paymentData')[0]);
+
+            $.ajax({
+                url: "{{ url('vendor/applications/'.$application->id.'/payment') }}",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done((response) => {
+                if(response == 'success'){
+                    $('#paymentModal').modal('hide')
+                    Swal.fire(
+                        'Success!',
+                        'Proof of payment uploaded!',
+                        'success'
+                    ).then((result) => {
+                        if(result.value){
+                            location.reload()
+                        }
+                    })
+                } 
+            });
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                type: 'error',
+                html:
+                    'No file or invalid format.<br>' +
+                    'Allowed format (pdf, png, jpeg, jpg).'
+            })
+        }
     }
-
 </script>
