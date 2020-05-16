@@ -154,7 +154,6 @@
 @section('postscript')
 <script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
 <script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 <script>
     $(() => {
@@ -347,11 +346,17 @@
                             window.location.replace("{{ url('admin/customers') }}");
                         }
                     })
-                } else if(response == 'duplicate'){
+                } else if(response == 'email'){
                     Swal.fire({
                         type: 'error',
                         title: 'Error!',
                         text: 'The e-mail address already exist, please use different e-mail or login to your existing account.'
+                    })
+                } else if(response == 'ic'){
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error!',
+                        text: 'The IC number already exist.'
                     })
                 }
             });

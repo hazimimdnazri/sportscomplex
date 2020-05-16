@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
     Route::group(['prefix' => 'vendors'], function() {
         Route::get('/', 'HomeController@vendors');
         Route::get('{id}', 'HomeController@viewVendor');
+        Route::post('{id}', 'HomeController@submitEditVendor');
     
     });
     

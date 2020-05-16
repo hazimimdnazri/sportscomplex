@@ -65,8 +65,8 @@
                                         <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
                                         <select name="nationality" class="form-control" name="nationality">
                                             <option value="" selected>-- Nationality --</option>
-                                            <option value="1" >Malaysian</option>
-                                            <option value="2" >Foriegner</option>
+                                            <option value="1" {{ $vendor->r_vendor->nationality == 1 ? 'selected' : '' }} >Malaysian</option>
+                                            <option value="2" {{ $vendor->r_vendor->nationality == 2 ? 'selected' : '' }} >Foriegner</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -86,7 +86,7 @@
                                         <select name="state" id="state" class="select2 form-control" style="width: 100%;">
                                             <option value="" selected>-- State --</option>
                                             @foreach($states as $s)
-                                            <option value="{{ $s->id }}" >{{ $s->state }}</option>
+                                            <option value="{{ $s->id }}" {{ $vendor->r_vendor->state == $s->id ? 'selected' : '' }} >{{ $s->state }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -214,31 +214,128 @@
         });
     }
 
-    $("#vendorData").submit(function(e) {
-        e.preventDefault();    
-        var formData = new FormData(this);
+    $("#vendorData").validate({
+        ignore: [],
+        rules: {
+            name: {
+                required: true,
+            },
+            phone_mobile: {
+                required: true,
+            },
+            phone_office: {
+                required: true,
+            },
+            email: {
+                required: true,
+            },
+            password: {
+                required: true,
+            },
+            address: {
+                required: true,
+            },
+            nationality: {
+                required: true,
+            },
+            company_reg: {
+                required: true,
+            },
+            zipcode: {
+                required: true,
+            },
+            city: {
+                required: true,
+            },
+            state: {
+                required: true,
+            },
+            "pic_name[]": {
+                required: true,
+            },
+            "pic_phone[]": {
+                required: true,
+            },
+            "pic_email[]": {
+                required: true,
+            },
+        },
+        messages: {
+            name: {
+                required: "Vendor name is required.",
+            },
+            phone_mobile: {
+                required: "Mobile number is required.",
+            },
+            phone_office: {
+                required: "Office number is required.",
+            },
+            email: {
+                required: "E-Mail is required.",
+            },
+            address: {
+                required: "Address is required.",
+            },
+            nationality: {
+                required: "Nationality is required.",
+            },
+            company_reg: {
+                required: "Company registration number is required.",
+            },
+            zipcode: {
+                required: "Zipcode is required.",
+            },
+            city: {
+                required: "City is required.",
+            },
+            state: {
+                required: "State is required.",
+            },
+            "pic_name[]": {
+                required: "Both PIC's name is required.",
+            },
+            "pic_phone[]": {
+                required: "Both PIC's phone is required.",
+            },
+            "pic_email[]": {
+                required: "Both PIC's email is required.",
+            },
+        },
 
-        $.ajax({
-            url: "{{ url('admin/registration/vendor') }}",
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        }).done((response) => {
-            if(response == 'success'){
-                $("#familyModal").modal('hide')
-                Swal.fire(
-                    'Success!',
-                    'Vendor has been registered!',
-                    'success'
-                ).then((result) => {
-                    if(result.value){
-                        window.location.replace("{{ url('admin/settings/users') }}");
-                    }
-                })
-            }
-        });
-    });
+        submitHandler: function(){
+            var formData = new FormData($('#vendorData')[0]);
+            Swal.fire({
+                title: 'Registering vendor',
+                html: 'Please wait for a moment...',
+                allowOutsideClick: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading()
+                }
+            })
+
+            $.ajax({
+                url: "{{ url('admin/vendors/'.$vendor->id) }}",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done((response) => {
+                if(response == 'success'){
+                    Swal.fire(
+                        'Success!',
+                        'Vendor has been edited.',
+                        'success'
+                    ).then((result) => {
+                        if(result.value){
+                            window.location.replace("{{ url('admin/vendors') }}");
+                        }
+                    })
+                }
+            });
+        },
+        errorLabelContainer: "#errors", 
+        errorElement: "li",
+    })
 </script>
 @endsection

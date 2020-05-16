@@ -121,18 +121,20 @@ class HomeController extends Controller
     }
 
     public function registerUser(){
-        $memberships = LMembership::all();
         $states = LState::all();
         $types = LCustomerType::all();
         $institutions = LInstitution::all();
-        return view('admin.registration-user', compact('memberships', 'types', 'institutions', 'states'));
+        return view('admin.registration-user', compact('types', 'institutions', 'states'));
     }
 
     public function submitUserRegister(Request $request){
         
         $email = User::where('email', $request->email)->first();
+        $ic = CustomerDetail::where('ic', $request->ic)->first();
         if($email){
-            return 'duplicate';
+            return 'email';
+        } else if($ic){
+            return 'ic';
         }
 
         $user = new User;
@@ -170,20 +172,6 @@ class HomeController extends Controller
                 $staff->company = $request->company;
                 $staff->save();
             }
-
-            // $memberships = new Membership;
-            // $memberships->user_id = $user->id;
-            // $memberships->membership = $request->membership;
-            // $memberships->cycle = $request->cycle;
-            // $memberships->cycle_start = date('Y-m-d');
-            // if($request->cycle == 1){
-            //     $memberships->cycle_end = date('Y-m-d', strtotime('+1 month'));
-            // } else {
-            //     $memberships->cycle_end = date('Y-m-d', strtotime('+1 year'));
-            // }
-            // if($members->save()){
-            //     return redirect('admin/customers');
-            // }
 
             $vars["email"] = $user->email;
             $vars["name"] = $user->name;
@@ -269,6 +257,42 @@ class HomeController extends Controller
         return "success";
     }
 
+    public function submitEditVendor(Request $request, $id){
+        $vendor = User::find($id);
+        $vendor->name = $request->name;
+        $vendor->email = $request->email;
+        $vendor->role = 4;
+        $vendor->status = 1;
+        $vendor->password = Hash::make($request->password);
+
+        if($vendor->save()){
+            $vendorDetail = VendorDetail::where('user_id', $id)->first();
+            $vendorDetail->user_id = $vendor->id;
+            $vendorDetail->phone_mobile = $request->phone_mobile;
+            $vendorDetail->phone_office = $request->phone_office;
+            $vendorDetail->company_registration = $request->company_reg;
+            $vendorDetail->address = $request->address;
+            $vendorDetail->city = $request->city;
+            $vendorDetail->state = $request->state;
+            $vendorDetail->zipcode = $request->zipcode;
+            $vendorDetail->nationality = $request->nationality;
+
+            if($vendorDetail->save()){
+                VendorPic::where('vendor_id', $id)->delete();
+                for($i = 0; $i < count($request->pic_email); $i++){
+                    $pic = new VendorPic;
+                    $pic->vendor_id = $vendor->id;
+                    $pic->name = $request->pic_name[$i];
+                    $pic->email = $request->pic_email[$i];
+                    $pic->phone_mobile = $request->pic_phone[$i];
+                    $pic->type = $i;
+                    $pic->save();
+                }
+            }
+        }
+        return "success";
+    }
+
     public function submitEditCust(Request $request, $id){
         $user = User::find($id);
         $user->name = $request->name;
@@ -308,22 +332,8 @@ class HomeController extends Controller
             $staff->save();
         }
 
-        $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
-        if($membership == ''){
-            $membership = new Membership;
-        }
-        $membership->user_id = $id;
-        $membership->membership = $request->membership;
-        $membership->cycle = $request->cycle;
-        $membership->cycle_start = date('Y-m-d');
-        if($request->cycle == 1){
-            $membership->cycle_end = date('Y-m-d', strtotime('+1 month'));
-        } else {
-            $membership->cycle_end = date('Y-m-d', strtotime('+1 year'));
-        }
-
-        if($user->save() && $members->save() && $membership->save()){
-            return back();
+        if($user->save() && $members->save()){
+            return "success";
         }
     }
 
@@ -368,10 +378,10 @@ class HomeController extends Controller
 
     public function editCustomer($id){
         $user = User::find($id);
-        $memberships = LMembership::all();
+        $states = LState::all();
         $types = LCustomerType::all();
         $institutions = LInstitution::all();
-        return view('admin.customer-edit', compact('user', 'memberships', 'types', 'institutions'));
+        return view('admin.customer-edit', compact('user', 'states', 'types', 'institutions'));
     }
 
     public function facilityCalendar(Request $request){
