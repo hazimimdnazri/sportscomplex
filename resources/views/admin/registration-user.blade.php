@@ -3,6 +3,7 @@
 @section('prescript')
 <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
+<link href="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -25,7 +26,7 @@
                     <p>Please fill in all the required fields, denoted with <span class="text-red">*</span>.</p>
                 </div>
                 <div class="box-body">
-                    <form id="application_form" action="{{ url('admin/registration/user') }}" method="POST">
+                    <form id="userData">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -35,9 +36,13 @@
                                         <label for="exampleInputEmail1">Full Name <span class="text-red">*</span></label>
                                         <input type="text" class="form-control" name="name" placeholder="Enter name">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" id="ic">
                                         <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
                                         <input type="text" class="form-control" name="ic" placeholder="Enter IC number">
+                                    </div>
+                                    <div class="form-group" style="display:none" id="passport">
+                                        <label for="exampleInputEmail1">Passport <span class="text-red">*</span></label>
+                                        <input type="text" class="form-control" name="passport" placeholder="Enter passport number">
                                     </div>
                                     <div class="form-group">
                                         <label>Date of Birth <span class="text-red">*</span></label>
@@ -65,23 +70,14 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Address <span class="text-red">*</span></label>
-                                        <textarea type="text" rows="4" class="form-control" name="address" placeholder="Enter address"></textarea>
-                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
-                                        <select id="nationality" class="form-control" name="nationality">
-                                            <option value="" selected>-- Nationality --</option>
+                                        <select id="nationality" class="form-control" name="nationality" onChange="nation(this.value)">
                                             <option value="1" >Malaysian</option>
                                             <option value="2" >Foriegner</option>
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Passport <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="passport" placeholder="Enter passport number">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Zipcode <span class="text-red">*</span></label>
@@ -101,25 +97,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Membership Type <span class="text-red">*</span></label>
-                                        <select onChange="member(this.value)" id="membership" class="form-control" name="membership">
-                                            <option value="" selected>-- Membership --</option>
-                                            @foreach($memberships as $m)
-                                                <option value="{{ $m->id }}">{{ $m->membership }}</option>
-                                            @endforeach
-                                        </select>
-                                        <small><span style="color:gold">Gold</span> = 20% discounted price</small><br>
-                                        <small><span style="color:silver">Silver</span> = 15% discounted price</small><br>
-                                        <small><span style="color:brown">Bronze</span> = 10% discounted price</small><br>
-                                        <small><span style="color:blue">EduCity Students</span> = 20% discounted price</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Payment Cycle <span class="text-red">*</span></label>
-                                        <select name="cycle" id="cycle" id="" class="form-control">
-                                            <option value="">-- Cycle --</option>
-                                            <option id="monthly" value="1">Monthly</option>
-                                            <option id="anually" value="2">Anually</option>
-                                        </select>
+                                        <label for="exampleInputEmail1">Address <span class="text-red">*</span></label>
+                                        <textarea type="text" rows="4" class="form-control" name="address" placeholder="Enter address"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +141,7 @@
                         <hr>
                         <div class="text-center">
                             <button type="button" class="btn btn-warning">Reset</button>
-                            <button class="btn btn-primary">Register</button>
+                            <button type="submit" class="btn btn-primary">Register</button>
                         </div>
                     </form>
                 </div>
@@ -176,6 +155,7 @@
 <script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 <script>
     $(() => {
         $('.select2').select2()
@@ -191,6 +171,16 @@
         } else {
             $("#students").hide()
             $("#staffs").hide()
+        }
+    }
+
+    nation = (value) => {
+        if(value == 1){
+            $("#ic").show();
+            $("#passport").hide();
+        } else {
+            $("#ic").hide();
+            $("#passport").show();
         }
     }
 
@@ -220,7 +210,7 @@
         }
     }
 
-    $("#application_form").validate({
+    $("#userData").validate({
         ignore: [],
         rules: {
             name: {
@@ -230,7 +220,14 @@
                 required: true,
             },
             ic: {
-                required: true,
+                required: () => {
+                    return $('#ic').is(':visible')
+                },
+            },
+            passport: {
+                required: () => {
+                    return $('#passport').is(':visible')
+                },
             },
             address: {
                 required: true,
@@ -250,47 +247,114 @@
             state: {
                 required: true,
             },
-            membership: {
+            type: {
                 required: true,
             },
-            cycle: {
-                required: true,
+            student_id: {
+                required: () => {
+                    return $('#students').is(':visible')
+                },
             },
+            institution: {
+                required: () => {
+                    return $('#students').is(':visible')
+                },
+            },
+            staff_id: {
+                required: () => {
+                    return $('#staffs').is(':visible')
+                },
+            },
+            company: {
+                required: () => {
+                    return $('#staffs').is(':visible')
+                },
+            }
         },
         messages: {
             name: {
-                required: "Applicant name is required.",
+                required: "User name is required.",
             },
             dob: {
-                required: "Applicant date of birth is required.",
+                required: "User date of birth is required.",
             },
             ic: {
-                required: "Applicant IC is required.",
+                required: "User IC number is required.",
+            },
+            passport: {
+                required: "User passport number is required.",
             },
             address: {
-                required: "Applicant address is required.",
+                required: "User address is required.",
             },
             phone: {
-                required: "Applicant phone is required.",
+                required: "User phone is required.",
             },
             email: {
-                required: "Applicant email is required.",
+                required: "User email is required.",
             },
             zipcode: {
-                required: "Applicant zipcode is required.",
+                required: "User zipcode is required.",
             },
             city: {
-                required: "Applicant city is required.",
+                required: "User city is required.",
             },
             state: {
-                required: "Select applicant state.",
+                required: "Select a state.",
             },
-            membership: {
-                required: "Select applicant membership.",
+            type: {
+                required: "User type is required.",
             },
-            cycle: {
-                required: "Select applicant payment cycle.",
+            student_id: {
+                required: "Please enter student ID.",
             },
+            institution: {
+                required: "Please select an institution.",
+            },
+            staff_id: {
+                required: "Please enter staff ID.",
+            },
+            company: {
+                required: "Please enter a company name.",
+            },
+        },
+        submitHandler: function(){
+            var formData = new FormData($('#userData')[0]);
+            Swal.fire({
+                title: 'Registering user',
+                html: 'Please wait for a moment...',
+                allowOutsideClick: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading()
+                }
+            })
+
+            $.ajax({
+                url: "{{ url('admin/registration/user') }}",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done((response) => {
+                if(response == 'success'){
+                    Swal.fire(
+                        'Success!',
+                        'User has been registered. E-mail has been successfully sent.',
+                        'success'
+                    ).then((result) => {
+                        if(result.value){
+                            window.location.replace("{{ url('admin/customers') }}");
+                        }
+                    })
+                } else if(response == 'duplicate'){
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error!',
+                        text: 'The e-mail address already exist, please use different e-mail or login to your existing account.'
+                    })
+                }
+            });
         },
         errorLabelContainer: "#errors", 
         errorElement: "li",

@@ -196,45 +196,134 @@
         startView: 3
     })
 
-    $("#vendorData").submit(function(e) {
-        var formData = new FormData(this);
-        e.preventDefault();
+    $("#vendorData").validate({
+        ignore: [],
+        rules: {
+            name: {
+                required: true,
+            },
+            phone_mobile: {
+                required: true,
+            },
+            phone_office: {
+                required: true,
+            },
+            email: {
+                required: true,
+            },
+            password: {
+                required: true,
+            },
+            address: {
+                required: true,
+            },
+            nationality: {
+                required: true,
+            },
+            company_reg: {
+                required: true,
+            },
+            zipcode: {
+                required: true,
+            },
+            city: {
+                required: true,
+            },
+            state: {
+                required: true,
+            },
+            "pic_name[]": {
+                required: true,
+            },
+            "pic_phone[]": {
+                required: true,
+            },
+            "pic_email[]": {
+                required: true,
+            },
+        },
+        messages: {
+            name: {
+                required: "Vendor name is required.",
+            },
+            phone_mobile: {
+                required: "Mobile number is required.",
+            },
+            phone_office: {
+                required: "Office number is required.",
+            },
+            email: {
+                required: "E-Mail is required.",
+            },
+            address: {
+                required: "Address is required.",
+            },
+            nationality: {
+                required: "Nationality is required.",
+            },
+            company_reg: {
+                required: "Company registration number is required.",
+            },
+            zipcode: {
+                required: "Zipcode is required.",
+            },
+            city: {
+                required: "City is required.",
+            },
+            state: {
+                required: "State is required.",
+            },
+            "pic_name[]": {
+                required: "Both PIC's name is required.",
+            },
+            "pic_phone[]": {
+                required: "Both PIC's phone is required.",
+            },
+            "pic_email[]": {
+                required: "Both PIC's email is required.",
+            },
+        },
 
-        Swal.fire({
-            title: 'Registering vendor!',
-            html: 'Please wait for a moment.',
-            allowOutsideClick: false,
-            onBeforeOpen: () => {
-                Swal.showLoading()
-            }
-        })
+        submitHandler: function(){
+            var formData = new FormData($('#vendorData')[0]);
+            Swal.fire({
+                title: 'Registering vendor',
+                html: 'Please wait for a moment...',
+                allowOutsideClick: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading()
+                }
+            })
 
-        $.ajax({
-            url: "{{ url('admin/registration/vendor') }}",
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        }).done((response) => {
-            if(response == 'success'){
-                Swal.fire(
-                    'Success!',
-                    'Vendor has been registered. E-mail has been successfully sent.',
-                    'success'
-                ).then((result) => {
-                    if(result.value){
-                        window.location.replace("{{ url('admin/settings/users') }}");
-                    }
-                })
-            } else if(response == 'duplicate'){
-                Swal.fire({
-                    type: 'error',
-                    title: 'Error!',
-                    text: 'The e-mail address already exist, please use different e-mail or login to your existing account.'
-                })
-            }
-        });
-    });
+            $.ajax({
+                url: "{{ url('admin/registration/vendor') }}",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done((response) => {
+                if(response == 'success'){
+                    Swal.fire(
+                        'Success!',
+                        'Vendor has been registered. E-mail has been successfully sent.',
+                        'success'
+                    ).then((result) => {
+                        if(result.value){
+                            window.location.replace("{{ url('admin/settings/users') }}");
+                        }
+                    })
+                } else if(response == 'duplicate'){
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error!',
+                        text: 'The e-mail address already exist, please use different e-mail or login to your existing account.'
+                    })
+                }
+            });
+        },
+        errorLabelContainer: "#errors", 
+        errorElement: "li",
+    })
 </script>
 @endsection

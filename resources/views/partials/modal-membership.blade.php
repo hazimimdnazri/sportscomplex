@@ -9,6 +9,9 @@
                 <form id="membershipData">
                     @csrf
                     <div class="row">
+                        <div class="col-md-12">
+                            <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Membership Type <span class="text-red">*</span></label>
@@ -74,29 +77,56 @@
 </div>
 
 <script>
-renew = () => { 
-    var formData = new FormData($('#membershipData')[0]);
 
-    $.ajax({
-        url: "{{ url('admin/membership/'.$id) }}",
-        type: 'POST',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false
-    }).done((response) => {
-        if(response == 'success'){
-            $('#membershipModal').modal('hide')
-            Swal.fire(
-                'Success!',
-                'Membership added!',
-                'success'
-            ).then((result) => {
-                if(result.value){
-                    location.reload()
-                }
-            })
-        } 
-    });
+$(() => {
+    $("#membershipData").validate({
+        ignore: [],
+        rules: {
+            membership: {
+                required: true,
+            },
+            cycle: {
+                required: true,
+            },
+        },
+        messages: {
+            membership: {
+                required: "Membership type is required.",
+            },
+            cycle: {
+                required: "Cycle is required.",
+            },
+        },
+        errorLabelContainer: "#errors", 
+        errorElement: "li",
+    })
+})
+
+renew = () => { 
+    if($("#membershipData").valid()){
+        var formData = new FormData($('#membershipData')[0]);
+
+        $.ajax({
+            url: "{{ url('admin/membership/'.$id) }}",
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done((response) => {
+            if(response == 'success'){
+                $('#membershipModal').modal('hide')
+                Swal.fire(
+                    'Success!',
+                    'Membership added!',
+                    'success'
+                ).then((result) => {
+                    if(result.value){
+                        location.reload()
+                    }
+                })
+            } 
+        });
+    }
 }
 </script>

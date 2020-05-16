@@ -129,6 +129,12 @@ class HomeController extends Controller
     }
 
     public function submitUserRegister(Request $request){
+        
+        $email = User::where('email', $request->email)->first();
+        if($email){
+            return 'duplicate';
+        }
+
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
@@ -175,9 +181,24 @@ class HomeController extends Controller
             // } else {
             //     $memberships->cycle_end = date('Y-m-d', strtotime('+1 year'));
             // }
-            if($members->save()){
-                return redirect('admin/customers');
+            // if($members->save()){
+            //     return redirect('admin/customers');
+            // }
+
+            $vars["email"] = $user->email;
+            $vars["name"] = $user->name;
+            $vars["token"] = base64_encode($user->email);
+            try {
+                Mail::send(["html" => "shared.mail-verify"], $vars, function($message) use ($vars){
+                    $message->from("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
+                    $message->to($vars["email"]);
+                    $message->sender("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
+                    $message->subject("EduCity Sports Centre Account Activation");
+                });
+            } catch(\Exception $err) {
+                return $err;
             }
+            return "success";
         }
     }
 

@@ -196,7 +196,7 @@
                 required: "Please enter a passport number.",
             },
             student_id: {
-                required: "Please enter studnent ID.",
+                required: "Please enter student ID.",
             },
             institution: {
                 required: "Please select an institution.",
