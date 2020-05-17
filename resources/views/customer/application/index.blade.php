@@ -165,7 +165,7 @@
             if (result.value) {
                 $.ajax({
                     type:"POST",
-                    url: "{{ url('admin/application/ajax/view-modal') }}",
+                    url: "{{ url('customer/ajax/modal-reservation') }}",
                     data: {
                         "_token" : "{{ csrf_token() }}",
                         "id" : id,

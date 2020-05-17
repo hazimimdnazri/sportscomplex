@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LVenue;
+use App\LState;
+use App\LInstitution;
 use App\Application;
 use App\Equiptment;
 use App\User;
@@ -12,12 +14,68 @@ use App\Activity;
 use App\LActivity;
 use App\LCustomerType;
 use App\Payment;
+use App\CustomerDetail;
+use App\StudentDetail;
+use App\StaffDetail;
 use Auth;
 
 class CustomerController extends Controller
 {
     public function dashboard(){
         return view('customer.dashboard');
+    }
+
+    public function profile(){
+        $user = User::find(Auth::user()->id);
+        $states = LState::all();
+        $types = LCustomerType::all();
+        $institutions = LInstitution::all();
+        return view('customer.profile', compact('user', 'states', 'types', 'institutions'));
+    }
+
+    public function editProfile(Request $request){
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        $members = CustomerDetail::where('user_id', $id)->first();
+        $members->user_id = $id;
+        $members->ic = $request->ic;
+        // $members->passport = $request->passport;
+        $members->phone = $request->phone;
+        $members->dob = date('Y-m-d', strtotime($request->dob));
+        $members->address = $request->address;
+        $members->zipcode = $request->zipcode;
+        $members->type = $request->type;
+        $members->nationality = $request->nationality;
+        $members->city = $request->city;
+        $members->state = $request->state;
+
+        if($request->type == 3){
+            $student = StudentDetail::where('user_id', $id)->first();
+            if($student == ''){
+                $student = new StudentDetail;
+            }
+            $student->user_id = $id;
+            $student->student_id = $request->student_id;
+            $student->institution = $request->institution;
+            $student->save();
+
+        } else if($request->type == 2){
+            $staff = StaffDetail::where('user_id', $id)->first();
+            if($staff == ''){
+                $staff = new StaffDetail;
+            }
+            $staff->user_id = $id;
+            $staff->staff_id = $request->staff_id;
+            $staff->company = $request->company;
+            $staff->save();
+        }
+
+        if($user->save() && $members->save()){
+            return "success";
+        }
     }
 
     public function applications(){

@@ -138,6 +138,8 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
 
 Route::group(['middleware' => ['auth', "role:3"], 'prefix' => 'customer'], function() {
     Route::get('dashboard', 'CustomerController@dashboard');
+    Route::get('profile', 'CustomerController@profile');
+    Route::post('profile', 'CustomerController@editProfile');
 
     Route::group(['prefix' => 'applications'], function() {
         Route::get('/', 'CustomerController@applications');
