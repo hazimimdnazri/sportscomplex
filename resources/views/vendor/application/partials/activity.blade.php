@@ -24,7 +24,7 @@
                         <td class="text-center">{{ $n++ }}</td>
                         <td class="text-center">{{ $a->r_activity->activity }}</td>
                         <td class="text-center">
-                            <button onClick="deleteActivity({{ $a->id }}, 2)" class="btn btn-danger" >Delete</button>
+                            <button onClick="deleteItem({{ $a->id }}, 2)" class="btn btn-danger" >Delete</button>
                         </td>
                     </tr>
                     @endforeach

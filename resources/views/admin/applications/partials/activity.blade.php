@@ -75,9 +75,7 @@
                     <h4 class="modal-title">Reserve an Activity</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="errors" style="display:none" class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    </div>
+                    <div id="errors" style="display:none" class="alert alert-danger alert-dismissable"></div>
                     <div class="form-group">
                         <label>Activity <span class="text-red">*</span></label>
                         <select name="activity" class="form-control select2" style="width: 100%;">

@@ -119,4 +119,16 @@ class CustomerController extends Controller
         }
 
     }
+
+    public function deleteItem(Request $request){
+        if($request->type == 1){
+            $item = Facility::find($request->id);
+        } else {
+            $item = Activity::find($request->id);
+        }
+
+        if($item->delete()){
+            return "success";
+        }
+    }
 }

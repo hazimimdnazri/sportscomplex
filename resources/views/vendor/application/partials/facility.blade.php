@@ -27,7 +27,7 @@
                             {{ date('h:i:s a' ,strtotime($f->start_date)) }} - {{ date('h:i:s a' ,strtotime($f->end_date)) }}
                         </td>
                         <td class="text-center">
-                            <button onClick="deleteFacility({{ $f->id }}, 1)" class="btn btn-danger">Delete</button>
+                            <button onClick="deleteItem({{ $f->id }}, 1)" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
                     @endforeach

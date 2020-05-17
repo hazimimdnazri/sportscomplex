@@ -156,17 +156,15 @@ class VendorController extends Controller
         return view('vendor.profile', compact('states', 'user'));
     }
 
-    public function deleteFacility(Request $request){
-        $facility = Facility::find($request->id);
-        if($facility->delete()){
-            return 'success';
+    public function deleteItem(Request $request){
+        if($request->type == 1){
+            $item = Facility::find($request->id);
+        } else {
+            $item = Activity::find($request->id);
         }
-    }
 
-    public function deleteActivity(Request $request){
-        $activity = Activity::find($request->id);
-        if($activity->delete()){
-            return 'success';
+        if($item->delete()){
+            return "success";
         }
     }
 }

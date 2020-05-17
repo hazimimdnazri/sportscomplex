@@ -120,8 +120,6 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::post('cancel', 'VendorController@applicationCancel');
         Route::get('{id}', 'VendorController@applicationDetails');
         Route::post('{id}/payment', 'VendorController@uploadPayment');
-        Route::post('delete-facility', 'VendorController@deleteFacility');
-        Route::post('delete-activity', 'VendorController@deleteActivity');
     });
 
     Route::group(['prefix' => 'settings'], function() {
@@ -134,6 +132,7 @@ Route::group(['middleware' => ['auth', "role:4"], 'prefix' => 'vendor'], functio
         Route::post('acceptreservation', 'VendorController@acceptReservation');
         Route::post('modal-adminApproval', 'VendorController@modalAdminApproval');
         Route::post('modal-payment', 'VendorController@modalPayment');
+        Route::post('delete-item', 'VendorController@deleteItem');
     });
 });
 
@@ -153,6 +152,7 @@ Route::group(['middleware' => ['auth', "role:3"], 'prefix' => 'customer'], funct
         Route::post('submitreservation', 'CustomerController@submitReservation');
         Route::post('modal-reservation', 'CustomerController@modalReservation');
         Route::post('modal-payment', 'CustomerController@modalPayment');
+        Route::post('delete-item', 'CustomerController@deleteItem');
     });
 });
 
