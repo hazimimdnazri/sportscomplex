@@ -154,6 +154,7 @@ Route::group(['middleware' => ['auth', "role:3"], 'prefix' => 'customer'], funct
         Route::post('submitreservation', 'CustomerController@submitReservation');
         Route::post('modal-reservation', 'CustomerController@modalReservation');
         Route::post('modal-payment', 'CustomerController@modalPayment');
+        Route::post('changepass', 'CustomerController@changePassword');
         Route::post('delete-item', 'CustomerController@deleteItem');
     });
 });

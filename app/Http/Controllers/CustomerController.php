@@ -18,6 +18,7 @@ use App\CustomerDetail;
 use App\StudentDetail;
 use App\StaffDetail;
 use Auth;
+use Hash;
 
 class CustomerController extends Controller
 {
@@ -187,6 +188,14 @@ class CustomerController extends Controller
 
         if($item->delete()){
             return "success";
+        }
+    }
+
+    public function changePassword(Request $request){
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($request->password);
+        if($user->save()){
+            return 'success';
         }
     }
 }
