@@ -305,7 +305,35 @@
     }
 
     checkIn = (id) => {
-
+        Swal.fire({
+            title: "Confirm check in?",
+            text: "Check in customer.",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, confirm!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/ajax/checkin') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Checked In!", "User may proceed to the venue.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
     }
 
     checkOut = (id) => {

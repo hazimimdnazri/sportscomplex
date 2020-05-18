@@ -109,6 +109,7 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
         Route::post('membership-modal', 'HomeController@membershipModal');
         Route::post('delete-membership', 'HomeController@deleteMembership');
         Route::post('change-userpassword', 'HomeController@changeUserPass');
+        Route::post('checkin', 'HomeController@checkIn');
     });
 });
 

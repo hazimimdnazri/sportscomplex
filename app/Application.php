@@ -48,6 +48,14 @@ class Application extends Model
                 return '<span class="label label-danger">'.$this->a_status->status.'</span>';
                 break;
     
+            case 7:
+                return '<span class="label bg-purple">'.$this->a_status->status.'</span>';
+                break;
+    
+            case 8:
+                return '<span class="label bg-navy">'.$this->a_status->status.'</span>';
+                break;
+    
             default:
                 return '<span class="label label-warning">ERR</span>';
                 break;
