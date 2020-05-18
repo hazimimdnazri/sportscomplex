@@ -26,25 +26,25 @@
                     <button type="button" class="btn btn-primary" id="grade" onClick="showModal()">New Activity</button>
                 </div>
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-bordered table-striped nowrap">
                         <thead>
                             <tr>
-                                <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Activity</th>
-                                <th class="text-center">Public Price (RM)</th>
-                                <th class="text-center">Students Price (RM)</th>
-                                <th class="text-center">Under 12 Price (RM)</th>
-                                <th class="text-center">Deposit (RM)</th>
+                                <th class="text-center">Venue</th>
+                                <th width="5%" class="text-center">Public Price (RM)</th>
+                                <th width="5%" class="text-center">Students Price (RM)</th>
+                                <th width="5%" class="text-center">Under 12 Price (RM)</th>
+                                <th width="5%" class="text-center">Deposit (RM)</th>
                                 <th class="text-center">Remark</th>
-                                <th class="text-center" width="20%">Actions</th>
+                                <th width="10%" class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         @php $n = 1 @endphp
                         @foreach($activities as $a)
                             <tr>
-                                <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $a->activity }}</td>
+                                <td class="text-center">{{ $a->r_venue->venue }}</td>
                                 <td class="text-center">{{ number_format($a->public, 2) }}</td>
                                 <td class="text-center">{{ number_format($a->students, 2) }}</td>
                                 <td class="text-center">{{ number_format($a->underage, 2) }}</td>

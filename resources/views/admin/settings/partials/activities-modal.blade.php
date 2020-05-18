@@ -13,6 +13,15 @@
                         <input type="text" class="form-control" name="activity" value="{{ $activity->activity }}" placeholder="Enter asset name">
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Venue <span class="text-red">*</span></label>
+                        <select class="form-control" name="venue" id="">
+                            <option value="">-- Select Venue --</option>
+                            @foreach($venues as $v)
+                            <option value="{{ $v->id }}">{{ $v->venue }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Public Price (RM) <span class="text-red">*</span></label>
                         <input type="integer" class="form-control" name="public" value="{{ $activity->public }}" placeholder="Enter asset name">
                     </div>

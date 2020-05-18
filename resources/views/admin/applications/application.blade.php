@@ -58,6 +58,9 @@
                                     {!! $a->getStatus($a->status) !!}
                                 </td>
                                 <td class="text-center">
+                                    @if($a->status == 5)
+                                    <button class="btn bg-navy" onClick="checkIn({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="Check In"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                                    @endif
                                     @if($a->a_applicant->role == 4)
                                         @if($a->status == 5 || $a->status == 4 || $a->status == 3)
                                             <button class="btn btn-primary" onClick="viewModal({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="View"><i class="glyphicon glyphicon-search"></i></button>
@@ -299,6 +302,14 @@
                 });
             }
         });
+    }
+
+    checkIn = (id) => {
+
+    }
+
+    checkOut = (id) => {
+        
     }
 </script>
 @endsection

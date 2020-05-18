@@ -126,6 +126,7 @@ class SettingsController extends Controller
             $activity = LActivity::find($request->id);
         }
         $activity->activity = $request->activity;
+        $activity->venue = $request->venue;
         $activity->public = $request->public;
         $activity->students = $request->students;
         $activity->underage = $request->underage;
@@ -236,6 +237,7 @@ class SettingsController extends Controller
     }
 
     public function activitiesModal(Request $request){
+        $venues = LVenue::all();
         $activity = new LActivity;
         if(isset($request->id)){
             $activity = LActivity::find($request->id);
@@ -246,7 +248,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('admin.settings.partials.activities-modal', compact('activity', 'id'));
+        return view('admin.settings.partials.activities-modal', compact('activity', 'id', 'venues'));
     }
 
     public function membershipsModal(Request $request){

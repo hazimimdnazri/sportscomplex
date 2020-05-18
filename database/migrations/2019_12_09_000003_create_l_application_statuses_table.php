@@ -56,7 +56,13 @@ class CreateLApplicationStatusesTable extends Migration
 
         DB::table('l_application_statuses')->insert(
             array(
-                'status' => 'Finished'
+                'status' => 'Checked In'
+            )
+        );
+
+        DB::table('l_application_statuses')->insert(
+            array(
+                'status' => 'Checked Out'
             )
         );
     }

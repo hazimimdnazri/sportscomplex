@@ -10,19 +10,19 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Sub Total (RM) </label>
-                        <input type="text" class="form-control" name="subtotal" id="subtotal" value="{{ number_format($total, 2) }}" readOnly>
+                        <input type="text" class="form-control" name="subtotal" id="subtotal" value="{{ number_format($total, 2, '.', '') }}" readOnly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Deposit (RM) </label>
-                        <input type="text" class="form-control" name="deposit" id="deposit_pay" value="{{ number_format($deposit, 2) }}" readOnly>
+                        <input type="text" class="form-control" name="deposit" id="deposit_pay" value="{{ number_format($deposit, 2, '.', '') }}" readOnly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Discount ({{$discount}}%) </label>
-                        <input type="text" class="form-control" name="discount" id="discount" value="{{$discount = number_format(($discount/100) * $total, 2)}}" readOnly>
+                        <input type="text" class="form-control" name="discount" id="discount" value="{{$discount = number_format(($discount/100) * $total, 2, '.', '')}}" readOnly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Total Price (RM) </label>
-                        <input type="text" class="form-control" name="total" id="total" value="{{ number_format($total - $discount + $deposit, 2) }}" readOnly>
+                        <input type="text" class="form-control" name="total" id="total" value="{{ number_format($total - $discount + $deposit, 2, '.', '') }}" readOnly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Cash Paid (RM) </label>
@@ -33,7 +33,6 @@
                         <input type="text" class="form-control" name="change" id="change" value="0.00">
                     </div>
                 </div>
-                <input type="hidden" name="type" value="B">
                 <input type="hidden" name="event" id="event_name" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

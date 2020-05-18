@@ -35,7 +35,7 @@
                             <button onClick="deleteItem({{ $f->id }}, 1)" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
-                    @php $ftotal += number_format($f->r_sport->price * ($f->duration/$f->r_sport->min_hour), 2) @endphp
+                    @php $ftotal += number_format($f->price, 2, '.', '') @endphp
                     @endforeach
                 </tbody>
             </table>

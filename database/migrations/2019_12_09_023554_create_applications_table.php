@@ -24,6 +24,7 @@ class CreateApplicationsTable extends Migration
             $table->unsignedBigInteger('registered_by');
             $table->unsignedBigInteger('approved_by')->nullable();
             $table->text('remark')->nullable();
+            $table->string('weather')->nullable();
             $table->integer('flag')->default(1);
             $table->timestamps();
 

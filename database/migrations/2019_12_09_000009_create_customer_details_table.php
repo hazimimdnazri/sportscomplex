@@ -19,6 +19,7 @@ class CreateCustomerDetailsTable extends Migration
             $table->string('ic')->nullable()->unique();
             $table->string('passport')->nullable()->unique();
             $table->string('phone')->nullable();
+            $table->string('gender');
             $table->date('dob');
             $table->string('address')->nullable();
             $table->string('zipcode')->nullable();

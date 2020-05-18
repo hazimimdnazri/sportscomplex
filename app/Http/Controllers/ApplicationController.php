@@ -212,42 +212,38 @@ class ApplicationController extends Controller
 
     public function ajaxPayment(Request $request, $id){
         $trasaction = new Transaction;
-        if($request->type == "B"){
-            $application = Application::find($id);
-            $equiptment = Equiptment::where('application_id', $id);
-            $equiptment->update(['status' => 2]);
+        $application = Application::find($id);
+        $equiptment = Equiptment::where('application_id', $id);
+        $equiptment->update(['status' => 2]);
 
-            $discount = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
-            if($discount){
-                $discount = $discount->r_membership->discount;
-            } else {
-                $discount = 0;
-            }
-            
-            $application->event = $request->event;
-            $application->status = 5;
-            $application->approved_by = Auth::user()->id;
-
-            $user = User::find($application->user_id);
-            $trasaction->trans_number = $request->type.$id;
-            $trasaction->trans_type = $request->type;
-            $trasaction->date = date('Y-m-d');
-            $trasaction->application_id = $id;
-            $trasaction->customer_id = $application->user_id;
-            $trasaction->tax = 0;
-            $trasaction->membership_discount = $discount;
-            $trasaction->general_discount = 0;
-            $trasaction->subtotal = number_format($request->subtotal, 2);
-            $trasaction->total = number_format($request->total, 2);
-            $trasaction->paid = number_format($request->paid, 2);
-            $trasaction->trans_changes = number_format($request->change, 2);
-
-            if($application->save() && $trasaction->save()){
-                return "success";
-            }
+        $discount = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
+        if($discount){
+            $discount = $discount->r_membership->discount;
+        } else {
+            $discount = 0;
         }
         
-        return $trasaction;
+        $application->event = $request->event;
+        $application->status = 5;
+        $application->approved_by = Auth::user()->id;
+
+        $user = User::find($application->user_id);
+        $trasaction->trans_number = $request->type.$id;
+        $trasaction->trans_type = "POS";
+        $trasaction->date = date('Y-m-d');
+        $trasaction->application_id = $id;
+        $trasaction->customer_id = $application->user_id;
+        $trasaction->tax = 0;
+        $trasaction->membership_discount = $discount;
+        $trasaction->general_discount = 0;
+        $trasaction->subtotal = number_format($request->subtotal, 2, '.', '');
+        $trasaction->total = number_format($request->total, 2, '.', '');
+        $trasaction->paid = number_format($request->paid, 2, '.', '');
+        $trasaction->trans_changes = number_format($request->change, 2, '.', '');
+
+        if($application->save() && $trasaction->save()){
+            return "success";
+        }
     }
 
     public function confirmReservation(Request $request){
