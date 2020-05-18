@@ -61,7 +61,7 @@
                             <td class="text-center">{{ date('d/m/Y', strtotime($mem->cycle_end)) }}</td>
                             <td class="text-center">
                                 <button class="btn btn-info">Edit</button>
-                                <button class="btn btn-danger">Delete</button>
+                                <button class="btn btn-danger" onClick="deleteMembership({{ $mem->id }})">Delete</button>
                             </td>
                         </tr>
                     @endforeach
@@ -101,6 +101,29 @@ $(() => {
         errorElement: "li",
     })
 })
+
+deleteMembership = (id) => {
+    $.ajax({
+        type:"POST",
+        url: "{{ url('admin/ajax/delete-membership') }}",
+        data : {
+            "_token": "{{ csrf_token() }}",
+            "id" : id,
+        }
+    }).done(function(response){
+        if(response == 'success'){
+            Swal.fire(
+                'Success!',
+                'Membership has been changed.',
+                'success'
+            ).then((result) => {
+                if(result.value){
+                    window.location.replace("{{ url('admin/customers') }}");
+                }
+            })
+        }
+    });
+}
 
 renew = () => { 
     if($("#membershipData").valid()){

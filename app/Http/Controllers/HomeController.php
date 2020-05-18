@@ -401,7 +401,7 @@ class HomeController extends Controller
         $id = $request->id;
         $memberships = LMembership::all();
         $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->get();
-        return view('partials.modal-membership', compact('memberships', 'id', 'membership'));
+        return view('admin.partials.modal-membership', compact('memberships', 'id', 'membership'));
     }
 
     public function renewMembership(Request $request, $id){
@@ -417,6 +417,13 @@ class HomeController extends Controller
         }
         if($membership->save()){
             return "success";
+        }
+    }
+
+    public function deleteMembership(Request $request){
+        $membership = Membership::find($request->id);
+        if($membership->delete()){
+            return 'success';
         }
     }
 

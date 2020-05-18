@@ -107,6 +107,7 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
 
     Route::group(['prefix' => 'ajax'], function() {
         Route::post('membership-modal', 'HomeController@membershipModal');
+        Route::post('delete-membership', 'HomeController@deleteMembership');
     });
 });
 
