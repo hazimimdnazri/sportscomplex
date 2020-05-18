@@ -144,7 +144,7 @@
                         <div class="text-center">
                             <button type="button" class="btn btn-warning">Reset</button>
                             <button class="btn btn-primary">Save</button>
-                            <button type="button" class="btn bg-navy" data-toggle="modal" data-target="#modal-default">Change Password</button>
+                            <button type="button" class="btn bg-navy" data-toggle="modal" data-target="#modal-password">Change Password</button>
                         </div>
                     </form>
                 </div>
@@ -153,7 +153,7 @@
     </div>
 </section>
 
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="modal-password">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

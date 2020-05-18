@@ -427,6 +427,14 @@ class HomeController extends Controller
         }
     }
 
+    public function changeUserPass(Request $request){
+        $user = User::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        if($user->save()){
+            return 'success';
+        }
+    }
+
     public function loading(){
         return view('modal-loading');
     }
