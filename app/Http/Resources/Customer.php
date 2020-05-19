@@ -19,6 +19,7 @@ class Customer extends JsonResource
             'name' => $this->r_user->name,
             'email' => $this->r_user->email,
             'ic' => $this->ic,
+            'gender' => $this->gender,
             'passport' => $this->passport,
             'nationality' => $this->nationality,
             'phone' => $this->phone,

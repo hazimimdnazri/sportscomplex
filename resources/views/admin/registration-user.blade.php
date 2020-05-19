@@ -73,6 +73,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">Gender <span class="text-red">*</span></label>
+                                        <select name="gender" class="form-control" id="gender">
+                                            <option value="" selected>-- Gender --</option>
+                                            <option value="M" >Male</option>
+                                            <option value="F" >Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
                                         <select id="nationality" class="form-control" name="nationality" onChange="nation(this.value)">
                                             <option value="1" >Malaysian</option>
@@ -234,6 +242,9 @@
             phone: {
                 required: true,
             },
+            gender: {
+                required: true,
+            },
             email: {
                 required: true,
             },
@@ -285,6 +296,9 @@
             },
             address: {
                 required: "User address is required.",
+            },
+            gender: {
+                required: "Please select a gender.",
             },
             phone: {
                 required: "User phone is required.",

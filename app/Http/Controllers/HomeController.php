@@ -435,17 +435,6 @@ class HomeController extends Controller
         }
     }
 
-    public function checkIn(Request $request){
-        $application = Application::find($request->id);
-        $json = file_get_contents("https://api.openweathermap.org/data/2.5/weather?q=Iskandar+Puteri&appid=3ac830c71bee7a1e9a48bbf9d303be41");
-        $obj = json_decode($json);
-        $application->weather = $obj->weather[0]->main;
-        $application->status = 7;
-        if($application->save()){
-            return 'success';
-        }
-    }
-
     public function loading(){
         return view('modal-loading');
     }

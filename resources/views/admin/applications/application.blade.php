@@ -58,8 +58,11 @@
                                     {!! $a->getStatus($a->status) !!}
                                 </td>
                                 <td class="text-center">
+                                    @if($a->status == 7)
+                                    <button class="btn bg-orange" onClick="checkOut({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="Check Out"><i class="glyphicon glyphicon-log-out"></i></button>
+                                    @endif
                                     @if($a->status == 5)
-                                    <button class="btn bg-navy" onClick="checkIn({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="Check In"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                                    <button class="btn bg-navy" onClick="checkIn({{ $a->id }})" data-toggle="tooltip" data-placement="top" title="Check In"><i class="glyphicon glyphicon-log-in"></i></button>
                                     @endif
                                     @if($a->a_applicant->role == 4)
                                         @if($a->status == 5 || $a->status == 4 || $a->status == 3)
@@ -133,6 +136,7 @@
                 $("#type").val(response.data.type).change();
                 $("#nationality").val(response.data.nationality).change();
                 $("#post_id").val(response.data.id);
+                $("#gender").val(response.data.gender).change();
             } else {
                 alert("User does not exist!")
             }
@@ -169,7 +173,7 @@
         if(id == 'existing'){
             $("#searchIC").show()
             $("#name, #ic, #email, #type, #nationality").attr('readOnly','readOnly')
-            $("#type, #nationality, option").each(function(i){
+            $("#type, #nationality, #gender, option").each(function(i){
                 $(this).attr('disabled', 'disabled')
             });
             $("#type").val('')
@@ -337,7 +341,35 @@
     }
 
     checkOut = (id) => {
-        
+        Swal.fire({
+            title: "Confirm check out?",
+            text: "Check out customer from the facility.",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, confirm!"
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/ajax/checkout') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id
+                    }
+                }).done(function(response){
+                    if(response == 'success'){
+                        Swal.fire("Checked Out!", "User may leave the venue.", "success")
+                        .then((result) => {
+                            if(result.value){
+                                location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        });
     }
 </script>
 @endsection

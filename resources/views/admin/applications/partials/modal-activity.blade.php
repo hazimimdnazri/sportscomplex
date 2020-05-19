@@ -105,7 +105,7 @@
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
-                                @if(count($equiptments) > 1)
+                                @if(count($equiptments) > 0 )
                                     @foreach($equiptments as $e)
                                     <tr>
                                         <td class="text-center">{{$n++}}</td>
@@ -113,11 +113,11 @@
                                         <td class="text-center">{{ $e->r_equiptment->serial_number }}</td>
                                         <td class="text-center">
                                             @if($e->status == 1)
-                                                <span class="label label-warning">Draf</span>
+                                                <span class="label label-warning">Draft</span>
                                             @elseif($e->status == 2)
-                                                <span class="label label-primary">Dalam Sewaan</span>
+                                                <span class="label label-primary">In Usage</span>
                                             @elseif($e->status == 3)
-                                                <span class="label label-success">Selesai Dipulangkan</span>
+                                                <span class="label label-success">Returned</span>
                                             @endif
                                         </td>
                                     </tr>

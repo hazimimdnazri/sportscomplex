@@ -50,7 +50,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" name="dob" class="form-control pull-right" id="datepicker" value="{{ isset($user->r_details->dob) ? date('m-d-Y', strtotime($user->r_details->dob)) : '' }}">
+                                            <input type="text" name="dob" class="form-control pull-right" id="datepicker" value="{{ isset($user->r_details->dob) ? date('d-m-Y', strtotime($user->r_details->dob)) : '' }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -64,7 +64,6 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Customer Type <span class="text-red">*</span></label>
                                         <select class="form-control" onChange="userType(this.value)" id="type" name="type">
-                                            <option value="" selected>-- Type --</option>
                                             @foreach($types as $t)
                                                 <option value="{{ $t->id }}">{{ $t->type }}</option>
                                             @endforeach
@@ -73,9 +72,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">Gender <span class="text-red">*</span></label>
+                                        <select name="gender" class="form-control" id="gender">
+                                            <option value="M" >Male</option>
+                                            <option value="F" >Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
                                         <select name="nationality" class="form-control" id="nationality" onChange="nation(this.value)">
-                                            <option value="" selected>-- Nationality --</option>
                                             <option value="1" >Malaysian</option>
                                             <option value="2" >Foriegner</option>
                                         </select>
@@ -91,7 +96,6 @@
                                     <div class="form-group">
                                         <label>State <span class="text-red">*</span></label>
                                         <select name="state" id="state" class="select2 form-control" style="width: 100%;">
-                                            <option value="" selected>-- State --</option>
                                             @foreach($states as $s)
                                             <option value="{{ $s->id }}">{{ $s->state }}</option>
                                             @endforeach
@@ -199,7 +203,11 @@
         @if(isset($user->r_details))
             $("#type").val({{$user->r_details->type}}).change()
             $("#nationality").val({{$user->r_details->nationality}}).change()
+            $("#gender").val("{{$user->r_details->gender}}").change()
+
+            @if(isset($user->r_details->state))
             $("#state").val({{$user->r_details->state}}).change()
+            @endif
 
             @if($user->r_details->type == 3)
                 $("#institution").val({{$user->r_student->institution}}).change()

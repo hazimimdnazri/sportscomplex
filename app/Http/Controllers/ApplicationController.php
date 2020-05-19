@@ -155,6 +155,7 @@ class ApplicationController extends Controller
                 $details->user_id = $user->id;
                 $details->type = $request->type;
                 $details->nationality = $request->nationality;
+                $details->gender = $request->gender;
 
                 if($request->nationality == 1){
                     $details->ic = $request->ic;
@@ -455,5 +456,26 @@ class ApplicationController extends Controller
             return "success";
         }
 
+    }
+
+    public function checkIn(Request $request){
+        $application = Application::find($request->id);
+        $json = file_get_contents("https://api.openweathermap.org/data/2.5/weather?q=Iskandar+Puteri&appid=3ac830c71bee7a1e9a48bbf9d303be41");
+        $obj = json_decode($json);
+        $application->weather = $obj->weather[0]->main;
+        $application->status = 7;
+        if($application->save()){
+            return 'success';
+        }
+    }
+
+    public function checkOut(Request $request){
+        $application = Application::find($request->id);
+        $equiptment = Equiptment::where('application_id', $request->id);
+        $application->status = 8;
+        $equiptment->update(['status' => 3]);
+        if($application->save()){
+            return 'success';
+        }
     }
 }

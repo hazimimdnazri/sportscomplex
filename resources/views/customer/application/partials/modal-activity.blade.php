@@ -68,7 +68,7 @@
                             </thead>
                             <tbody>
                                 @php $n = 1 @endphp
-                                @if(count($equiptments) > 1)
+                                @if(count($equiptments) > 0)
                                     @foreach($equiptments as $e)
                                     <tr>
                                         <td class="text-center">{{$n++}}</td>

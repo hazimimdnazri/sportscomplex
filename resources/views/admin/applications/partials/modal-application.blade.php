@@ -53,6 +53,16 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
+                                <label for="exampleInputEmail1">Gender <span class="text-red">*</span></label>
+                                <select id="gender" name="gender" class="form-control">
+                                    <option value="" selected>-- Gender --</option>
+                                    <option value="M" >Male</option>
+                                    <option value="F" >Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
                                 <select name="nationality" onChange="selectNationality(this.value)" id="nationality" class="form-control">
                                     <option value="" selected>-- Nationality --</option>
@@ -136,6 +146,9 @@
                 required: true,
                 email: true
             },
+            gender: {
+                required: true
+            },
             nationality: {
                 required: true
             },
@@ -181,6 +194,9 @@
             },
             name: {
                 required: "Name is required.",
+            },
+            name: {
+                required: "Please select gender.",
             },
             email: {
                 required: "E-Mail is required.",
