@@ -92,17 +92,21 @@
 				@yield('content')
 			</div>
 			@include('shared.footer')
+			@include('partials.modal-timeout')
 		</div>
 		<script>
-		(() => {
-			$('[data-toggle="tooltip"]').tooltip()
-		})
 		</script>
 		<script src="{{ asset('assets/bower_components/jquery/dist/jquery.min.js') }}"></script>
 		<script src="{{ asset('assets/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
+
 		<script>
-		$.widget.bridge('uibutton', $.ui.button);
+			$('[data-toggle="tooltip"]').tooltip()
+			$.widget.bridge('uibutton', $.ui.button);
+			$(() => {
+				timeoutStart()
+			})
 		</script>
+
 		<script src="{{ asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('assets/bower_components/jquery-knob/dist/jquery.knob.min.js') }}"></script>
 		<script src="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
@@ -111,6 +115,32 @@
 		<script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 		<script src="{{ asset('assets/dist/js/demo.js') }}"></script>
 		<script src="{{ asset('assets/js/jquery.validate.js') }}"></script>
+		<script src="{{ asset('assets/js/timeout.js') }}"></script>
+
+		<script>
+			timeoutModal = () => {
+				$("#timeoutModal").modal('show');
+			}
+
+			endSession = () => {
+				$.ajax({
+					type: "POST",
+					data: {
+						"_token": "{{ csrf_token() }}"
+					},
+                    url: "{{ route('logout') }}",
+                    success: function(){
+						location.reload();
+                    }
+                });
+			}
+			
+			resetTimer = () => {
+				$("#timeoutModal").modal('hide')
+				timeoutReset()
+			}
+		</script>
+
 		@yield('postscript')
 	</body>
 </html>
