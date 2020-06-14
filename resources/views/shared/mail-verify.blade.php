@@ -117,7 +117,7 @@
 			padding-top: 25px; 
 			color: #000000;
 			font-family: sans-serif;" class="paragraph">
-				You are just one step away from becomeing one of our community member! All you need to do is press the button below to activate your EduCity Sports Centre account.
+				You are just one step away from becoming one of our community member! All you need to do is press the button below to activate your EduCity Sports Centre account.
 		</td>
 	</tr>
 
