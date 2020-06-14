@@ -38,11 +38,11 @@
                                     </div>
                                     <div class="form-group" id="ic">
                                         <label for="exampleInputEmail1">I.C Number <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="ic" placeholder="Enter IC number" value="{{ $user->r_details->ic ?? '' }}">
+                                        <input type="text" class="form-control" name="ic" placeholder="Enter IC number" value="{{ $user->r_details->ic ?? '' }}" readOnly>
                                     </div>
                                     <div class="form-group" style="display:none" id="passport">
                                         <label for="exampleInputEmail1">Passport <span class="text-red">*</span></label>
-                                        <input type="text" class="form-control" name="passport" placeholder="Enter passport number" value="{{ $user->r_details->passport ?? '' }}">
+                                        <input type="text" class="form-control" name="passport" placeholder="Enter passport number" value="{{ $user->r_details->passport ?? '' }}" readOnly>
                                     </div>
                                     <div class="form-group" >
                                         <label>Date of Birth <span class="text-red">*</span></label>
@@ -219,32 +219,34 @@
             $(".error-password").text('Please enter your password')
             $(".error-retype").text('')
         } else {
-            if($("#password_1").val() == $("#password_2").val()){
-                $.ajax({
-                    type:"POST",
-                    url: "{{ url('customer/ajax/changepass') }}",
-                    data : {
-                        "_token": "{{ csrf_token() }}",
-                        "password" : $("#password_2").val(),
-                    }
-                }).done(function(response){
-                    if(response == 'success'){
-                        Swal.fire(
-                            'Success!',
-                            'Password has been changed.',
-                            'success'
-                        ).then((result) => {
-                            if(result.value){
-                                window.location.replace("{{ url('customer/profile') }}");
-                            }
-                        })
-                    }
-                });
-            } else {
-                $(".div_retype").addClass('has-error')
-                $(".error-password").text('')
-                $(".div_password").removeClass('has-error')
-                $(".error-retype").text('Retype password does not match')
+            if(alphanumeric($("#password_1").val())){
+                if($("#password_1").val() == $("#password_2").val()){
+                    $.ajax({
+                        type:"POST",
+                        url: "{{ url('customer/ajax/changepass') }}",
+                        data : {
+                            "_token": "{{ csrf_token() }}",
+                            "password" : $("#password_2").val(),
+                        }
+                    }).done(function(response){
+                        if(response == 'success'){
+                            Swal.fire(
+                                'Success!',
+                                'Password has been changed.',
+                                'success'
+                            ).then((result) => {
+                                if(result.value){
+                                    window.location.replace("{{ url('customer/profile') }}");
+                                }
+                            })
+                        }
+                    });
+                } else {
+                    $(".div_retype").addClass('has-error')
+                    $(".error-password").text('')
+                    $(".div_password").removeClass('has-error')
+                    $(".error-retype").text('Retype password does not match')
+                }
             }
         }
     }
@@ -422,5 +424,18 @@
         errorLabelContainer: "#errors", 
         errorElement: "li",
     });
+
+    alphanumeric = (password) => {
+        var cond = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{7,15}$/;
+        if(password.match(cond)){
+            return true;
+        } else {
+            $(".div_password").addClass('has-error')
+            $(".div_retype").removeClass('has-error')
+            $(".error-password").text('The password must be at least 8 characters long, containing one uppercase letter, one lowercase letter, one number, and one special character.')
+            $(".error-retype").text('')
+            return false;
+        }            
+    }
 </script>
 @endsection

@@ -96,6 +96,8 @@ class HomeController extends Controller
                 $details->nationality = $request->nationality;
                 if($request->nationality == 1){
                     $details->ic = $request->ic;
+                    $date = str_split(substr($request->ic, 0, 6), 2);
+                    $details->dob = date('Y-m-d', strtotime("$date[0]-$date[1]-$date[2]"));
                 } else {
                     $details->passport = $request->passport;
                 }

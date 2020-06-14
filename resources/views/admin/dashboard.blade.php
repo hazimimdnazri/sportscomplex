@@ -23,9 +23,6 @@
 					<div class="col-md-12 text-center" style="margin-top: 20px; margin-bottom: 20px;">
 						<h2>Coming Soon!</h2>
 					</div>
-					<div class="col-md-12">
-                    	<div id="calender"></div>
-					</div>
                 </div>
             </div>
         </div>
