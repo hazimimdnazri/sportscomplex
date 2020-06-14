@@ -327,6 +327,19 @@ class SettingsController extends Controller
         return view('admin.settings.partials.users-modal', compact('user', 'id'));
     }
 
+    public function passwordModal(Request $request){
+        $id = $request->id;
+        return view('admin.settings.partials.password-modal', compact('id'));
+    }
+
+    public function changePassword(Request $request){
+        $user = User::find($request->id);
+        $user->password = Hash::make($request->password);
+        if($user->save()){
+            return 'success';
+        }
+    }
+
     public function facilitiesModal(Request $request){
         $venues = LVenue::all();
         $facility = new LFacility;

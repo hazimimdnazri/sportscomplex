@@ -100,15 +100,16 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
             Route::post('institutions-modal', 'SettingsController@institutionsModal');
             Route::post('facilities-modal', 'SettingsController@facilitiesModal');
             Route::post('users-modal', 'SettingsController@usersModal');
+            Route::post('password-modal', 'SettingsController@passwordModal');
             Route::post('select-facilities', 'SettingsController@selectFacilities');
             Route::post('changerole', 'SettingsController@changeRole');
+            Route::post('changepass', 'SettingsController@changePassword');
         });
     });
 
     Route::group(['prefix' => 'ajax'], function() {
         Route::post('membership-modal', 'HomeController@membershipModal');
         Route::post('delete-membership', 'HomeController@deleteMembership');
-        Route::post('change-userpassword', 'HomeController@changeUserPass');
         Route::post('checkin', 'ApplicationController@checkIn');
         Route::post('checkout', 'ApplicationController@checkOut');
     });

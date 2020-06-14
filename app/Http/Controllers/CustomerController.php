@@ -49,6 +49,7 @@ class CustomerController extends Controller
         $members->address = $request->address;
         $members->zipcode = $request->zipcode;
         $members->type = $request->type;
+        $members->gender = $request->gender;
         $members->nationality = $request->nationality;
         $members->city = $request->city;
         $members->state = $request->state;

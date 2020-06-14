@@ -73,6 +73,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">Gender <span class="text-red">*</span></label>
+                                        <select name="gender" class="form-control" id="gender">
+                                            <option value="" selected>-- Gender --</option>
+                                            <option value="M" >Male</option>
+                                            <option value="F" >Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">Nationality <span class="text-red">*</span></label>
                                         <select name="nationality" class="form-control" id="nationality" onChange="nation(this.value)" disabled>
                                             <option value="" selected>-- Nationality --</option>
@@ -152,42 +160,7 @@
         </div>
     </div>
 </section>
-
-<div class="modal fade" id="modal-password">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Change Password</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group div_password">
-                            <label>New Password <span class="text-red">*</span></label>
-                            <input type="password" id="password_1" class="form-control" placeholder="Enter new password">
-                            <span class="help-block error-password"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group div_retype">
-                            <label>Confirm Password <span class="text-red">*</span></label>
-                            <input type="password" id="password_2" class="form-control" placeholder="Retype new password">
-                            <span class="help-block error-retype"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" onClick="changePass()" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+@include('customer.partials.modal-password')
 @endsection
 
 @section('postscript')
@@ -203,6 +176,9 @@
             $("#nationality").val({{$user->r_details->nationality}}).change()
             @if(isset($user->r_details->state))
                 $("#state").val({{$user->r_details->state}}).change()
+            @endif
+            @if(isset($user->r_details->gender))
+                $("#gender").val("{{$user->r_details->gender}}").change()
             @endif
 
             @if($user->r_details->type == 3)

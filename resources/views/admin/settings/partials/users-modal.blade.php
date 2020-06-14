@@ -5,7 +5,7 @@
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">New User</h4>
+                    <h4 class="modal-title">{{ $id ? 'Edit User' : 'New User' }}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -15,13 +15,14 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">E-Mail <span class="text-red">*</span></label>
                         <input type="email" class="form-control" name="email" value="{{ $user->email }}" id="event" placeholder="E-mail">
-                        <small>Activation email will be sent. E-mail will be used for login.</small>
                     </div>
+                    @if(!($id))
                     <div class="form-group">
                         <label for="exampleInputEmail1">Password <span class="text-red">*</span></label>
-                        <input type="password" class="form-control" name="password" value="123456" {{ $id ? '' : 'readOnly' }}>
+                        <input type="password" class="form-control" name="password" value="123456" readOnly>
                         <small>Defualt password will be 123456. Please change when the user login for the first time.</small>
                     </div>
+                    @endif
                 </div>
                 <input type="hidden" name="id" value="{{ $id }}">
                 <div class="modal-footer">

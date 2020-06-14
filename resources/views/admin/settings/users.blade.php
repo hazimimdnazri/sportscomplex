@@ -63,9 +63,10 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <a onClick="editModal({{ $u->id }})" class="btn btn-info">Edit</a>
+                                    <a onClick="editModal({{ $u->id }})" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a onClick="passModal({{ $u->id }})" class="btn bg-navy" data-toggle="tooltip" data-placement="top" title="Change Password"><i class="glyphicon glyphicon-wrench"></i></a>
                                     @if($u->flag == 1)
-                                    <a onClick="deleteFx({{ $u->id }})" class="btn btn-danger">Deactivate</a>
+                                    <a onClick="deleteFx({{ $u->id }})" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Deactivate User"><i class="glyphicon glyphicon-lock"></i></a>
                                     @else 
                                     <a onClick="deleteFx({{ $u->id }})" class="btn btn-success">Reactivate</a>
                                     @endif
@@ -116,6 +117,20 @@
         }).done(function(response){
             $("#variable").html(response)
             $('#usersModal').modal('show')
+        });
+    }
+
+    passModal = (id) => {
+        $.ajax({
+            type:"POST",
+            url: "{{ url('admin/settings/ajax/password-modal') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+                "id" : id
+            }
+        }).done(function(response){
+            $("#variable").html(response)
+            $('#passwordModal').modal('show')
         });
     }
 
