@@ -43,7 +43,9 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Proof of Payment</label>
-                                @if(isset($application->r_payment->file))
+                                @if($application->status == 5 || $application->status == 7 || $application->status == 8)
+                                <p><button type="button" class="btn btn-success">Paid</button></a></p>
+                                @elseif(isset($application->r_payment->file))
                                 <p><a target="_blank" href="{{ url('uploads/payments/'.$application->r_payment->file) }}"><button type="button" class="btn bg-navy">View Payment</button></a></p>
                                 @else
                                 <p><span class="label bg-navy">Payment still pending</span></p>
