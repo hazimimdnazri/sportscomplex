@@ -23,7 +23,9 @@ use App\Membership;
 use App\LInstitution;
 use App\Activity;
 use App\Facility;
+use App\Payment;
 use Hash;
+use PDF;
 
 class ApplicationController extends Controller
 {
@@ -219,7 +221,20 @@ class ApplicationController extends Controller
         } else {
             $activity = Activity::where("application_id", $id)->get();
         }
-        return view('admin.applications.receipt', compact('facility', 'activity', 'transaction', 'id'));
+        $pdf = PDF::loadView('admin.applications.receipt', compact('facility', 'activity', 'transaction'))->setPaper([0, 0, 226.772, 740 ], 'portrait');  
+        $content = $pdf->output();
+        $uniq = uniqid();
+        if(file_put_contents(public_path('uploads/payments/'.$uniq.'.pdf'), $content)){
+            $payment = new Payment;
+            $payment->application_id = $id;
+            $payment->file = "$uniq.pdf";
+            if($payment->save()){
+                return $data = [
+                    'status' => 'success',
+                    'id' => "$payment->file"
+                ];
+            }
+        }
     }
 
     public function finishReceipt(Request $request, $id){

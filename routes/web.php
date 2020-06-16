@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
         Route::post('{id}', 'ApplicationController@submitDetails');
         Route::get('payment/{id}', 'ApplicationController@payment');
         Route::post('payment/{id}', 'ApplicationController@ajaxPayment');
-        Route::get('receipt/{id}', 'ApplicationController@receipt');
+        Route::post('generate/receipt/{id}', 'ApplicationController@receipt');
         Route::post('receipt/{id}', 'ApplicationController@finishReceipt');
         Route::post('status/{id}', 'ApplicationController@statusCheck');
     

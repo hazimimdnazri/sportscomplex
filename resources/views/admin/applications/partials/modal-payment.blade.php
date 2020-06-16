@@ -61,7 +61,6 @@
         }).done((response) => {
             if(response == 'success'){
                 $("#paymentModal").modal('hide')
-                receiptWindow = window.open("{{ url('admin/application/receipt/'.$id) }}", "receiptWindow", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
                 Swal.fire({
                     title: 'Payment Processing',
                     html: 
@@ -81,6 +80,35 @@
                         Swal.showLoading()
                     }
                 })
+
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('admin/application/generate/receipt/'.$id) }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    }
+                }).done(function(response){
+                    if(response.status == 'success'){
+                        receiptWindow = window.open("{{ url('uploads/payments') }}/"+response.id, "receiptWindow", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+                    }
+                });
+
+                var popupTick = setInterval(function() {
+                    if (receiptWindow.closed) {
+                        clearInterval(popupTick);
+                        $.ajax({
+                            type:"POST",
+                            url: "{{ url('admin/application/receipt/'.$id) }}",
+                            data: {
+                                "_token": "{{ csrf_token() }}"
+                            }
+                        }).done(function(response){
+                            if(response == 'success'){
+                                console.log(success)
+                            }
+                        });
+                    }
+                }, 500);
 
                 var statusInterval = setInterval(statusChecker,3000);
 
