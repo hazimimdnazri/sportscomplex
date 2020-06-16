@@ -36,7 +36,7 @@
                 <input type="hidden" name="event" id="event_name" value="">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save"/>
+                    <button type="button" id="payButton" onClick="pay()" class="btn btn-primary" disabled>Submit</button>
                 </div>
             </form>
         </div>
@@ -48,9 +48,8 @@
         $('#event_name').val($("#event").val())
     })
 
-    $("#paymentForm").submit(function(e) {
-        e.preventDefault();    
-        var formData = new FormData(this);
+    pay = () => {
+        var formData = new FormData($('#paymentForm')[0]);
 
         $.ajax({
             url: "{{ url('admin/application/payment/'.$id) }}",
@@ -62,16 +61,49 @@
         }).done((response) => {
             if(response == 'success'){
                 $("#paymentModal").modal('hide')
-                Swal.fire(
-                    'Succes!',
-                    'Data saved!!',
-                    'success'
-                ).then((result) => {
-                    if(result.value){
-                        window.location.replace("{{ url('admin/application') }}");
+                receiptWindow = window.open("{{ url('admin/application/receipt/'.$id) }}", "receiptWindow", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+                Swal.fire({
+                    title: 'Payment Processing',
+                    html: 
+                        '<table class="table table-bordered mt-0">' +
+                        '<tr>' + 
+                        '<td><b>Total</b></td><td>:</td><td>RM'+$("#total").val()+'</td><br>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td><b>Paid</b></td><td>:</td><td>RM'+$("#paid").val()+'</td><br>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td><b>Change</b></td><td>:</td><td>RM'+$("#change").val()+'</td><br>' +
+                        '</tr>' +
+                        '</table>',
+                    allowOutsideClick: false,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
                     }
                 })
+
+                var statusInterval = setInterval(statusChecker,3000);
+
+                function statusChecker(){
+                    $.ajax({
+                        type:"POST",
+                        url: "{{ url('admin/application/status/'.$id) }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        }
+                    }).done(function(response){
+                        if(response == 'success'){
+                            clearInterval(statusInterval);
+                            Swal.fire("Success!", "Payment confirmed.", "success")
+                            .then((result) => {
+                                if(result.value){
+                                    window.location.replace("{{ url('admin/application') }}");
+                                }
+                            })
+                        }
+                    });
+                }
             } 
         });
-    });
+    };
 </script>

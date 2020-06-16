@@ -317,8 +317,17 @@
             confirmButtonColor: "#47bd9a",
             cancelButtonColor: "#e74c5e",
             confirmButtonText: "Yes, confirm!"
-        }).then(function (result) {
-            if (result.value) {
+        }).then((result) => {
+            if(result.value) {
+                Swal.fire({
+                    title: 'Checking In',
+                    html: 'Please wait for a moment...',
+                    allowOutsideClick: false,
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    }
+                })
+
                 $.ajax({
                     type:"POST",
                     url: "{{ url('admin/ajax/checkin') }}",
