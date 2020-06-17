@@ -10,7 +10,7 @@
 
 <body>
 	<div class="invoice-box">
-        <center><img src="/srv/http/sports/public/assets/images/logo.jpg"></center>
+        <center><img src="{{getcwd()}}/assets/images/logo.jpg"></center>
 		<table cellpadding="0" cellspacing="0">
 			<tr class="top">
 				<td colspan="3">
