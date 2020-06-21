@@ -320,7 +320,7 @@
             url: "https://api.openweathermap.org/data/2.5/weather?q=Iskandar+Puteri&appid=3ac830c71bee7a1e9a48bbf9d303be41"
         }).done((response) => {
 			$("#main_weather").text(response.weather[0].main)
-			$("#weather_img").attr("src","http://openweathermap.org/img/wn/"+response.weather[0].icon+".png");
+			$("#weather_img").attr("src","https://openweathermap.org/img/wn/"+response.weather[0].icon+".png");
         });
 	})
 
