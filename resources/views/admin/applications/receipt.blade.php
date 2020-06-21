@@ -83,19 +83,35 @@
 					Price
 				</td>
 			</tr>
-			@foreach($facility as $f)
-			<tr class="item">
-				<td style="text-align: left">
-					{{ $f->r_sport->sport }}
-				</td>
-				<td style="text-align: center">
-					{{ $f->duration }}
-				</td>
-				<td style="text-align: right">
-					RM {{ number_format($f->price, 2) }}
-				</td>
-			</tr>
-			@endforeach
+			@if(isset($facility))
+				@foreach($facility as $f)
+				<tr class="item">
+					<td style="text-align: left">
+						{{ $f->r_sport->sport }}
+					</td>
+					<td style="text-align: center">
+						{{ $f->duration }}
+					</td>
+					<td style="text-align: right">
+						RM {{ number_format($f->price, 2) }}
+					</td>
+				</tr>
+				@endforeach
+			@elseif(isset($activity))
+				@foreach($activity as $a)
+				<tr class="item">
+					<td style="text-align: left">
+						{{ $a->r_activity->activity }}
+					</td>
+					<td style="text-align: center">
+						1
+					</td>
+					<td style="text-align: right">
+						RM {{ number_format($a->price, 2) }}
+					</td>
+				</tr>
+				@endforeach
+			@endif
 		</table>
 		<table>
 			<tr>

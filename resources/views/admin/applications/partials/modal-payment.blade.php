@@ -104,7 +104,7 @@
                             }
                         }).done(function(response){
                             if(response == 'success'){
-                                console.log(success)
+                                console.log(response)
                             }
                         });
                     }

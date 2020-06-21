@@ -21,6 +21,9 @@ use App\StudentDetail;
 use App\StaffDetail;
 use App\VendorDetail;
 use App\VendorPic;
+use App\LiveFacility;
+use App\LiveActivity;
+use App\LiveCollection;
 use Mail;
 
 class HomeController extends Controller
@@ -353,7 +356,10 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
-        return view('admin.dashboard');
+        $facilities = LiveFacility::groupBy('venue')->get();
+        $activities = LiveActivity::groupBy('venue')->get();
+        $collections = LiveCollection::all();
+        return view('admin.dashboard', compact('facilities', 'activities', 'collections'));
     }
 
     public function calendar(){
