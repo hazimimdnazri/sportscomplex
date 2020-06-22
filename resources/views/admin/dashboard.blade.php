@@ -65,7 +65,7 @@
 
 			<div class="box box-danger box-solid">
 				<div class="box-header with-border">
-					<h3 class="box-title">Collections</h3>
+					<h3 class="box-title">Customer Collections</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -85,6 +85,29 @@
 					<div>
 						<h4><strong>Live Monthly Collections</strong></h4>
 						<p>RM {{ number_format($collections->where('month', date('m'))->sum('total'), 2) }}</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="box box-danger box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Hire Collections</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div>
+				</div>
+				<div class="box-body">
+					<div>
+						<div>
+							<h4><strong>Facilities Hire</strong></h4>
+							<p>No Data Found</p>
+						</div>
+						<hr>
+						<div>
+							<h4><strong>Venue Hire</strong></h4>
+							<p>No Data Found</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -139,6 +162,21 @@
 					@endforeach
 				</div>
 			</div>
+
+			<div class="box box-danger box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Rating</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div>
+				</div>
+				<div class="box-body">
+					<div class="text-center">
+						<h4>Coming Sooon</h4>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="col-md-6">
@@ -166,7 +204,7 @@
 							<p class="text-center">
 								<strong>Facility Usage</strong>
 							</p>
-							<canvas id="canvas"></canvas>
+							<canvas id="canvas1"></canvas>
 						</div>
 					</div>
 				</div>
@@ -260,7 +298,7 @@
 		<div class="col-md-3">
 			<div class="box box-success box-solid">
 				<div class="box-header with-border">
-					<h3 class="box-title">Hire Collections</h3>
+					<h3 class="box-title">Payment Type Statistics</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -268,16 +306,12 @@
 				</div>
 				<div class="box-body">
 					<div>
-						<div>
-							<h4><strong>Facilities Hire</strong></h4>
-							<p>No Data Found</p>
-						</div>
-						<hr>
-						<div>
-							<h4><strong>Venue Hire</strong></h4>
-							<p>No Data Found</p>
-						</div>
+						<canvas id="canvas2" style="width:500px !important;"></canvas>
 					</div>
+					<div>
+						<canvas id="canvas3" style="width:500px !important;"></canvas>
+					</div>
+					
 				</div>
 			</div>
 			
@@ -334,21 +368,6 @@
 					</table>
 				</div>
 			</div>
-
-			<div class="box box-success box-solid">
-				<div class="box-header with-border">
-					<h3 class="box-title">Rating</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="text-center">
-						<h4>Coming Sooon</h4>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </section>
@@ -361,7 +380,6 @@
 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
 
 <script>
-
 	$(() => {
 		$('body').addClass("sidebar-collapse");
 		startTime()
@@ -373,6 +391,61 @@
 			$("#main_weather").text(response.weather[0].main)
 			$("#weather_img").attr("src","https://openweathermap.org/img/wn/"+response.weather[0].icon+".png");
         });
+
+		var ctx = document.getElementById('canvas1').getContext('2d');
+		var ctx2 = document.getElementById('canvas2').getContext('2d');
+		var ctx3 = document.getElementById('canvas3').getContext('2d');
+
+		window.myBar = new Chart(ctx, {
+			type: 'bar',
+			data: barChartData,
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				}
+			}
+		});
+
+		window.myDoughnut = new Chart(ctx2, {
+			type: 'doughnut',
+			data: doughnutData1,
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'bottom',
+				},
+				title: {
+					display: true,
+					text: 'Weekly Collection'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			}
+		});
+
+		window.myDoughnut = new Chart(ctx3, {
+			type: 'doughnut',
+			data: doughnutData2,
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'bottom',
+				},
+				title: {
+					display: true,
+					text: 'Monthly Collection'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			}
+		});
 	})
 
 	startTime = () => {
@@ -386,23 +459,26 @@
 		var t = setTimeout(startTime, 500);
 	}
 	checkTime = (i) => {
-		if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+		if (i < 10) {i = "0" + i};
 		return i;
 	}
 
 	var color = Chart.helpers.color;
 	var barChartData = {
-		labels: ['Indoor Arena', 'Stadium', 'Aquatic Centre', 'Outdoor Arena'],
+		labels: [
+			@foreach($venues as $v)
+			"{{ $v->venue }}",
+			@endforeach
+		],
 		datasets: [{
 			label: 'Week 1',
 			backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
 			borderColor: window.chartColors.red,
 			borderWidth: 1,
 			data: [
-				30,
-				15,
-				20,
-				12
+				@foreach($venues as $v)
+				Math.floor(Math.random() * 20),
+				@endforeach
 			]
 		}, {
 			label: 'Week 2',
@@ -410,10 +486,9 @@
 			borderColor: window.chartColors.blue,
 			borderWidth: 1,
 			data: [
-				30,
-				25,
-				15,
-				12
+				@foreach($venues as $v)
+				Math.floor(Math.random() * 20),
+				@endforeach
 			]
 		}, {
 			label: 'Week 3',
@@ -421,10 +496,9 @@
 			borderColor: window.chartColors.blue,
 			borderWidth: 1,
 			data: [
-				12,
-				20,
-				30,
-				12
+				@foreach($venues as $v)
+				Math.floor(Math.random() * 20),
+				@endforeach
 			]
 		}, {
 			label: 'Week 4',
@@ -432,28 +506,55 @@
 			borderColor: window.chartColors.blue,
 			borderWidth: 1,
 			data: [
-				10,
-				20,
-				30,
-				12
+				@foreach($venues as $v)
+				Math.floor(Math.random() * 20),
+				@endforeach
 			]
 		}]
 
 	};
 
-	window.onload = function() {
-		var ctx = document.getElementById('canvas').getContext('2d');
-		window.myBar = new Chart(ctx, {
-			type: 'bar',
-			data: barChartData,
-			options: {
-				responsive: true,
-				legend: {
-					position: 'top',
-				}
-			}
-		});
+	var doughnutData1 = {
+		datasets: [{
+			data: [
+				Math.floor(Math.random() * 100),
+				Math.floor(Math.random() * 100),
+				Math.floor(Math.random() * 100),
+			],
+			backgroundColor: [
+				window.chartColors.blue,
+				window.chartColors.green,
+				window.chartColors.red,
+			],
+			label: 'Dataset 1'
+		}],
+		labels: [
+			'Cash',
+			'Bank Deposit',
+			'Online Transfer',
+		]
+	}
 
-	};
+	var doughnutData2 = {
+		datasets: [{
+			data: [
+				Math.floor(Math.random() * 100),
+				Math.floor(Math.random() * 100),
+				Math.floor(Math.random() * 100),
+			],
+			backgroundColor: [
+				window.chartColors.blue,
+				window.chartColors.green,
+				window.chartColors.red,
+			],
+			label: 'Dataset 1'
+		}],
+		labels: [
+			'Cash',
+			'Bank Deposit',
+			'Online Transfer',
+		]
+	}
+
 </script>
 @endsection
