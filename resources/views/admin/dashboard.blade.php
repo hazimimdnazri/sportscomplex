@@ -204,6 +204,50 @@
 					</div>
 				</div> -->
 			</div>
+
+			<div class="box box-primary box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Venues Report</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<div class="btn-group">
+							<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul>
+						</div>
+						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div>
+				</div>
+				<div class="box-body">
+					<table class="table table-bordered">
+						<tr class="bg-gray">
+							<th class="text-center" style="vertical-align:middle; border-color:black; " rowspan="2" >Venue</th>
+							<th class="text-center" style="border-color:black;" colspan="2" >Collections</th>
+							<th class="text-center" style="border-color:black;" colspan="2" >Frequency</th>
+						</tr>
+						<tr class="bg-gray">
+							<th class="text-center" style="border-color:black;" >This Month</th>
+							<th class="text-center" style="border-color:black;" >Today</th>
+							<th class="text-center" style="border-color:black;" >This Month</th>
+							<th class="text-center" style="border-color:black;" >Today</th>
+						</tr>
+						@foreach($venues as $v)
+						<tr>
+							<td style="border-color:black;">{{$v->venue}}</td>
+							<td class="text-center" style="border-color:black;">RM 0</td>
+							<td class="text-center" style="border-color:black;">RM 0</td>
+							<td class="text-center" style="border-color:black;">0</td>
+							<td class="text-center" style="border-color:black;">0</td>
+						</tr>
+						@endforeach
+					</table>
+				</div>
+			</div>
 		</div>
 
 		<div class="col-md-3">

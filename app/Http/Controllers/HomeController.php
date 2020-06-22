@@ -359,7 +359,8 @@ class HomeController extends Controller
         $facilities = LiveFacility::groupBy('venue')->get();
         $activities = LiveActivity::groupBy('venue')->get();
         $collections = LiveCollection::all();
-        return view('admin.dashboard', compact('facilities', 'activities', 'collections'));
+        $venues = LVenue::all();
+        return view('admin.dashboard', compact('facilities', 'activities', 'collections', 'venues'));
     }
 
     public function calendar(){
