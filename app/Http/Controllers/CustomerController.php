@@ -41,9 +41,11 @@ class CustomerController extends Controller
         $user->email = $request->email;
 
         $members = CustomerDetail::where('user_id', $id)->first();
+        if(!($members)){
+            $members = new CustomerDetail;
+        }
+        
         $members->user_id = $id;
-        $members->ic = $request->ic;
-        // $members->passport = $request->passport;
         $members->phone = $request->phone;
         $members->dob = date('Y-m-d', strtotime($request->dob));
         $members->address = $request->address;
@@ -53,6 +55,14 @@ class CustomerController extends Controller
         $members->nationality = $request->nationality;
         $members->city = $request->city;
         $members->state = $request->state;
+
+        if($members->nationality == 1){
+            $members->ic = $request->ic;
+            $members->passport = NULL;
+        } else {
+            $members->passport = $request->passport;
+            $members->ic = NULL;
+        }
 
         if($request->type == 3){
             $student = StudentDetail::where('user_id', $id)->first();
