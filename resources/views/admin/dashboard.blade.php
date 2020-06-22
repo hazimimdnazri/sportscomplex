@@ -226,7 +226,7 @@
 				<div class="box-body">
 					<table class="table table-bordered">
 						<tr class="bg-gray">
-							<th class="text-center" style="vertical-align:middle; border-color:black; " rowspan="2" >Venue</th>
+							<th class="text-center" style="vertical-align:middle; border-color:black; " rowspan="2" >Item</th>
 							<th class="text-center" style="border-color:black;" colspan="2" >Collections</th>
 							<th class="text-center" style="border-color:black;" colspan="2" >Frequency</th>
 						</tr>
@@ -245,6 +245,13 @@
 							<td class="text-center" style="border-color:black;">0</td>
 						</tr>
 						@endforeach
+						<tr>
+							<td style="border-color:black;">Facilities Rental</td>
+							<td class="text-center" style="border-color:black;">RM 0</td>
+							<td class="text-center" style="border-color:black;">RM 0</td>
+							<td class="text-center" style="border-color:black;">0</td>
+							<td class="text-center" style="border-color:black;">0</td>
+						</tr>
 					</table>
 				</div>
 			</div>
