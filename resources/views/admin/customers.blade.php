@@ -43,7 +43,7 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $c->name }}</td>
-                                <td class="text-center">{{ $c->r_details->ic ?? $c->r_details->passport}}</td>
+                                <td class="text-center">{{ isset($c->r_details->ic) ? $c->r_details->ic : (isset($c->r_details->passport) ? $c->r_details->passport : '' )}}</td>
                                 <td class="text-center">{{ $c->email }}</td>
                                 <td class="text-center">
                                     {!! $c->getStatus($c->status) !!}
