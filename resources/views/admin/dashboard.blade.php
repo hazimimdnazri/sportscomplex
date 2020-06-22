@@ -399,10 +399,10 @@
 			borderColor: window.chartColors.red,
 			borderWidth: 1,
 			data: [
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
+				30,
+				15,
+				20,
+				12
 			]
 		}, {
 			label: 'Week 2',
@@ -410,10 +410,10 @@
 			borderColor: window.chartColors.blue,
 			borderWidth: 1,
 			data: [
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
+				30,
+				25,
+				15,
+				12
 			]
 		}, {
 			label: 'Week 3',
@@ -421,10 +421,10 @@
 			borderColor: window.chartColors.blue,
 			borderWidth: 1,
 			data: [
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
+				12,
+				20,
+				30,
+				12
 			]
 		}, {
 			label: 'Week 4',
@@ -432,10 +432,10 @@
 			borderColor: window.chartColors.blue,
 			borderWidth: 1,
 			data: [
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
+				10,
+				20,
+				30,
+				12
 			]
 		}]
 
