@@ -12,10 +12,20 @@
         <link rel="stylesheet" href="{{ asset('assets/plugins/iCheck/square/blue.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     </head>
-    <body class="hold-transition register-page">
+    <style>
+        .bg-image {
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url("{{ asset('assets/images/bg.jpg') }}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+
+    <body class="hold-transition register-page bg-image">
         <div class="register-box">
             <div class="register-logo">
-                <a href="{{ url('/') }}"><b>Sports</b>Complex</a>
+                <a href="{{ url('/') }}" style="color: white !important"><b>Sports</b>Complex</a>
             </div>
 
             <div class="register-box-body">
