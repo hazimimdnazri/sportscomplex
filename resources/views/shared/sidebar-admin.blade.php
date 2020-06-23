@@ -2,7 +2,19 @@
     <section class="sidebar">
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li><a href="{{ url('admin/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li class="treeview">
+            <a href="{{ url('admin/dashboard') }}">
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{ url('admin/dashboard') }}"><i class="fa fa-circle-o"></i>Main Dashboard</a></li>
+                <li><a href="{{ url('admin/dashboard/financial') }}"><i class="fa fa-circle-o"></i>Financial Dashboard</a></li>
+            </ul>
+        </li>
         <li><a href="{{ url('admin/calendar') }}"><i class="fa fa-calendar-check-o"></i> <span>Availability Calendar</span></a></li>
         <li><a href="{{ url('admin/application') }}"><i class="fa fa-shopping-bag"></i> <span>POS</span></a></li>
         <li><a href="{{ url('admin/application/pencil-booking') }}"><i class="fa fa-send"></i> <span>Pencil Booking</span></a></li>

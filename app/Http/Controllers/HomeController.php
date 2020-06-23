@@ -24,6 +24,7 @@ use App\VendorPic;
 use App\LiveFacility;
 use App\LiveActivity;
 use App\LiveCollection;
+use App\DashboardFinancial;
 use Mail;
 
 class HomeController extends Controller
@@ -372,6 +373,15 @@ class HomeController extends Controller
         $collections = LiveCollection::all();
         $venues = LVenue::all();
         return view('admin.dashboard', compact('facilities', 'activities', 'collections', 'venues'));
+    }
+
+    public function dashboardFinancial(){
+        $facilities = LiveFacility::groupBy('venue')->get();
+        $activities = LiveActivity::groupBy('venue')->get();
+        $collections = LiveCollection::all();
+        $venues = LVenue::all();
+        $financials = DashboardFinancial::all();
+        return view('admin.dashboard-financial', compact('facilities', 'activities', 'collections', 'venues', 'financials'));
     }
 
     public function calendar(){

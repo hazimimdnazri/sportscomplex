@@ -28,6 +28,7 @@ Route::group(['prefix' => 'guest'], function() {
 
 Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], function() {
     Route::get('dashboard', 'HomeController@dashboard');
+    Route::get('dashboard/financial', 'HomeController@dashboardFinancial');
     Route::get('calendar', 'HomeController@calendar');
     Route::get('registration/user', 'HomeController@registerUser');
     Route::post('registration/user', 'HomeController@submitUserRegister');
