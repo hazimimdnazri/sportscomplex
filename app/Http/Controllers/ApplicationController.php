@@ -460,13 +460,57 @@ class ApplicationController extends Controller
 
     public function confirmPayment(Request $request){
         $application = Application::find($request->id);
-        $application->status = 5;
-        if($application->save()){
+        if($application->type == 1){
+            $price = Facility::where('application_id', $request->id)->sum('price');
+            $transaction = new Transaction;
+            $equiptment = Equiptment::where('application_id', $request->id);
+            $equiptment->update(['status' => 2]);
+    
+            $discount = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
+            if($discount){
+                $discount = $discount->r_membership->discount;
+            } else {
+                $discount = 0;
+            }
+            
+            $application->event = $request->event;
+            $application->status = 5;
+            $application->approved_by = Auth::user()->id;
+    
+            $user = User::find($application->user_id);
+            $transaction->trans_number = $request->type.$request->id;
+            $transaction->trans_type = "Online";
+            $transaction->date = date('Y-m-d');
+            $transaction->application_id = $request->id;
+            $transaction->customer_id = $application->user_id;
+            $transaction->tax = 0;
+            $transaction->membership_discount = $discount;
+            $transaction->general_discount = 0;
+            $transaction->subtotal = number_format($price, 2, '.', '');
+            $transaction->total = number_format($price, 2, '.', '');
+            $transaction->paid = number_format($price, 2, '.', '');
+            $transaction->trans_changes = number_format(0,2);
+        }
+        if($application->save() && $transaction->save()){
             foreach(Equiptment::where('application_id', $request->id) as $e){
                 $e->status = 2;
                 $e->save();
             }
-            return "success";
+
+            if($application->type == 1){
+                $facility = Facility::where("application_id", $request->id)->get();
+            } else {
+                $activity = Activity::where("application_id", $request->id)->get();
+            }
+            $pdf = PDF::loadView('admin.applications.receipt', compact('facility', 'activity', 'transaction'))->setPaper([0, 0, 226.772, 740 ], 'portrait');  
+            $content = $pdf->output();
+            $uniq = uniqid();
+            if(file_put_contents(public_path('uploads/receipts/'.$uniq.'.pdf'), $content)){
+                $transaction->receipt = "$uniq.pdf";
+                if($transaction->save()){
+                    return 'success';
+                }
+            }
         }
     }
 
