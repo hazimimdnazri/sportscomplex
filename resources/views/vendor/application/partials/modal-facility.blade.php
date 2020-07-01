@@ -29,8 +29,13 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Proof of Payment</label>
-                                @if(isset($application->r_payment->file))
+                                <label for="exampleInpu}tEmail1">Proof of Payment</label>
+                                @if(isset($application->r_transaction->receipt) && isset($application->r_payment->file))
+                                <p><a target="_blank" href="{{ url('uploads/payments/'.$application->r_payment->file) }}"><button type="button" class="btn bg-navy">View Payment</button></a></p>
+                                <p><a target="_blank" href="{{ url('uploads/receipts/'.$application->r_transaction->receipt) }}"><button type="button" class="btn bg-maroon">View Receipt</button></a></p>
+                                @elseif(isset($application->r_transaction->receipt))
+                                <p><a target="_blank" href="{{ url('uploads/receipts/'.$application->r_transaction->receipt) }}"><button type="button" class="btn bg-maroon">View Receipt</button></a></p>
+                                @elseif(isset($application->r_payment->file))
                                 <p><a target="_blank" href="{{ url('uploads/payments/'.$application->r_payment->file) }}"><button type="button" class="btn bg-navy">View Payment</button></a></p>
                                 @else
                                 <p><span class="label bg-navy">Payment still pending</span></p>

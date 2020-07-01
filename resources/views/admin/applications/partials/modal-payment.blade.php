@@ -89,7 +89,7 @@
                     }
                 }).done(function(response){
                     if(response.status == 'success'){
-                        receiptWindow = window.open("{{ url('uploads/payments') }}/"+response.id, "receiptWindow", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+                        receiptWindow = window.open("{{ url('uploads/receipts') }}/"+response.id, "receiptWindow", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
                     }
                 });
 

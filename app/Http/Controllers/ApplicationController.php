@@ -224,14 +224,12 @@ class ApplicationController extends Controller
         $pdf = PDF::loadView('admin.applications.receipt', compact('facility', 'activity', 'transaction'))->setPaper([0, 0, 226.772, 740 ], 'portrait');  
         $content = $pdf->output();
         $uniq = uniqid();
-        if(file_put_contents(public_path('uploads/payments/'.$uniq.'.pdf'), $content)){
-            $payment = new Payment;
-            $payment->application_id = $id;
-            $payment->file = "$uniq.pdf";
-            if($payment->save()){
+        if(file_put_contents(public_path('uploads/receipts/'.$uniq.'.pdf'), $content)){
+            $transaction->receipt = "$uniq.pdf";
+            if($transaction->save()){
                 return $data = [
                     'status' => 'success',
-                    'id' => "$payment->file"
+                    'id' => "$transaction->receipt"
                 ];
             }
         }

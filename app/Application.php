@@ -22,6 +22,10 @@ class Application extends Model
         return $this->hasOne(Payment::class, 'application_id', 'id');
     }
 
+    public function r_transaction(){
+        return $this->hasOne(Transaction::class, 'application_id', 'id');
+    }
+
     public function getStatus($status){
         switch ($status) {
             case 1:

@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->string('trans_number'); // B - Booking | M - Membership
             $table->string('trans_type'); // B - Booking | M - Membership
             $table->unsignedBigInteger('application_id')->nullable();
+            $table->string('receipt')->nullable();
             $table->date('date');
             $table->unsignedBigInteger('customer_id');
             $table->integer('issuer')->default('1');
