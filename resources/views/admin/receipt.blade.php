@@ -80,7 +80,7 @@
 					Membership
 				</td>
 				<td colspan="2" style="text-align: right">
-					RM xx.xx
+					RM {{ number_format($transaction->total, 2) }}
 				</td>
 			</tr>
 		</table>

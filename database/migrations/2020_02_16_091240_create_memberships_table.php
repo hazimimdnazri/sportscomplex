@@ -20,10 +20,12 @@ class CreateMembershipsTable extends Migration
             $table->integer('cycle')->nullable();
             $table->date('cycle_start')->nullable();
             $table->date('cycle_end')->nullable();
+            $table->unsignedBigInteger('transaction_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('membership')->references('id')->on('l_memberships');
+            $table->foreign('transaction_id')->references('id')->on('transactions');
         });
     }
 

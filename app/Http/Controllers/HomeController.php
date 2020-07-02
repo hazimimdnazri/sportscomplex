@@ -459,22 +459,26 @@ class HomeController extends Controller
     }
 
     public function paymentMembership(Request $request, $id){
-        $trasaction = new Transaction;
-        $trasaction->trans_number = $request->type.$id;
-        $trasaction->trans_type = "POS";
-        $trasaction->date = date('Y-m-d');
-        $trasaction->customer_id = $id;
-        $trasaction->tax = 0;
-        $trasaction->payment_type = 2;
-        $trasaction->membership_discount = number_format(0, 2, '.', '');
-        $trasaction->general_discount = 0;
-        $trasaction->subtotal = number_format($request->subtotal, 2, '.', '');
-        $trasaction->total = number_format($request->total, 2, '.', '');
-        $trasaction->paid = number_format($request->paid, 2, '.', '');
-        $trasaction->trans_changes = number_format($request->change, 2, '.', '');
+        $transaction = new Transaction;
+        $transaction->trans_number = $request->type.$id;
+        $transaction->trans_type = "POS";
+        $transaction->date = date('Y-m-d');
+        $transaction->customer_id = $id;
+        $transaction->tax = 0;
+        $transaction->payment_type = 2;
+        $transaction->membership_discount = number_format(0, 2, '.', '');
+        $transaction->general_discount = 0;
+        $transaction->subtotal = number_format($request->subtotal, 2, '.', '');
+        $transaction->total = number_format($request->total, 2, '.', '');
+        $transaction->paid = number_format($request->paid, 2, '.', '');
+        $transaction->trans_changes = number_format($request->change, 2, '.', '');
 
-        if($trasaction->save()){
-            return "success";
+        if($transaction->save()){
+            $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
+            $membership->transaction_id = $transaction->id;
+            if($membership->save()){
+                return 'success';
+            }
         }
     }
 
