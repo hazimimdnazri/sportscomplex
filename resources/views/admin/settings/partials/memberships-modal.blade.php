@@ -13,6 +13,22 @@
                         <input type="text" class="form-control" name="membership" value="{{ $membership->membership }}">
                     </div>
                     <div class="form-group">
+                        <label>Activities</label>
+                        <select id="activityList" class="form-control select2" name="activities[]" multiple="multiple" data-placeholder="Select activities" style="width: 100%;">
+                            @foreach($activities as $a)
+                            <option value="{{ $a->id }}">{{$a->activity}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sports</label>
+                        <select id="facilityList" class="form-control select2" name="facilities[]" multiple="multiple" data-placeholder="Select facilities" style="width: 100%;">
+                            @foreach($facilities as $f)
+                            <option value="{{ $f->id }}">{{$f->facility}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Discount (%) <span class="text-red">*</span></label>
                         <input type="integer" class="form-control" name="discount" value="{{ $membership->discount }}">
                     </div>
@@ -34,3 +50,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(() => {
+        $('.select2').select2()
+        $("#activityList").val(<?= $membership->activities ?>).trigger("change")
+        $("#facilityList").val(<?= $membership->facilities ?>).trigger("change")
+    })
+</script>

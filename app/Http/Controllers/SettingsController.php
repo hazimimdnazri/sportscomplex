@@ -145,6 +145,8 @@ class SettingsController extends Controller
         }
         $membership->membership = $request->membership;
         $membership->discount = $request->discount;
+        $membership->activities = $request->activities ? json_encode($request->activities) : NULL;
+        $membership->facilities = $request->facilities ? json_encode($request->facilities) : NULL;
         $membership->monthly = $request->monthly;
         $membership->anually = $request->anually;
 
@@ -252,6 +254,8 @@ class SettingsController extends Controller
     }
 
     public function membershipsModal(Request $request){
+        $facilities = LSport::all();
+        $activities = LActivity::all();
         $membership = new LMembership;
         if(isset($request->id)){
             $membership = LMembership::find($request->id);
@@ -262,7 +266,7 @@ class SettingsController extends Controller
             }
         }
         $id = $request->id;
-        return view('admin.settings.partials.memberships-modal', compact('membership', 'id'));
+        return view('admin.settings.partials.memberships-modal', compact('membership', 'id', 'facilities', 'activities'));
     }
 
     public function venuesModal(Request $request){

@@ -16,6 +16,8 @@ class CreateLMembershipsTable extends Migration
         Schema::create('l_memberships', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('membership');
+            $table->string('activities')->nullable(); // Unlimited free usage
+            $table->string('facilities')->nullable(); // Just discount
             $table->float('discount');
             $table->float('monthly');
             $table->float('anually');
