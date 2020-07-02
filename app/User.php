@@ -96,7 +96,27 @@ class User extends Authenticatable
                     break;
                 
                 case 3:
+                    return "<span class='label text-black' style='background-color:silver'>Silver</span>";
+                    break;
+                
+                case 4:
+                    return "<span class='label text-black' style='background-color:silver'>Silver</span>";
+                    break;
+                
+                case 5:
                     return "<span class='label' style='background-color:brown'>Bronze</span>";
+                    break;
+                
+                case 6:
+                    return "<span class='label' style='background-color:brown'>Bronze</span>";
+                    break;
+                
+                case 7:
+                    return "<span class='label' style='background-color:brown'>Bronze</span>";
+                    break;
+                
+                case 7:
+                    return "<span class='label' style='background-color:green'>EduCity Student</span>";
                     break;
                 
                 default:

@@ -32,6 +32,7 @@
                             <tr>
                                 <th class="text-center" width="5%">No. </th>
                                 <th class="text-center">Membership</th>
+                                <th class="text-center">Unlimited Activity</th>
                                 <th class="text-center">Discount (%)</th>
                                 <th class="text-center">Montly Fee (RM)</th>
                                 <th class="text-center">Anually Fee (RM)</th>
@@ -44,6 +45,15 @@
                             <tr>
                                 <td class="text-center">{{ $n++ }}</td>
                                 <td class="text-center">{{ $m->membership }}</td>
+                                <td>
+                                @if($m->activities)
+                                    @for($i = 0; $i < count(json_decode($m->activities)); $i++)
+                                    <ul>
+                                    <li>{{ $m->getActivityName(json_decode($m->activities)[$i]) }}</li>
+                                    </ul>
+                                    @endfor
+                                @endif
+                                </td>
                                 <td class="text-center">{{ $m->discount }}</td>
                                 <td class="text-center">{{ number_format($m->monthly, 2) }}</td>
                                 <td class="text-center">{{ number_format($m->anually, 2) }}</td>

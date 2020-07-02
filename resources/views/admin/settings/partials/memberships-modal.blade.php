@@ -24,7 +24,7 @@
                         <label>Sports</label>
                         <select id="facilityList" class="form-control select2" name="facilities[]" multiple="multiple" data-placeholder="Select facilities" style="width: 100%;">
                             @foreach($facilities as $f)
-                            <option value="{{ $f->id }}">{{$f->facility}}</option>
+                            <option value="{{ $f->id }}">{{$f->sport}}</option>
                             @endforeach
                         </select>
                     </div>

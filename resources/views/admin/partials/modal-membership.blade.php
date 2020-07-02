@@ -1,5 +1,5 @@
 <div class="modal fade" id="membershipModal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content" id="form">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -49,6 +49,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <th class="text-center">Membership</th>
+                        <th class="text-center">Unlimited Activity</th>
                         <th class="text-center">Renewal Date</th>
                         <th class="text-center">Expiry Date</th>
                         <th class="text-center">Action</th>
@@ -56,10 +57,19 @@
                     <tbody>
                     @foreach($membership as $mem)
                         <tr>
-                            <td class="text-center">{!! $mem->membershipBadge($mem->membership) !!}</td>
-                            <td class="text-center">{{ date('d/m/Y', strtotime($mem->cycle_start)) }}</td>
-                            <td class="text-center">{{ date('d/m/Y', strtotime($mem->cycle_end)) }}</td>
-                            <td class="text-center">
+                            <td class="text-center" style="vertical-align:middle">{!! $mem->membershipBadge($mem->membership) !!}</td>
+                            <td style="vertical-align:middle">
+                            @if($mem->r_membership->activities)
+                                @for($i = 0; $i < count(json_decode($mem->r_membership->activities)); $i++)
+                                    <ul>
+                                        <li>{{ $mem->getActivityName(json_decode($mem->r_membership->activities)[$i]) }}</li>
+                                    </ul>
+                                @endfor
+                            @endif
+                            </td>
+                            <td class="text-center" style="vertical-align:middle">{{ date('d/m/Y', strtotime($mem->cycle_start)) }}</td>
+                            <td class="text-center" style="vertical-align:middle">{{ date('d/m/Y', strtotime($mem->cycle_end)) }}</td>
+                            <td class="text-center" style="vertical-align:middle">
                                 <button class="btn btn-info">Edit</button>
                                 <button class="btn btn-danger" onClick="deleteMembership({{ $mem->id }})">Delete</button>
                             </td>

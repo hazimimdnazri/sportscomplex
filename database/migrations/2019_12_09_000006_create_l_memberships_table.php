@@ -30,6 +30,7 @@ class CreateLMembershipsTable extends Migration
         DB::table('l_memberships')->insert(
             array(
                 'membership' => 'Gold',
+                'activities' => '["1","2","3"]',
                 'discount' => 20,
                 'monthly' => 140,
                 'anually' => 1200
@@ -38,7 +39,8 @@ class CreateLMembershipsTable extends Migration
 
         DB::table('l_memberships')->insert(
             array(
-                'membership' => 'Silver',
+                'membership' => 'Silver (Swimming + Gym)',
+                'activities' => '["1","2"]',
                 'discount' => 15,
                 'monthly' => 140,
                 'anually' => 900
@@ -47,7 +49,48 @@ class CreateLMembershipsTable extends Migration
 
         DB::table('l_memberships')->insert(
             array(
-                'membership' => 'Bronze',
+                'membership' => 'Silver (Swimming + Running)',
+                'activities' => '["1","3"]',
+                'discount' => 15,
+                'monthly' => 140,
+                'anually' => 900
+            )
+        );
+
+        DB::table('l_memberships')->insert(
+            array(
+                'membership' => 'Silver (Gym + Running)',
+                'activities' => '["2","3"]',
+                'discount' => 15,
+                'monthly' => 140,
+                'anually' => 900
+            )
+        );
+
+        DB::table('l_memberships')->insert(
+            array(
+                'membership' => 'Bronze (Swimming)',
+                'activities' => '["1"]',
+                'discount' => 10,
+                'monthly' => 140,
+                'anually' => 600
+            )
+        );
+
+        DB::table('l_memberships')->insert(
+            array(
+                'membership' => 'Bronze (Gym)',
+                'activities' => '["2"]',
+                'discount' => 10,
+                'monthly' => 140,
+                'anually' => 600
+            )
+        );
+
+        DB::table('l_memberships')->insert(
+            array(
+                'membership' => 'Bronze (Running)',
+                'activities' => '["3"]',
                 'discount' => 10,
                 'monthly' => 140,
                 'anually' => 600
