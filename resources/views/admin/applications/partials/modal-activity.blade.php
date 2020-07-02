@@ -39,7 +39,7 @@
                                 <input id="member_id" type="text" class="form-control" value="{{ date('d/m/Y', strtotime($application->date)) }}" disabled>
                             </div>
                         </div>
-                        @if($application->a_applicant->role == 4)
+                        @if($application->a_applicant->role == 4 || $application->a_applicant->role == 3)
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Proof of Payment</label>
