@@ -85,6 +85,7 @@
         </div>
     </div>
 </div>
+<div id="variable_2"></div>
 
 <script>
 
@@ -135,6 +136,10 @@ deleteMembership = (id) => {
     });
 }
 
+payment = () => {
+
+}
+
 renew = () => { 
     if($("#membershipData").valid()){
         var formData = new FormData($('#membershipData')[0]);
@@ -147,17 +152,32 @@ renew = () => {
             contentType: false,
             processData: false
         }).done((response) => {
+            $("#variable_2").html(response)
+            $('#paymentModal').modal('show');
+
             if(response == 'success'){
-                $('#membershipModal').modal('hide')
-                Swal.fire(
-                    'Success!',
-                    'Membership added!',
-                    'success'
-                ).then((result) => {
-                    if(result.value){
-                        location.reload()
+                $.ajax({
+                    type:"POST", 
+                    url: "{{ url('admin/membership/'.$id.'/payment') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}"
                     }
-                })
+                }).done(function(response){
+                    $("#variable_2").html(response)
+                    $('#paymentModal').modal('show');
+                });
+
+
+                // $('#membershipModal').modal('hide')
+                // Swal.fire(
+                //     'Success!',
+                //     'Membership added!',
+                //     'success'
+                // ).then((result) => {
+                //     if(result.value){
+                //         location.reload()
+                //     }
+                // })
             } 
         });
     }

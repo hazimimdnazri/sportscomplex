@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth', "role:1,2"], 'prefix' => 'admin'], functi
     Route::get('customer/{id}/edit', 'HomeController@editCustomer');
     Route::post('customer/{id}/edit', 'HomeController@submitEditCust');
     Route::post('membership/{id}', 'HomeController@renewMembership');
+    Route::post('membership/{id}/payment', 'HomeController@paymentMembership');
+    Route::post('membership/{id}/receipt', 'HomeController@receiptMembership');
+    Route::post('membership/{id}/check', 'HomeController@checkMembership');
 
     Route::group(['prefix' => 'application'], function() {
         Route::get('/', 'ApplicationController@index');

@@ -278,7 +278,7 @@ class ApplicationController extends Controller
             $trasaction->application_id = $id;
             $trasaction->customer_id = $application->user_id;
             $trasaction->tax = 0;
-            $trasaction->membership_discount = $discount;
+            $trasaction->membership_discount = number_format($discount/100 * ($request->subtotal), 2, '.', '');
             $trasaction->general_discount = 0;
             $trasaction->subtotal = number_format($request->subtotal, 2, '.', '');
             $trasaction->total = number_format($request->total, 2, '.', '');

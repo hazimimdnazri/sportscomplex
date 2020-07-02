@@ -25,7 +25,9 @@ use App\LiveFacility;
 use App\LiveActivity;
 use App\LiveCollection;
 use App\DashboardFinancial;
+use App\Transaction;
 use Mail;
+use PDF;
 
 class HomeController extends Controller
 {
@@ -445,7 +447,56 @@ class HomeController extends Controller
         } else {
             $membership->cycle_end = date('Y-m-d', strtotime('+1 year'));
         }
+
+        if($membership->cycle == 1){
+            $total = $membership->r_membership->monthly;
+        } else {
+            $total = $membership->r_membership->anually;
+        }
         if($membership->save()){
+            return view('admin.partials.modal-payment', compact('total', 'id'));
+        }
+    }
+
+    public function paymentMembership(Request $request, $id){
+        $trasaction = new Transaction;
+        $trasaction->trans_number = $request->type.$id;
+        $trasaction->trans_type = "POS";
+        $trasaction->date = date('Y-m-d');
+        $trasaction->customer_id = $id;
+        $trasaction->tax = 0;
+        $trasaction->payment_type = 2;
+        $trasaction->membership_discount = number_format(0, 2, '.', '');
+        $trasaction->general_discount = 0;
+        $trasaction->subtotal = number_format($request->subtotal, 2, '.', '');
+        $trasaction->total = number_format($request->total, 2, '.', '');
+        $trasaction->paid = number_format($request->paid, 2, '.', '');
+        $trasaction->trans_changes = number_format($request->change, 2, '.', '');
+
+        if($trasaction->save()){
+            return "success";
+        }
+    }
+
+    public function receiptMembership(Request $request, $id){
+        $transaction = Transaction::where('customer_id', $id)->orderBy('created_at', 'DESC')->first();
+        $pdf = PDF::loadView('admin.receipt', compact('facility', 'activity', 'transaction'))->setPaper([0, 0, 226.772, 740 ], 'portrait');  
+        $content = $pdf->output();
+        $uniq = uniqid();
+        if(file_put_contents(public_path('uploads/receipts/'.$uniq.'.pdf'), $content)){
+            $transaction->receipt = "$uniq.pdf";
+            if($transaction->save()){
+                return $data = [
+                    'status' => 'success',
+                    'id' => "$transaction->receipt"
+                ];
+            }
+        }
+    }
+
+    public function checkMembership(Request $request, $id){
+        $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
+        if($membership->cycle_start == date('Y-m-d')){
             return "success";
         }
     }

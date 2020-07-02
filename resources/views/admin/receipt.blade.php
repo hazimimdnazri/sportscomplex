@@ -71,48 +71,18 @@
 				<td style="width: 45%; text-align: left">
 					Item
 				</td>
-				@if(isset($facility))
-				<td style="width: 10%; text-align: center">
-					Duration (Hours)
-				</td>
-				@elseif(isset($activity))
-				<td style="width: 10%; text-align: center">
-					Quantity
-				</td>
-				@endif
-				<td style="width: 45%; text-align: right">
+				<td colspan="2" style="width: 45%; text-align: right">
 					Price
 				</td>
 			</tr>
-			@if(isset($facility))
-				@foreach($facility as $f)
-				<tr class="item">
-					<td style="text-align: left">
-						{{ $f->r_sport->sport }}
-					</td>
-					<td style="text-align: center">
-						{{ $f->duration }}
-					</td>
-					<td style="text-align: right">
-						RM {{ number_format($f->price, 2) }}
-					</td>
-				</tr>
-				@endforeach
-			@elseif(isset($activity))
-				@foreach($activity as $a)
-				<tr class="item">
-					<td style="text-align: left">
-						{{ $a->r_activity->activity }}
-					</td>
-					<td style="text-align: center">
-						1
-					</td>
-					<td style="text-align: right">
-						RM {{ number_format($a->price, 2) }}
-					</td>
-				</tr>
-				@endforeach
-			@endif
+			<tr class="item">
+				<td style="text-align: left">
+					Membership
+				</td>
+				<td colspan="2" style="text-align: right">
+					RM xx.xx
+				</td>
+			</tr>
 		</table>
 		<table>
 			<tr>

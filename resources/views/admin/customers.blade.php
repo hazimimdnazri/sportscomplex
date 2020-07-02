@@ -76,6 +76,16 @@
         $('#example1').DataTable()
     })
 
+    calcChange = (value) => {
+        var change = value - $("#total").val()
+        $("#change").val(change.toFixed(2))
+        if(change.toFixed(2) < 0){
+            $("#payButton").attr('disabled', 'disabled')
+        } else {
+            $("#payButton").removeAttr('disabled')
+        }
+    }
+
     membership = (id) => {
         $.ajax({
             type:"POST",
