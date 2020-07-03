@@ -20,7 +20,7 @@
 								EduCity Sports Complex<br><br>
 								Jalan Sarjana, EduCity@Iskandar<br>
 								79250 Iskandar Puteri, Johor<br>
-								educity@mail.com<br>
+								info.esc@educity.com.my<br>
 								+607-5095776
 							</td>
 						</tr>
@@ -91,7 +91,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><b>Sutotal :</b> RM {{ number_format($transaction->subtotal, 2) }}</td>
+				<td><b>Subtotal :</b> RM {{ number_format($transaction->subtotal, 2) }}</td>
 			</tr>
 			<tr>
 				<td></td>
