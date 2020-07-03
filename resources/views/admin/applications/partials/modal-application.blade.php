@@ -1,7 +1,7 @@
 <div class="modal fade" id="activityModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" id="form">
-            <form id="applicationForm" action="{{ url('admin/application') }}" method="POST">
+            <form id="applicationForm">
                 @csrf
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -121,7 +121,7 @@
                 <input type="hidden" name="post_id" id="post_id">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" onClick="newApplication()" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -131,101 +131,139 @@
 <script>
     $(() => {
         $('.select2').select2()
+
+        $("#applicationForm").validate({
+            ignore: [],
+            rules: {
+                type: {
+                    required: true
+                },
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                gender: {
+                    required: true
+                },
+                nationality: {
+                    required: true
+                },
+                ic: {
+                    required: () => {
+                        return $('#searchIC').is(':visible')
+                    },
+                },
+                ic: {
+                    required: () => {
+                        return $('#ic_block').is(':visible')
+                    },
+                },
+                passport: {
+                    required: () => {
+                        return $('#passport_block').is(':visible')
+                    },
+                },
+                student_id: {
+                    required: () => {
+                        return $('#students').is(':visible')
+                    },
+                },
+                institution: {
+                    required: () => {
+                        return $('#students').is(':visible')
+                    },
+                },
+                staff_id: {
+                    required: () => {
+                        return $('#staffs').is(':visible')
+                    },
+                },
+                company: {
+                    required: () => {
+                        return $('#staffs').is(':visible')
+                    },
+                }
+            },
+            messages: {
+                type: {
+                    required: "Type is required.",
+                },
+                name: {
+                    required: "Name is required.",
+                },
+                name: {
+                    required: "Please select gender.",
+                },
+                email: {
+                    required: "E-Mail is required.",
+                    email: "Please enter a valid e-mail address."
+                },
+                nationality: {
+                    required: "Nationality is required.",
+                },
+                ic: {
+                    required: "Please enter an IC / Passport number.",
+                },
+                passport: {
+                    required: "Please enter a passport number.",
+                },
+                student_id: {
+                    required: "Please enter student ID.",
+                },
+                institution: {
+                    required: "Please select an institution.",
+                },
+                staff_id: {
+                    required: "Please enter staff ID.",
+                },
+                company: {
+                    required: "Please enter a company name.",
+                },
+            },
+            errorLabelContainer: "#errors", 
+            errorElement: "li",
+        });
     })
 
-    $("#applicationForm").validate({
-        ignore: [],
-        rules: {
-            type: {
-                required: true
-            },
-            name: {
-                required: true
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            gender: {
-                required: true
-            },
-            nationality: {
-                required: true
-            },
-            ic: {
-                required: () => {
-                    return $('#searchIC').is(':visible')
-                },
-            },
-            ic: {
-                required: () => {
-                    return $('#ic_block').is(':visible')
-                },
-            },
-            passport: {
-                required: () => {
-                    return $('#passport_block').is(':visible')
-                },
-            },
-            student_id: {
-                required: () => {
-                    return $('#students').is(':visible')
-                },
-            },
-            institution: {
-                required: () => {
-                    return $('#students').is(':visible')
-                },
-            },
-            staff_id: {
-                required: () => {
-                    return $('#staffs').is(':visible')
-                },
-            },
-            company: {
-                required: () => {
-                    return $('#staffs').is(':visible')
-                },
-            }
-        },
-        messages: {
-            type: {
-                required: "Type is required.",
-            },
-            name: {
-                required: "Name is required.",
-            },
-            name: {
-                required: "Please select gender.",
-            },
-            email: {
-                required: "E-Mail is required.",
-                email: "Please enter a valid e-mail address."
-            },
-            nationality: {
-                required: "Nationality is required.",
-            },
-            ic: {
-                required: "Please enter an IC / Passport number.",
-            },
-            passport: {
-                required: "Please enter a passport number.",
-            },
-            student_id: {
-                required: "Please enter student ID.",
-            },
-            institution: {
-                required: "Please select an institution.",
-            },
-            staff_id: {
-                required: "Please enter staff ID.",
-            },
-            company: {
-                required: "Please enter a company name.",
-            },
-        },
-        errorLabelContainer: "#errors", 
-        errorElement: "li",
-    });
+    newApplication = () => { 
+        if($("#applicationForm").valid()){
+            var formData = new FormData($('#applicationForm')[0]);
 
+            $.ajax({
+                url: "{{ url('admin/application') }}",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done((response) => {
+                if(response.status == 'success'){
+                    Swal.fire(
+                    'Success!',
+                    'New application added!',
+                    'success'
+                    ).then((result) => {
+                        if(result.value){
+                            window.location.replace("{{ url('admin/application')}}/"+response.data)
+                        }
+                    })
+                } else if(response.status == 'email') {
+                    Swal.fire(
+                    'Error!',
+                    'E-Mail already exist!',
+                    'error'
+                    )
+                } else if(response.status == 'ic') {
+                    Swal.fire(
+                    'Error!',
+                    'I.C. already exist!',
+                    'error'
+                    )
+                }
+            });
+        }
+    }
 </script>

@@ -146,6 +146,25 @@ class ApplicationController extends Controller
 
     public function submitApplication(Request $request){
         if($request->post_id == ''){
+            $email = User::where('email', $request->email)->first();
+            $ic = CustomerDetail::where('ic', $request->ic)->first();
+            if($email){
+                $response = [
+                    'code' => 500,
+                    'status' => 'email'
+                ];
+                return $response;
+            }
+
+            if($ic){
+                $response = [
+                    'code' => 500,
+                    'status' => 'ic'
+                ];
+                return $response;
+            }
+
+
             $user = new User;
             $user->name = $request->name;
             $user->email = $request->email;
@@ -195,7 +214,12 @@ class ApplicationController extends Controller
         $application->date = date('Y-m-d');
         $application->registered_by = Auth::user()->id;
         if($application->save()){
-            return redirect('admin/application/'.$application->id);
+            $response = [
+                'code' => 200,
+                'status' => 'success',
+                'data' => $application->id
+            ];
+            return $response;
         }
     }
 
