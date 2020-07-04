@@ -31,7 +31,7 @@ class ApplicationController extends Controller
 {
     public function index(){
         $assets = LFacility::all();
-        $applications = Application::all()->where('flag', 1);
+        $applications = Application::where('flag', 1)->orderBy('date', 'DESC')->get();
         return view('admin.applications.application', compact('assets', 'applications'));
     }
 
