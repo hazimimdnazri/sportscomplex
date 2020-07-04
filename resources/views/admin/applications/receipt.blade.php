@@ -121,7 +121,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><b>Sutotal :</b> RM {{ number_format($transaction->subtotal, 2) }}</td>
+				<td><b>Subtotal :</b> RM {{ number_format($transaction->subtotal, 2) }}</td>
 			</tr>
 			<tr>
 				<td></td>
