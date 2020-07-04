@@ -16,10 +16,17 @@
                         <label for="exampleInputEmail1">Deposit (RM) </label>
                         <input type="text" class="form-control" name="deposit" id="deposit_pay" value="{{ number_format($deposit, 2, '.', '') }}" readOnly>
                     </div>
+                    @if($type == 1)
                     <div class="form-group">
                         <label for="exampleInputEmail1">Discount ({{$discount}}%) </label>
                         <input type="text" class="form-control" name="discount" id="discount" value="{{$discount = number_format(($discount/100) * $total, 2, '.', '')}}" readOnly>
                     </div>
+                    @else
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Discount (RM) </label>
+                        <input type="text" class="form-control" name="discount" id="discount" value="{{$discount = number_format($discount, 2, '.', '')}}" readOnly>
+                    </div>
+                    @endif
                     <div class="form-group">
                         <label for="exampleInputEmail1">Total Price (RM) </label>
                         <input type="text" class="form-control" name="total" id="total" value="{{ number_format($total - $discount + $deposit, 2, '.', '') }}" readOnly>

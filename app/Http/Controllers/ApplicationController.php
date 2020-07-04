@@ -227,14 +227,31 @@ class ApplicationController extends Controller
         $application = Application::find($request->id);
         $deposit = $request->deposit;
         $id = $request->id;
-        $discount = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
-        if($discount){
-            $discount = $discount->r_membership->discount;
+        $type = $application->type;
+        $minus = 0;
+        $membership = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
+        if($type == 1 ){
+            if(isset($membership) && $membership->cycle_end > date('Y-m-d') ){
+                $discount = $membership->r_membership->discount;
+            } else {
+                $discount = 0;
+            }
         } else {
-            $discount = 0;
+            if(isset($membership) && $membership->cycle_end > date('Y-m-d') ){
+                $free = json_decode($membership->r_membership->activities);
+                $activities = Activity::where('application_id', $request->id)->whereIn('activity_id', $free)->get();
+                foreach($activities as $a){
+                    $minus += $a->r_activity->deposit;
+                }
+                $discount = $activities->sum('price');
+                $deposit = $deposit - $minus;
+            } else {
+                $discount = 0;
+            }
         }
+
         $total = $request->ftotal + $request->etotal;
-        return view('admin.applications.partials.modal-payment', compact('ftotal', 'etotal', 'total', 'discount', 'id', 'deposit'));
+        return view('admin.applications.partials.modal-payment', compact('ftotal', 'etotal', 'total', 'discount', 'id', 'deposit', 'type'));
     }
 
     public function receipt(Request $request, $id){
@@ -299,7 +316,6 @@ class ApplicationController extends Controller
             }
             
             $application->event = $request->event;
-            // $application->status = 5;
             $application->approved_by = Auth::user()->id;
     
             $user = User::find($application->user_id);
@@ -309,7 +325,7 @@ class ApplicationController extends Controller
             $trasaction->application_id = $id;
             $trasaction->customer_id = $application->user_id;
             $trasaction->tax = 0;
-            $trasaction->membership_discount = number_format($discount/100 * ($request->subtotal), 2, '.', '');
+            $trasaction->membership_discount = number_format($request->discount, 2, '.', '');
             $trasaction->general_discount = 0;
             $trasaction->subtotal = number_format($request->subtotal, 2, '.', '');
             $trasaction->total = number_format($request->total, 2, '.', '');
