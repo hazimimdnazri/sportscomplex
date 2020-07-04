@@ -245,7 +245,14 @@ class ApplicationController extends Controller
         } else {
             $activity = Activity::where("application_id", $id)->get();
         }
-        $pdf = PDF::loadView('admin.applications.receipt', compact('facility', 'activity', 'transaction'))->setPaper([0, 0, 226.772, 740 ], 'portrait');  
+        
+        $pdf = PDF::loadView('admin.applications.receipt', compact('facility', 'activity', 'transaction'))->setPaper([0, 0, 226.772, 50 ], 'portrait');
+        $pdf->output();
+        $page_count = $pdf->getDomPDF()->get_canvas()->get_page_number();
+        unset($pdf);
+
+        $number = (50 * $page_count) - 120;
+        $pdf = PDF::loadView('admin.applications.receipt', compact('facility', 'activity', 'transaction'))->setPaper([0, 0, 226.772, $number ], 'portrait');
         $content = $pdf->output();
         $uniq = uniqid();
         if(file_put_contents(public_path('uploads/receipts/'.$uniq.'.pdf'), $content)){
