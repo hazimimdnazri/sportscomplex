@@ -136,7 +136,6 @@ class HomeController extends Controller
     }
 
     public function submitUserRegister(Request $request){
-        
         $email = User::where('email', $request->email)->first();
         $ic = CustomerDetail::where('ic', $request->ic)->first();
         if($email){
@@ -155,14 +154,22 @@ class HomeController extends Controller
         if($user->save()){
             $members = new CustomerDetail;
             $members->user_id = $user->id;
-            $members->ic = $request->ic;
-            $members->passport = $request->passport;
+            $members->nationality = $request->nationality;
+            $members->gender = $request->gender;
+
+            if($members->nationality == 1){
+                $members->ic = $request->ic;
+                $members->passport = NULL;
+            } else {
+                $members->passport = $request->passport;
+                $members->ic = NULL;
+            }
+
             $members->phone = $request->phone;
             $members->dob = date('Y-m-d', strtotime($request->dob));
             $members->address = $request->address;
             $members->zipcode = $request->zipcode;
             $members->type = $request->type;
-            $members->nationality = $request->nationality;
             $members->city = $request->city;
             $members->state = $request->state;
 
@@ -181,20 +188,22 @@ class HomeController extends Controller
                 $staff->save();
             }
 
-            $vars["email"] = $user->email;
-            $vars["name"] = $user->name;
-            $vars["token"] = base64_encode($user->email);
-            try {
-                Mail::send(["html" => "shared.mail-verify"], $vars, function($message) use ($vars){
-                    $message->from("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
-                    $message->to($vars["email"]);
-                    $message->sender("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
-                    $message->subject("EduCity Sports Centre Account Activation");
-                });
-            } catch(\Exception $err) {
-                return $err;
+            if($members->save()){
+                $vars["email"] = $user->email;
+                $vars["name"] = $user->name;
+                $vars["token"] = base64_encode($user->email);
+                try {
+                    Mail::send(["html" => "shared.mail-verify"], $vars, function($message) use ($vars){
+                        $message->from("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
+                        $message->to($vars["email"]);
+                        $message->sender("admin@esurvey.jkr.gov.my", "EduCity Sports Centre");
+                        $message->subject("EduCity Sports Centre Account Activation");
+                    });
+                } catch(\Exception $err) {
+                    return $err;
+                }
+                return "success";
             }
-            return "success";
         }
     }
 
