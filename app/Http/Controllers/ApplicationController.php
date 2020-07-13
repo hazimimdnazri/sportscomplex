@@ -231,20 +231,37 @@ class ApplicationController extends Controller
         $minus = 0;
         $membership = Membership::where('user_id', $application->user_id)->orderBy('cycle_end', 'DESC')->first();
         if($type == 1 ){
-            if(isset($membership) && $membership->cycle_end > date('Y-m-d') ){
-                $discount = $membership->r_membership->discount;
+            // Membership discount
+            if($application->a_applicant->r_details->type == 1){
+                if(isset($membership) && $membership->cycle_end > date('Y-m-d') ){
+                    $discount = $membership->r_membership->discount;
+                } else {
+                    $discount = 0;
+                }
+            // Staff discount
+            } else if($application->a_applicant->r_details->type == 2){
+                $discount = 20;
             } else {
                 $discount = 0;
             }
         } else {
-            if(isset($membership) && $membership->cycle_end > date('Y-m-d') ){
-                $free = json_decode($membership->r_membership->activities);
-                $activities = Activity::where('application_id', $request->id)->whereIn('activity_id', $free)->get();
-                foreach($activities as $a){
-                    $minus += $a->r_activity->deposit;
+            // Membership discount
+            if($application->a_applicant->r_details->type == 1){
+                if(isset($membership) && $membership->cycle_end > date('Y-m-d') ){
+                    $free = json_decode($membership->r_membership->activities);
+                    $activities = Activity::where('application_id', $request->id)->whereIn('activity_id', $free)->get();
+                    foreach($activities as $a){
+                        $minus += $a->r_activity->deposit;
+                    }
+                    $discount = $activities->sum('price');
+                    $deposit = $deposit - $minus;
+                } else {
+                    $discount = 0;
                 }
-                $discount = $activities->sum('price');
-                $deposit = $deposit - $minus;
+            // Staff discount
+            } else if($application->a_applicant->r_details->type == 2){
+                $activities = Activity::where('application_id', $request->id)->get();
+                $discount = ($activities->sum('price') + $deposit) * 20/100;
             } else {
                 $discount = 0;
             }

@@ -106,13 +106,13 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Staff ID <span class="text-red">*</span></label>
-                                    <input type="text" class="form-control" id="staff_id" name="staff_id" placeholder="Applicant email">
+                                    <input type="text" class="form-control" id="staff_id" name="staff_id" placeholder="Staff ID">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Company <span class="text-red">*</span></label>
-                                    <input type="text" class="form-control" id="company" name="company" placeholder="Applicant email">
+                                    <input type="text" class="form-control" id="company" name="company" placeholder="Company">
                                 </div>
                             </div>
                         </div>

@@ -29,6 +29,18 @@ class Customer extends JsonResource
             'state' => $this->state,
             'type' => $this->type,
             'membership' => $this->r_membership,
+
+            'staff' => $this->r_user->r_staff ? [
+                'id' => $this->r_user->r_staff->id,
+                'staff_id' => $this->r_user->r_staff->staff_id,
+                'company' => $this->r_user->r_staff->company
+            ] : NULL,
+
+            'student' => $this->r_user->r_student ? [
+                'id' => $this->r_user->r_student->id,
+                'staff_id' => $this->r_user->r_student->student_id,
+                'company' => $this->r_user->r_student->institution
+            ] : NULL
         ];
     }
 }

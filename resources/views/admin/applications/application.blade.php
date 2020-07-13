@@ -137,6 +137,8 @@
                 $("#nationality").val(response.data.nationality).change();
                 $("#post_id").val(response.data.id);
                 $("#gender").val(response.data.gender).change();
+                $("#staff_id").val(response.data.staff.staff_id).change();
+                $("#company").val(response.data.staff.company).change();
             } else {
                 alert("User does not exist!")
             }
@@ -172,7 +174,7 @@
     searchIC = (id) => {
         if(id == 'existing'){
             $("#searchIC").show()
-            $("#name, #ic, #email, #type, #nationality").attr('readOnly','readOnly')
+            $("#name, #ic, #email, #type, #nationality, #staff_id, #company").attr('readOnly','readOnly')
             $("#type, #nationality, #gender, option").each(function(i){
                 $(this).attr('disabled', 'disabled')
             });
@@ -185,7 +187,7 @@
             
         } else {
             $("#searchIC").hide()
-            $("#name, #ic, #email, #type, #nationality").removeAttr('readOnly','readOnly')
+            $("#name, #ic, #email, #type, #nationality, #staff_id, #company").removeAttr('readOnly','readOnly')
             $("#type, #nationality, option").each(function(i){
                 $(this).removeAttr('disabled', 'disabled')
             });
