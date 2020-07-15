@@ -38,8 +38,8 @@ class Customer extends JsonResource
 
             'student' => $this->r_user->r_student ? [
                 'id' => $this->r_user->r_student->id,
-                'staff_id' => $this->r_user->r_student->student_id,
-                'company' => $this->r_user->r_student->institution
+                'student_id' => $this->r_user->r_student->student_id,
+                'institution' => $this->r_user->r_student->institution
             ] : NULL
         ];
     }

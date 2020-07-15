@@ -129,7 +129,6 @@
         }).done(function(response){
             if(response != "error"){
                 $("#name").val(response.data.name);
-                $("#name").val(response.data.name);
                 $("#email").val(response.data.email);
                 $("#ic").val(response.data.ic);
                 $("#passport").val(response.data.passport);
@@ -137,8 +136,13 @@
                 $("#nationality").val(response.data.nationality).change();
                 $("#post_id").val(response.data.id);
                 $("#gender").val(response.data.gender).change();
-                $("#staff_id").val(response.data.staff.staff_id).change();
-                $("#company").val(response.data.staff.company).change();
+                if(response.data.staff){
+                    $("#staff_id").val(response.data.staff.staff_id);
+                    $("#company").val(response.data.staff.company).change();
+                } else if(response.data.student){
+                    $("#student_id").val(response.data.student.student_id);
+                    $("#institution").val(response.data.student.institution).change();
+                }
             } else {
                 alert("User does not exist!")
             }
@@ -174,8 +178,8 @@
     searchIC = (id) => {
         if(id == 'existing'){
             $("#searchIC").show()
-            $("#name, #ic, #email, #type, #nationality, #staff_id, #company").attr('readOnly','readOnly')
-            $("#type, #nationality, #gender, option").each(function(i){
+            $("#name, #ic, #email, #type, #nationality, #staff_id, #company, #student_id").attr('readOnly','readOnly')
+            $("#type, #nationality, #gender, #institution, option").each(function(i){
                 $(this).attr('disabled', 'disabled')
             });
             $("#type").val('')
@@ -187,8 +191,8 @@
             
         } else {
             $("#searchIC").hide()
-            $("#name, #ic, #email, #type, #nationality, #staff_id, #company").removeAttr('readOnly','readOnly')
-            $("#type, #nationality, option").each(function(i){
+            $("#name, #ic, #email, #type, #nationality, #staff_id, #company, #student_id").removeAttr('readOnly','readOnly')
+            $("#type, #nationality, #gender, #institution,  option").each(function(i){
                 $(this).removeAttr('disabled', 'disabled')
             });
             $("#name").val('')

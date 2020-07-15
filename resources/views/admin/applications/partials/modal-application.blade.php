@@ -87,7 +87,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Student ID <span class="text-red">*</span></label>
-                                    <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Applicant email">
+                                    <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Student ID">
                                 </div>
                             </div>
                             <div class="col-lg-6">
