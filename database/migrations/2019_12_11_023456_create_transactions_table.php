@@ -26,6 +26,7 @@ class CreateTransactionsTable extends Migration
             $table->float('tax');
             $table->float('membership_discount');
             $table->float('general_discount');
+            $table->float('deposit')->default(0.00);
             $table->float('subtotal');
             $table->float('total');
             $table->float('paid');

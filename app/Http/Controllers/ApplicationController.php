@@ -342,6 +342,7 @@ class ApplicationController extends Controller
             $trasaction->application_id = $id;
             $trasaction->customer_id = $application->user_id;
             $trasaction->tax = 0;
+            $trasaction->deposit = number_format($request->deposit, 2, '.', '');
             $trasaction->membership_discount = number_format($request->discount, 2, '.', '');
             $trasaction->general_discount = 0;
             $trasaction->subtotal = number_format($request->subtotal, 2, '.', '');

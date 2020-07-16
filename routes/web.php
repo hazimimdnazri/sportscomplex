@@ -17,6 +17,7 @@ Route::get('unauthorized', 'HomeController@unauthorized');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('verify', 'HomeController@verifyAccount');
+Route::get('script', 'HomeController@script');
 
 Route::group(['prefix' => 'guest'], function() {
     Route::get('login', 'Auth\LoginController@showLoginForm');

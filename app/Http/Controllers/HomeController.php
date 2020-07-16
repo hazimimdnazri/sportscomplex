@@ -26,6 +26,7 @@ use App\LiveActivity;
 use App\LiveCollection;
 use App\DashboardFinancial;
 use App\Transaction;
+use App\Activity;
 use Mail;
 use PDF;
 
@@ -531,5 +532,21 @@ class HomeController extends Controller
 
     public function loading(){
         return view('modal-loading');
+    }
+
+    public function script(){
+        $trans = Transaction::where('application_id', "!=", NULL)->get();
+        foreach($trans as $t){
+            $deposit = 0;
+            $activities = Activity::where('application_id', $t->application_id)->get();
+            foreach($activities as $a){
+                $deposit += $a->r_activity->deposit;
+            }
+            $t->deposit = $deposit;
+            if(($t->total - $t->deposit) > 0){
+                $t->save();
+            }
+        }
+        return "success";
     }
 }
