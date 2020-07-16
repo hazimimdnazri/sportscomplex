@@ -24,6 +24,7 @@ use App\VendorPic;
 use App\LiveFacility;
 use App\LiveActivity;
 use App\LiveCollection;
+use App\CustGender;
 use App\DashboardFinancial;
 use App\Transaction;
 use App\Activity;
@@ -383,8 +384,9 @@ class HomeController extends Controller
         $facilities = LiveFacility::groupBy('venue')->get();
         $activities = LiveActivity::groupBy('venue')->get();
         $collections = LiveCollection::all();
+        $genders = CustGender::all();
         $venues = LVenue::all();
-        return view('admin.dashboard', compact('facilities', 'activities', 'collections', 'venues'));
+        return view('admin.dashboard', compact('facilities', 'activities', 'collections', 'venues', 'genders'));
     }
 
     public function dashboardFinancial(){

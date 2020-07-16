@@ -289,11 +289,11 @@
 						<table class="table table-bordered">
 							<tr>
 								<td class="text-center"><strong>Male</strong></td>
-								<td class="text-center">0</td>
+								<td class="text-center">{{ $male = $genders->where('gender', 'M')->first()->total }}</td>
 							</tr>
 							<tr>
 								<td class="text-center"><strong>Female</strong></td>
-								<td class="text-center">0</td>
+								<td class="text-center">{{ $female = $genders->where('gender', 'F')->first()->total }}</td>
 							</tr>
 							<tr>
 								<td class="text-center"><strong>Group</strong></td>
@@ -301,7 +301,7 @@
 							</tr>
 							<tr>
 								<td class="text-center bg-gray"><strong>Total</strong></td>
-								<td class="text-center bg-gray">0</td>
+								<td class="text-center bg-gray">{{ $male + $female }}</td>
 							</tr>
 						</table>
 					</div>
@@ -463,9 +463,9 @@
 	var doughnutData1 = {
 		datasets: [{
 			data: [
-				Math.floor(Math.random() * 100),
-				Math.floor(Math.random() * 100),
-				Math.floor(Math.random() * 100),
+				Math.floor({{ number_format($collections->where('week', date('W'))->where('trans_type', 'POS')->sum('total'), 2, '.', '') }}),
+				Math.floor({{ number_format($collections->where('week', date('W'))->where('trans_type', 'Bank')->sum('total'), 2, '.', '') }}),
+				Math.floor({{ number_format($collections->where('week', date('W'))->where('trans_type', 'Online')->sum('total'), 2, '.', '') }}),
 			],
 			backgroundColor: [
 				window.chartColors.blue,
@@ -484,9 +484,9 @@
 	var doughnutData2 = {
 		datasets: [{
 			data: [
-				Math.floor(Math.random() * 100),
-				Math.floor(Math.random() * 100),
-				Math.floor(Math.random() * 100),
+				Math.floor({{ number_format($collections->where('month', date('m'))->where('trans_type', 'POS')->sum('total'), 2, '.', '') }}),
+				Math.floor({{ number_format($collections->where('month', date('m'))->where('trans_type', 'Bank')->sum('total'), 2, '.', '') }}),
+				Math.floor({{ number_format($collections->where('month', date('m'))->where('trans_type', 'Online')->sum('total'), 2, '.', '') }}),
 			],
 			backgroundColor: [
 				window.chartColors.blue,
