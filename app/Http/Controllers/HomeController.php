@@ -484,6 +484,7 @@ class HomeController extends Controller
         $transaction->total = number_format($request->total, 2, '.', '');
         $transaction->paid = number_format($request->paid, 2, '.', '');
         $transaction->trans_changes = number_format($request->change, 2, '.', '');
+        $transaction->deposit = 0;
 
         if($transaction->save()){
             $membership = Membership::where('user_id', $id)->orderBy('cycle_end', 'DESC')->first();
