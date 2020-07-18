@@ -238,10 +238,10 @@
 						@foreach($venues as $v)
 						<tr>
 							<td style="border-color:black;">{{$v->venue}}</td>
-							<td class="text-center" style="border-color:black;">RM 0</td>
-							<td class="text-center" style="border-color:black;">RM 0</td>
-							<td class="text-center" style="border-color:black;">0</td>
-							<td class="text-center" style="border-color:black;">0</td>
+							<td class="text-center" style="border-color:black;">RM {{ $vcs->where('month', date('m'))->where('venue', $v->id)->sum('total') }}</td>
+							<td class="text-center" style="border-color:black;">RM {{ $vcs->where('date', date('Y-m-d'))->where('venue', $v->id)->sum('total') }}</td>
+							<td class="text-center" style="border-color:black;">{{ $vcs->where('month', date('m'))->where('venue', $v->id)->count() }}</td>
+							<td class="text-center" style="border-color:black;">{{ $vcs->where('month', date('Y-m-d'))->where('venue', $v->id)->count() }}</td>
 						</tr>
 						@endforeach
 						<tr>

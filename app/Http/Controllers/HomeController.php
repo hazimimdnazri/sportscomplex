@@ -28,6 +28,7 @@ use App\CustGender;
 use App\DashboardFinancial;
 use App\Transaction;
 use App\Activity;
+use App\VenueCollection;
 use Mail;
 use PDF;
 
@@ -386,7 +387,8 @@ class HomeController extends Controller
         $collections = LiveCollection::all();
         $genders = CustGender::all();
         $venues = LVenue::all();
-        return view('admin.dashboard', compact('facilities', 'activities', 'collections', 'venues', 'genders'));
+        $vcs = VenueCollection::all();
+        return view('admin.dashboard', compact('facilities', 'activities', 'collections', 'venues', 'genders', 'vcs'));
     }
 
     public function dashboardFinancial(){
