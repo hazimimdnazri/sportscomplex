@@ -241,7 +241,7 @@
 							<td class="text-center" style="border-color:black;">RM {{ $vcs->where('month', date('m'))->where('venue', $v->id)->sum('total') }}</td>
 							<td class="text-center" style="border-color:black;">RM {{ $vcs->where('date', date('Y-m-d'))->where('venue', $v->id)->sum('total') }}</td>
 							<td class="text-center" style="border-color:black;">{{ $vcs->where('month', date('m'))->where('venue', $v->id)->count() }}</td>
-							<td class="text-center" style="border-color:black;">{{ $vcs->where('month', date('Y-m-d'))->where('venue', $v->id)->count() }}</td>
+							<td class="text-center" style="border-color:black;">{{ $vcs->where('date', date('Y-m-d'))->where('venue', $v->id)->count() }}</td>
 						</tr>
 						@endforeach
 						<tr>
