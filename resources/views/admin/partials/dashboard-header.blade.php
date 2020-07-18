@@ -5,7 +5,7 @@
         </div>
         <div class="box-body">
             <b>News & Announcements:</b>
-            <p><marquee>No current news or announcements.</marquee></p>
+            <p><marquee>System maintenance are scheduled from <b>0000</b> to <b>0300</b> daily.</marquee></p>
 
         </div>
         <div class="box-footer bg-navy">
