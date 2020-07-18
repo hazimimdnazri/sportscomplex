@@ -163,7 +163,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<p class="text-center">
-								<strong>Facility Usage</strong>
+								<strong>Facility Usage ({{ date('F') }})</strong>
 							</p>
 							<canvas id="canvas1"></canvas>
 						</div>
@@ -423,7 +423,7 @@
 			borderWidth: 1,
 			data: [
 				@foreach($venues as $v)
-				Math.floor(Math.random() * 20),
+					{{ $vcs->where('venue', $v->id)->where('month', date('m'))->where('week', date('W', strtotime(date('Y-m-01'))))->count() }},
 				@endforeach
 			]
 		}, {
@@ -433,7 +433,7 @@
 			borderWidth: 1,
 			data: [
 				@foreach($venues as $v)
-				Math.floor(Math.random() * 20),
+				{{ $vcs->where('venue', $v->id)->where('month', date('m'))->where('week', date('W', strtotime(date('Y-m-08'))))->count() }},
 				@endforeach
 			]
 		}, {
@@ -443,7 +443,7 @@
 			borderWidth: 1,
 			data: [
 				@foreach($venues as $v)
-				Math.floor(Math.random() * 20),
+				{{ $vcs->where('venue', $v->id)->where('month', date('m'))->where('week', date('W', strtotime(date('Y-m-16'))))->count() }},
 				@endforeach
 			]
 		}, {
@@ -453,7 +453,7 @@
 			borderWidth: 1,
 			data: [
 				@foreach($venues as $v)
-				Math.floor(Math.random() * 20),
+				{{ $vcs->where('venue', $v->id)->where('month', date('m'))->where('week', date('W', strtotime(date('Y-m-24'))))->count() }},
 				@endforeach
 			]
 		}]
