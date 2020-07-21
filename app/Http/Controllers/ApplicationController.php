@@ -261,7 +261,7 @@ class ApplicationController extends Controller
             // Staff discount
             } else if($application->a_applicant->r_details->type == 2){
                 $activities = Activity::where('application_id', $request->id)->get();
-                $discount = ($activities->sum('price') + $deposit) * 20/100;
+                $discount = $activities->sum('price') * 20/100;
             } else {
                 $discount = 0;
             }
