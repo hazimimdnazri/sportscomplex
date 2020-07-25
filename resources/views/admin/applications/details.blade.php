@@ -68,8 +68,8 @@
                                 <input type="text" class="form-control" name="event" value="{{ $application->event ?? 'Booking #'.$application->id }}" id="event" placeholder="Event name">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">I.C Number </label>
-                                <input type="text" class="form-control" id="ic" name="ic" value="{{ $application->a_applicant->r_details->ic ?? '' }}" placeholder="Applicant MyKad / MyKid" disabled>
+                                <label for="exampleInputEmail1">I.C. / Passport Number </label>
+                                <input type="text" class="form-control" id="ic" name="ic" value="{{ $application->a_applicant->r_details->ic ?? $application->a_applicant->r_details->passport }}" placeholder="Applicant MyKad / MyKid" disabled>
                             </div>
                         </div>
                         <div class="col-lg-4">
