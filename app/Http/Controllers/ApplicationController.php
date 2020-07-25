@@ -147,7 +147,13 @@ class ApplicationController extends Controller
     public function submitApplication(Request $request){
         if($request->post_id == ''){
             $email = User::where('email', $request->email)->first();
-            $ic = CustomerDetail::where('ic', $request->ic)->first();
+            
+            if($request->nationality == 2){
+                $ic = CustomerDetail::where('passport', $request->passport)->first();
+            } else if($request->nationality == 2) {
+                $ic = CustomerDetail::where('ic', $request->ic)->first();
+            }
+           
             if($email){
                 $response = [
                     'code' => 500,

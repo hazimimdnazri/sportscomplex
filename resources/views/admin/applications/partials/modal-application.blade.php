@@ -259,7 +259,7 @@
                 } else if(response.status == 'ic') {
                     Swal.fire(
                     'Error!',
-                    'I.C. already exist!',
+                    'I.C. / Passport already exist!',
                     'error'
                     )
                 }
