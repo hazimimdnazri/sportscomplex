@@ -150,7 +150,7 @@ class ApplicationController extends Controller
             
             if($request->nationality == 2){
                 $ic = CustomerDetail::where('passport', $request->passport)->first();
-            } else if($request->nationality == 2) {
+            } else if($request->nationality == 1) {
                 $ic = CustomerDetail::where('ic', $request->ic)->first();
             }
            
